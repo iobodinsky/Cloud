@@ -39,6 +39,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,11 +48,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\AspNetUser.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\CloudEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CloudEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\CloudEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\CloudEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\UserFile.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="DataContext\CloudEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CloudEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataContext\CloudEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+      <LastGenOutput>CloudEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataContext\CloudEntities.edmx.diagram">
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+    </None>
+    <None Include="DataContext\CloudEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+      <LastGenOutput>CloudEntities.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
