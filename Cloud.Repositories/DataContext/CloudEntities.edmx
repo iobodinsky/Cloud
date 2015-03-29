@@ -32,9 +32,9 @@
         </EntityType>
         <EntityType Name="FileTypes">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="FileTypeId" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Extension" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IconUrl" Type="nvarchar" MaxLength="500" />
@@ -88,7 +88,7 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
           <End Role="UserFileInfos" Type="Self.UserFileInfos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FileTypes">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="FileTypeId" />
             </Principal>
             <Dependent Role="UserFileInfos">
               <PropertyRef Name="TypeId" />
@@ -142,18 +142,18 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
         <EntityContainer Name="CloudDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
           <EntitySet Name="FileServers" EntityType="CloudDbModel.FileServer" />
-          <EntitySet Name="FileTypes" EntityType="CloudDbModel.FileType" />
           <EntitySet Name="UserFileInfos" EntityType="CloudDbModel.UserFileInfo" />
           <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="CloudDbModel.FK_UserFiles_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="UserFileInfo" EntitySet="UserFileInfos" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserFileInfos_FileTypes" Association="CloudDbModel.FK_UserFileInfos_FileTypes">
-            <End Role="FileType" EntitySet="FileTypes" />
-            <End Role="UserFileInfo" EntitySet="UserFileInfos" />
-          </AssociationSet>
           <AssociationSet Name="UserFileInfos_FileServers" Association="CloudDbModel.UserFileInfos_FileServers">
             <End Role="FileServer" EntitySet="FileServers" />
+            <End Role="UserFileInfo" EntitySet="UserFileInfos" />
+          </AssociationSet>
+          <EntitySet Name="FileTypes" EntityType="CloudDbModel.FileType" />
+          <AssociationSet Name="FK_UserFileInfos_FileTypes" Association="CloudDbModel.FK_UserFileInfos_FileTypes">
+            <End Role="FileType" EntitySet="FileTypes" />
             <End Role="UserFileInfo" EntitySet="UserFileInfos" />
           </AssociationSet>
         </EntityContainer>
@@ -184,16 +184,6 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
           <Property Name="Url" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserFileInfos" Relationship="CloudDbModel.UserFileInfos_FileServers" FromRole="FileServer" ToRole="UserFileInfo" />
         </EntityType>
-        <EntityType Name="FileType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Extension" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IconUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserFileInfos" Relationship="CloudDbModel.FK_UserFileInfos_FileTypes" FromRole="FileType" ToRole="UserFileInfo" />
-        </EntityType>
         <EntityType Name="UserFileInfo">
           <Key>
             <PropertyRef Name="FileId" />
@@ -204,8 +194,8 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="UserFileInfo" ToRole="AspNetUser" />
-          <NavigationProperty Name="FileType" Relationship="CloudDbModel.FK_UserFileInfos_FileTypes" FromRole="UserFileInfo" ToRole="FileType" />
           <NavigationProperty Name="FileServers" Relationship="CloudDbModel.UserFileInfos_FileServers" FromRole="UserFileInfo" ToRole="FileServer" />
+          <NavigationProperty Name="FileType" Relationship="CloudDbModel.FK_UserFileInfos_FileTypes" FromRole="UserFileInfo" ToRole="FileType" />
         </EntityType>
         <Association Name="FK_UserFiles_AspNetUsers">
           <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -219,21 +209,31 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="UserFileInfos_FileServers">
+          <End Type="CloudDbModel.FileServer" Role="FileServer" Multiplicity="*" />
+          <End Type="CloudDbModel.UserFileInfo" Role="UserFileInfo" Multiplicity="*" />
+        </Association>
+        <EntityType Name="FileType">
+          <Key>
+            <PropertyRef Name="FileTypeId" />
+          </Key>
+          <Property Name="FileTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Extension" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IconUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserFileInfos" Relationship="CloudDbModel.FK_UserFileInfos_FileTypes" FromRole="FileType" ToRole="UserFileInfo" />
+        </EntityType>
         <Association Name="FK_UserFileInfos_FileTypes">
           <End Type="CloudDbModel.FileType" Role="FileType" Multiplicity="1" />
           <End Type="CloudDbModel.UserFileInfo" Role="UserFileInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FileType">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="FileTypeId" />
             </Principal>
             <Dependent Role="UserFileInfo">
               <PropertyRef Name="TypeId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="UserFileInfos_FileServers">
-          <End Type="CloudDbModel.FileServer" Role="FileServer" Multiplicity="*" />
-          <End Type="CloudDbModel.UserFileInfo" Role="UserFileInfo" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -268,16 +268,6 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FileTypes">
-            <EntityTypeMapping TypeName="CloudDbModel.FileType">
-              <MappingFragment StoreEntitySet="FileTypes">
-                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
-                <ScalarProperty Name="Extension" ColumnName="Extension" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserFileInfos">
             <EntityTypeMapping TypeName="CloudDbModel.UserFileInfo">
               <MappingFragment StoreEntitySet="UserFileInfos">
@@ -297,6 +287,16 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
               <ScalarProperty Name="ServerId" ColumnName="ServerId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="FileTypes">
+            <EntityTypeMapping TypeName="CloudDbModel.FileType">
+              <MappingFragment StoreEntitySet="FileTypes">
+                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileTypeId" ColumnName="FileTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
