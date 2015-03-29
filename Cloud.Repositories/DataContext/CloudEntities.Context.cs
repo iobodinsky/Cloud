@@ -30,5 +30,6 @@ namespace Cloud.Repositories.DataContext
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<UserFileInfo> UserFileInfos { get; set; }
+        public virtual DbSet<FileServer> FileServers { get; set; }
     }
 }

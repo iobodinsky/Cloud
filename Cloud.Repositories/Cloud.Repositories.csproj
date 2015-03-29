@@ -75,10 +75,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CloudEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\FileServer.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\UserFileInfo.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\FileServerRepository.cs" />
     <Compile Include="Repositories\UserFileInfoRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
   </ItemGroup>

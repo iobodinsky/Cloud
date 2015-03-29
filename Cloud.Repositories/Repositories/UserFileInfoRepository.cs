@@ -23,17 +23,12 @@ namespace Cloud.Repositories.Repositories
             return Entities.UserFileInfos.Where(file => file.UserId == userId);
         }
 
-        public bool UpdateFileName(int fileId)
+        public bool UpdateFileName(UserFileInfo fileToUpdate)
         {
-            var fileToUpdate = Entities.UserFileInfos.SingleOrDefault(
-                file => file.FileId == fileId);
-
-            if (fileToUpdate == null) return false;
-
             Entities.UserFileInfos.Attach(fileToUpdate);
             var entry = Entities.Entry(fileToUpdate);
-            entry.Property(e => e.Name).IsModified = true;
-            Entities.SaveChanges();
+            entry.Property(file => file.Name).IsModified = true;
+            SaveChanges();
 
             return true;
         }
@@ -50,7 +45,7 @@ namespace Cloud.Repositories.Repositories
             // Delete file from db
             Entities.UserFileInfos.Attach(fileToDelete);
             Entities.UserFileInfos.Remove(fileToDelete);
-            Entities.SaveChanges();
+            SaveChanges();
 
             return true;
         }

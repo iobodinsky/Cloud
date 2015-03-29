@@ -56,6 +56,14 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="FileServers">
+          <Key>
+            <PropertyRef Name="ServerId" />
+          </Key>
+          <Property Name="ServerId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Url" Type="nchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserFileInfos">
           <Key>
             <PropertyRef Name="FileId" />
@@ -140,6 +148,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileServers" EntityType="Self.FileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileInfos" EntityType="Self.UserFileInfos" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -209,6 +218,7 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="UserFileInfo" EntitySet="UserFileInfos" />
           </AssociationSet>
+          <EntitySet Name="FileServers" EntityType="CloudDbModel.FileServer" />
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -294,6 +304,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FileServer">
+          <Key>
+            <PropertyRef Name="ServerId" />
+          </Key>
+          <Property Name="ServerId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="500" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -361,6 +379,15 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="FileId" ColumnName="FileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileServers">
+            <EntityTypeMapping TypeName="CloudDbModel.FileServer">
+              <MappingFragment StoreEntitySet="FileServers">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
