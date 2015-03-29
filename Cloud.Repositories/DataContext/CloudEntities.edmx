@@ -56,7 +56,7 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserFiles">
+        <EntityType Name="UserFileInfos">
           <Key>
             <PropertyRef Name="FileId" />
           </Key>
@@ -124,12 +124,12 @@
         </Association>
         <Association Name="FK_UserFiles_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="UserFiles" Type="Self.UserFiles" Multiplicity="*" />
+          <End Role="UserFileInfos" Type="Self.UserFileInfos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserFiles">
+            <Dependent Role="UserFileInfos">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -140,7 +140,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFileInfos" EntityType="Self.UserFileInfos" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -159,7 +159,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="Self.FK_UserFiles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserFiles" EntitySet="UserFiles" />
+            <End Role="UserFileInfos" EntitySet="UserFileInfos" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -184,23 +184,11 @@
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="CloudDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="CloudDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="UserFiles" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="AspNetUser" ToRole="UserFile" />
           <NavigationProperty Name="AspNetRoles" Relationship="CloudDbModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
-        </EntityType>
-        <EntityType Name="UserFile">
-          <Key>
-            <PropertyRef Name="FileId" />
-          </Key>
-          <Property Name="FileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TypeId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="UserFile" ToRole="AspNetUser" />
+          <NavigationProperty Name="UserFileInfos" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers1" FromRole="AspNetUser" ToRole="UserFileInfo" />
         </EntityType>
         <EntityContainer Name="CloudDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="UserFiles" EntityType="Self.UserFile" />
           <EntitySet Name="AspNetRoles" EntityType="CloudDbModel.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="CloudDbModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="CloudDbModel.AspNetUserLogin" />
@@ -212,13 +200,14 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="CloudDbModel.FK_UserFiles_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="UserFile" EntitySet="UserFiles" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="CloudDbModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="UserFileInfos" EntityType="CloudDbModel.UserFileInfo" />
+          <AssociationSet Name="FK_UserFiles_AspNetUsers1" Association="CloudDbModel.FK_UserFiles_AspNetUsers1">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserFileInfo" EntitySet="UserFileInfos" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -278,21 +267,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserFiles_AspNetUsers">
+        <Association Name="AspNetUserRoles">
+          <End Type="CloudDbModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="UserFileInfo">
+          <Key>
+            <PropertyRef Name="FileId" />
+          </Key>
+          <Property Name="FileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers1" FromRole="UserFileInfo" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_UserFiles_AspNetUsers1">
           <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="CloudDbModel.UserFile" Role="UserFile" Multiplicity="*" />
+          <End Type="CloudDbModel.UserFileInfo" Role="UserFileInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserFile">
+            <Dependent Role="UserFileInfo">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="CloudDbModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -315,17 +315,6 @@
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFiles">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
-              <MappingFragment StoreEntitySet="UserFiles">
-                <ScalarProperty Name="FileId" ColumnName="FileId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -364,6 +353,17 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="UserFileInfos">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFileInfo">
+              <MappingFragment StoreEntitySet="UserFileInfos">
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

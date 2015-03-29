@@ -12,7 +12,7 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFile
+    public partial class UserFileInfo
     {
         public int FileId { get; set; }
         public string UserId { get; set; }

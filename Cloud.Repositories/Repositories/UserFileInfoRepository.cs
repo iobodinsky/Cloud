@@ -5,32 +5,32 @@ using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Repositories
 {
-    public class UserFileRepository : RepositoryBase
+    public class UserFileInfoRepository : RepositoryBase
     {
-        public void AddFile(UserFile file)
+        public void AddFile(UserFileInfo file)
         {
             Add(file, true);
         }
 
-        public UserFile GetFile(string userId, int fileId)
+        public UserFileInfo GetFile(string userId, int fileId)
         {
-            return  Entities.UserFiles.SingleOrDefault(
+            return  Entities.UserFileInfos.SingleOrDefault(
                 file => file.UserId == userId && file.FileId == fileId);
         }
 
-        public IEnumerable<UserFile> GetFiles(string userId)
+        public IEnumerable<UserFileInfo> GetFiles(string userId)
         {
-            return Entities.UserFiles.Where(file => file.UserId == userId);
+            return Entities.UserFileInfos.Where(file => file.UserId == userId);
         }
 
         public bool UpdateFileName(int fileId)
         {
-            var fileToUpdate = Entities.UserFiles.SingleOrDefault(
+            var fileToUpdate = Entities.UserFileInfos.SingleOrDefault(
                 file => file.FileId == fileId);
 
             if (fileToUpdate == null) return false;
 
-            Entities.UserFiles.Attach(fileToUpdate);
+            Entities.UserFileInfos.Attach(fileToUpdate);
             var entry = Entities.Entry(fileToUpdate);
             entry.Property(e => e.Name).IsModified = true;
             Entities.SaveChanges();
@@ -40,7 +40,7 @@ namespace Cloud.Repositories.Repositories
         
         public bool DeleteFile(int fileId)
         {
-            var fileToDelete = Entities.UserFiles.First(file => file.FileId == fileId);
+            var fileToDelete = Entities.UserFileInfos.First(file => file.FileId == fileId);
             if (fileToDelete == null) return false;
 
             // Delete file from storage first
@@ -48,8 +48,8 @@ namespace Cloud.Repositories.Repositories
             File.Delete(filePath);
 
             // Delete file from db
-            Entities.UserFiles.Attach(fileToDelete);
-            Entities.UserFiles.Remove(fileToDelete);
+            Entities.UserFileInfos.Attach(fileToDelete);
+            Entities.UserFileInfos.Remove(fileToDelete);
             Entities.SaveChanges();
 
             return true;

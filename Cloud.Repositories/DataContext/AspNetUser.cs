@@ -18,8 +18,8 @@ namespace Cloud.Repositories.DataContext
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
-            this.UserFiles = new HashSet<UserFile>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.UserFileInfos = new HashSet<UserFileInfo>();
         }
     
         public string Id { get; set; }
@@ -37,7 +37,7 @@ namespace Cloud.Repositories.DataContext
     
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual ICollection<UserFile> UserFiles { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<UserFileInfo> UserFileInfos { get; set; }
     }
 }
