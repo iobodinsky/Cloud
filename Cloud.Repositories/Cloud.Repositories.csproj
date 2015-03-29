@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ServerManager.cs" />
     <Compile Include="DataContext\AspNetUser.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
@@ -75,9 +76,11 @@
     <Compile Include="DataContext\UserFileInfo.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\FileServerRepository.cs" />
     <Compile Include="Repositories\UserFileInfoRepository.cs" />
+    <Compile Include="Repositories\UserFileRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Images\FileTypes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

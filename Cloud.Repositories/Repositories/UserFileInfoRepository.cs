@@ -38,10 +38,6 @@ namespace Cloud.Repositories.Repositories
             var fileToDelete = Entities.UserFileInfos.First(file => file.FileId == fileId);
             if (fileToDelete == null) return false;
 
-            // Delete file from storage first
-            var filePath = Path.Combine(fileToDelete.Path, fileToDelete.Name);
-            File.Delete(filePath);
-
             // Delete file from db
             Entities.UserFileInfos.Attach(fileToDelete);
             Entities.UserFileInfos.Remove(fileToDelete);

@@ -28,7 +28,7 @@
           </Key>
           <Property Name="ServerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Url" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="FileTypes">
           <Key>
@@ -181,8 +181,8 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
           </Key>
           <Property Name="ServerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Url" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserFileInfos" Relationship="CloudDbModel.UserFileInfos_FileServers" FromRole="FileServer" ToRole="UserFileInfo" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserFileInfo">
           <Key>
@@ -262,7 +262,7 @@ warning 6002: The table/view 'CloudDb.dbo.UserFileInfos_FileServers' does not ha
           <EntitySetMapping Name="FileServers">
             <EntityTypeMapping TypeName="CloudDbModel.FileServer">
               <MappingFragment StoreEntitySet="FileServers">
-                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ServerId" ColumnName="ServerId" />
               </MappingFragment>

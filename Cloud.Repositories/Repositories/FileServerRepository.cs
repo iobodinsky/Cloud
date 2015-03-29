@@ -27,7 +27,7 @@ namespace Cloud.Repositories.Repositories
             Entities.FileServers.Attach(serverToUpdate);
             var entry = Entities.Entry(serverToUpdate);
             entry.Property(server => server.Name).IsModified = true;
-            entry.Property(server => server.Url).IsModified = true;
+            entry.Property(server => server.Path).IsModified = true;
             SaveChanges();
 
             return true;
