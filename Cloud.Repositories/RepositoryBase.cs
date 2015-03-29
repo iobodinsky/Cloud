@@ -32,15 +32,17 @@ namespace Cloud.Repositories
         /// <param name="entity">The entity that has to be added to the data context</param>
         /// <param name="isAutoSave">If AutoSave is true the entity will utomatically be saved to the database</param>
         /// <typeparam name="T">Entity type</typeparam>
-        public void Add<T>(T entity, bool isAutoSave) where T : class
+        public bool Add<T>(T entity, bool isAutoSave) where T : class
         {
             var dbSet = Entities.Set<T>();
-            if (dbSet == null) return;
+            if (dbSet == null) return false;
             dbSet.Add(entity);
             if (isAutoSave)
             {
                 SaveChanges();
             }
+
+            return true;
         }
     }
 }
