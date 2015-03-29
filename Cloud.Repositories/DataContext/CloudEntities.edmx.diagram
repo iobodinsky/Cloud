@@ -5,16 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1">
-        <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CloudDbModel.AspNetRole" Width="1.5" PointX="0.5" PointY="5.25" />
-        <EntityTypeShape EntityType="CloudDbModel.AspNetUserClaim" Width="1.5" PointX="2.875" PointY="0.5" />
-        <EntityTypeShape EntityType="CloudDbModel.AspNetUserLogin" Width="1.5" PointX="3.25" PointY="3.625" />
-        <AssociationConnector Association="CloudDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="CloudDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="CloudDbModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="CloudDbModel.UserFileInfo" Width="1.5" PointX="5.875" PointY="2.75" />
-        <AssociationConnector Association="CloudDbModel.FK_UserFiles_AspNetUsers1" />
-        <EntityTypeShape EntityType="CloudDbModel.FileServer" Width="1.5" PointX="5.75" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="CloudDbModel.FileServer" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="CloudDbModel.FileType" Width="1.5" PointX="0.75" PointY="5.5" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFileInfo" Width="1.5" PointX="3" PointY="1.5" />
+        <AssociationConnector Association="CloudDbModel.FK_UserFiles_AspNetUsers" />
+        <AssociationConnector Association="CloudDbModel.FK_UserFileInfos_FileTypes" />
+        <AssociationConnector Association="CloudDbModel.UserFileInfos_FileServers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

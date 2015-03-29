@@ -48,16 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\AspNetRole.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataContext\AspNetUser.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\AspNetUserClaim.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\AspNetUserLogin.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\CloudEntities.Context.cs">
@@ -76,6 +67,9 @@
       <DependentUpon>CloudEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataContext\FileServer.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\FileType.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\UserFileInfo.cs">

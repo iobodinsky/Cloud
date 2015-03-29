@@ -14,12 +14,19 @@ namespace Cloud.Repositories.DataContext
     
     public partial class UserFileInfo
     {
+        public UserFileInfo()
+        {
+            this.FileServers = new HashSet<FileServer>();
+        }
+    
         public int FileId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
-        public string TypeId { get; set; }
+        public int TypeId { get; set; }
         public string Path { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual FileType FileType { get; set; }
+        public virtual ICollection<FileServer> FileServers { get; set; }
     }
 }
