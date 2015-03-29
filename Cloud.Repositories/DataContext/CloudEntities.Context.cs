@@ -27,7 +27,7 @@ namespace Cloud.Repositories.DataContext
     
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<FileServer> FileServers { get; set; }
-        public virtual DbSet<FileType> FileTypes { get; set; }
         public virtual DbSet<UserFileInfo> UserFileInfos { get; set; }
+        public virtual DbSet<FileType> FileTypes { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace Cloud.Repositories.DataContext
         public string Path { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual FileType FileType { get; set; }
         public virtual ICollection<FileServer> FileServers { get; set; }
+        public virtual FileType FileType { get; set; }
     }
 }

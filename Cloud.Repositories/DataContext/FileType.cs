@@ -19,7 +19,7 @@ namespace Cloud.Repositories.DataContext
             this.UserFileInfos = new HashSet<UserFileInfo>();
         }
     
-        public int Id { get; set; }
+        public int FileTypeId { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; }
         public string IconUrl { get; set; }
