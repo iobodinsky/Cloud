@@ -12,14 +12,16 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFile
+    public partial class AspNetRole
     {
-        public int FileId { get; set; }
-        public string UserId { get; set; }
-        public string Name { get; set; }
-        public string TypeId { get; set; }
-        public string Path { get; set; }
+        public AspNetRole()
+        {
+            this.AspNetUsers = new HashSet<AspNetUser>();
+        }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

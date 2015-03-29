@@ -12,13 +12,11 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFile
+    public partial class AspNetUserLogin
     {
-        public int FileId { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
         public string UserId { get; set; }
-        public string Name { get; set; }
-        public string TypeId { get; set; }
-        public string Path { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }
