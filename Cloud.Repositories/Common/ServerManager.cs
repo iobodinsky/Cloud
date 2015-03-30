@@ -1,29 +1,35 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Cloud.Repositories.DataContext;
+using Cloud.Repositories.Models;
 
 namespace Cloud.Repositories.Common
 {
     internal class ServerManager
     {
-        private readonly FileServer _fileServer;
+        private readonly IEnumerable<FileServer> _servers;
         private readonly string _userId;
         private readonly double _userFreeSpace;
 
-        public ServerManager(FileServer fileServer, string userId)
+        public ServerManager(IEnumerable<FileServer> servers, string userId)
         {
-            _fileServer = fileServer;
+            _servers = servers;
             _userId = userId;
         }
 
-        public bool SaveFile(Stream fileStream, string fileNameWithExtension)
+        // todo: user return value
+        public SaveUserFileStatus SaveFile(Stream fileStream, string fileNameWithExtension)
         {
-            if (!HasUserEnoughFreeSpace()) return false;
+            if (!HasUserEnoughFreeSpace()) return SaveUserFileStatus.NoFreeUserSpace;
 
-            var filePath = Path.Combine(_fileServer.Path, GetUserPath(), fileNameWithExtension);
-            using (var file = File.Open(filePath, FileMode.CreateNew))
-                fileStream.CopyTo(file);
+            foreach (var fileServer in _servers)
+            {
+                var filePath = Path.Combine(fileServer.Path, GetUserPath(), fileNameWithExtension);
+                using (var file = File.Open(filePath, FileMode.CreateNew))
+                    fileStream.CopyTo(file);   
+            }
 
-            return true;
+            return SaveUserFileStatus.Success;
         }
 
         // todo: implement user space counter 
