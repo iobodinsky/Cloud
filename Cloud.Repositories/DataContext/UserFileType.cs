@@ -12,11 +12,11 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class FileType
+    public partial class UserFileType
     {
-        public FileType()
+        public UserFileType()
         {
-            this.UserFileInfos = new HashSet<UserFileInfo>();
+            this.UserFiles = new HashSet<UserFile>();
         }
     
         public int FileTypeId { get; set; }
@@ -24,6 +24,6 @@ namespace Cloud.Repositories.DataContext
         public string Extension { get; set; }
         public string IconUrl { get; set; }
     
-        public virtual ICollection<UserFileInfo> UserFileInfos { get; set; }
+        public virtual ICollection<UserFile> UserFiles { get; set; }
     }
 }

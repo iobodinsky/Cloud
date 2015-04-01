@@ -3,10 +3,10 @@ using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Models
 {
-    public class UserFile
+    public class UserFileModel
     {
-        public UserFileInfo UserFileInfo { get; set; }
-        public FileType FileType { get; set; }
+        public UserFile UserFile { get; set; }
+        public UserFileType FileType { get; set; }
         public Stream Stream { get; set; }
     }
 }

@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1">
+      <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="CloudDbModel.FileServer" Width="1.5" PointX="5.625" PointY="0.5" />
-        <EntityTypeShape EntityType="CloudDbModel.UserFileInfo" Width="1.5" PointX="3" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.FileServer" Width="1.5" PointX="5.875" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="3.25" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFileType" Width="1.5" PointX="8.75" PointY="0.5" />
         <AssociationConnector Association="CloudDbModel.FK_UserFiles_AspNetUsers" />
-        <AssociationConnector Association="CloudDbModel.UserFileInfos_FileServers" />
-        <EntityTypeShape EntityType="CloudDbModel.FileType" Width="1.5" PointX="8.125" PointY="0.5" />
         <AssociationConnector Association="CloudDbModel.FK_UserFileInfos_FileTypes" />
-      </Diagram>
+        <AssociationConnector Association="CloudDbModel.UserFiles_FileServers" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

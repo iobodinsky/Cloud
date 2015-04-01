@@ -12,9 +12,9 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFileInfo
+    public partial class UserFile
     {
-        public UserFileInfo()
+        public UserFile()
         {
             this.FileServers = new HashSet<FileServer>();
         }
@@ -26,7 +26,7 @@ namespace Cloud.Repositories.DataContext
         public string Path { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual UserFileType UserFileType { get; set; }
         public virtual ICollection<FileServer> FileServers { get; set; }
-        public virtual FileType FileType { get; set; }
     }
 }

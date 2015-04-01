@@ -16,7 +16,7 @@ namespace Cloud.Repositories.DataContext
     {
         public AspNetUser()
         {
-            this.UserFileInfos = new HashSet<UserFileInfo>();
+            this.UserFiles = new HashSet<UserFile>();
         }
     
         public string Id { get; set; }
@@ -32,6 +32,6 @@ namespace Cloud.Repositories.DataContext
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
     
-        public virtual ICollection<UserFileInfo> UserFileInfos { get; set; }
+        public virtual ICollection<UserFile> UserFiles { get; set; }
     }
 }
