@@ -1,0 +1,62 @@
+﻿@model Cloud.Web.Models.UserStorageViewModel
+
+@{
+    ViewBag.Title = "Storage";
+}
+
+<h2>Storage</h2>
+
+<div>
+    <div class=" alert alert-success" role="alert">
+        @using (Html.BeginForm("Upload", "Storage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.TextBoxFor(model => model.UploadFile, new { type = "file", @class = "hidden", multiple = "" })
+
+            <a href="javascript:void(0)" class="btn btn-primary">Select file</a>
+            <button class="btn btn-warning hidden" data-selected-file-name>No selected file</button>
+            <button type="submit" class="btn btn-success hidden" data-upload-submit><span class="glyphicon glyphicon-upload"></span>&nbsp;Upload</button>
+        }
+    </div>
+
+    <div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">There are @Model.Files.Count() files in your cloud</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    @foreach (var file in Model.Files)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 text-left" data-file-id="@file.Id">
+                                <h3><span class="label label-success">@file.Name</span></h3>
+                                @*<span>@Html.ActionLink("X", "DeleteFile", "Storage", new { fileId = file.Id }, null)</span>*@
+                                <h3><span class="label label-danger glyphicon glyphicon-remove-circle"></span></h3>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.btn-primary').click(function () {
+                $('input[type=file]').click();
+            });
+
+            $('input[type=file]').change(function () {
+                var self = $(this);
+                var selectedFilename = self.val().split('\\').pop();
+                self.parent().find('[data-selected-file-name]').text(selectedFilename);
+
+                $('[data-selected-file-name]').removeClass('hidden');
+                $('[data-upload-submit]').removeClass('hidden');
+            });
+        });
+    </script>
+}
