@@ -9,14 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Repositories", "Cloud
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Web", "Cloud.Web\Cloud.Web.csproj", "{C96B40CD-E420-4B1E-A535-10925188B9A1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbItems", "DbItems", "{09DD90F3-DD52-4AF3-845A-A794EAB56EBF}"
-	ProjectSection(SolutionItems) = preProject
-		Cloud.Repositories\DbItems\CloudDb.bak = Cloud.Repositories\DbItems\CloudDb.bak
-		Cloud.Repositories\DbItems\DatabaseChanges.sql = Cloud.Repositories\DbItems\DatabaseChanges.sql
-		Cloud.Repositories\DbItems\DatabaseChanges[EXAPMLES].sql = Cloud.Repositories\DbItems\DatabaseChanges[EXAPMLES].sql
-		Cloud.Repositories\DbItems\DummyDataQuery.sql = Cloud.Repositories\DbItems\DummyDataQuery.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
