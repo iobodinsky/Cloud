@@ -31,10 +31,9 @@ IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION
 
-	
 	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
 	COMMIT
-END
+END 
 
 
 /*

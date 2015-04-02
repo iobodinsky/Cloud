@@ -14,16 +14,9 @@ namespace Cloud.Repositories.DataContext
     
     public partial class UserFileType
     {
-        public UserFileType()
-        {
-            this.UserFiles = new HashSet<UserFile>();
-        }
-    
         public int FileTypeId { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; }
         public string IconUrl { get; set; }
-    
-        public virtual ICollection<UserFile> UserFiles { get; set; }
     }
 }

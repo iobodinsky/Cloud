@@ -22,11 +22,10 @@ namespace Cloud.Repositories.DataContext
         public int FileId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
-        public int TypeId { get; set; }
+        public Nullable<int> TypeId { get; set; }
         public string Path { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual UserFileType UserFileType { get; set; }
         public virtual ICollection<FileServer> FileServers { get; set; }
     }
 }
