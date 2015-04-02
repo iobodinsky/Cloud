@@ -24,6 +24,11 @@ namespace Cloud.Repositories.DataContext
         public string Name { get; set; }
         public Nullable<int> TypeId { get; set; }
         public string Path { get; set; }
+        public bool IsEditable { get; set; }
+        public long Size { get; set; }
+        public System.DateTime LastModifiedDateTime { get; set; }
+        public System.DateTime AddedDateTime { get; set; }
+        public int DownloadedTimes { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<FileServer> FileServers { get; set; }

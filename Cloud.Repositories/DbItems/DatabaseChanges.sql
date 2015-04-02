@@ -22,14 +22,29 @@ BEGIN TRY
 
 
 -- =============================================================
--- Author:		<full name>
--- Update date:	<yyyy-mm-dd>
--- Description:	<desc>
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-02
+-- Description:	Added IsEditable, Size, LastModifiedDateTime, AddedDateTime, 
+--				DownloadedTimes columns to UserFiles table
 -- =============================================================
 SET @newSchemaVersion = 1
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[UserFiles] ADD
+		IsEditable bit NOT NULL CONSTRAINT DF_UserFiles_IsEditable DEFAULT(0),
+		Size bigint NOT NULL CONSTRAINT DF_UserFiles_Size DEFAULT(0),
+		LastModifiedDateTime datetime NOT NULL CONSTRAINT DF_UserFiles_LastModifiedDateTime DEFAULT('1/1/1999'),
+		AddedDateTime datetime NOT NULL CONSTRAINT DF_UserFiles_AddedDateTime DEFAULT('1/1/1999'),
+		DownloadedTimes int NOT NULL CONSTRAINT DF_UserFiles_DownloadedTimes DEFAULT(0)
+
+	ALTER TABLE [dbo].[UserFiles] DROP
+		CONSTRAINT DF_UserFiles_IsEditable,
+		CONSTRAINT DF_UserFiles_Size,
+		CONSTRAINT DF_UserFiles_LastModifiedDateTime,
+		CONSTRAINT DF_UserFiles_AddedDateTime,
+		CONSTRAINT DF_UserFiles_DownloadedTimes
 
 	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
 	COMMIT

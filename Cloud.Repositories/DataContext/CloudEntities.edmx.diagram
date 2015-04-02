@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.75" PointY="6.375" />
-        <EntityTypeShape EntityType="CloudDbModel.FileServer" Width="1.5" PointX="0.75" PointY="1.25" />
-        <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="CloudDbModel.UserFileType" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.5" PointY="0.625" />
+        <EntityTypeShape EntityType="CloudDbModel.FileServer" Width="1.5" PointX="5.375" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="3" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFileType" Width="1.5" PointX="8.25" PointY="0.5" />
         <AssociationConnector Association="CloudDbModel.FK_UserFiles_AspNetUsers" />
         <AssociationConnector Association="CloudDbModel.UserFiles_FileServers" />
       </Diagram>

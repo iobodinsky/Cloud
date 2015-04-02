@@ -39,6 +39,11 @@
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="TypeId" Type="int" />
           <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsEditable" Type="bit" Nullable="false" />
+          <Property Name="Size" Type="bigint" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="AddedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="DownloadedTimes" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CloudDb.dbo.UserFiles_FileServers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -175,6 +180,11 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles_FileServers' does not have a
           <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="UserFile" ToRole="AspNetUser" />
           <NavigationProperty Name="FileServers" Relationship="CloudDbModel.UserFiles_FileServers" FromRole="UserFile" ToRole="FileServer" />
+          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
+          <Property Name="Size" Type="Int64" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserFileType">
           <Key>
@@ -237,6 +247,11 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles_FileServers' does not have a
           <EntitySetMapping Name="UserFiles">
             <EntityTypeMapping TypeName="CloudDbModel.UserFile">
               <MappingFragment StoreEntitySet="UserFiles">
+                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
+                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
