@@ -7,6 +7,6 @@ namespace Cloud.Web.Models
     {
         public UserViewModel UserInfo { get; set; }
         public IEnumerable<FileViewModel> Files { get; set; }
-        public HttpPostedFileBase UploadFile { get; set; }
+        public IEnumerable<HttpPostedFileBase> UploadFiles { get; set; }
     }
 }

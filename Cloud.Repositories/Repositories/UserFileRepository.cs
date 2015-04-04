@@ -12,18 +12,12 @@ namespace Cloud.Repositories.Repositories
         {
             // Save file on all physical servers
             var serverManager = new ServerManager();
-            var fileName = file.UserFile.Name + file.FileType.Extension;
-            serverManager.SaveFile(file.Stream, fileName, file.UserFile.UserId);
+            serverManager.SaveFile(file.Stream, file.UserFile.Name, file.UserFile.UserId);
 
             // Save file info to Db
-            AddFile(file.UserFile);
+            Add(file.UserFile, true);
 
             return true;
-        }
-
-        public void AddFile(UserFile file)
-        {
-            Add(file, true);
         }
 
         public UserFile GetFile(string userId, int fileId)
@@ -37,8 +31,14 @@ namespace Cloud.Repositories.Repositories
             return Entities.UserFiles.Where(file => file.UserId == userId);
         }
 
-        public bool UpdateFileName(UserFile fileToUpdate)
+        // todo: test
+        // todo: implement return type info
+        public bool UpdateFileName(string userId, int fileId, string fileName)
         {
+            var fileToUpdate = Entities.UserFiles.SingleOrDefault(
+                file => file.FileId == fileId && file.UserId == userId);
+            if (fileToUpdate == null) return false;
+
             Entities.UserFiles.Attach(fileToUpdate);
             var entry = Entities.Entry(fileToUpdate);
             entry.Property(file => file.Name).IsModified = true;
@@ -47,10 +47,16 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
-        public bool DeleteFile(int fileId)
+        public bool DeleteFile(string userId, int fileId)
         {
-            var fileToDelete = Entities.UserFiles.First(file => file.FileId == fileId);
+            var fileToDelete = Entities.UserFiles.SingleOrDefault(
+                file => file.FileId == fileId && file.UserId == userId);
             if (fileToDelete == null) return false;
+
+            // Delete file from all servers
+
+            var serverManager = new ServerManager();
+            serverManager.DeleteFile(userId, fileToDelete.Name);
 
             // Delete file from db
             Entities.UserFiles.Attach(fileToDelete);

@@ -11,7 +11,7 @@
         @using (Html.BeginForm("Upload", "Storage", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-            @Html.TextBoxFor(model => model.UploadFile, new { type = "file", @class = "hidden", multiple = "" })
+            @Html.TextBoxFor(model => model.UploadFiles, new { type = "file", @class = "hidden", multiple = "" })
 
             <a href="javascript:void(0)" class="btn btn-primary">Select file</a>
             <button class="btn btn-warning hidden" data-selected-file-name>No selected file</button>

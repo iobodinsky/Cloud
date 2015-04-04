@@ -37,8 +37,24 @@ namespace Cloud.Repositories.Common
             foreach (var fileServer in GetFileServers())
             {
                 var filePath = Path.Combine(fileServer.Path, GetUserPath(userId), fileNameWithExtension);
-                using (var file = File.Open(filePath, FileMode.CreateNew))
-                    fileStream.CopyTo(file);   
+                using (var createdFileStream = File.Open(filePath, FileMode.CreateNew))
+                {
+                    // Save the same file stream on all servers
+                    fileStream.Position = 0;
+
+                    fileStream.CopyTo(createdFileStream);
+                }
+            }
+
+            return true;
+        }
+
+        public bool DeleteFile(string userId, string fileName)
+        {
+            foreach (var fileServer in GetFileServers())
+            {
+                var serverFilePath = GetUserFileServerPath(fileServer.Path, userId, fileName);
+                File.Delete(serverFilePath);
             }
 
             return true;
@@ -54,9 +70,15 @@ namespace Cloud.Repositories.Common
             return true;
         }
 
+        // todo: if there is no user folder on some server
         private string GetUserPath(string userId)
         {
             return userId;
+        }
+        
+        private string GetUserFileServerPath(string serverPath, string userId, string fileName)
+        {
+            return Path.Combine(serverPath, GetUserPath(userId), fileName);
         }
 
         private IEnumerable<FileServer> GetFileServers()

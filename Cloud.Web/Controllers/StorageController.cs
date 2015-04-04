@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Cloud.Repositories.DataContext;
+using Cloud.Repositories.Models;
 using Cloud.Repositories.Repositories;
 using Cloud.Web.Models;
 using Microsoft.AspNet.Identity;
@@ -50,17 +53,46 @@ namespace Cloud.Web.Controllers
         // POST: Storage/Upload
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void Upload(IEnumerable<HttpPostedFileBase> uploadFile)
+        public void Upload(IEnumerable<HttpPostedFileBase> uploadFiles)
         {
+            if (uploadFiles == null) return;
 
+            foreach (var uploadFile in uploadFiles)
+            {
+                var userFile = new UserFile
+                {
+                    Name = uploadFile.FileName,
+                    AddedDateTime = DateTime.Now,
+                    IsEditable = true,
+                    UserId = User.Identity.GetUserId(),
+                    Size = uploadFile.ContentLength,
+                    DownloadedTimes = 0,
+                    LastModifiedDateTime = DateTime.Now,
+                    // todo: implement directories
+                    Path = string.Format("path")
+                    // todo: implement creation file type
+                    //TypeId = 
+                };
+
+                var userFileModel = new UserFileModel
+                {
+                    UserFile = userFile,
+                    Stream = uploadFile.InputStream
+                };
+
+                _repository.AddFile(userFileModel);
+            }
         }
 
         // POST: Storage/RenameFile
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void RenameFile(string fileName)
+        public void RenameFile(int fileId, string fileName)
         {
-            
+            if (string.IsNullOrEmpty(fileName)) return;
+
+            var userId = User.Identity.GetUserId();
+            _repository.UpdateFileName(userId, fileId, fileName);
         }
 
         // POST: Storage/DeleteFile
@@ -68,7 +100,7 @@ namespace Cloud.Web.Controllers
         [ValidateAntiForgeryToken]
         public void DeleteFile(int fileId)
         {
-            
+            _repository.DeleteFile(User.Identity.GetUserId(), fileId);
         }
     }
 }
