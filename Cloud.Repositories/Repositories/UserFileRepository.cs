@@ -8,22 +8,12 @@ namespace Cloud.Repositories.Repositories
 {
     public class UserFileRepository : RepositoryBase
     {
-        private readonly FileServerRepository _fileServerRepository;
-
-        public UserFileRepository()
-        {
-            _fileServerRepository = new FileServerRepository();
-        }
-
         public bool AddFile(UserFileModel file)
         {
-            // Get all avaliable physical servers
-            var servers = _fileServerRepository.GetFileServers();
-            if (servers == null || !servers.Any()) return false;
-
             // Save file on all physical servers
-            var serverManager = new ServerManager(servers, file.UserFile.UserId);
-            serverManager.SaveFile(file.Stream, file.UserFile.Name + file.FileType.Extension);
+            var serverManager = new ServerManager();
+            var fileName = file.UserFile.Name + file.FileType.Extension;
+            serverManager.SaveFile(file.Stream, fileName, file.UserFile.UserId);
 
             // Save file info to Db
             AddFile(file.UserFile);

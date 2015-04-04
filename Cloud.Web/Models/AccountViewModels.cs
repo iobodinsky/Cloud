@@ -65,6 +65,13 @@ namespace Cloud.Web.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        [MaxLength(20)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
