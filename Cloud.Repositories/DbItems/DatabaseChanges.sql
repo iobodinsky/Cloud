@@ -51,13 +51,33 @@ BEGIN
 END 
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-04
+-- Description:	Added two servers to FileServers table
+-- =============================================================
+SET @newSchemaVersion = 2
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	INSERT INTO [dbo].[FileServers]
+           ([Name], [Path])
+     VALUES ('LenovoMain', 'E:\Development\MainCloudServer\'), 
+			('LenovoAddth', 'E:\Development\AddthCloudSever\')
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 2
+SET @newSchemaVersion = 3
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION
