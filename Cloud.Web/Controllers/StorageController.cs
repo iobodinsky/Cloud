@@ -17,10 +17,7 @@ namespace Cloud.Web.Controllers
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
         }
 
@@ -39,7 +36,7 @@ namespace Cloud.Web.Controllers
                     Id = file.FileId,
                     Name = file.Name
                 });
-            var userInfo = new UserViewModel { Name = user.UserName };
+            var userInfo = new UserViewModel {Name = user.UserName};
 
             var model = new UserStorageViewModel
             {
@@ -54,6 +51,22 @@ namespace Cloud.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void Upload(IEnumerable<HttpPostedFileBase> uploadFile)
+        {
+
+        }
+
+        // POST: Storage/RenameFile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void RenameFile(string fileName)
+        {
+            
+        }
+
+        // POST: Storage/DeleteFile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void DeleteFile(int fileId)
         {
             
         }
