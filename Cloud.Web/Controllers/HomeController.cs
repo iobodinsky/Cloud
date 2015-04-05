@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Net.Http;
+using System.Web.Mvc;
 
 namespace Cloud.Web.Controllers
 {
@@ -6,6 +7,12 @@ namespace Cloud.Web.Controllers
     {
         public ActionResult Index()
         {
+             using (var httpClient = new HttpClient()) 
+             {
+                 var response = httpClient.GetStringAsync("http://localhost:19800/api/values/");   
+                 var s = response.Result;   
+             }   
+         
             return View();
         }
 
