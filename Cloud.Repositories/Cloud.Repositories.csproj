@@ -116,6 +116,12 @@
     <Content Include="DbItems\DatabaseChanges[EXAPMLES].sql" />
     <Content Include="DbItems\DummyDataQuery.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cloud.StoragesApi\Cloud.StoragesApi.csproj">
+      <Project>{973e9b34-7f76-43f6-9f9c-95d7159cc92f}</Project>
+      <Name>Cloud.StoragesApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
