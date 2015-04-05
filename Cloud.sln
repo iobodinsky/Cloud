@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Repositories", "Cloud
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Web", "Cloud.Web\Cloud.Web.csproj", "{C96B40CD-E420-4B1E-A535-10925188B9A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.StoragesApi", "Cloud.StoragesApi\Cloud.StoragesApi.csproj", "{973E9B34-7F76-43F6-9F9C-95D7159CC92F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C96B40CD-E420-4B1E-A535-10925188B9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C96B40CD-E420-4B1E-A535-10925188B9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C96B40CD-E420-4B1E-A535-10925188B9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{973E9B34-7F76-43F6-9F9C-95D7159CC92F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{973E9B34-7F76-43F6-9F9C-95D7159CC92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{973E9B34-7F76-43F6-9F9C-95D7159CC92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{973E9B34-7F76-43F6-9F9C-95D7159CC92F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
