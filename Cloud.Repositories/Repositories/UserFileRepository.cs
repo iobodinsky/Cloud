@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Cloud.Repositories.Common;
 using Cloud.Repositories.DataContext;
@@ -33,12 +34,22 @@ namespace Cloud.Repositories.Repositories
 
         // todo: test
         // todo: implement return type info
-        public bool UpdateFileName(string userId, int fileId, string fileName)
+        public bool UpdateFileName(string userId, int fileId, string newfileName)
         {
             var fileToUpdate = Entities.UserFiles.SingleOrDefault(
                 file => file.FileId == fileId && file.UserId == userId);
             if (fileToUpdate == null) return false;
 
+            // Rename file on servers
+            var oldfileName = fileToUpdate.Name;
+            var extention = Path.GetExtension(oldfileName);
+            newfileName += extention;
+            var serverManager = new ServerManager();
+            if (!serverManager.RenameFile(userId, fileId, oldfileName, newfileName))
+                return false;
+
+            // Rename file in Db
+            fileToUpdate.Name = newfileName;
             Entities.UserFiles.Attach(fileToUpdate);
             var entry = Entities.Entry(fileToUpdate);
             entry.Property(file => file.Name).IsModified = true;

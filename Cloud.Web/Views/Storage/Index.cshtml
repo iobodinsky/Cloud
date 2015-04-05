@@ -31,8 +31,18 @@
                         <div class="row">
                             <div class="col-md-12 text-left" data-file-id="@file.Id">
                                 <h3><span class="label label-success">@file.Name</span></h3>
-                                @*<span>@Html.ActionLink("X", "DeleteFile", "Storage", new { fileId = file.Id }, null)</span>*@
-                                <h3><span class="label label-danger glyphicon glyphicon-remove-circle"></span></h3>
+                                @using (Html.BeginForm("RenameFile", "Storage", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="fileId" value="@file.Id" />
+                                    <input type="text" name="fileName" />
+                                    <button type="submit" class="label label-info glyphicon glyphicon-remove-circle">r</button>
+                                }
+
+                                @using (Html.BeginForm("DeleteFile", "Storage", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="fileId" value="@file.Id" />
+                                    <button type="submit" class="label label-danger glyphicon glyphicon-remove-circle">d</button>
+                                }
                             </div>
                         </div>
                     }

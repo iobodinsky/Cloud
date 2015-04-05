@@ -49,6 +49,20 @@ namespace Cloud.Repositories.Common
             return true;
         }
 
+        public bool RenameFile(string userId, int fileId, string oldFileName, string newFileName)
+        {
+            foreach (var fileServer in GetFileServers())
+            {
+                var serverFilePath = GetUserFileServerPath(fileServer.Path, userId, oldFileName);
+                var serverNewFilePath = GetUserFileServerPath(fileServer.Path, userId, newFileName);
+                if (File.Exists(serverNewFilePath)) return false;
+
+                File.Move(serverFilePath, serverNewFilePath);
+            }
+
+            return true;
+        }
+
         public bool DeleteFile(string userId, string fileName)
         {
             foreach (var fileServer in GetFileServers())

@@ -86,7 +86,7 @@ namespace Cloud.Web.Controllers
 
         // POST: Storage/RenameFile
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public void RenameFile(int fileId, string fileName)
         {
             if (string.IsNullOrEmpty(fileName)) return;
@@ -97,7 +97,7 @@ namespace Cloud.Web.Controllers
 
         // POST: Storage/DeleteFile
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public void DeleteFile(int fileId)
         {
             _repository.DeleteFile(User.Identity.GetUserId(), fileId);
