@@ -34,6 +34,7 @@ namespace Cloud.WebApi.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -42,6 +43,7 @@ namespace Cloud.WebApi.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
@@ -52,6 +54,7 @@ namespace Cloud.WebApi.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
     }
 
@@ -74,6 +77,7 @@ namespace Cloud.WebApi.Models
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
