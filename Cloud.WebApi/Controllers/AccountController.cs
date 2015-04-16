@@ -41,7 +41,9 @@ namespace Cloud.WebApi.Controllers
         {
             get
             {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                if (_userManager != null) return _userManager;
+                _userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager;
             }
             private set
             {

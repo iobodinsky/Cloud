@@ -20,7 +20,7 @@ namespace Cloud.WebApi.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("CloudDbEntities", throwIfV1Schema: false)
+            : base("CloudDbAccountEntities", throwIfV1Schema: false)
         {
         }
         
