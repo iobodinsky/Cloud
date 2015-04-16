@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Cloud.Web.Models;
-using Cloud.Repositories.Common;
 
 namespace Cloud.Web.Controllers
 {
@@ -155,10 +154,6 @@ namespace Cloud.Web.Controllers
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                // Create user directories on servers
-                var serverManager = new ServerManager();
-                serverManager.CreateUserDirectory(user.Id);
-
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser:false);
                     
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

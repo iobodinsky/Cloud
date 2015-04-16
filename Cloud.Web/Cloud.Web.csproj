@@ -248,12 +248,6 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Cloud.Repositories\Cloud.Repositories.csproj">
-      <Project>{a00a8ec7-1b30-42a9-bea0-bac63ef1eacf}</Project>
-      <Name>Cloud.Repositories</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

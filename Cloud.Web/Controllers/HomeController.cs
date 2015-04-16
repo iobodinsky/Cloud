@@ -11,7 +11,7 @@ namespace Cloud.Web.Controllers
              {
                  var response = httpClient.GetStringAsync("http://localhost:19800/api/values/");   
                  var s = response.Result;   
-             }   
+             }
          
             return View();
         }
