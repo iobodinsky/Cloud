@@ -45,7 +45,7 @@ namespace Cloud.WebApi.Controllers
         // POST api/upload
         [Route("upload")]
         [HttpPost]
-        public void UploadFile(HttpPostedFileBase uploadedFile)
+        public void UploadFile([FromBody] HttpPostedFileBase uploadedFile)
         {
             if (uploadedFile == null) return;
 
@@ -74,9 +74,9 @@ namespace Cloud.WebApi.Controllers
         }
 
         // POST api/rename
-        [Route("{fileId:int:min(1)}/rename/{newFileName}")]
+        [Route("rename")]
         [HttpPost]
-        public void RenameFile(int fileId, string newFileName)
+        public void RenameFile([FromBody] int fileId, [FromBody] string newFileName)
         {
             if (string.IsNullOrEmpty(newFileName)) return;
 
@@ -87,7 +87,7 @@ namespace Cloud.WebApi.Controllers
         // DELETE api/delete
         [Route("{fileId:int:min(1)}")]
         [HttpDelete]
-        public void DeleteFile(int fileId)
+        public void DeleteFile([FromBody] int fileId)
         {
             Repository.DeleteFile(User.Identity.GetUserId(), fileId);
         }
