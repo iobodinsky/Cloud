@@ -21,7 +21,7 @@ namespace Cloud.StoragesApi.Providers
             var service = BuildServiceAsync(userId);
             var request = service.Files.List();
             return request.Execute().Items.Take(10);
-        } 
+        }
 
         #endregion Public methods
         
@@ -32,8 +32,8 @@ namespace Cloud.StoragesApi.Providers
         /// </summary>
         private DriveService BuildServiceAsync(string userId)
         {
-            var credentials = GetInitializerFor(userId).Result;
-            return new DriveService(credentials);
+            var initializer = GetInitializerFor(userId).Result;
+            return new DriveService(initializer);
         }
 
         /// <summary> 
@@ -67,7 +67,8 @@ namespace Cloud.StoragesApi.Providers
         /// </summary>
         private IDataStore GetPersistentCredentialStore()
         {
-            var serverDataStore = new FileDataStore("Drive.Sample.Credentals");
+            var filderName = ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder];
+            var serverDataStore = new FileDataStore(filderName);
             return serverDataStore;
         }
 

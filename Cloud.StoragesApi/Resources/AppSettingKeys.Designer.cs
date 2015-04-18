@@ -61,15 +61,6 @@ namespace Cloud.StoragesApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DriveAppDataFileStore.
-        /// </summary>
-        internal static string DriveAppDataFileStore {
-            get {
-                return ResourceManager.GetString("DriveAppDataFileStore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to DriveApplicationUserAgent.
         /// </summary>
         internal static string DriveApplicationUserAgent {
@@ -93,6 +84,15 @@ namespace Cloud.StoragesApi.Resources {
         internal static string DriveClientSecret {
             get {
                 return ResourceManager.GetString("DriveClientSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DriveUserCredentalsFolder.
+        /// </summary>
+        internal static string DriveUserCredentalsFolder {
+            get {
+                return ResourceManager.GetString("DriveUserCredentalsFolder", resourceCulture);
             }
         }
     }
