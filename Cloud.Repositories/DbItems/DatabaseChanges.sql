@@ -74,7 +74,7 @@ END
 -- =============================================================
 -- Author:		Ivan Obodianskyi
 -- Update date:	2015-04-18
--- Description:	Rename AspNetUsers table
+-- Description:	Rename AspNet... table
 -- =============================================================
 SET @newSchemaVersion = 3
 IF @schemaVersion < @newSchemaVersion
@@ -96,13 +96,29 @@ BEGIN
 END 
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-18
+-- Description:	Set not null Email column in Users table
+-- =============================================================
+SET @newSchemaVersion = 4
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[Users] ALTER COLUMN [Email] nvarchar(256) NOT NULL
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 4
+SET @newSchemaVersion = 5
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION
