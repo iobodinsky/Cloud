@@ -12,9 +12,9 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUser
+    public partial class User
     {
-        public AspNetUser()
+        public User()
         {
             this.UserFiles = new HashSet<UserFile>();
         }

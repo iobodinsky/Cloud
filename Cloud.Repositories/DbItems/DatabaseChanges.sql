@@ -71,13 +71,38 @@ BEGIN
 END 
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-18
+-- Description:	Rename AspNetUsers table
+-- =============================================================
+SET @newSchemaVersion = 3
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	EXEC sp_rename 'AspNetUsers', 'Users';
+
+	EXEC sp_rename 'AspNetRoles', 'Roles';
+
+	EXEC sp_rename 'AspNetUserClaims', 'UserClaims';
+
+	EXEC sp_rename 'AspNetUserLogins', 'UserLogins';
+
+	EXEC sp_rename 'AspNetUserRoles', 'UserRoles';
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 3
+SET @newSchemaVersion = 4
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

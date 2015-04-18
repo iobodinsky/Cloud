@@ -25,9 +25,9 @@ namespace Cloud.Repositories.DataContext
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<UserFileType> UserFileTypes { get; set; }
         public virtual DbSet<FileServer> FileServers { get; set; }
         public virtual DbSet<UserFile> UserFiles { get; set; }
-        public virtual DbSet<UserFileType> UserFileTypes { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

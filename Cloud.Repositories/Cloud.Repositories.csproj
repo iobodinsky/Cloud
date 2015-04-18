@@ -49,9 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ServerManager.cs" />
-    <Compile Include="DataContext\AspNetUser.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataContext\CloudEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,6 +65,9 @@
       <DependentUpon>CloudEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataContext\FileServer.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\User.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\UserFile.cs">

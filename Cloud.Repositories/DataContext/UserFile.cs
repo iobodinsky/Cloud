@@ -14,11 +14,6 @@ namespace Cloud.Repositories.DataContext
     
     public partial class UserFile
     {
-        public UserFile()
-        {
-            this.FileServers = new HashSet<FileServer>();
-        }
-    
         public int FileId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -30,7 +25,6 @@ namespace Cloud.Repositories.DataContext
         public System.DateTime AddedDateTime { get; set; }
         public int DownloadedTimes { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ICollection<FileServer> FileServers { get; set; }
+        public virtual User User { get; set; }
     }
 }
