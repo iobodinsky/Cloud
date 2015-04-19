@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Cloud.Common;
 using Cloud.Common.Interfaces;
+using Cloud.Common.Types;
 using Cloud.Repositories.Common;
 using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Models;
+using Cloud.Repositories.Repositories.ExternalStorages;
+//using Cloud.StoragesApi.Providers;
 
 namespace Cloud.Repositories.Repositories
 {
     public class UserFileRepository : RepositoryBase, IFileRepository
     {
-        public bool AddFile(FullUserFile file)
+        public bool Add(string userId, FullUserFile file)
         {
             // Save file on all physical servers
             var serverManager = new ServerManager();
@@ -22,20 +26,22 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
-        public IFile GetFile(string userId, int fileId)
+        public IFile Get(string userId, int fileId)
         {
             return Entities.UserFiles.SingleOrDefault(
                 file => file.UserId == userId && file.FileId == fileId);
         }
 
-        public IEnumerable<IFile> GetFiles(string userId)
+        public IEnumerable<IFile> GetAll(string userId)
         {
-            return Entities.UserFiles.Where(file => file.UserId == userId);
+            //return Entities.UserFiles.Where(file => file.UserId == userId);
+
+            return new DriveRepository().GetAll(userId);
         }
 
         // todo: test
         // todo: implement return type info
-        public bool UpdateFileName(string userId, int fileId, string newfileName)
+        public bool UpdateName(string userId, int fileId, string newfileName)
         {
             var fileToUpdate = Entities.UserFiles.SingleOrDefault(
                 file => file.FileId == fileId && file.UserId == userId);
@@ -59,7 +65,7 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
-        public bool DeleteFile(string userId, int fileId)
+        public bool Delete(string userId, int fileId)
         {
             var fileToDelete = Entities.UserFiles.SingleOrDefault(
                 file => file.FileId == fileId && file.UserId == userId);

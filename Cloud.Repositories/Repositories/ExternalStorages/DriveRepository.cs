@@ -1,35 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cloud.Common.Interfaces;
-using Cloud.Repositories.Models;
+using Cloud.Common.Types;
+//using Cloud.StoragesApi.Providers;
 
 namespace Cloud.Repositories.Repositories.ExternalStorages
 {
     public class DriveRepository : IFileRepository
     {
-        public bool AddFile(FullUserFile file)
+        #region Private fields
+
+        private readonly IStorage _provider;
+
+        #endregion Private fields
+
+        public DriveRepository()
+        {
+            // todo: Dependency injection
+            //_provider = new DriveProvider();
+        }
+
+        #region IFileRepository implementation
+
+        public bool Add(string userId, FullUserFile file)
         {
             throw new NotImplementedException();
         }
 
-        public IFile GetFile(string userId, int fileId)
+        public IFile Get(string userId, int fileId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IFile> GetFiles(string userId)
+        public IEnumerable<IFile> GetAll(string userId)
+        {
+            return _provider.GetAll(userId);
+        }
+
+        public bool UpdateName(string userId, int fileId, string newfileName)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateFileName(string userId, int fileId, string newfileName)
+        public bool Delete(string userId, int fileId)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteFile(string userId, int fileId)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion IFileRepository implementation
     }
 }
