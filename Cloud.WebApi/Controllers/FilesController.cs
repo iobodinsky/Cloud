@@ -13,12 +13,12 @@ namespace Cloud.WebApi.Controllers
     [RoutePrefix("api/files")]
     public class FilesController : ApiControllerBase
     {
-        // GET api/files
-        [Route("")]
+        // GET api/root
+        [Route("api/root")]
         [HttpGet]
-        public IEnumerable<UserFileInfo> GetUserFiles()
+        public IEnumerable<UserFileInfo> GetRootFoldersFiles()
         {
-            var files = Repository.GetAll(User.Identity.GetUserId())
+            var files = Repository.GetRootFiles(User.Identity.GetUserId())
                 .Select(file => new UserFileInfo
                 {
                     Id = file.FileId,

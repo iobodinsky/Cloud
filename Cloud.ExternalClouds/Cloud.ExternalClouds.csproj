@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\DriveManager.cs" />
     <Compile Include="Providers\DriveProvider.cs" />
     <Compile Include="Models\DriveFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +108,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppSettingKeys.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\DriveFilters.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DriveFilters.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +129,10 @@
     <EmbeddedResource Include="Resources\AppSettingKeys.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppSettingKeys.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DriveFilters.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DriveFilters.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

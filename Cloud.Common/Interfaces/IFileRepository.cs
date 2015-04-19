@@ -9,7 +9,9 @@ namespace Cloud.Common.Interfaces
 
         IFile Get(string userId, int fileId);
 
-        IEnumerable<IFile> GetAll(string userId);
+        IEnumerable<IFile> GetRootFiles(string userId);
+
+        IEnumerable<IFolder> GetRootFolders(string userId);
 
         bool UpdateName(string userId, int fileId, string newfileName);
 

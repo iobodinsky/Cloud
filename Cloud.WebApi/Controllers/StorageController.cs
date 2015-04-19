@@ -11,11 +11,22 @@ namespace Cloud.WebApi.Controllers
         // GET api/cloud/test
         [AllowAnonymous]
         [Route("test")]
-        public string GetTest()
+        public UserStorage GetTest()
         {
-            var s = Repository.GetAll("61b0b62a-fbdd-4d72-9a9f-1d95bc73765b");
-
-            return s.Count().ToString();
+            var s = Repository.GetRootFiles("61b0b62a-fbdd-4d72-9a9f-1d95bc73765b");
+            var model = new UserStorage
+            {
+                Files = s.Select(file => new UserFileInfo
+                {
+                    Id = 4,
+                    Name = file.Name
+                }),
+                UserInfo = new UserInfo
+                {
+                    Name = "Addddsdsd"
+                }
+            };
+            return model;
         }
 
         // GET api/cloud
@@ -24,7 +35,7 @@ namespace Cloud.WebApi.Controllers
         public UserStorage Cloud()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            var files = Repository.GetAll(user.Id)
+            var files = Repository.GetRootFiles(user.Id)
                 .Select(file => new UserFileInfo
                 {
                     Id = file.FileId,

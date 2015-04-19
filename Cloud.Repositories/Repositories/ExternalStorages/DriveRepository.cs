@@ -32,9 +32,14 @@ namespace Cloud.Repositories.Repositories.ExternalStorages
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IFile> GetAll(string userId)
+        public IEnumerable<IFile> GetRootFiles(string userId)
         {
-            return _provider.GetAll(userId);
+            return _provider.GetRootFiles(userId);
+        }
+
+        public IEnumerable<IFolder> GetRootFolders(string userId)
+        {
+            return _provider.GetRootFolders(userId);
         }
 
         public bool UpdateName(string userId, int fileId, string newfileName)

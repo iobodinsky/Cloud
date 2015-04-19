@@ -28,11 +28,18 @@ namespace Cloud.Repositories.Repositories
                 file => file.UserId == userId && file.FileId == fileId);
         }
 
-        public IEnumerable<IFile> GetAll(string userId)
+        public IEnumerable<IFile> GetRootFiles(string userId)
         {
             //return Entities.UserFiles.Where(file => file.UserId == userId);
 
-            return new DriveRepository().GetAll(userId);
+            return new DriveRepository().GetRootFiles(userId);
+        }
+
+        public IEnumerable<IFolder> GetRootFolders(string userId)
+        {
+            //return Entities.UserFiles.Where(file => file.UserId == userId);
+
+            return new DriveRepository().GetRootFolders(userId);
         }
 
         // todo: test
