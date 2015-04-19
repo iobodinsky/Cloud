@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cloud.Common.Interfaces;
+using Cloud.StoragesApi.Models;
 using Cloud.StoragesApi.Resources;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v2;
-using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 
@@ -16,11 +18,21 @@ namespace Cloud.StoragesApi.Providers
     {
         #region Public methods
 
-        public IEnumerable<File> GetFirstTenFilesFor(string userId)
+        // todo: get also file id
+        public IEnumerable<IFile> GetFirstTenFilesFor(string userId)
         {
             var service = BuildServiceAsync(userId);
             var request = service.Files.List();
-            return request.Execute().Items.Take(10);
+            return request.Execute().Items.Select(file => new DriveFile
+            {
+                UserId = userId,
+                Name = file.Title,
+                LastModifiedDateTime = file.LastViewedByMeDate == null ? 
+                    new DateTime() : file.LastViewedByMeDate.Value,
+                AddedDateTime = file.CreatedDate == null ?
+                    new DateTime() : file.CreatedDate.Value,
+            })
+            .Take(10);
         }
 
         #endregion Public methods

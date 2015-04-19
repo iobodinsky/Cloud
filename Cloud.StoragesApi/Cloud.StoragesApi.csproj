@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DriveFile.cs" />
     <Compile Include="Providers\DriveProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppSettingKeys.Designer.cs">
@@ -97,7 +98,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Cloud.Common\Cloud.Common.csproj">
+      <Project>{8168b5e5-976c-4d63-8641-dd864b7d5673}</Project>
+      <Name>Cloud.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppSettingKeys.resx">
       <Generator>ResXFileCodeGenerator</Generator>

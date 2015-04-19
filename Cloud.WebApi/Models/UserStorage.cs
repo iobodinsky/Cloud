@@ -9,6 +9,6 @@ namespace Cloud.WebApi.Models
         public UserInfo UserInfo { get; set; }
 
         [JsonProperty("files")]
-        public IEnumerable<UserFile> Files { get; set; }
+        public IEnumerable<UserFileInfo> Files { get; set; }
     }
 }

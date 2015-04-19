@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Cloud.Common.Interfaces;
 using Cloud.Repositories.Common;
 using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Models;
@@ -9,7 +10,7 @@ namespace Cloud.Repositories.Repositories
 {
     public class UserFileRepository : RepositoryBase
     {
-        public bool AddFile(UserFileModel file)
+        public bool AddFile(FullUserFile file)
         {
             // Save file on all physical servers
             var serverManager = new ServerManager();
@@ -21,13 +22,13 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
-        public UserFile GetFile(string userId, int fileId)
+        public IFile GetFile(string userId, int fileId)
         {
             return Entities.UserFiles.SingleOrDefault(
                 file => file.UserId == userId && file.FileId == fileId);
         }
 
-        public IEnumerable<UserFile> GetFiles(string userId)
+        public IEnumerable<IFile> GetFiles(string userId)
         {
             return Entities.UserFiles.Where(file => file.UserId == userId);
         }

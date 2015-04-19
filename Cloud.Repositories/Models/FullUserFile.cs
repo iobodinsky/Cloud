@@ -1,11 +1,11 @@
 ﻿using System.IO;
-using Cloud.Repositories.DataContext;
+using Cloud.Common.Interfaces;
 
 namespace Cloud.Repositories.Models
 {
-    public class UserFileModel
+    public class FullUserFile
     {
-        public UserFile UserFile { get; set; }
+        public IFile UserFile { get; set; }
         public Stream Stream { get; set; }
     }
 }

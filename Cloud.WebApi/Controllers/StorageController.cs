@@ -2,7 +2,6 @@
 using System.Web.Http;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
-using UserFile = Cloud.WebApi.Models.UserFile;
 
 namespace Cloud.WebApi.Controllers
 {
@@ -24,7 +23,7 @@ namespace Cloud.WebApi.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             var files = Repository.GetFiles(user.Id)
-                .Select(file => new UserFile
+                .Select(file => new UserFileInfo
                 {
                     Id = file.FileId,
                     Name = file.Name
