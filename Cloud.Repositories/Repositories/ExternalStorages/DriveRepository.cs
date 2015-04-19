@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Types;
-//using Cloud.StoragesApi.Providers;
+using Cloud.ExternalClouds.Providers;
 
 namespace Cloud.Repositories.Repositories.ExternalStorages
 {
@@ -17,7 +17,7 @@ namespace Cloud.Repositories.Repositories.ExternalStorages
         public DriveRepository()
         {
             // todo: Dependency injection
-            //_provider = new DriveProvider();
+            _provider = new DriveProvider();
         }
 
         #region IFileRepository implementation

@@ -13,7 +13,9 @@ namespace Cloud.WebApi.Controllers
         [Route("test")]
         public string GetTest()
         {
-            return Repository.Get("61b0b62a-fbdd-4d72-9a9f-1d95bc73765b", 30).Name;
+            var s = Repository.GetAll("61b0b62a-fbdd-4d72-9a9f-1d95bc73765b");
+
+            return s.Count().ToString();
         }
 
         // GET api/cloud

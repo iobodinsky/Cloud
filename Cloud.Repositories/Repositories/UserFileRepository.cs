@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Cloud.Common;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Types;
 using Cloud.Repositories.Common;
-using Cloud.Repositories.DataContext;
-using Cloud.Repositories.Models;
 using Cloud.Repositories.Repositories.ExternalStorages;
-//using Cloud.StoragesApi.Providers;
 
 namespace Cloud.Repositories.Repositories
 {
