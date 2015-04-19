@@ -1,6 +1,6 @@
 ﻿using System.Web;
 using System.Web.Http;
-using Cloud.Repositories;
+using Cloud.Common.Interfaces;
 using Cloud.Repositories.Repositories;
 using Microsoft.AspNet.Identity.Owin;
 

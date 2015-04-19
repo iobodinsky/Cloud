@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Cloud.Common.Types;
 using Cloud.Repositories.DataContext;
-using Cloud.Repositories.Models;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -18,7 +18,7 @@ namespace Cloud.WebApi.Controllers
         [HttpGet]
         public IEnumerable<UserFileInfo> GetUserFiles()
         {
-            var files = Repository.GetFiles(User.Identity.GetUserId())
+            var files = Repository.GetAll(User.Identity.GetUserId())
                 .Select(file => new UserFileInfo
                 {
                     Id = file.FileId,
@@ -32,7 +32,7 @@ namespace Cloud.WebApi.Controllers
         [Route("{fileId:int:min(1)}")]
         public UserFileInfo GetUserFile(int fileId)
         {
-            var file = Repository.GetFile(User.Identity.GetUserId(), fileId);
+            var file = Repository.Get(User.Identity.GetUserId(), fileId);
             var userFile = new UserFileInfo
             {
                 Id = file.FileId,
@@ -71,7 +71,7 @@ namespace Cloud.WebApi.Controllers
                 Stream = uploadedFile.InputStream
             };
 
-            Repository.AddFile(userFileModel);
+            Repository.Add(User.Identity.GetUserId(), userFileModel);
         }
 
         // POST api/rename
@@ -82,7 +82,7 @@ namespace Cloud.WebApi.Controllers
             if (string.IsNullOrEmpty(newFileName)) return;
 
             var userId = User.Identity.GetUserId();
-            Repository.UpdateFileName(userId, fileId, newFileName);
+            Repository.UpdateName(userId, fileId, newFileName);
         }
 
         // DELETE api/delete
@@ -90,7 +90,7 @@ namespace Cloud.WebApi.Controllers
         [HttpDelete]
         public void DeleteFile([FromBody] int fileId)
         {
-            Repository.DeleteFile(User.Identity.GetUserId(), fileId);
+            Repository.Delete(User.Identity.GetUserId(), fileId);
         }
     }
 }
