@@ -8,7 +8,7 @@ using Cloud.Repositories.Models;
 
 namespace Cloud.Repositories.Repositories
 {
-    public class UserFileRepository : RepositoryBase
+    public class UserFileRepository : RepositoryBase, IFileRepository
     {
         public bool AddFile(FullUserFile file)
         {
