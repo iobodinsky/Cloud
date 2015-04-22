@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Cloud.Common.Types;
-using Cloud.Repositories.DataContext;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -16,10 +15,10 @@ namespace Cloud.WebApi.Controllers
         // GET api/files
         [Route("")]
         [HttpGet]
-        public IEnumerable<UserFileInfo> GetRootFoldersFiles()
+        public IEnumerable<UserFile> GetRootFoldersFiles()
         {
             var files = Repository.GetRootFiles(User.Identity.GetUserId())
-                .Select(file => new UserFileInfo
+                .Select(file => new UserFile
                 {
                     Id = file.FileId,
                     Name = file.Name
@@ -30,10 +29,10 @@ namespace Cloud.WebApi.Controllers
 
         // GET api/files/1
         [Route("{fileId:int:min(1)}")]
-        public UserFileInfo GetUserFile(int fileId)
+        public UserFile GetUserFile(int fileId)
         {
             var file = Repository.Get(User.Identity.GetUserId(), fileId);
-            var userFile = new UserFileInfo
+            var userFile = new UserFile
             {
                 Id = file.FileId,
                 Name = file.Name
@@ -50,7 +49,7 @@ namespace Cloud.WebApi.Controllers
         {
             if (uploadedFile == null) return;
 
-            var userFile = new UserFile
+            var userFile = new Repositories.DataContext.UserFile
             {
                 Name = uploadedFile.FileName,
                 AddedDateTime = DateTime.Now,

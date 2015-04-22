@@ -4,25 +4,25 @@ using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Repositories
 {
-    public class FileServerRepository : RepositoryBase
+    public class LocalFileServerRepository : RepositoryBase
     {
-        public LocalFileServer GetFileServer(int serverId)
+        public LocalFileServer GetLocalFileServer(int serverId)
         {
             return Entities.LocalFileServers.SingleOrDefault(
                 server => server.ServerId == serverId);
         }
 
-        public IEnumerable<LocalFileServer> GetFileServers()
+        public IEnumerable<LocalFileServer> GetLocalFileServers()
         {
             return Entities.LocalFileServers;
         }
 
-        public bool AddFileServer(LocalFileServer server)
+        public bool AddLocalFileServer(LocalFileServer server)
         {
             return Add(server, true);
         }
 
-        public bool UpdateFileSrver(LocalFileServer serverToUpdate)
+        public bool UpdateLocalFileSrver(LocalFileServer serverToUpdate)
         {
             Entities.LocalFileServers.Attach(serverToUpdate);
             var entry = Entities.Entry(serverToUpdate);

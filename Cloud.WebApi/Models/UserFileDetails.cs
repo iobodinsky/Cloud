@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Cloud.WebApi.Models
 {
-    public class UserFileDetails : UserFileInfo
+    public class UserFileDetails : UserFile
     {
         [JsonProperty("size")]
         public long Size { get; set; }

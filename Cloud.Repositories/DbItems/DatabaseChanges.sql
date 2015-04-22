@@ -171,6 +171,25 @@ BEGIN
 	COMMIT
 END 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-22
+-- Description:	Rename table FileServers to LocalFileServers
+-- =============================================================
+SET @newSchemaVersion = 8
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	EXEC sp_rename 'FileServers', 'LocalFileServers';
+
+	EXEC sp_rename 'UserFiles_FileServers', 'UserFiles_LocalFileServers';
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
 
 /*
 -- =============================================================
@@ -178,7 +197,7 @@ END
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 8
+SET @newSchemaVersion = 9
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

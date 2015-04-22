@@ -16,7 +16,7 @@ namespace Cloud.WebApi.Controllers
             var s = Repository.GetRootFiles("61b0b62a-fbdd-4d72-9a9f-1d95bc73765b");
             var model = new UserStorage
             {
-                Files = s.Select(file => new UserFileInfo
+                Files = s.Select(file => new UserFile
                 {
                     Id = 4,
                     Name = file.Name
@@ -36,7 +36,7 @@ namespace Cloud.WebApi.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             var files = Repository.GetRootFiles(user.Id)
-                .Select(file => new UserFileInfo
+                .Select(file => new UserFile
                 {
                     Id = file.FileId,
                     Name = file.Name

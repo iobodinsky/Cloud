@@ -2,7 +2,7 @@
 
 namespace Cloud.WebApi.Models
 {
-    public class UserFileInfo
+    public class UserFolder
     {
         [JsonProperty("id")]
         public int Id { get; set; }

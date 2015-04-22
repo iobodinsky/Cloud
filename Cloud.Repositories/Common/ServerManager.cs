@@ -9,13 +9,13 @@ namespace Cloud.Repositories.Common
     {
         #region Fields
 
-        private readonly FileServerRepository _fileServerRepository;
+        private readonly LocalFileServerRepository _fileServerRepository;
 
         #endregion Fields
 
         public LocalFileServerManager()
         {
-            _fileServerRepository = new FileServerRepository();
+            _fileServerRepository = new LocalFileServerRepository();
         }
 
         #region Public methods
@@ -97,7 +97,7 @@ namespace Cloud.Repositories.Common
 
         private IEnumerable<LocalFileServer> GetFileServers()
         {
-            return _fileServerRepository.GetFileServers();
+            return _fileServerRepository.GetLocalFileServers();
         }
 
         #endregion Private methods
