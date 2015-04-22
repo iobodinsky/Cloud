@@ -5,7 +5,7 @@ using Cloud.Repositories.Repositories;
 
 namespace Cloud.Repositories.Common
 {
-    public class ServerManager
+    public class LocalFileServerManager
     {
         #region Fields
 
@@ -13,7 +13,7 @@ namespace Cloud.Repositories.Common
 
         #endregion Fields
 
-        public ServerManager()
+        public LocalFileServerManager()
         {
             _fileServerRepository = new FileServerRepository();
         }
@@ -95,7 +95,7 @@ namespace Cloud.Repositories.Common
             return Path.Combine(serverPath, GetUserPath(userId), fileName);
         }
 
-        private IEnumerable<FileServer> GetFileServers()
+        private IEnumerable<LocalFileServer> GetFileServers()
         {
             return _fileServerRepository.GetFileServers();
         }

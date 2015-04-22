@@ -340,7 +340,7 @@ namespace Cloud.WebApi.Controllers
             }
 
             // Create user directories on servers
-            var serverManager = new ServerManager();
+            var serverManager = new LocalFileServerManager();
             serverManager.CreateUserDirectory(user.Id);
 
             return Ok();

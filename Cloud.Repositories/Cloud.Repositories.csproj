@@ -67,7 +67,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CloudEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataContext\FileServer.cs">
+    <Compile Include="DataContext\ExternalFileServer.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\LocalFileServer.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\User.cs">

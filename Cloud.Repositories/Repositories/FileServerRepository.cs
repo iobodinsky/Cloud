@@ -6,25 +6,25 @@ namespace Cloud.Repositories.Repositories
 {
     public class FileServerRepository : RepositoryBase
     {
-        public FileServer GetFileServer(int serverId)
+        public LocalFileServer GetFileServer(int serverId)
         {
-            return Entities.FileServers.SingleOrDefault(
+            return Entities.LocalFileServers.SingleOrDefault(
                 server => server.ServerId == serverId);
         }
 
-        public IEnumerable<FileServer> GetFileServers()
+        public IEnumerable<LocalFileServer> GetFileServers()
         {
-            return Entities.FileServers;
+            return Entities.LocalFileServers;
         }
 
-        public bool AddFileServer(FileServer server)
+        public bool AddFileServer(LocalFileServer server)
         {
             return Add(server, true);
         }
 
-        public bool UpdateFileSrver(FileServer serverToUpdate)
+        public bool UpdateFileSrver(LocalFileServer serverToUpdate)
         {
-            Entities.FileServers.Attach(serverToUpdate);
+            Entities.LocalFileServers.Attach(serverToUpdate);
             var entry = Entities.Entry(serverToUpdate);
             entry.Property(server => server.Name).IsModified = true;
             entry.Property(server => server.Path).IsModified = true;

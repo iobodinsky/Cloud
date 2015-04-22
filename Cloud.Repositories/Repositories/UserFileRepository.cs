@@ -13,7 +13,7 @@ namespace Cloud.Repositories.Repositories
         public bool Add(string userId, FullUserFile file)
         {
             // Save file on all physical servers
-            var serverManager = new ServerManager();
+            var serverManager = new LocalFileServerManager();
             serverManager.SaveFile(file.Stream, file.UserFile.Name, file.UserFile.UserId);
 
             // Save file info to Db
@@ -54,7 +54,7 @@ namespace Cloud.Repositories.Repositories
             var oldfileName = fileToUpdate.Name;
             var extention = Path.GetExtension(oldfileName);
             newfileName += extention;
-            var serverManager = new ServerManager();
+            var serverManager = new LocalFileServerManager();
             if (!serverManager.RenameFile(userId, fileId, oldfileName, newfileName))
                 return false;
 
@@ -76,7 +76,7 @@ namespace Cloud.Repositories.Repositories
 
             // Delete file from all servers
 
-            var serverManager = new ServerManager();
+            var serverManager = new LocalFileServerManager();
             serverManager.DeleteFile(userId, fileToDelete.Name);
 
             // Delete file from db

@@ -5,7 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="CloudDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="FileServers">
+        <EntityType Name="ExternalFileServers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LocalFileServers">
           <Key>
             <PropertyRef Name="ServerId" />
           </Key>
@@ -67,7 +74,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CloudDbModelStoreContainer">
-          <EntitySet Name="FileServers" EntityType="Self.FileServers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExternalFileServers" EntityType="Self.ExternalFileServers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -82,13 +90,14 @@
       <Schema Namespace="CloudDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CloudDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="UserFileTypes" EntityType="CloudDbModel.UserFileType" />
-          <EntitySet Name="FileServers" EntityType="CloudDbModel.FileServer" />
           <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           <EntitySet Name="Users" EntityType="CloudDbModel.User" />
           <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="CloudDbModel.FK_UserFiles_AspNetUsers">
             <End Role="User" EntitySet="Users" />
             <End Role="UserFile" EntitySet="UserFiles" />
           </AssociationSet>
+          <EntitySet Name="LocalFileServers" EntityType="CloudDbModel.LocalFileServer" />
+          <EntitySet Name="ExternalFileServers" EntityType="CloudDbModel.ExternalFileServer" />
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -98,14 +107,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Extension" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IconUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="FileServer">
-          <Key>
-            <PropertyRef Name="ServerId" />
-          </Key>
-          <Property Name="ServerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserFile">
           <Key>
@@ -153,6 +154,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LocalFileServer">
+          <Key>
+            <PropertyRef Name="ServerId" />
+          </Key>
+          <Property Name="ServerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ExternalFileServer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -166,15 +182,6 @@
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="FileTypeId" ColumnName="FileTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FileServers">
-            <EntityTypeMapping TypeName="CloudDbModel.FileServer">
-              <MappingFragment StoreEntitySet="FileServers">
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -208,6 +215,23 @@
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocalFileServers">
+            <EntityTypeMapping TypeName="CloudDbModel.LocalFileServer">
+              <MappingFragment StoreEntitySet="LocalFileServers">
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExternalFileServers">
+            <EntityTypeMapping TypeName="CloudDbModel.ExternalFileServer">
+              <MappingFragment StoreEntitySet="ExternalFileServers">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

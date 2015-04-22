@@ -112,13 +112,73 @@ BEGIN
 	COMMIT
 END 
 
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-22
+-- Description:	Create ExternalFileServers table
+-- =============================================================
+SET @newSchemaVersion = 5
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	CREATE TABLE [dbo].[ExternalFileServers] 
+	(
+		[Id] int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+		[Name] nvarchar(64) NOT NULL
+	)
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-22
+-- Description:	Added Google Drive file server to ExternalFileServers table
+-- =============================================================
+SET @newSchemaVersion = 6
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	INSERT INTO [dbo].[ExternalFileServers]
+		(Name)
+		VALUES ('Google Drive');
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-22
+-- Description:	Change table name FileServers to Local FileServers and UserFiles_FileServers
+-- =============================================================
+SET @newSchemaVersion = 7
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	EXEC sp_rename 'FileServers', 'LocalFileServers';
+
+	EXEC sp_rename 'UserFiles_FileServers', 'UserFiles_LocalFileServers';
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 5
+SET @newSchemaVersion = 8
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

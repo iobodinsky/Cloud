@@ -12,10 +12,9 @@ namespace Cloud.Repositories.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class FileServer
+    public partial class ExternalFileServer
     {
-        public int ServerId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Path { get; set; }
     }
 }
