@@ -190,6 +190,41 @@ BEGIN
 END 
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-23
+-- Description:	Rename ExternalFileServers table to CloudServers
+-- =============================================================
+SET @newSchemaVersion = 9
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	EXEC sp_rename 'ExternalFileServers', 'CloudServers';
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-23
+-- Description:	Add Local Lenovo server to CloudServers
+-- =============================================================
+SET @newSchemaVersion = 10
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	INSERT INTO [dbo].[CloudServers]
+	(Name)
+	VALUES('Local Lenovo');
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
 
 /*
 -- =============================================================
@@ -197,7 +232,7 @@ END
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 9
+SET @newSchemaVersion = 11
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

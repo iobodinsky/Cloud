@@ -29,6 +29,6 @@ namespace Cloud.Repositories.DataContext
         public virtual DbSet<UserFile> UserFiles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<LocalFileServer> LocalFileServers { get; set; }
-        public virtual DbSet<ExternalFileServer> ExternalFileServers { get; set; }
+        public virtual DbSet<CloudServer> CloudServers { get; set; }
     }
 }
