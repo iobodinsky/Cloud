@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Cloud.Common.Interfaces;
 
 namespace Cloud.WebApi.Models
 {
     public class FoldersFiles
     {
-        public IEnumerable<UserFolder> Folders { get; set; }
-        public IEnumerable<UserFile> Files { get; set; }
+        public IEnumerable<IFolder> Folders { get; set; }
+        public IEnumerable<IFile> Files { get; set; }
     }
 }

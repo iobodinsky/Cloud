@@ -14,7 +14,6 @@ namespace Cloud.Repositories.DataContext
     
     public partial class UserFile
     {
-        public int FileId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
         public Nullable<int> TypeId { get; set; }
@@ -24,7 +23,6 @@ namespace Cloud.Repositories.DataContext
         public System.DateTime LastModifiedDateTime { get; set; }
         public System.DateTime AddedDateTime { get; set; }
         public int DownloadedTimes { get; set; }
-    
-        public virtual User User { get; set; }
+        public string Id { get; set; }
     }
 }

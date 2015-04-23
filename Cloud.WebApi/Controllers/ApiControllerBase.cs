@@ -27,7 +27,7 @@ namespace Cloud.WebApi.Controllers
 
         protected ApiControllerBase()
         {
-            Repository = new UserFileRepository();
+            Repository = new StorageRepository();
         }
     }
 }

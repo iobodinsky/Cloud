@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Types;
 using Cloud.Repositories.Common;
-using Cloud.Repositories.Repositories.ExternalStorages;
 
 namespace Cloud.Repositories.Repositories
 {
-    public class UserFileRepository : RepositoryBase, IFileRepository
+    public class StorageRepository : RepositoryBase, IFileRepository
     {
-        public bool Add(string userId, FullUserFile file)
+        public bool Add(string userId, int cloudId, FullUserFile file)
         {
             // Save file on all physical servers
             var serverManager = new LocalFileServerManager();
@@ -22,32 +22,29 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
-        public IFile Get(string userId, int fileId)
+        public IFile Get(string userId, int cloudId, string fileId)
         {
             return Entities.UserFiles.SingleOrDefault(
-                file => file.UserId == userId && file.FileId == fileId);
+                file => file.UserId == userId && file.Id == fileId);
         }
 
         public IEnumerable<IFile> GetRootFiles(string userId)
         {
-            //return Entities.UserFiles.Where(file => file.UserId == userId);
-
-            return new DriveRepository().GetRootFiles(userId);
+            return Entities.UserFiles.Where(file => file.UserId == userId);
         }
 
         public IEnumerable<IFolder> GetRootFolders(string userId)
         {
+            throw new NotImplementedException();
             //return Entities.UserFiles.Where(file => file.UserId == userId);
-
-            return new DriveRepository().GetRootFolders(userId);
         }
 
         // todo: test
         // todo: implement return type info
-        public bool UpdateName(string userId, int fileId, string newfileName)
+        public bool UpdateName(string userId, int cloudId, string fileId, string newfileName)
         {
             var fileToUpdate = Entities.UserFiles.SingleOrDefault(
-                file => file.FileId == fileId && file.UserId == userId);
+                file => file.Id == fileId && file.UserId == userId);
             if (fileToUpdate == null) return false;
 
             // Rename file on servers
@@ -68,10 +65,10 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
-        public bool Delete(string userId, int fileId)
+        public bool Delete(string userId, int cloudId, string fileId)
         {
             var fileToDelete = Entities.UserFiles.SingleOrDefault(
-                file => file.FileId == fileId && file.UserId == userId);
+                file => file.Id == fileId && file.UserId == userId);
             if (fileToDelete == null) return false;
 
             // Delete file from all servers

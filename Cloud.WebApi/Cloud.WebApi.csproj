@@ -248,7 +248,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\FilesController.cs" />
-    <Compile Include="Controllers\StorageController.cs" />
+    <Compile Include="Controllers\CloudController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -1,11 +1,11 @@
 ﻿using System;
 using Cloud.Common.Interfaces;
 
-namespace Cloud.ExternalClouds.Models
+namespace Cloud.Storages.Models
 {
     class DriveFile : IFile
     {
-        public int FileId { get; set; }
+        public string Id { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
         public int? TypeId { get; set; }

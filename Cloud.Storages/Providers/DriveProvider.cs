@@ -5,7 +5,7 @@ using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Types;
 using Cloud.Storages.Managers;
-using Cloud.ExternalClouds.Models;
+using Cloud.Storages.Models;
 using Cloud.Storages.Resources;
 
 namespace Cloud.Storages.Providers

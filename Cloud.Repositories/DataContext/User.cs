@@ -14,11 +14,6 @@ namespace Cloud.Repositories.DataContext
     
     public partial class User
     {
-        public User()
-        {
-            this.UserFiles = new HashSet<UserFile>();
-        }
-    
         public string Id { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
@@ -31,7 +26,5 @@ namespace Cloud.Repositories.DataContext
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
-    
-        public virtual ICollection<UserFile> UserFiles { get; set; }
     }
 }

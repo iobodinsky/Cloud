@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Cloud.Common.Interfaces;
 
 namespace Cloud.WebApi.Models
 {
-    public class UserFolder
+    public class UserFolder : IFolder
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        [JsonProperty("name")]
         public string Name { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity;
 namespace Cloud.WebApi.Controllers
 {
     [RoutePrefix("api/cloud")]
-    public class StorageController : ApiControllerBase
+    public class CloudController : ApiControllerBase
     {
         // GET api/cloud/test
         [AllowAnonymous]
@@ -18,7 +18,7 @@ namespace Cloud.WebApi.Controllers
             {
                 Files = s.Select(file => new UserFile
                 {
-                    Id = 4,
+                    Id = "sd",
                     Name = file.Name
                 }),
                 UserInfo = new UserInfo
@@ -38,7 +38,7 @@ namespace Cloud.WebApi.Controllers
             var files = Repository.GetRootFiles(user.Id)
                 .Select(file => new UserFile
                 {
-                    Id = file.FileId,
+                    Id = file.Id,
                     Name = file.Name
                 });
             var userInfo = new UserInfo {Name = user.UserName};

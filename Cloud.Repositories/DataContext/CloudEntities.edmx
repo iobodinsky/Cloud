@@ -20,11 +20,20 @@
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserFiles">
           <Key>
-            <PropertyRef Name="FileId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Path" />
+            <PropertyRef Name="IsEditable" />
+            <PropertyRef Name="Size" />
+            <PropertyRef Name="LastModifiedDateTime" />
+            <PropertyRef Name="AddedDateTime" />
+            <PropertyRef Name="DownloadedTimes" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="FileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="TypeId" Type="int" />
@@ -34,6 +43,7 @@
           <Property Name="LastModifiedDateTime" Type="datetime" Nullable="false" />
           <Property Name="AddedDateTime" Type="datetime" Nullable="false" />
           <Property Name="DownloadedTimes" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <EntityType Name="UserFileTypes">
           <Key>
@@ -61,28 +71,25 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <Association Name="FK_UserFiles_AspNetUsers">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserFiles" Type="Self.UserFiles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserFiles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CloudDbModelStoreContainer">
           <EntitySet Name="CloudServers" EntityType="Self.CloudServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="Self.FK_UserFiles_AspNetUsers">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserFiles" EntitySet="UserFiles" />
-          </AssociationSet>
+          <EntitySet Name="UserFiles" EntityType="Self.UserFiles" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserFiles].[UserId] AS [UserId], 
+    [UserFiles].[Name] AS [Name], 
+    [UserFiles].[TypeId] AS [TypeId], 
+    [UserFiles].[Path] AS [Path], 
+    [UserFiles].[IsEditable] AS [IsEditable], 
+    [UserFiles].[Size] AS [Size], 
+    [UserFiles].[LastModifiedDateTime] AS [LastModifiedDateTime], 
+    [UserFiles].[AddedDateTime] AS [AddedDateTime], 
+    [UserFiles].[DownloadedTimes] AS [DownloadedTimes], 
+    [UserFiles].[Id] AS [Id]
+    FROM [dbo].[UserFiles] AS [UserFiles]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -90,14 +97,10 @@
       <Schema Namespace="CloudDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CloudDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="UserFileTypes" EntityType="CloudDbModel.UserFileType" />
-          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           <EntitySet Name="Users" EntityType="CloudDbModel.User" />
-          <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="CloudDbModel.FK_UserFiles_AspNetUsers">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserFile" EntitySet="UserFiles" />
-          </AssociationSet>
           <EntitySet Name="LocalFileServers" EntityType="CloudDbModel.LocalFileServer" />
           <EntitySet Name="CloudServers" EntityType="CloudDbModel.CloudServer" />
+          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -107,22 +110,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Extension" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IconUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="UserFile">
-          <Key>
-            <PropertyRef Name="FileId" />
-          </Key>
-          <Property Name="FileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="TypeId" Type="Int32" />
-          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
-          <Property Name="Size" Type="Int64" Nullable="false" />
-          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="UserFile" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -140,20 +127,7 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserFiles" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="User" ToRole="UserFile" />
         </EntityType>
-        <Association Name="FK_UserFiles_AspNetUsers">
-          <End Type="CloudDbModel.User" Role="User" Multiplicity="1" />
-          <End Type="CloudDbModel.UserFile" Role="UserFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserFile">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="LocalFileServer">
           <Key>
             <PropertyRef Name="ServerId" />
@@ -169,6 +143,29 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="UserFile">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Path" />
+            <PropertyRef Name="IsEditable" />
+            <PropertyRef Name="Size" />
+            <PropertyRef Name="LastModifiedDateTime" />
+            <PropertyRef Name="AddedDateTime" />
+            <PropertyRef Name="DownloadedTimes" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
+          <Property Name="Size" Type="Int64" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -182,22 +179,6 @@
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="FileTypeId" ColumnName="FileTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFiles">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
-              <MappingFragment StoreEntitySet="UserFiles">
-                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
-                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
-                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FileId" ColumnName="FileId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -233,6 +214,22 @@
               <MappingFragment StoreEntitySet="CloudServers">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFiles">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
+              <MappingFragment StoreEntitySet="UserFiles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
+                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

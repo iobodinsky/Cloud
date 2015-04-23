@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Cloud.Common.Types;
@@ -15,37 +13,37 @@ namespace Cloud.WebApi.Controllers
         // GET api/files
         [Route("")]
         [HttpGet]
-        public IEnumerable<UserFile> GetRootFoldersFiles()
+        public FoldersFiles GetRootFoldersFiles()
         {
-            var files = Repository.GetRootFiles(User.Identity.GetUserId())
-                .Select(file => new UserFile
-                {
-                    Id = file.FileId,
-                    Name = file.Name
-                });
+            var userId = User.Identity.GetUserId();
+            var model = new FoldersFiles
+            {
+                Folders = Repository.GetRootFolders(userId),
+                Files = Repository.GetRootFiles(userId)
+            };
 
-            return files;
+            return model;
         }
 
-        // GET api/files/1
-        [Route("{fileId:int:min(1)}")]
-        public UserFile GetUserFile(int fileId)
+        // GET api/files/1/cloud/1/download
+        [Route("{fileId}/cloud/{cloudId:int:min(0)}/download")]
+        public void DownloadUserFile([FromUri] string fileId, [FromUri] int cloudId)
         {
-            var file = Repository.Get(User.Identity.GetUserId(), fileId);
+            throw new NotImplementedException();
+            var file = Repository.Get(User.Identity.GetUserId(), cloudId, fileId);
             var userFile = new UserFile
             {
-                Id = file.FileId,
+                Id = file.Id,
                 Name = file.Name
             };
 
-            return userFile;
+            //return userFile;
         }
 
-        // todo: upload file
-        // POST api/upload
-        [Route("upload")]
+        // POST api/files/cloud/1/upload
+        [Route("cloud/{cloudId:int:min(0)}/upload")]
         [HttpPost]
-        public void UploadFile([FromBody] HttpPostedFileBase uploadedFile)
+        public void UploadFile([FromUri] int cloudId, [FromBody] HttpPostedFileBase uploadedFile)
         {
             if (uploadedFile == null) return;
 
@@ -70,26 +68,26 @@ namespace Cloud.WebApi.Controllers
                 Stream = uploadedFile.InputStream
             };
 
-            Repository.Add(User.Identity.GetUserId(), userFileModel);
+            Repository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
         }
 
-        // POST api/rename
-        [Route("rename")]
+        // POST api/files/1/cloud/1/rename
+        [Route("{fileId}/cloud/{cloudId:int:min(0)}/rename")]
         [HttpPost]
-        public void RenameFile([FromBody] int fileId, [FromBody] string newFileName)
+        public void RenameFile([FromUri] string fileId, [FromUri] int cloudId, [FromBody] string newFileName)
         {
             if (string.IsNullOrEmpty(newFileName)) return;
 
             var userId = User.Identity.GetUserId();
-            Repository.UpdateName(userId, fileId, newFileName);
+            Repository.UpdateName(userId, cloudId, fileId, newFileName);
         }
 
-        // DELETE api/delete
-        [Route("{fileId:int:min(1)}")]
+        // DELETE api/files/1/cloud/1/delete
+        [Route("{fileId}/cloud/{cloudId:int:min(1)}/delete")]
         [HttpDelete]
-        public void DeleteFile([FromBody] int fileId)
+        public void DeleteFile([FromUri] string fileId, [FromUri] int cloudId)
         {
-            Repository.Delete(User.Identity.GetUserId(), fileId);
+            Repository.Delete(User.Identity.GetUserId(), cloudId, fileId);
         }
     }
 }

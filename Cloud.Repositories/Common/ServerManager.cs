@@ -49,7 +49,7 @@ namespace Cloud.Repositories.Common
             return true;
         }
 
-        public bool RenameFile(string userId, int fileId, string oldFileName, string newFileName)
+        public bool RenameFile(string userId, string fileId, string oldFileName, string newFileName)
         {
             foreach (var fileServer in GetFileServers())
             {

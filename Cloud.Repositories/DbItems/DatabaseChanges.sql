@@ -226,13 +226,89 @@ BEGIN
 END
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-23
+-- Description:	Remove CONSTRAINT FK_UserFiles_AspNetUsers
+-- =============================================================
+SET @newSchemaVersion = 11
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[LocalFileServers]
+	DROP CONSTRAINT FK_UserFileInfos_FileServers_FileServers;
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-23
+-- Description:	Remove UserFiles_LocalFileServers table
+-- =============================================================
+SET @newSchemaVersion = 12
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	DROP TABLE [dbo].[UserFiles_LocalFileServers];
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-23
+-- Description:	Remove CONSTRAINT PK_Files from UserFiles table
+-- =============================================================
+SET @newSchemaVersion = 13
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[UserFiles]
+	DROP CONSTRAINT PK_Files;
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-23
+-- Description:	Change Id file to string type
+-- =============================================================
+SET @newSchemaVersion = 14
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[UserFiles]
+	ADD [Id] nvarchar(16) NOT NULL CONSTRAINT DF_Id DEFAULT('qwer2103');
+	
+	ALTER TABLE [dbo].[UserFiles]
+	DROP CONSTRAINT DF_Id;
+
+	ALTER TABLE [dbo].[UserFiles]
+	DROP COLUMN [FileId]
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 11
+SET @newSchemaVersion = 15
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION
