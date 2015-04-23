@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Types;
-using Cloud.ExternalClouds.Providers;
+using Cloud.Storages.Providers;
 
 namespace Cloud.Repositories.Repositories.ExternalStorages
 {

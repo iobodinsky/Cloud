@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cloud.ExternalClouds.Resources {
+namespace Cloud.Storages.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Cloud.ExternalClouds.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DriveFilters {
+    internal class AppSettingKeys {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DriveFilters() {
+        internal AppSettingKeys() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Cloud.ExternalClouds.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cloud.ExternalClouds.Resources.DriveFilters", typeof(DriveFilters).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cloud.Storages.Resources.AppSettingKeys", typeof(AppSettingKeys).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,38 @@ namespace Cloud.ExternalClouds.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DriveFileMaxResults.
+        ///   Looks up a localized string similar to DriveApplicationUserAgent.
         /// </summary>
-        internal static string FilesMaxResults {
+        internal static string DriveApplicationUserAgent {
             get {
-                return ResourceManager.GetString("FilesMaxResults", resourceCulture);
+                return ResourceManager.GetString("DriveApplicationUserAgent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DriveFoldersMaxResults.
+        ///   Looks up a localized string similar to DriveClientId.
         /// </summary>
-        internal static string FoldersMaxResults {
+        internal static string DriveClientId {
             get {
-                return ResourceManager.GetString("FoldersMaxResults", resourceCulture);
+                return ResourceManager.GetString("DriveClientId", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to trashed=false.
+        ///   Looks up a localized string similar to DriveClientSecret.
         /// </summary>
-        internal static string NoTrash {
+        internal static string DriveClientSecret {
             get {
-                return ResourceManager.GetString("NoTrash", resourceCulture);
+                return ResourceManager.GetString("DriveClientSecret", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimeType = &apos;application/vnd.google-apps.folder&apos;.
+        ///   Looks up a localized string similar to DriveUserCredentalsFolder.
         /// </summary>
-        internal static string SearchFolders {
+        internal static string DriveUserCredentalsFolder {
             get {
-                return ResourceManager.GetString("SearchFolders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mimeType != &apos;application/vnd.google-apps.folder&apos;.
-        /// </summary>
-        internal static string SearchNotFolders {
-            get {
-                return ResourceManager.GetString("SearchNotFolders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;root&apos; in parents.
-        /// </summary>
-        internal static string SearchRoot {
-            get {
-                return ResourceManager.GetString("SearchRoot", resourceCulture);
+                return ResourceManager.GetString("DriveUserCredentalsFolder", resourceCulture);
             }
         }
     }

@@ -3,13 +3,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Cloud.ExternalClouds.Resources;
+using Cloud.Storages.Resources;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 
-namespace Cloud.ExternalClouds.Managers
+namespace Cloud.Storages.Managers
 {
     internal class DriveManager
     {

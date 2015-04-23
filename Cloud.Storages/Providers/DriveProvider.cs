@@ -4,11 +4,11 @@ using System.Configuration;
 using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Types;
-using Cloud.ExternalClouds.Managers;
+using Cloud.Storages.Managers;
 using Cloud.ExternalClouds.Models;
-using Cloud.ExternalClouds.Resources;
+using Cloud.Storages.Resources;
 
-namespace Cloud.ExternalClouds.Providers
+namespace Cloud.Storages.Providers
 {
     public class DriveProvider : IStorage
     {

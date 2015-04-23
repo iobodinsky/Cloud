@@ -7,8 +7,8 @@
     <ProjectGuid>{A7077BAF-C941-49E9-8952-2BF55D5F8CAF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cloud.ExternalClouds</RootNamespace>
-    <AssemblyName>Cloud.ExternalClouds</AssemblyName>
+    <RootNamespace>Cloud.Storages</RootNamespace>
+    <AssemblyName>Cloud.Storages</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>0615e49b</NuGetPackageImportStamp>
@@ -116,7 +116,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
