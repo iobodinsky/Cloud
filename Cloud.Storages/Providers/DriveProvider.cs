@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Cloud.Common.Interfaces;
-using Cloud.Common.Types;
+using Cloud.Common.Models;
 using Cloud.Storages.Managers;
 using Cloud.Storages.Models;
 using Cloud.Storages.Resources;
@@ -31,14 +31,14 @@ namespace Cloud.Storages.Providers
             var request = service.Files.List();
 
             request.MaxResults = int.Parse(
-                ConfigurationManager.AppSettings[DriveFilters.FilesMaxResults]);
+                ConfigurationManager.AppSettings[DriveSearchFilters.FilesMaxResults]);
 
             request.Q = _manager.ConstructSearchQuery(
-                DriveFilters.NoTrash, DriveFilters.SearchRoot, DriveFilters.SearchNotFolders);
+                DriveSearchFilters.NoTrash, DriveSearchFilters.SearchRoot, DriveSearchFilters.SearchNotFolders);
 
             return request.Execute().Items.Select(file => new DriveFile
             {
-                UserId = userId,
+                Id = file.Id,
                 Name = file.Title,
                 LastModifiedDateTime = file.LastViewedByMeDate == null
                     ? new DateTime()
@@ -46,6 +46,7 @@ namespace Cloud.Storages.Providers
                 AddedDateTime = file.CreatedDate == null
                     ? new DateTime()
                     : file.CreatedDate.Value,
+                DownloadUrl = file.WebContentLink
             });
         }
 
@@ -59,9 +60,9 @@ namespace Cloud.Storages.Providers
             var service = _manager.BuildServiceAsync(userId);
             var request = service.Files.List();
 
-            request.MaxResults = int.Parse(ConfigurationManager.AppSettings[DriveFilters.FilesMaxResults]);
+            request.MaxResults = int.Parse(ConfigurationManager.AppSettings[DriveSearchFilters.FilesMaxResults]);
             request.Q = _manager.ConstructSearchQuery(
-                DriveFilters.NoTrash, DriveFilters.SearchRoot, DriveFilters.SearchFolders);
+                DriveSearchFilters.NoTrash, DriveSearchFilters.SearchRoot, DriveSearchFilters.SearchFolders);
 
             return request.Execute().Items.Select(file => new Folder
             {
@@ -75,17 +76,22 @@ namespace Cloud.Storages.Providers
             throw new NotImplementedException();
         }
 
-        public IFile Get(string userId, int fileId)
+        public IFile GetFileInfo(string userId, string fileId)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateName(string userId, int fileId, string newfileName)
+        public FullUserFile GetFile(string userId, string fileId)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(string userId, int fileId)
+        public bool UpdateName(string userId, string fileId, string newfileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(string userId, string fileId)
         {
             throw new NotImplementedException();
         }

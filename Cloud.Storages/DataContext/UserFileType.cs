@@ -7,14 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cloud.Repositories.DataContext
+namespace Cloud.Storages.DataContext
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class CloudServer
+    public partial class UserFileType
     {
-        public int Id { get; set; }
+        public int FileTypeId { get; set; }
         public string Name { get; set; }
+        public string Extension { get; set; }
+        public string IconUrl { get; set; }
     }
 }

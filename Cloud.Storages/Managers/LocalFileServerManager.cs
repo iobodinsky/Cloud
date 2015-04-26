@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Cloud.Repositories.DataContext;
-using Cloud.Repositories.Repositories;
+using System.Linq;
+using Cloud.Common.Models;
+using Cloud.Storages.DataContext;
+using Cloud.Storages.Repositories;
 
-namespace Cloud.Repositories.Common
+namespace Cloud.Storages.Managers
 {
-    public class LocalFileServerManager
+    public class LocalFileServerManager : RepositoryBase
     {
         #region Fields
 
@@ -49,15 +51,33 @@ namespace Cloud.Repositories.Common
             return true;
         }
 
+        // todo: check if needed FileInfo or just Stream
+        public FullUserFile GetFile(string userId, string fileId)
+        {
+            FullUserFile file = null;
+            foreach (var fileServer in GetFileServers())
+            {
+                var filePath = GetFilePathById(fileServer.Path, userId, fileId);
+                if (string.IsNullOrEmpty(filePath)) continue;
+
+                file = new FullUserFile
+                {
+                    Stream = new FileStream(filePath, FileMode.Open)
+                };
+            }
+
+            return file;
+        }
+
         public bool RenameFile(string userId, string fileId, string oldFileName, string newFileName)
         {
             foreach (var fileServer in GetFileServers())
             {
-                var serverFilePath = GetUserFileServerPath(fileServer.Path, userId, oldFileName);
-                var serverNewFilePath = GetUserFileServerPath(fileServer.Path, userId, newFileName);
+                var fileServerPath = GetFilePathByName(fileServer.Path, userId, oldFileName);
+                var serverNewFilePath = GetFilePathByName(fileServer.Path, userId, newFileName);
                 if (File.Exists(serverNewFilePath)) return false;
 
-                File.Move(serverFilePath, serverNewFilePath);
+                File.Move(fileServerPath, serverNewFilePath);
             }
 
             return true;
@@ -67,7 +87,7 @@ namespace Cloud.Repositories.Common
         {
             foreach (var fileServer in GetFileServers())
             {
-                var serverFilePath = GetUserFileServerPath(fileServer.Path, userId, fileName);
+                var serverFilePath = GetFilePathByName(fileServer.Path, userId, fileName);
                 File.Delete(serverFilePath);
             }
 
@@ -90,9 +110,19 @@ namespace Cloud.Repositories.Common
             return userId;
         }
         
-        private string GetUserFileServerPath(string serverPath, string userId, string fileName)
+        private string GetFilePathByName(string serverPath, string userId, string fileName)
         {
             return Path.Combine(serverPath, GetUserPath(userId), fileName);
+        }
+
+        private string GetFilePathById(string serverPath, string userId, string fileId)
+        {
+            var fileInfo = Entities.UserFiles.
+                SingleOrDefault(file => file.UserId == userId && file.Id == fileId);
+            if (fileInfo == null) return null;
+
+            var fileName = fileInfo.Name;
+            return GetFilePathByName(serverPath, userId, fileName);
         }
 
         private IEnumerable<LocalFileServer> GetFileServers()

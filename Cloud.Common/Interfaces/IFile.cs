@@ -34,5 +34,8 @@ namespace Cloud.Common.Interfaces
 
         [JsonProperty("downloadedTimes")]
         int DownloadedTimes { get; set; }
+
+        [JsonProperty("downloadUrl")]
+        string DownloadUrl { get; set; }
     }
 }

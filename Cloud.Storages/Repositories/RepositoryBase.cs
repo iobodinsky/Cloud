@@ -1,6 +1,6 @@
-﻿using Cloud.Repositories.DataContext;
+﻿using Cloud.Storages.DataContext;
 
-namespace Cloud.Repositories
+namespace Cloud.Storages.Repositories
 {
      /// <summary>
     ///    Base repository class

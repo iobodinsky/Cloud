@@ -1,6 +1,6 @@
 ﻿using Cloud.Common.Interfaces;
 
-namespace Cloud.Common.Types
+namespace Cloud.Common.Models
 {
     public class Folder : IFolder
     {

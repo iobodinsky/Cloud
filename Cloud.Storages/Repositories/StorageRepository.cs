@@ -2,14 +2,48 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Cloud.Common.Interfaces;
-using Cloud.Common.Types;
-using Cloud.Repositories.Common;
+using Cloud.Common.Models;
+using Cloud.Storages.Managers;
+using Cloud.Storages.Providers;
 
-namespace Cloud.Repositories.Repositories
+namespace Cloud.Storages.Repositories
 {
     public class StorageRepository : RepositoryBase, IFileRepository
     {
+        #region Fields
+
+        private readonly IList<IStorage> _storages; 
+
+        #endregion Fields
+
+        public StorageRepository()
+        {
+            // todo: implement MEF
+            _storages = new List<IStorage>();
+            _storages.Add(new LocalLenevoProvider());
+            _storages.Add(new DriveProvider());
+        }
+
+        #region Private methods
+
+        private IStorage ResolveStorageInstance(int cloudId)
+        {
+            var cloudServer = Entities.CloudServers.
+                SingleOrDefault(server => server.Id == cloudId);
+            if (cloudServer == null) return null;
+            var cloudType = Type.GetType(cloudServer.ClassName);
+            if (cloudType == null) return null;
+            var cloud = Activator.CreateInstance(cloudType) as IStorage;
+
+            return cloud;
+        }
+
+        #endregion Private methods
+
+        #region IFileRepository implementation
+
         public bool Add(string userId, int cloudId, FullUserFile file)
         {
             // Save file on all physical servers
@@ -22,6 +56,17 @@ namespace Cloud.Repositories.Repositories
             return true;
         }
 
+        public IFile GetFileInfo(string userId, int cloudId, string fileId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public FullUserFile GetFile(string userId, int cloudId, string fileId)
+        {
+            var cloud = ResolveStorageInstance(cloudId);
+            return cloud.GetFile(userId, fileId);
+        }
+
         public IFile Get(string userId, int cloudId, string fileId)
         {
             return Entities.UserFiles.SingleOrDefault(
@@ -30,13 +75,24 @@ namespace Cloud.Repositories.Repositories
 
         public IEnumerable<IFile> GetRootFiles(string userId)
         {
-            return Entities.UserFiles.Where(file => file.UserId == userId);
+            var files = new List<IFile>();
+            foreach (var storage in _storages)
+            {
+                files.AddRange(storage.GetRootFiles(userId));
+            }
+
+            return files;
         }
 
         public IEnumerable<IFolder> GetRootFolders(string userId)
         {
-            throw new NotImplementedException();
-            //return Entities.UserFiles.Where(file => file.UserId == userId);
+            var folders = new List<IFolder>();
+            foreach (var storage in _storages)
+            {
+                folders.AddRange(storage.GetRootFolders(userId));
+            }
+
+            return folders;
         }
 
         // todo: test
@@ -83,5 +139,7 @@ namespace Cloud.Repositories.Repositories
 
             return true;
         }
+
+        #endregion IFileRepository implementation
     }
 }

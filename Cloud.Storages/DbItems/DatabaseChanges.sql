@@ -290,6 +290,9 @@ BEGIN
 
 	ALTER TABLE [dbo].[UserFiles]
 	ADD [Id] nvarchar(16) NOT NULL CONSTRAINT DF_Id DEFAULT('qwer2103');
+
+	ALTER TABLE [dbo].[UserFiles]	DROP 
+	CONSTRAINT DF_Id;
 	
 	ALTER TABLE [dbo].[UserFiles]
 	DROP CONSTRAINT DF_Id;
@@ -302,13 +305,55 @@ BEGIN
 END
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-26
+-- Description:	Add ClassName column to CloudServers table
+-- =============================================================
+SET @newSchemaVersion = 15
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[CloudServers]
+	ADD [ClassName] nvarchar(64) NOT NULL CONSTRAINT DF_ClassName DEFAULT('DefaultClass');
+	
+	ALTER TABLE [dbo].[CloudServers]	DROP 
+	CONSTRAINT DF_ClassName;
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-26
+-- Description:	Update ClassName cloumn in CloudServers table with real data
+-- =============================================================
+SET @newSchemaVersion = 16
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	UPDATE [dbo].[CloudServers]
+	SET [ClassName] = 'Cloud.Storages.Providers.DriveProvider'
+	WHERE [Id] = 1;
+
+	UPDATE [dbo].[CloudServers]
+	SET [ClassName] = 'Cloud.Storages.Providers.LocalLenevoProvider'
+	WHERE [Id] = 2;
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 15
+SET @newSchemaVersion = 17
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

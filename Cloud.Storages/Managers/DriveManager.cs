@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -81,8 +82,10 @@ namespace Cloud.Storages.Managers
         /// </summary>
         private IDataStore GetPersistentCredentialStore()
         {
-            var filderName = ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder];
-            var serverDataStore = new FileDataStore(filderName);
+           var folderName = Path.Combine(
+                @"C:\Users\Ivan\AppData\Roaming",
+                ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder]);
+            var serverDataStore = new FileDataStore(folderName, true);
             return serverDataStore;
         }
 

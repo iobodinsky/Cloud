@@ -1,8 +1,9 @@
 ﻿using Cloud.Common.Interfaces;
 
-namespace Cloud.Repositories.DataContext
+namespace Cloud.Storages.DataContext
 {
     public partial class UserFile : IFile
     {
+        public string DownloadUrl { get; set; }
     }
 }

@@ -1,5 +1,9 @@
 ﻿using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
+using Cloud.Common.Resources;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -10,23 +14,15 @@ namespace Cloud.WebApi.Controllers
     {
         // GET api/cloud/test
         [AllowAnonymous]
-        [Route("test")]
-        public UserStorage GetTest()
+        [Route("{fileId}/cloud/{cloudId:int:min(0)}/download/url")]
+        public HttpResponseMessage GetTest([FromUri] string fileId, [FromUri] int cloudId)
         {
-            var s = Repository.GetRootFiles("61b0b62a-fbdd-4d72-9a9f-1d95bc73765b");
-            var model = new UserStorage
-            {
-                Files = s.Select(file => new UserFile
-                {
-                    Id = "sd",
-                    Name = file.Name
-                }),
-                UserInfo = new UserInfo
-                {
-                    Name = "Addddsdsd"
-                }
-            };
-            return model;
+            var resporseResult = new HttpResponseMessage(HttpStatusCode.OK);
+            var userId = "61b0b62a-fbdd-4d72-9a9f-1d95bc73765b";
+            var file = Repository.GetFile(userId, 2, fileId);
+            resporseResult.Content = new StreamContent(file.Stream);
+            resporseResult.Content.Headers.ContentType = new MediaTypeHeaderValue(InternetMediaTypes.AppStreem);
+            return resporseResult;
         }
 
         // GET api/cloud

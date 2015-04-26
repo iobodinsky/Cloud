@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Http;
 using Cloud.Common.Interfaces;
-using Cloud.Repositories.Repositories;
+using Cloud.Storages.Repositories;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Cloud.WebApi.Controllers

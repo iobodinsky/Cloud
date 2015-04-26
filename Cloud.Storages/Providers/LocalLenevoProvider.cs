@@ -1,11 +1,23 @@
 ﻿using System.Collections.Generic;
 using Cloud.Common.Interfaces;
-using Cloud.Common.Types;
+using Cloud.Common.Models;
+using Cloud.Storages.Managers;
 
 namespace Cloud.Storages.Providers
 {
     internal class LocalLenevoProvider : IStorage
     {
+        #region Private fields
+
+        private readonly LocalFileServerManager _localFileServerManager;
+
+        #endregion Private fields
+
+        public LocalLenevoProvider()
+        {
+            _localFileServerManager = new LocalFileServerManager();
+        }
+
         #region IStorage implementation
 
         public bool Add(string userId, FullUserFile file)
@@ -25,6 +37,7 @@ namespace Cloud.Storages.Providers
 
         public IEnumerable<IFolder> GetRootFolders(string userId)
         {
+            return null;
             throw new System.NotImplementedException();
         }
 
@@ -33,17 +46,22 @@ namespace Cloud.Storages.Providers
             throw new System.NotImplementedException();
         }
 
-        public IFile Get(string userId, int fileId)
+        public IFile GetFileInfo(string userId, string fileId)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool UpdateName(string userId, int fileId, string newfileName)
+        public FullUserFile GetFile(string userId, string fileId)
+        {
+            return _localFileServerManager.GetFile(userId, fileId);
+        }
+
+        public bool UpdateName(string userId, string fileId, string newfileName)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool Delete(string userId, int fileId)
+        public bool Delete(string userId, string fileId)
         {
             throw new System.NotImplementedException();
         }

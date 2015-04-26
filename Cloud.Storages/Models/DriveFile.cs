@@ -15,5 +15,6 @@ namespace Cloud.Storages.Models
         public DateTime LastModifiedDateTime { get; set; }
         public DateTime AddedDateTime { get; set; }
         public int DownloadedTimes { get; set; }
+        public string DownloadUrl { get; set; }
     }
 }

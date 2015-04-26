@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Cloud.Repositories.DataContext;
+using Cloud.Storages.DataContext;
 
-namespace Cloud.Repositories.Repositories
+namespace Cloud.Storages.Repositories
 {
     public class LocalFileServerRepository : RepositoryBase
     {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cloud.Repositories.DataContext
+namespace Cloud.Storages.DataContext
 {
     using System;
     using System.Collections.Generic;

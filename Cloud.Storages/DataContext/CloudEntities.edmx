@@ -11,6 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="LocalFileServers">
           <Key>
@@ -142,6 +143,7 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserFile">
           <Key>
@@ -212,6 +214,7 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           <EntitySetMapping Name="CloudServers">
             <EntityTypeMapping TypeName="CloudDbModel.CloudServer">
               <MappingFragment StoreEntitySet="CloudServers">
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

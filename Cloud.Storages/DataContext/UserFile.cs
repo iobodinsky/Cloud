@@ -7,16 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cloud.Repositories.DataContext
+namespace Cloud.Storages.DataContext
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFileType
+    public partial class UserFile
     {
-        public int FileTypeId { get; set; }
+        public string UserId { get; set; }
         public string Name { get; set; }
-        public string Extension { get; set; }
-        public string IconUrl { get; set; }
+        public Nullable<int> TypeId { get; set; }
+        public string Path { get; set; }
+        public bool IsEditable { get; set; }
+        public long Size { get; set; }
+        public System.DateTime LastModifiedDateTime { get; set; }
+        public System.DateTime AddedDateTime { get; set; }
+        public int DownloadedTimes { get; set; }
+        public string Id { get; set; }
     }
 }

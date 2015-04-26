@@ -12,6 +12,9 @@ namespace Cloud.WebApi
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.
+                SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented; 
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

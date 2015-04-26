@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Cloud.Common.Types;
+using Cloud.Common.Models;
 
 namespace Cloud.Common.Interfaces
 {
@@ -15,10 +15,12 @@ namespace Cloud.Common.Interfaces
 
         IEnumerable<IFolder> GetFoldersIn(string userId, string folder);
 
-        IFile Get(string userId, int fileId);
+        IFile GetFileInfo(string userId, string fileId);
 
-        bool UpdateName(string userId, int fileId, string newfileName);
+        FullUserFile GetFile(string userId, string fileId);
 
-        bool Delete(string userId, int fileId);
+        bool UpdateName(string userId, string fileId, string newfileName);
+
+        bool Delete(string userId, string fileId);
     }
 }

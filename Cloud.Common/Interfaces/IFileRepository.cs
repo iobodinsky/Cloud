@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Cloud.Common.Types;
+using Cloud.Common.Models;
 
 namespace Cloud.Common.Interfaces
 {
@@ -7,7 +7,9 @@ namespace Cloud.Common.Interfaces
     {
         bool Add(string userId, int cloudId, FullUserFile file);
 
-        IFile Get(string userId, int cloudId, string fileId);
+        IFile GetFileInfo(string userId, int cloudId, string fileId);
+
+        FullUserFile GetFile(string userId, int cloudId, string fileId);
 
         IEnumerable<IFile> GetRootFiles(string userId);
 

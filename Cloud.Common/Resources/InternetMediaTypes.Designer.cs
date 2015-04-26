@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cloud.Storages.Resources {
+namespace Cloud.Common.Resources {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace Cloud.Storages.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DriveFilters {
+    public class InternetMediaTypes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DriveFilters() {
+        internal InternetMediaTypes() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cloud.Storages.Resources.DriveFilters", typeof(DriveFilters).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cloud.Common.Resources.InternetMediaTypes", typeof(InternetMediaTypes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Cloud.Storages.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,56 +61,11 @@ namespace Cloud.Storages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DriveFileMaxResults.
+        ///   Looks up a localized string similar to application/octet-stream.
         /// </summary>
-        internal static string FilesMaxResults {
+        public static string AppStreem {
             get {
-                return ResourceManager.GetString("FilesMaxResults", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DriveFoldersMaxResults.
-        /// </summary>
-        internal static string FoldersMaxResults {
-            get {
-                return ResourceManager.GetString("FoldersMaxResults", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to trashed=false.
-        /// </summary>
-        internal static string NoTrash {
-            get {
-                return ResourceManager.GetString("NoTrash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mimeType = &apos;application/vnd.google-apps.folder&apos;.
-        /// </summary>
-        internal static string SearchFolders {
-            get {
-                return ResourceManager.GetString("SearchFolders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mimeType != &apos;application/vnd.google-apps.folder&apos;.
-        /// </summary>
-        internal static string SearchNotFolders {
-            get {
-                return ResourceManager.GetString("SearchNotFolders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;root&apos; in parents.
-        /// </summary>
-        internal static string SearchRoot {
-            get {
-                return ResourceManager.GetString("SearchRoot", resourceCulture);
+                return ResourceManager.GetString("AppStreem", resourceCulture);
             }
         }
     }
