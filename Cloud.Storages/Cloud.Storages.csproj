@@ -112,6 +112,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\AspNetUser.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\CloudEntities.Context.cs">
       <DependentUpon>CloudEntities.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -131,9 +134,6 @@
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\LocalFileServer.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\User.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\UserFile.cs">

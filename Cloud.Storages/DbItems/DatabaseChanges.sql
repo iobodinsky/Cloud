@@ -347,13 +347,38 @@ BEGIN
 	COMMIT
 END
 
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-04-18
+-- Description:	Rename back to AspNet... tables
+-- =============================================================
+SET @newSchemaVersion = 17
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	EXEC sp_rename 'Users', 'AspNetUsers';
+
+	EXEC sp_rename 'Roles', 'AspNetRoles';
+
+	EXEC sp_rename 'UserClaims', 'AspNetUserClaims';
+
+	EXEC sp_rename 'UserLogins', 'AspNetUserLogins';
+
+	EXEC sp_rename 'UserRoles', 'AspNetUserRoles';
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 17
+SET @newSchemaVersion = 18
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

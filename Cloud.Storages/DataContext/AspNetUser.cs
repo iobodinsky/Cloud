@@ -12,7 +12,7 @@ namespace Cloud.Storages.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class AspNetUser
     {
         public string Id { get; set; }
         public string Email { get; set; }
