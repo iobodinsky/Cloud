@@ -47,6 +47,15 @@
     <Compile Include="Interfaces\IFile.cs" />
     <Compile Include="Interfaces\IFolder.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
+    <Compile Include="Models\ResponceError.cs" />
+    <Compile Include="Models\UserFile.cs" />
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\UserStorage.cs" />
+    <Compile Include="Resources\HttpHeaders.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HttpHeaders.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\InternetMediaTypes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -60,6 +69,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\HttpHeaders.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HttpHeaders.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\InternetMediaTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InternetMediaTypes.Designer.cs</LastGenOutput>

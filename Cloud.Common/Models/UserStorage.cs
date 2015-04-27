@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Cloud.WebApi.Models;
 using Newtonsoft.Json;
 
-namespace Cloud.WebApi.Models
+namespace Cloud.Common.Models
 {
     public class UserStorage
     {
