@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cloud.Common.Interfaces;
 using Cloud.WebApi.Models;
 using Newtonsoft.Json;
 
@@ -10,6 +11,9 @@ namespace Cloud.Common.Models
         public UserInfo UserInfo { get; set; }
 
         [JsonProperty("files")]
-        public IEnumerable<UserFile> Files { get; set; }
+        public IEnumerable<IFile> Files { get; set; }
+
+        [JsonProperty("folders")]
+        public IEnumerable<IFolder> Folders { get; set; }
     }
 }
