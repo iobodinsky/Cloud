@@ -1,1 +1,41 @@
-﻿
+﻿<div ng-app="cloud">
+    <div ng-controller="cloudController">
+        <div ng-if="!isLogin">
+            <div class="row">
+                <div class="col-md-12">{{userName}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">asd</div>
+                <div class="col-md-7">asd</div>
+                <div class="col-md-2">asd</div>
+            </div>
+        </div>
+
+        <div ng-if="isLogin">
+            <div>
+                <div>
+                    Welcome
+                </div>
+                <form ng-submit="login()">
+                    <div class="login-head">
+                        <h1>Are you ready ?</h1>
+                    </div>
+                    <div class="form-login">
+                        <div class="form-group">
+                            <input type="text" placeholder="Login" class="form-control"
+                                   ng-model="userLogin" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="*******" class="form-control"
+                                   ng-model="userPassword" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-default" value="Let's go" />
+                        </div>
+                        <h4><a href="#">Lost your Password ?</a></h4>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

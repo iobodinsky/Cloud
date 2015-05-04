@@ -290,6 +290,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\cloud.js" />
+    <Content Include="Scripts\app\controllers\cloudController.js" />
+    <Content Include="Scripts\app\models\constants.js" />
     <Content Include="Scripts\assets\js\angular.min.js" />
     <Content Include="Scripts\assets\js\bootstrap.min.js" />
     <Content Include="Scripts\assets\js\jquery-1.10.2.min.js" />
@@ -307,7 +310,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\app\controllers\" />
     <Folder Include="Scripts\app\directives\" />
     <Folder Include="Scripts\app\services\" />
     <Folder Include="Scripts\views\" />
@@ -393,9 +395,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Cloud\Cloud.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +402,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Cloud\Cloud.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
