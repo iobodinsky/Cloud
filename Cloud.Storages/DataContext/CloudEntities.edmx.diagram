@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1" ZoomLevel="88">
+      <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="CloudDbModel.UserFileType" Width="1.5" PointX="8.25" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.LocalFileServer" Width="1.5" PointX="4.5" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.CloudServer" Width="1.5" PointX="6.375" PointY="0.5" />
-        <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="2.5" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="2.375" PointY="0.625" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Cloud.Common.Models;
@@ -39,6 +40,7 @@ namespace Cloud.Storages.Managers
             foreach (var fileServer in GetFileServers())
             {
                 var filePath = Path.Combine(fileServer.Path, GetUserPath(userId), fileNameWithExtension);
+                if (File.Exists(filePath)) throw new Exception("File already exist");
                 using (var createdFileStream = File.Open(filePath, FileMode.CreateNew))
                 {
                     // Save the same file stream on all servers

@@ -1,4 +1,5 @@
-﻿using Cloud.Storages.DataContext;
+﻿using System.Data.Entity.Validation;
+using Cloud.Storages.DataContext;
 
 namespace Cloud.Storages.Repositories
 {
@@ -23,7 +24,14 @@ namespace Cloud.Storages.Repositories
         /// </summary>
         public virtual void SaveChanges()
         {
-            Entities.SaveChanges();
+            try
+            {
+                Entities.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+            }
+            
         }
 
         /// <summary>

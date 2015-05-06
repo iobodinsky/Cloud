@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Cloud.Common.Managers;
+using Cloud.Common.Models;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -22,8 +24,8 @@ namespace Cloud.WebApi.Controllers
             var userId = "61b0b62a-fbdd-4d72-9a9f-1d95bc73765b";
             var model = new FoldersFiles
             {
-                Folders = Repository.GetRootFolders(userId).ToList(),
-                Files = Repository.GetRootFiles(userId)
+                Folders = FileRepository.GetRootFolders(userId).ToList(),
+                Files = FileRepository.GetRootFiles(userId)
             };
 
             return model;
@@ -63,41 +65,38 @@ namespace Cloud.WebApi.Controllers
         public HttpResponseMessage UploadFile([FromUri] int cloudId)
         {
             var httpRequest = HttpContext.Current.Request;
-            if (httpRequest.Files.Count > 0)
+
+            foreach (string file in httpRequest.Files)
             {
-                foreach (string file in httpRequest.Files)
+                var postedFile = httpRequest.Files[file];
+                if(postedFile == null) continue;
+
+                var userFile = new Storages.DataContext.UserFile
                 {
-                    var postedFile = httpRequest.Files[file];
-                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
-                    postedFile.SaveAs(filePath);
-                }
-                return Request.CreateResponse(HttpStatusCode.Created);
+                    Id = new FileIdGenerator().Get(),
+                    Name = postedFile.FileName,
+                    AddedDateTime = DateTime.Now,
+                    IsEditable = true,
+                    UserId = User.Identity.GetUserId(),
+                    Size = postedFile.ContentLength,
+                    DownloadedTimes = 0,
+                    LastModifiedDateTime = DateTime.Now,
+                    // todo: implement directories
+                    Path = string.Format("path")
+                    // todo: implement creation file type
+                    //TypeId = 
+                };
+
+                var userFileModel = new FullUserFile
+                {
+                    UserFile = userFile,
+                    Stream = postedFile.InputStream
+                };
+
+                FileRepository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
             }
-            
-            return Request.CreateResponse(HttpStatusCode.BadRequest);
-            
-            //var userFile = new Storages.DataContext.UserFile
-            //{
-            //    Name = uploadedFile.FileName,
-            //    AddedDateTime = DateTime.Now,
-            //    IsEditable = true,
-            //    UserId = User.Identity.GetUserId(),
-            //    Size = uploadedFile.ContentLength,
-            //    DownloadedTimes = 0,
-            //    LastModifiedDateTime = DateTime.Now,
-            //    // todo: implement directories
-            //    Path = string.Format("path")
-            //    // todo: implement creation file type
-            //    //TypeId = 
-            //};
 
-            //var userFileModel = new FullUserFile
-            //{
-            //    UserFile = userFile,
-            //    Stream = uploadedFile.InputStream
-            //};
-
-            //Repository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         // POST api/files/1/cloud/1/rename
@@ -108,7 +107,7 @@ namespace Cloud.WebApi.Controllers
             if (string.IsNullOrEmpty(newFileName)) return;
 
             var userId = User.Identity.GetUserId();
-            Repository.UpdateName(userId, cloudId, fileId, newFileName);
+            FileRepository.UpdateName(userId, cloudId, fileId, newFileName);
         }
 
         // DELETE api/files/1/cloud/1/delete
@@ -116,7 +115,7 @@ namespace Cloud.WebApi.Controllers
         [HttpDelete]
         public void DeleteFile([FromUri] string fileId, [FromUri] int cloudId)
         {
-            Repository.Delete(User.Identity.GetUserId(), cloudId, fileId);
+            FileRepository.Delete(User.Identity.GetUserId(), cloudId, fileId);
         }
     }
 }

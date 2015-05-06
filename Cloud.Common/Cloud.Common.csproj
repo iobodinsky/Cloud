@@ -47,6 +47,7 @@
     <Compile Include="Interfaces\IFile.cs" />
     <Compile Include="Interfaces\IFolder.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
+    <Compile Include="Managers\FileIdGenerator.cs" />
     <Compile Include="Models\ResponceError.cs" />
     <Compile Include="Models\UserFile.cs" />
     <Compile Include="Models\UserInfo.cs" />

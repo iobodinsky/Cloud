@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
+using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
 using Cloud.Storages.Providers;
 
@@ -51,7 +51,7 @@ namespace Cloud.Storages.Repositories
             serverManager.SaveFile(file.Stream, file.UserFile.Name, file.UserFile.UserId);
 
             // Save file info to Db
-            Add(file.UserFile, true);
+            Add(file.UserFile as UserFile, true);
 
             return true;
         }
@@ -95,8 +95,6 @@ namespace Cloud.Storages.Repositories
             return folders;
         }
 
-        // todo: test
-        // todo: implement return type info
         public bool UpdateName(string userId, int cloudId, string fileId, string newfileName)
         {
             var fileToUpdate = Entities.UserFiles.SingleOrDefault(

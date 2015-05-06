@@ -38,18 +38,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserFiles">
           <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Path" />
-            <PropertyRef Name="IsEditable" />
-            <PropertyRef Name="Size" />
-            <PropertyRef Name="LastModifiedDateTime" />
-            <PropertyRef Name="AddedDateTime" />
-            <PropertyRef Name="DownloadedTimes" />
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -61,7 +51,7 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           <Property Name="LastModifiedDateTime" Type="datetime" Nullable="false" />
           <Property Name="AddedDateTime" Type="datetime" Nullable="false" />
           <Property Name="DownloadedTimes" Type="int" Nullable="false" />
-          <Property Name="Id" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="UserFileTypes">
           <Key>
@@ -76,21 +66,8 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CloudServers" EntityType="Self.CloudServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserFiles" EntityType="Self.UserFiles" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFiles].[UserId] AS [UserId], 
-    [UserFiles].[Name] AS [Name], 
-    [UserFiles].[TypeId] AS [TypeId], 
-    [UserFiles].[Path] AS [Path], 
-    [UserFiles].[IsEditable] AS [IsEditable], 
-    [UserFiles].[Size] AS [Size], 
-    [UserFiles].[LastModifiedDateTime] AS [LastModifiedDateTime], 
-    [UserFiles].[AddedDateTime] AS [AddedDateTime], 
-    [UserFiles].[DownloadedTimes] AS [DownloadedTimes], 
-    [UserFiles].[Id] AS [Id]
-    FROM [dbo].[UserFiles] AS [UserFiles]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -100,8 +77,8 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           <EntitySet Name="UserFileTypes" EntityType="CloudDbModel.UserFileType" />
           <EntitySet Name="LocalFileServers" EntityType="CloudDbModel.LocalFileServer" />
           <EntitySet Name="CloudServers" EntityType="CloudDbModel.CloudServer" />
-          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
+          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -128,29 +105,6 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="UserFile">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Path" />
-            <PropertyRef Name="IsEditable" />
-            <PropertyRef Name="Size" />
-            <PropertyRef Name="LastModifiedDateTime" />
-            <PropertyRef Name="AddedDateTime" />
-            <PropertyRef Name="DownloadedTimes" />
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="TypeId" Type="Int32" />
-          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
-          <Property Name="Size" Type="Int64" Nullable="false" />
-          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
@@ -167,6 +121,21 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
+          <Property Name="Size" Type="Int64" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -202,22 +171,6 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserFiles">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
-              <MappingFragment StoreEntitySet="UserFiles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
-                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
-                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="CloudDbModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
@@ -233,6 +186,22 @@ warning 6002: The table/view 'CloudDb.dbo.UserFiles' does not have a primary key
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFiles">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
+              <MappingFragment StoreEntitySet="UserFiles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
+                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

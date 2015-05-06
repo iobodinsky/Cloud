@@ -372,13 +372,46 @@ BEGIN
 	COMMIT
 END 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-05-7
+-- Description:	Set Id column as primary in UserFiles table
+-- =============================================================
+SET @newSchemaVersion = 18
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[UserFiles] ADD PRIMARY KEY (Id);
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-05-7
+-- Description:	Extend Id column to 128 in UserFiles table
+-- =============================================================
+SET @newSchemaVersion = 19
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE [dbo].[UserFiles] ALTER COLUMN [Id] nvarchar(128) NOT NULL;
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 18
+SET @newSchemaVersion = 20
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION
