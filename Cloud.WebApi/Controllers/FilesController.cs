@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using Cloud.Common.Models;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -60,32 +60,44 @@ namespace Cloud.WebApi.Controllers
         // POST api/files/cloud/1/upload
         [Route("cloud/{cloudId:int:min(0)}/upload")]
         [HttpPost]
-        public void UploadFile([FromUri] int cloudId, [FromBody] HttpPostedFileBase uploadedFile)
+        public HttpResponseMessage UploadFile([FromUri] int cloudId)
         {
-            if (uploadedFile == null) return;
-
-            var userFile = new Storages.DataContext.UserFile
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count > 0)
             {
-                Name = uploadedFile.FileName,
-                AddedDateTime = DateTime.Now,
-                IsEditable = true,
-                UserId = User.Identity.GetUserId(),
-                Size = uploadedFile.ContentLength,
-                DownloadedTimes = 0,
-                LastModifiedDateTime = DateTime.Now,
-                // todo: implement directories
-                Path = string.Format("path")
-                // todo: implement creation file type
-                //TypeId = 
-            };
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
+                    postedFile.SaveAs(filePath);
+                }
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+            
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
+            
+            //var userFile = new Storages.DataContext.UserFile
+            //{
+            //    Name = uploadedFile.FileName,
+            //    AddedDateTime = DateTime.Now,
+            //    IsEditable = true,
+            //    UserId = User.Identity.GetUserId(),
+            //    Size = uploadedFile.ContentLength,
+            //    DownloadedTimes = 0,
+            //    LastModifiedDateTime = DateTime.Now,
+            //    // todo: implement directories
+            //    Path = string.Format("path")
+            //    // todo: implement creation file type
+            //    //TypeId = 
+            //};
 
-            var userFileModel = new FullUserFile
-            {
-                UserFile = userFile,
-                Stream = uploadedFile.InputStream
-            };
+            //var userFileModel = new FullUserFile
+            //{
+            //    UserFile = userFile,
+            //    Stream = uploadedFile.InputStream
+            //};
 
-            Repository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
+            //Repository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
         }
 
         // POST api/files/1/cloud/1/rename

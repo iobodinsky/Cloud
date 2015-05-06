@@ -9,3 +9,4 @@ cloud.models.constants.userTokenKey = 'CloudUserBearerToken';
 cloud.models.constants.urls.home = '';
 cloud.models.constants.urls.token = '/Token';
 cloud.models.constants.urls.userInfo = 'api/Account/UserInfo';
+cloud.models.constants.urls.upload = 'api/files/cloud/2/upload';

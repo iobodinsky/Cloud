@@ -1,13 +1,42 @@
-﻿<div ng-app="cloud">
-    <div ng-controller="cloudController">
+﻿<div >
+    <div>
         <div ng-if="!isLogin">
-            <div class="row">
-                <div class="col-md-12">{{userName}}</div>
+            <div class="row margin-bottom-s">
+                <div class="col-md-12"></div>
             </div>
             <div class="row">
-                <div class="col-md-3">asd</div>
-                <div class="col-md-7">asd</div>
-                <div class="col-md-2">asd</div>
+                <div class="col-md-2">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Options</div>
+                        <div class="panel-body">
+                            <input type="file" nv-file-select uploader="uploader" />
+                            <button ng-click="item.upload()">upload</button>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Folders & files</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="box folder"
+                                     ng-repeate="folders">{{name}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="box file"
+                                     ng-repeate="folders">{{name}}</div>
+                        </div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">Details</div>
+                        <div class="panel-body">
+                            <div class=""></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

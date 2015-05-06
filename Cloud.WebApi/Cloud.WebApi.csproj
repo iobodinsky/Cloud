@@ -293,6 +293,7 @@
     <Content Include="Scripts\app\cloud.js" />
     <Content Include="Scripts\app\controllers\cloudController.js" />
     <Content Include="Scripts\app\models\constants.js" />
+    <Content Include="Scripts\assets\js\angular-file-upload.min.js" />
     <Content Include="Scripts\assets\js\angular.min.js" />
     <Content Include="Scripts\assets\js\bootstrap.min.js" />
     <Content Include="Scripts\assets\js\jquery-1.10.2.min.js" />
