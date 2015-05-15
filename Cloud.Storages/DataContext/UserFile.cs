@@ -24,5 +24,6 @@ namespace Cloud.Storages.DataContext
         public System.DateTime AddedDateTime { get; set; }
         public int DownloadedTimes { get; set; }
         public string Id { get; set; }
+        public string FolderId { get; set; }
     }
 }

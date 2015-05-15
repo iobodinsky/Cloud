@@ -21,9 +21,11 @@ namespace Cloud.Storages.Repositories
         public StorageRepository()
         {
             // todo: implement MEF
-            _storages = new List<IStorage>();
-            //_storages.Add(new LocalLenevoProvider());
-            _storages.Add(new DriveProvider());
+            _storages = new List<IStorage>
+            {
+                new LocalLenevoProvider(), 
+                new DriveProvider()
+            };
         }
 
         #region Private methods

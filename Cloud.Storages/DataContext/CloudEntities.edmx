@@ -52,6 +52,7 @@
           <Property Name="AddedDateTime" Type="datetime" Nullable="false" />
           <Property Name="DownloadedTimes" Type="int" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FolderId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="UserFileTypes">
           <Key>
@@ -66,8 +67,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ParentId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
@@ -167,13 +168,14 @@
           <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FolderId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserFolder">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserFolders1" Relationship="CloudDbModel.Fk_Parent_Folders" FromRole="UserFolder" ToRole="UserFolder1" />
@@ -246,6 +248,7 @@
           <EntitySetMapping Name="UserFiles">
             <EntityTypeMapping TypeName="CloudDbModel.UserFile">
               <MappingFragment StoreEntitySet="UserFiles">
+                <ScalarProperty Name="FolderId" ColumnName="FolderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
                 <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />

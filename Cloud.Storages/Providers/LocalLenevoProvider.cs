@@ -36,17 +36,17 @@ namespace Cloud.Storages.Providers
 
         public IEnumerable<IFile> GetRootFiles(string userId)
         {
-            throw new System.NotImplementedException();
+            return _localFileServerManager.GetRootFiles(userId);
+        }
+
+        public IEnumerable<IFolder> GetRootFolders(string userId)
+        {
+            return _localFileServerManager.GetRootFolders(userId);
         }
 
         public IEnumerable<IFile> GetFilesIn(string userId, string folder)
         {
             throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<IFolder> GetRootFolders(string userId)
-        {
-            return new List<IFolder>();
         }
 
         public IEnumerable<IFolder> GetFoldersIn(string userId, string folder)

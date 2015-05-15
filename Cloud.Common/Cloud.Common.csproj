@@ -52,6 +52,11 @@
     <Compile Include="Models\UserFile.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\UserStorage.cs" />
+    <Compile Include="Resources\ErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HttpHeaders.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -70,6 +75,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ErrorMessages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HttpHeaders.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HttpHeaders.Designer.cs</LastGenOutput>

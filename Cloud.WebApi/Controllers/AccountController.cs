@@ -339,9 +339,9 @@ namespace Cloud.WebApi.Controllers
                 return GetErrorResult(result);
             }
 
-            // Create user directories on servers
+            // Create user root directory on servers
             var serverManager = new LocalFileServerManager();
-            serverManager.CreateUserDirectory(user.Id);
+            serverManager.CreateUserRootDirectory(user.Id);
 
             return Ok();
         }

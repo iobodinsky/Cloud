@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
+using Cloud.Common.Resources;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Repositories;
 
 namespace Cloud.Storages.Managers
 {
-    public class LocalFileServerManager : RepositoryBase
+    public class LocalFileServerManager
     {
         #region Fields
 
@@ -23,12 +25,42 @@ namespace Cloud.Storages.Managers
 
         #region Public methods
 
-        public void CreateUserDirectory( string userId)
+        public bool Add(UserFile entity, bool isAutoSave)
+        {
+            return _fileServerRepository.Add(entity, isAutoSave);
+        }
+
+        public IEnumerable<IFile> GetRootFiles(string userId)
+        {
+            var rootFolderId = GetUserRootFolderId(userId);
+            return _fileServerRepository.Entities.UserFiles
+                .Where(file => file.UserId == userId && file.FolderId == rootFolderId);
+        }
+
+        public IEnumerable<IFolder> GetRootFolders(string userId)
+        {
+            var rootFolderId = GetUserRootFolderId(userId);
+            return _fileServerRepository.Entities.UserFolders
+                .Where(folder => folder.UserId == userId &&
+                    folder.ParentId == rootFolderId);
+        }
+
+        public void CreateUserRootDirectory(string userId)
         {
             foreach (var fileServer in GetFileServers())
             {
                 var newUserDirectoryPath = Path.Combine(fileServer.Path, GetUserPath(userId));
                 Directory.CreateDirectory(newUserDirectoryPath);
+
+                // Save user root folder to Db
+                var userFolder = new UserFolder
+                {
+                    Id = userId,
+                    Name = userId,
+                    ParentId = string.Empty,
+                    UserId = userId
+                };
+                _fileServerRepository.Entities.UserFolders.Add(userFolder);
             }
         }
 
@@ -119,7 +151,7 @@ namespace Cloud.Storages.Managers
 
         private string GetFilePathById(string serverPath, string userId, string fileId)
         {
-            var fileInfo = Entities.UserFiles.
+            var fileInfo = _fileServerRepository.Entities.UserFiles.
                 SingleOrDefault(file => file.UserId == userId && file.Id == fileId);
             if (fileInfo == null) return null;
 
@@ -130,6 +162,14 @@ namespace Cloud.Storages.Managers
         private IEnumerable<LocalFileServer> GetFileServers()
         {
             return _fileServerRepository.GetLocalFileServers();
+        }
+
+        private string GetUserRootFolderId(string userId)
+        {
+            var userRootFolder = _fileServerRepository.Entities.UserFolders
+                .SingleOrDefault(folder => folder.Id == userId);
+            if (userRootFolder == null) throw new Exception(ErrorMessages.InvalidUserRootFolder);
+            return userRootFolder.Id;
         }
 
         #endregion Private methods

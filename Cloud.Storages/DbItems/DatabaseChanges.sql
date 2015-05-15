@@ -417,8 +417,8 @@ BEGIN
 	BEGIN TRANSACTION
 
 	CREATE TABLE dbo.UserFolders (
-		Id int NOT NULL Identity(1, 1) PRIMARY KEY,
-		ParentId int NOT NULL,
+		Id nvarchar(128) NOT NULL PRIMARY KEY,
+		ParentId nvarchar(128) NOT NULL,
 		UserId nvarchar(128) NOT NULL,
 		Name nvarchar(128) NOT NULL,
 	)
@@ -427,7 +427,25 @@ BEGIN
 	
 	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
 	COMMIT
-END 
+END
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-05-16
+-- Description:	Add column FolderId to UserFiles table
+-- =============================================================
+SET @newSchemaVersion = 21
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE dbo.UserFiles ADD
+	FolderId nvarchar(128) NOT NULL DEFAULT('201557116371');
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
 
 
 /*

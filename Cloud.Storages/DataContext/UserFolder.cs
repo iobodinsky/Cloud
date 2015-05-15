@@ -19,8 +19,8 @@ namespace Cloud.Storages.DataContext
             this.UserFolders1 = new HashSet<UserFolder>();
         }
     
-        public int Id { get; set; }
-        public int ParentId { get; set; }
+        public string Id { get; set; }
+        public string ParentId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
     
