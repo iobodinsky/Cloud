@@ -45,7 +45,6 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="TypeId" Type="int" />
-          <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IsEditable" Type="bit" Nullable="false" />
           <Property Name="Size" Type="bigint" Nullable="false" />
           <Property Name="LastModifiedDateTime" Type="datetime" Nullable="false" />
@@ -105,12 +104,12 @@
           <EntitySet Name="LocalFileServers" EntityType="CloudDbModel.LocalFileServer" />
           <EntitySet Name="CloudServers" EntityType="CloudDbModel.CloudServer" />
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
-          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           <EntitySet Name="UserFolders" EntityType="CloudDbModel.UserFolder" />
           <AssociationSet Name="Fk_Parent_Folders" Association="CloudDbModel.Fk_Parent_Folders">
             <End Role="UserFolder" EntitySet="UserFolders" />
             <End Role="UserFolder1" EntitySet="UserFolders" />
           </AssociationSet>
+          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -154,22 +153,6 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="UserFile">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="TypeId" Type="Int32" />
-          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
-          <Property Name="Size" Type="Int64" Nullable="false" />
-          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FolderId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="UserFolder">
           <Key>
             <PropertyRef Name="Id" />
@@ -193,6 +176,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" />
+          <Property Name="IsEditable" Type="Boolean" Nullable="false" />
+          <Property Name="Size" Type="Int64" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AddedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FolderId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -245,6 +243,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserFolders">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFolder">
+              <MappingFragment StoreEntitySet="UserFolders">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserFiles">
             <EntityTypeMapping TypeName="CloudDbModel.UserFile">
               <MappingFragment StoreEntitySet="UserFiles">
@@ -255,20 +263,9 @@
                 <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFolders">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFolder">
-              <MappingFragment StoreEntitySet="UserFolders">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

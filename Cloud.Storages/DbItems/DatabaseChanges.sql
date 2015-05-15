@@ -448,13 +448,31 @@ BEGIN
 END
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-05-16
+-- Description:	Remove Path column from UserFiles table
+-- =============================================================
+SET @newSchemaVersion = 22
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE dbo.UserFiles
+	DROP COLUMN Path
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 21
+SET @newSchemaVersion = 23
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

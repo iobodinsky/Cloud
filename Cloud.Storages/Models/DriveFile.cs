@@ -8,8 +8,8 @@ namespace Cloud.Storages.Models
         public string Id { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
+        public string FolderId { get; set; }
         public int? TypeId { get; set; }
-        public string Path { get; set; }
         public bool IsEditable { get; set; }
         public long Size { get; set; }
         public DateTime LastModifiedDateTime { get; set; }

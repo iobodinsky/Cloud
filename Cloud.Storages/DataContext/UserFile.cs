@@ -17,7 +17,6 @@ namespace Cloud.Storages.DataContext
         public string UserId { get; set; }
         public string Name { get; set; }
         public Nullable<int> TypeId { get; set; }
-        public string Path { get; set; }
         public bool IsEditable { get; set; }
         public long Size { get; set; }
         public System.DateTime LastModifiedDateTime { get; set; }

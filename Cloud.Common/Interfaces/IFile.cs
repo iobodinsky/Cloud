@@ -14,11 +14,11 @@ namespace Cloud.Common.Interfaces
         [JsonProperty("name")]
         string Name { get; set; }
 
+        [JsonProperty("folderId")]
+        string FolderId { get; set; }
+
         [JsonProperty("typeId")]
         int? TypeId { get; set; }
-
-        [JsonProperty("path")]
-        string Path { get; set; }
 
         [JsonProperty("isEditable")]
         bool IsEditable { get; set; }

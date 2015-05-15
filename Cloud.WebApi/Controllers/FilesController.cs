@@ -57,10 +57,10 @@ namespace Cloud.WebApi.Controllers
 
         #endregion Download file
 
-        // POST api/files/cloud/1/upload
-        [Route("cloud/{cloudId:int:min(0)}/upload")]
+        // POST api/files/cloud/1/folder/1/upload
+        [Route("cloud/{cloudId:int:min(0)}/folder/{folderId}/upload")]
         [HttpPost]
-        public HttpResponseMessage UploadFile([FromUri] int cloudId)
+        public HttpResponseMessage UploadFile([FromUri] int cloudId, [FromUri] string folderId)
         {
             var httpRequest = HttpContext.Current.Request;
 
@@ -79,10 +79,7 @@ namespace Cloud.WebApi.Controllers
                     Size = postedFile.ContentLength,
                     DownloadedTimes = 0,
                     LastModifiedDateTime = DateTime.Now,
-                    // todo: implement directories
-                    Path = string.Format("path")
-                    // todo: implement creation file type
-                    //TypeId = 
+                    FolderId = folderId,
                 };
 
                 var userFileModel = new FullUserFile
