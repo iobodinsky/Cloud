@@ -15,13 +15,11 @@ namespace Cloud.WebApi.Controllers
     public class FilesController : ApiControllerBase
     {
         // GET api/files
-        [AllowAnonymous]
         [Route("")]
         [HttpGet]
         public FoldersFiles GetRootFoldersFiles()
         {
-            //var userId = User.Identity.GetUserId();
-            var userId = "61b0b62a-fbdd-4d72-9a9f-1d95bc73765b";
+            var userId = User.Identity.GetUserId();
             var model = new FoldersFiles
             {
                 Folders = FileRepository.GetRootFolders(userId).ToList(),

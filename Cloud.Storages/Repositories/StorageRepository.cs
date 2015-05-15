@@ -22,7 +22,7 @@ namespace Cloud.Storages.Repositories
         {
             // todo: implement MEF
             _storages = new List<IStorage>();
-            _storages.Add(new LocalLenevoProvider());
+            //_storages.Add(new LocalLenevoProvider());
             _storages.Add(new DriveProvider());
         }
 
@@ -46,13 +46,9 @@ namespace Cloud.Storages.Repositories
 
         public bool Add(string userId, int cloudId, FullUserFile file)
         {
-            // Save file on all physical servers
-            var serverManager = new LocalFileServerManager();
-            serverManager.SaveFile(file.Stream, file.UserFile.Name, file.UserFile.UserId);
-
-            // Save file info to Db
-            Add(file.UserFile as UserFile, true);
-
+            var cloud = ResolveStorageInstance(cloudId);
+            cloud.Add(userId, file);
+            
             return true;
         }
 

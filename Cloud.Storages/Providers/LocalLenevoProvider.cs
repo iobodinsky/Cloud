@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
+using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
 
 namespace Cloud.Storages.Providers
@@ -22,7 +23,15 @@ namespace Cloud.Storages.Providers
 
         public bool Add(string userId, FullUserFile file)
         {
-            throw new System.NotImplementedException();
+            // Save file on all physical servers
+            var serverManager = new LocalFileServerManager();
+            var isSavedSuccess = serverManager.SaveFile(file.Stream, file.UserFile.Name, file.UserFile.UserId);
+
+            // Save file info to Db
+            if (!isSavedSuccess) return false;
+            _localFileServerManager.Add(file.UserFile as UserFile, true);
+            
+            return true;
         }
 
         public IEnumerable<IFile> GetRootFiles(string userId)
@@ -37,8 +46,7 @@ namespace Cloud.Storages.Providers
 
         public IEnumerable<IFolder> GetRootFolders(string userId)
         {
-            return null;
-            throw new System.NotImplementedException();
+            return new List<IFolder>();
         }
 
         public IEnumerable<IFolder> GetFoldersIn(string userId, string folder)

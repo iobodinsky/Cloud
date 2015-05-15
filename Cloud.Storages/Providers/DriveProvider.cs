@@ -22,7 +22,16 @@ namespace Cloud.Storages.Providers
 
         public bool Add(string userId, FullUserFile file)
         {
-            throw new NotImplementedException();
+            var body = new Google.Apis.Drive.v2.Data.File
+            {
+                Title = file.UserFile.Name,
+            };
+
+            var service = _manager.BuildServiceAsync(userId);
+            var request = service.Files.Insert(body, file.Stream, string.Empty);
+            request.Upload();
+
+            return true;
         }
 
         public IEnumerable<IFile> GetRootFiles(string userId)
