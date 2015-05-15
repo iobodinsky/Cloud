@@ -30,5 +30,6 @@ namespace Cloud.Storages.DataContext
         public virtual DbSet<CloudServer> CloudServers { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<UserFile> UserFiles { get; set; }
+        public virtual DbSet<UserFolder> UserFolders { get; set; }
     }
 }

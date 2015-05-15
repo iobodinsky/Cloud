@@ -405,13 +405,38 @@ BEGIN
 	COMMIT
 END 
 
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-05-16
+-- Description:	Create table UserFolders
+-- =============================================================
+SET @newSchemaVersion = 20
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	CREATE TABLE dbo.UserFolders (
+		Id int NOT NULL Identity(1, 1) PRIMARY KEY,
+		ParentId int NOT NULL,
+		UserId nvarchar(128) NOT NULL,
+		Name nvarchar(128) NOT NULL,
+	)
+
+	ALTER TABLE dbo.UserFolders ADD CONSTRAINT Fk_Parent_Folders FOREIGN KEY (ParentId) REFERENCES dbo.UserFolders(Id)
+	
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END 
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 20
+SET @newSchemaVersion = 21
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

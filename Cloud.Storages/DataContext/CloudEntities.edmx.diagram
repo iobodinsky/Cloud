@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="CloudDbModel.CloudServer" Width="1.5" PointX="6.375" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="2.375" PointY="0.625" />
+        <EntityTypeShape EntityType="CloudDbModel.UserFolder" Width="1.5" PointX="0.5" PointY="4.125" />
+        <AssociationConnector Association="CloudDbModel.Fk_Parent_Folders" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

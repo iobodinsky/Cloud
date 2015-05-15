@@ -62,12 +62,38 @@
           <Property Name="Extension" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IconUrl" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="UserFolders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="Fk_Parent_Folders">
+          <End Role="UserFolders" Type="Self.UserFolders" Multiplicity="1" />
+          <End Role="UserFolders1" Type="Self.UserFolders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserFolders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFolders1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CloudDbModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CloudServers" EntityType="Self.CloudServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFolders" EntityType="Self.UserFolders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Fk_Parent_Folders" Association="Self.Fk_Parent_Folders">
+            <End Role="UserFolders" EntitySet="UserFolders" />
+            <End Role="UserFolders1" EntitySet="UserFolders" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -79,6 +105,11 @@
           <EntitySet Name="CloudServers" EntityType="CloudDbModel.CloudServer" />
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
           <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
+          <EntitySet Name="UserFolders" EntityType="CloudDbModel.UserFolder" />
+          <AssociationSet Name="Fk_Parent_Folders" Association="CloudDbModel.Fk_Parent_Folders">
+            <End Role="UserFolder" EntitySet="UserFolders" />
+            <End Role="UserFolder1" EntitySet="UserFolders" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -137,6 +168,29 @@
           <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="UserFolder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserFolders1" Relationship="CloudDbModel.Fk_Parent_Folders" FromRole="UserFolder" ToRole="UserFolder1" />
+          <NavigationProperty Name="UserFolder1" Relationship="CloudDbModel.Fk_Parent_Folders" FromRole="UserFolder1" ToRole="UserFolder" />
+        </EntityType>
+        <Association Name="Fk_Parent_Folders">
+          <End Type="CloudDbModel.UserFolder" Role="UserFolder" Multiplicity="1" />
+          <End Type="CloudDbModel.UserFolder" Role="UserFolder1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserFolder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFolder1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -202,6 +256,16 @@
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFolders">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFolder">
+              <MappingFragment StoreEntitySet="UserFolders">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -142,6 +142,9 @@
     <Compile Include="DataContext\UserFileType.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\UserFolder.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Managers\DriveManager.cs" />
     <Compile Include="Managers\LocalFileServerManager.cs" />
     <Compile Include="Models\DriveFile.cs" />
