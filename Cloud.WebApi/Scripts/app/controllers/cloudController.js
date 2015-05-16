@@ -16,6 +16,29 @@ cloud.controllers.cloudController = cloud.controllers.cloudController || functio
     };
     $scope.isCloud = true;
 
+    $scope.register = function () {
+        var registrationData = {
+            Email: this.userRegistrationEmail,
+            Password: this.userRegistrationPassword,
+            ConfirmPassword: this.userRegistrationConfirmPassword
+        };
+
+        var registerRequest = {
+            method: 'POST',
+            url: cloud.models.constants.urls.register,
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(registrationData)
+        };
+
+        $http(registerRequest)
+            .success(function (data, status, headers, config) {
+                
+            })
+            .error(function (data, status, headers, config) {
+
+            });
+    };
+
     $scope.login = function () {
         var userLogin = this.userLogin;
         var userPassword = this.userPassword;

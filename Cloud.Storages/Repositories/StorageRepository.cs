@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
-using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
 using Cloud.Storages.Providers;
 

@@ -423,8 +423,6 @@ BEGIN
 		Name nvarchar(128) NOT NULL,
 	)
 
-	ALTER TABLE dbo.UserFolders ADD CONSTRAINT Fk_Parent_Folders FOREIGN KEY (ParentId) REFERENCES dbo.UserFolders(Id)
-	
 	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
 	COMMIT
 END

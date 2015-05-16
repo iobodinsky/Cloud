@@ -51,17 +51,17 @@ namespace Cloud.Storages.Managers
             {
                 var newUserDirectoryPath = Path.Combine(fileServer.Path, GetUserPath(userId));
                 Directory.CreateDirectory(newUserDirectoryPath);
-
-                // Save user root folder to Db
-                var userFolder = new UserFolder
-                {
-                    Id = userId,
-                    Name = userId,
-                    ParentId = string.Empty,
-                    UserId = userId
-                };
-                _fileServerRepository.Entities.UserFolders.Add(userFolder);
             }
+
+            // Save user root folder to Db
+            var userRootFolder = new UserFolder
+            {
+                Id = userId,
+                Name = userId,
+                ParentId = string.Empty,
+                UserId = userId
+            };
+            _fileServerRepository.Add(userRootFolder, true);
         }
 
         // todo: user return value

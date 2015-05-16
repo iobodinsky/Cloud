@@ -16,7 +16,7 @@
                                     <button ng-click="item.upload()">upload</button>
                                 </li>
                             </ul>
-                    </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -30,7 +30,7 @@
                             <div class="row">
                                 <div class="box file"
                                      ng-repeate="folders">{{name}}</div>
-                        </div>
+                            </div>
                         </div>  
                     </div>
                 </div>
@@ -46,29 +46,41 @@
         </div>
 
         <div ng-if="isLogin">
-            <div>
-                <div>
-                    Welcome
+            <div class="row">
+                <div class="login-head">
+                    <h1>Are you ready ?</h1>
                 </div>
-                <form ng-submit="login()">
-                    <div class="login-head">
-                        <h1>Are you ready ?</h1>
+                <div class="form-login col-md-6">
+                    <div class="form-group">
+                        <input type="text" placeholder="Login" class="form-control"
+                               ng-model="userLogin" />
                     </div>
-                    <div class="form-login">
-                        <div class="form-group">
-                            <input type="text" placeholder="Login" class="form-control"
-                                   ng-model="userLogin" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="*******" class="form-control"
-                                   ng-model="userPassword" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-default" value="Let's go" />
-                        </div>
-                        <h4><a href="#">Lost your Password ?</a></h4>
+                    <div class="form-group">
+                        <input type="password" placeholder="*******" class="form-control"
+                               ng-model="userPassword" />
                     </div>
-                </form>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" value="Let's go"
+                               ng-click="login()" />
+                    </div>
+                    <h4><a href="#">Lost your Password ?</a></h4>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="email" placeholder="e-mail" class="form-control"
+                               ng-model="userRegistrationEmail" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="*******" class="form-control"
+                               ng-model="userRegistrationPassword" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="*******" class="form-control"
+                               ng-model="userRegistrationConfirmPassword" />
+                    </div>
+                    <button type="button" class="btn btn-default"
+                            ng-click="register()">Register</button>
+                </div>
             </div>
         </div>
     </div>

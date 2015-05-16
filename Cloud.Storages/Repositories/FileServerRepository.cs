@@ -17,11 +17,6 @@ namespace Cloud.Storages.Repositories
             return Entities.LocalFileServers;
         }
 
-        public bool AddLocalFileServer(LocalFileServer server)
-        {
-            return Add(server, true);
-        }
-
         public bool UpdateLocalFileSrver(LocalFileServer serverToUpdate)
         {
             Entities.LocalFileServers.Attach(serverToUpdate);

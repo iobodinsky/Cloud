@@ -14,17 +14,9 @@ namespace Cloud.Storages.DataContext
     
     public partial class UserFolder
     {
-        public UserFolder()
-        {
-            this.UserFolders1 = new HashSet<UserFolder>();
-        }
-    
         public string Id { get; set; }
         public string ParentId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
-    
-        public virtual ICollection<UserFolder> UserFolders1 { get; set; }
-        public virtual UserFolder UserFolder1 { get; set; }
     }
 }
