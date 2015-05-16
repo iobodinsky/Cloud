@@ -23,7 +23,7 @@ namespace Cloud.Storages.Repositories
             _storages = new List<IStorage>
             {
                 new LocalLenevoProvider(), 
-                //new DriveProvider()
+                new DriveProvider()
             };
         }
 

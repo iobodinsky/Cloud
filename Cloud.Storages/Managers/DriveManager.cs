@@ -56,7 +56,7 @@ namespace Cloud.Storages.Managers
         /// </summary>
         private async Task<BaseClientService.Initializer> GetInitializerFor(string userId)
         {
-            var secrets = new ClientSecrets
+          var secrets = new ClientSecrets
             {
                 ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientId],
                 ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientSecret]
@@ -64,8 +64,9 @@ namespace Cloud.Storages.Managers
 
             var credentialPersistanceStore = GetPersistentCredentialStore();
 
-            var userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(secrets,
-                new[] { DriveService.Scope.Drive }, userId, CancellationToken.None, credentialPersistanceStore);
+            var userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+					secrets, new[] { DriveService.Scope.Drive }, userId, 
+					CancellationToken.None, credentialPersistanceStore);
 
             var initializer = new BaseClientService.Initializer
             {
@@ -82,9 +83,7 @@ namespace Cloud.Storages.Managers
         /// </summary>
         private IDataStore GetPersistentCredentialStore()
         {
-           var folderName = Path.Combine(
-                @"C:\Users\Ivan\AppData\Roaming",
-                ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder]);
+            var folderName = ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder];
             var serverDataStore = new FileDataStore(folderName, true);
             return serverDataStore;
         }
