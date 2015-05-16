@@ -5,15 +5,43 @@ cloud.controllers = cloud.controllers || {};
 cloud.controllers.cloudController = cloud.controllers.cloudController || function ($scope, $http, $window, fileUploader) {
     var self = this;
 
-    self.getToken = function () {
+    self.getToken = function() {
         return $window.sessionStorage.getItem(cloud.models.constants.userTokenKey) || '';
-    }
+    };
+
+    self.updateFiles = function () {
+        var token = self.getToken();
+
+        var filesFoldersRequest = {
+            method: 'GET',
+            url: cloud.models.constants.urls.files,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        $http(filesFoldersRequest)
+            .success(function (data, status, headers, config) {
+                $scope.folders = data.Folders;
+                $scope.files = data.Files;
+            })
+            .error(function (data, status, headers, config) {
+
+            });
+    };
 
     $scope.uploader = new fileUploader();
     $scope.uploader.url = cloud.models.constants.urls.upload;
     $scope.uploader.headers = {
         'Authorization': 'Bearer ' + self.getToken()
     };
+
+    $scope.uploader.onCompleteItem = function (item, response, status, headers) {
+        $scope.files.push(item.file.name);
+
+        self.updateFiles();
+    }
+
     $scope.isCloud = true;
 
     $scope.register = function () {
@@ -91,30 +119,37 @@ cloud.controllers.cloudController = cloud.controllers.cloudController || functio
         );
     };
 
+    $scope.folders = [];
+    $scope.files = [];
+
     // Private
     self.init = function() {
         var token = self.getToken();
 
         if (token) {
-            var request = {
+            var userInfoRequest = {
                 method: 'GET',
                 url: cloud.models.constants.urls.userInfo,
                 headers: {
                     'Authorization': 'Bearer ' + token
-                },
-                data: { test: 'test' }
+                }
             };
-            $http(request)
+            $http(userInfoRequest)
                 .success(function (data, status, headers, config) {
                     $scope.userName = data.Email;
                 })
                 .error(function (data, status, headers, config) {
 
                 });
+
+            self.updateFiles();
+
         } else {
             $scope.isLogin = true;
         }
     };
 
     self.init();
+
+    
 };

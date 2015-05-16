@@ -53,6 +53,12 @@ textarea {
     padding: 5px;
     border: 1px solid #000;
     width: 150px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    -moz-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 .box.folder {
