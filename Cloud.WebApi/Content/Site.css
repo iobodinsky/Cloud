@@ -46,25 +46,53 @@ textarea {
     background: #F2F2F2;
 }
 
+.relative { position: relative; }
+
+.absolute { position: absolute; }
+
+.cursor-pointer { cursor: pointer; }
+
 .box {
     display: inline-block;
     text-align: center;
     margin: 5px;
-    padding: 5px;
+    padding: 0 5px;
     border: 1px solid #000;
     width: 150px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    -moz-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
 }
 
 .box.folder {
     border-color: #708090;
 }
 
-.box.file {
-    border-color: #008000;
+.box.file-container {
+	border-color: green;
+	top: 0;
+	bottom: 0;
+	height: 32px;
+	line-height: 32px;
 }
+
+.box .file-name {
+	width: 135px;
+	white-space: nowrap;
+	overflow: hidden !important;
+	-moz-text-overflow: ellipsis;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+.box .file-option {
+	background: none;
+	border: none;
+	border-bottom: 31px solid transparent;
+	
+	top: 0;
+	right: 0;
+	padding: 0;
+}
+
+.box.file-container:hover .file-option { border-right: 32px solid green; }
+
+.box .file-option:focus { outline: none; }

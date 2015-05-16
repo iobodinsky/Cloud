@@ -6,48 +6,48 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 	function($scope, $http, $window, fileUploader) {
 		var self = this;
 
-		self.init = function () {
+		self.init = function() {
 			$scope.folders = [];
 			$scope.files = [];
 
 			var token = self.getToken();
 			if (token) {
-				self.getUserInfo(token);
-				self.getFiles(token);
+				self.getUserInfo();
+				self.getFiles();
 			} else {
 				$scope.isLogin = true;
 			}
 		};
-		self.getToken = function () {
+		self.getToken = function() {
 			return $window.sessionStorage.getItem(cloud.models.constants.userTokenKey) || '';
 		};
-		self.getUserInfo = function (token) {
+		self.getUserInfo = function(token) {
 			var userInfoRequest = {
 				method: 'GET',
 				url: cloud.models.constants.urls.userInfo,
 				headers: {
-					'Authorization': 'Bearer ' + token
+					'Authorization': self.getAuthorizationToken()
 				}
 			};
 			$http(userInfoRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					$scope.userName = data.Email;
 				})
-				.error(function (data, status, headers, config) {
+				.error(function(data, status, headers, config) {
 
 				});
 		};
-		self.getFiles = function (token) {
+		self.getFiles = function() {
 			var filesFoldersRequest = {
 				method: 'GET',
 				url: cloud.models.constants.urls.files,
 				headers: {
-					'Authorization': 'Bearer ' + token
+					'Authorization': self.getAuthorizationToken()
 				}
 			};
 
 			$http(filesFoldersRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					for (var i = 0; i < data.Folders.length; i++) {
 						$scope.folders.push(data.Folders[i]);
 					}
@@ -56,19 +56,24 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 						$scope.files.push(data.Files[j]);
 					}
 				})
-				.error(function (data, status, headers, config) {
+				.error(function(data, status, headers, config) {
 
 				});
+		};
+		self.getAuthorizationToken = function() {
+			return 'Bearer ' + self.getToken();
 		};
 
 		$scope.uploader = new fileUploader();
 		$scope.uploader.url = cloud.models.constants.urls.upload;
 		$scope.uploader.headers = {
-			'Authorization': 'Bearer ' + self.getToken()
+			'Authorization': self.getAuthorizationToken()
 		};
 
 		$scope.uploader.onCompleteItem =
 			function(uploadedItem, response, status, headers) {
+				$scope.uploader.clearQueue();
+
 				$scope.files.push(uploadedItem.file);
 			}
 
@@ -113,8 +118,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
-				data: 'grant_type=password&username=' + loginData.username + '&password=' + loginData.password
-
+				data: 'grant_type=password&username=' + loginData.username +
+					'&password=' + loginData.password
 			};
 
 			$http(loginRequest)
@@ -129,7 +134,30 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				});
 		}
 
+		$scope.delete = function(file) {
+			var cloudId = 2;
+			var url = 'api/files/' + file.id + '/cloud/' + cloudId + '/delete';
+			var deleteRequest = {
+				method: 'DELETE',
+				url: url,
+				headers: {
+					'Authorization': self.getAuthorizationToken()
+				}
+			};
+
+			$http(deleteRequest)
+				.success(function(data, status, headers, config) {
+					for (var i = 0; i < $scope.files.length; i++) {
+						if ($scope.files[i].id == file.id) {
+							$scope.files.splice(i, 1);
+						}
+					}
+				})
+				.error(function(data, status, headers, config) {
+				});
+		};
+
 		// Private
-		
+
 		self.init();
 	};
