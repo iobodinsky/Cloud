@@ -292,12 +292,15 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.js" />
     <Content Include="Scripts\app\controllers\cloudController.js" />
+    <Content Include="Scripts\app\controllers\renameFileModalController.js" />
     <Content Include="Scripts\app\models\constants.js" />
+    <Content Include="Scripts\app\services\userTokenService.js" />
     <Content Include="Scripts\assets\js\angular-file-upload.js" />
-    <Content Include="Scripts\assets\js\angular.min.js" />
+    <Content Include="Scripts\assets\js\angular.js" />
     <Content Include="Scripts\assets\js\bootstrap.min.js" />
     <Content Include="Scripts\assets\js\jquery-1.10.2.min.js" />
     <Content Include="Scripts\assets\js\modernizr-2.6.2.js" />
+    <Content Include="Scripts\assets\js\ui-bootstrap-tpls-0.13.0.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -312,7 +315,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\app\directives\" />
-    <Folder Include="Scripts\app\services\" />
     <Folder Include="Scripts\views\" />
   </ItemGroup>
   <ItemGroup>

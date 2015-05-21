@@ -1,16 +1,16 @@
-﻿var cloud = cloud || {};
+﻿window.cloud = window.cloud || {};
 
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function($scope, $http, $window, fileUploader) {
+	function ($scope, $http, $window, constants, userTokenService, fileUploader, $modal) {
 		var self = this;
 
 		self.init = function() {
 			$scope.folders = [];
 			$scope.files = [];
 
-			var token = self.getToken();
+			var token = userTokenService.getToken();
 			if (token) {
 				self.getUserInfo();
 				self.getFiles();
@@ -18,15 +18,12 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				$scope.isLogin = true;
 			}
 		};
-		self.getToken = function() {
-			return $window.sessionStorage.getItem(cloud.models.constants.userTokenKey) || '';
-		};
-		self.getUserInfo = function(token) {
+		self.getUserInfo = function() {
 			var userInfoRequest = {
 				method: 'GET',
-				url: cloud.models.constants.urls.userInfo,
+				url: constants.urls.cloud.userInfo,
 				headers: {
-					'Authorization': self.getAuthorizationToken()
+					'Authorization': userTokenService.getAuthorizationHeader()
 				}
 			};
 			$http(userInfoRequest)
@@ -40,9 +37,9 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		self.getFiles = function() {
 			var filesFoldersRequest = {
 				method: 'GET',
-				url: cloud.models.constants.urls.files,
+				url: constants.urls.cloud.files,
 				headers: {
-					'Authorization': self.getAuthorizationToken()
+					'Authorization': userTokenService.getAuthorizationHeader()
 				}
 			};
 
@@ -60,14 +57,14 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 				});
 		};
-		self.getAuthorizationToken = function() {
-			return 'Bearer ' + self.getToken();
-		};
-
+		
 		$scope.uploader = new fileUploader();
-		$scope.uploader.url = cloud.models.constants.urls.upload;
+		// TODO:
+		var cloudId = 2;
+		var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
+		$scope.uploader.url = constants.urls.common.constructUpload(cloudId, folderId);
 		$scope.uploader.headers = {
-			'Authorization': self.getAuthorizationToken()
+			'Authorization': userTokenService.getAuthorizationHeader()
 		};
 
 		$scope.uploader.onCompleteItem =
@@ -88,7 +85,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			var registerRequest = {
 				method: 'POST',
-				url: cloud.models.constants.urls.register,
+				url: constants.urls.register,
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify(registrationData)
 			};
@@ -114,7 +111,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			var loginRequest = {
 				method: 'POST',
-				url: cloud.models.constants.urls.token,
+				url: constants.urls.token,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
@@ -125,7 +122,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			$http(loginRequest)
 				.success(function(data, status, headers, config) {
 					$window.sessionStorage.setItem(
-						cloud.models.constants.userTokenKey, data.access_token);
+						constants.userTokenKey, data.access_token);
 					$scope.isLogin = false;
 					self.init();
 				})
@@ -141,7 +138,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				method: 'DELETE',
 				url: url,
 				headers: {
-					'Authorization': self.getAuthorizationToken()
+					'Authorization': userTokenService.getAuthorizationHeader()
 				}
 			};
 
@@ -155,6 +152,27 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				})
 				.error(function(data, status, headers, config) {
 				});
+		};
+		
+		$scope.animationsEnabled = true;
+
+		$scope.renameFile = function (file) {
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'renameFileModal.html',
+				controller: 'renameFileModalController',
+				resolve: {
+					file: function () {
+						return file;
+					}
+				}
+			});
+
+			modalInstance.result.then(function () {
+					
+			}, function () {
+				
+			});
 		};
 
 		// Private

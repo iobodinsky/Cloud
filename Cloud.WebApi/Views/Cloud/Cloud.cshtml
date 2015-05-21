@@ -7,19 +7,19 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="panel panel-info">
-						<div class="panel-heading">Options</div>
+						<div class="panel-heading">options</div>
 						<div class="panel-body">
 							<input type="file" nv-file-select uploader="uploader" />
 							<div ng-if="uploader.queue[0]">
-								Name: <span ng-bind="uploader.queue[0].file.name"></span><br />
-								<button ng-click="uploader.queue[0].upload()">Upload</button>
+								name: <span ng-bind="uploader.queue[0].file.name"></span><br />
+								<button ng-click="uploader.queue[0].upload()">upload</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-8">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Folders & files</div>
+						<div class="panel-heading">folders & files</div>
 						<div class="panel-body container">
 							<div class="row">
 								<div class="box folder" ng-repeat="folder in folders">
@@ -33,6 +33,7 @@
 									</button>
 										<ul class="dropdown-menu" role="menu">
 											<li><a ng-click="delete(file)">delete</a></li>
+											<li><a ng-click="renameFile(file)">rename</a></li>
 										</ul>
 								</div>
 							</div>
@@ -41,7 +42,7 @@
 				</div>
 				<div class="col-md-2">
 					<div class="panel panel-success">
-						<div class="panel-heading">Details</div>
+						<div class="panel-heading">details</div>
 						<div class="panel-body">
 							<div class=""></div>
 						</div>
@@ -53,7 +54,7 @@
 		<div ng-if="isLogin">
 			<div class="row">
 				<div class="login-head">
-					<h1>Are you ready ?</h1>
+					<h1>are you ready ?</h1>
 				</div>
 				<div class="form-login col-md-6">
 					<div class="form-group">
@@ -68,7 +69,7 @@
 						<input type="submit" class="btn btn-default" value="Let's go"
 						       ng-click="login()" />
 					</div>
-					<h4><a href="#">Lost your Password ?</a></h4>
+					<h4><a href="#">lost password ?</a></h4>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
@@ -84,7 +85,7 @@
 						       ng-model="userRegistrationConfirmPassword" />
 					</div>
 					<button type="button" class="btn btn-default"
-					        ng-click="register()">Register</button>
+					        ng-click="register()">register</button>
 				</div>
 			</div>
 		</div>
