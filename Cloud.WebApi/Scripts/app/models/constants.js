@@ -6,10 +6,10 @@ cloud.models.constants = cloud.models.constants || {
 	userTokenType: 'Bearer',
 	urls: {
 		common: {
-			constructUpload: function (cloudId, folderId) {
+			constructUpload: function(cloudId, folderId) {
 				return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
 			},
-			constructRename: function(fileId, cloudId ) {
+			constructRename: function(fileId, cloudId) {
 				return 'api/files/' + fileId + '/cloud/' + cloudId + '/rename';
 			}
 		},
@@ -19,6 +19,9 @@ cloud.models.constants = cloud.models.constants || {
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
 			files: 'api/files',
+			folders: {
+				create: 'api/folders/create'
+			}
 		},
 		drive: {
 			driveUpload: 'https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart'

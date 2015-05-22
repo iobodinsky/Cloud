@@ -9,5 +9,11 @@ namespace Cloud.Common.Interfaces
 
         [JsonProperty("name")]
         string Name { get; set; }
+
+		  [JsonProperty("parentId")]
+		  string ParentId { get; set; }
+
+		  [JsonProperty("userId")]
+		  string UserId { get; set; }
     }
 }

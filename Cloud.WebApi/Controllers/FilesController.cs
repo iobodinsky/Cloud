@@ -23,7 +23,8 @@ namespace Cloud.WebApi.Controllers
             var model = new FoldersFiles
             {
                 Folders = FileRepository.GetRootFolders(userId).ToList(),
-                Files = FileRepository.GetRootFiles(userId)
+                Files = FileRepository.GetRootFiles(userId),
+					 CurrentFolderId = FileRepository.GetRootFolderId(userId)
             };
 
             return model;
@@ -71,7 +72,7 @@ namespace Cloud.WebApi.Controllers
 
                 var userFile = new Storages.DataContext.UserFile
                 {
-                    Id = new FileIdGenerator().Get(),
+                    Id = new IdGenerator().ForFile(),
                     Name = postedFile.FileName,
                     AddedDateTime = DateTime.Now,
                     IsEditable = true,

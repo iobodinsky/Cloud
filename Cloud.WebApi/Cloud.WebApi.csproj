@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\CloudController.cs" />
+    <Compile Include="Controllers\FoldersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,7 +274,6 @@
     <Compile Include="Models\FoldersFiles.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\UserFileDetails.cs" />
-    <Compile Include="Models\UserFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -292,6 +292,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.js" />
     <Content Include="Scripts\app\controllers\cloudController.js" />
+    <Content Include="Scripts\app\controllers\createFolderModalController.js" />
     <Content Include="Scripts\app\controllers\renameFileModalController.js" />
     <Content Include="Scripts\app\models\constants.js" />
     <Content Include="Scripts\app\services\userTokenService.js" />

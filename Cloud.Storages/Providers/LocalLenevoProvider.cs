@@ -1,79 +1,64 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
 
-namespace Cloud.Storages.Providers
-{
-    internal class LocalLenevoProvider : IStorage
-    {
-        #region Private fields
+namespace Cloud.Storages.Providers {
+	internal class LocalLenevoProvider : IStorage {
+		#region Private fields
 
-        private readonly LocalFileServerManager _localFileServerManager;
+		private readonly LocalFileServerManager _localFileServerManager;
 
-        #endregion Private fields
+		#endregion Private fields
 
-        public LocalLenevoProvider()
-        {
-            _localFileServerManager = new LocalFileServerManager();
-        }
+		public LocalLenevoProvider() {
+			_localFileServerManager = new LocalFileServerManager();
+		}
 
-        #region IStorage implementation
+		#region IStorage implementation
 
-        public bool Add(string userId, FullUserFile file)
-        {
-            // Save file on all physical servers
-            var serverManager = new LocalFileServerManager();
-            var isSavedSuccess = serverManager.SaveFile(file.Stream, file.UserFile.Name, file.UserFile.UserId);
+		public void AddFile( string userId, FullUserFile file ) {
+			_localFileServerManager.AddFile(userId, file);
+		}
 
-            // Save file info to Db
-            if (!isSavedSuccess) return false;
-            _localFileServerManager.Add(file.UserFile as UserFile, true);
-            
-            return true;
-        }
+		public void AddFolder( string userId, IFolder folder ) {
+			_localFileServerManager.AddFolder(userId, folder, true);
+		}
 
-        public IEnumerable<IFile> GetRootFiles(string userId)
-        {
-            return _localFileServerManager.GetRootFiles(userId);
-        }
+		public IEnumerable<IFile> GetRootFiles( string userId ) {
+			return _localFileServerManager.GetRootFiles(userId);
+		}
 
-        public IEnumerable<IFolder> GetRootFolders(string userId)
-        {
-            return _localFileServerManager.GetRootFolders(userId);
-        }
+		public IEnumerable<IFolder> GetRootFolders( string userId ) {
+			return _localFileServerManager.GetRootFolders(userId);
+		}
 
-        public IEnumerable<IFile> GetFilesIn(string userId, string folder)
-        {
-            throw new System.NotImplementedException();
-        }
+		public IEnumerable<IFile> GetFilesIn( string userId, string folder ) {
+			throw new NotImplementedException();
+		}
 
-        public IEnumerable<IFolder> GetFoldersIn(string userId, string folder)
-        {
-            throw new System.NotImplementedException();
-        }
+		public IEnumerable<IFolder> GetFoldersIn( string userId, string folder ) {
+			throw new NotImplementedException();
+		}
 
-        public IFile GetFileInfo(string userId, string fileId)
-        {
-            throw new System.NotImplementedException();
-        }
+		public IFile GetFileInfo( string userId, string fileId ) {
+			throw new NotImplementedException();
+		}
 
-        public FullUserFile GetFile(string userId, string fileId)
-        {
-            return _localFileServerManager.GetFile(userId, fileId);
-        }
+		public FullUserFile GetFile( string userId, string fileId ) {
+			return _localFileServerManager.GetFile(userId, fileId);
+		}
 
-        public bool UpdateName(string userId, string fileId, string newfileName)
-        {
-            throw new System.NotImplementedException();
-        }
+		public void UpdateName( string userId, string fileId, string newfileName ) {
+			throw new NotImplementedException();
+		}
 
-        public bool Delete(string userId, string fileId)
-        {
-            throw new System.NotImplementedException();
-        }
+		public void Delete( string userId, string fileId ) {
+			throw new NotImplementedException();
+		}
 
-        #endregion IStorage implementation
-    }
+		#endregion IStorage implementation
+	}
 }

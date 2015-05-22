@@ -5,7 +5,7 @@ namespace Cloud.Common.Interfaces
 {
     public interface IFileRepository
     {
-        bool Add(string userId, int cloudId, FullUserFile file);
+        void Add(string userId, int cloudId, FullUserFile file);
 
         IFile GetFileInfo(string userId, int cloudId, string fileId);
 
@@ -15,8 +15,10 @@ namespace Cloud.Common.Interfaces
 
         IEnumerable<IFolder> GetRootFolders(string userId);
 
-        bool UpdateName(string userId, int cloudId, string fileId, string newfileName);
+		  string GetRootFolderId(string userId);
 
-        bool Delete(string userId, int cloudId, string fileId);
+		  void UpdateName(string userId, int cloudId, string fileId, string newfileName);
+
+		  void Delete(string userId, int cloudId, string fileId);
     }
 }

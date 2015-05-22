@@ -20,7 +20,7 @@ namespace Cloud.Storages.Providers
 
         #region IStorage implementation
 
-        public bool Add(string userId, FullUserFile file)
+        public void AddFile(string userId, FullUserFile file)
         {
             var body = new Google.Apis.Drive.v2.Data.File
             {
@@ -30,9 +30,11 @@ namespace Cloud.Storages.Providers
             var service = _manager.BuildServiceAsync(userId);
             var request = service.Files.Insert(body, file.Stream, string.Empty);
             request.Upload();
-
-            return true;
         }
+
+		  public void AddFolder(string userId, IFolder file) {
+			  throw new NotImplementedException();
+		  }
 
         public IEnumerable<IFile> GetRootFiles(string userId)
         {
@@ -95,12 +97,12 @@ namespace Cloud.Storages.Providers
             throw new NotImplementedException();
         }
 
-        public bool UpdateName(string userId, string fileId, string newfileName)
+        public void UpdateName(string userId, string fileId, string newfileName)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(string userId, string fileId)
+        public void Delete(string userId, string fileId)
         {
             throw new NotImplementedException();
         }

@@ -21,6 +21,7 @@ namespace Cloud.WebApi
 					 "~/Scripts/app/services/userTokenService.js",
 					 "~/Scripts/app/controllers/cloudController.js",
 					 "~/Scripts/app/controllers/renameFileModalController.js",
+					 "~/Scripts/app/controllers/createFolderModalController.js",
                 "~/Scripts/app/cloud.js"));
 
             bundles.Add(new StyleBundle("~/Content/css")

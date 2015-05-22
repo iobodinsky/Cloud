@@ -28,6 +28,20 @@
 	<div class="container body-content">
 		@RenderBody()
 		<hr />
+		<script type="text/ng-template" id="createFolderModal.html">
+			<div class="modal-header">
+				<h3 class="modal-title">create folder</h3>
+			</div>
+			<div class="modal-body">
+				<div>
+					<input type="text" class="form-control" ng-model="folderName" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" ng-click="create(file.name)">create</button>
+				<button class="btn btn-warning" ng-click="cancel()">cancel</button>
+			</div>
+		</script>
 		<script type="text/ng-template" id="renameFileModal.html">
 			<div class="modal-header">
 				<h3 class="modal-title">rename file</h3>

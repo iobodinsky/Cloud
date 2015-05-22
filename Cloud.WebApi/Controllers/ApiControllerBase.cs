@@ -11,7 +11,8 @@ namespace Cloud.WebApi.Controllers
     {
         private ApplicationUserManager _userManager;
 
-        protected readonly IFileRepository FileRepository;
+		  protected readonly IFileRepository FileRepository;
+		  protected readonly IFolderRepository FolderRepository;
 
         public ApplicationUserManager UserManager
         {
@@ -28,6 +29,7 @@ namespace Cloud.WebApi.Controllers
         protected ApiControllerBase()
         {
             FileRepository = new StorageRepository();
+			   FolderRepository = new FolderRepository();
         }
     }
 }

@@ -45,6 +45,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			$http(filesFoldersRequest)
 				.success(function(data, status, headers, config) {
+					$scope.currentFolderId = data.CurrentFolderId;
+
 					for (var i = 0; i < data.Folders.length; i++) {
 						$scope.folders.push(data.Folders[i]);
 					}
@@ -85,7 +87,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			var registerRequest = {
 				method: 'POST',
-				url: constants.urls.register,
+				url: constants.urls.cloud.register,
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify(registrationData)
 			};
@@ -111,7 +113,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			var loginRequest = {
 				method: 'POST',
-				url: constants.urls.token,
+				url: constants.urls.cloud.token,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
@@ -170,12 +172,23 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			modalInstance.result.then(function () {
 					
-			}, function () {
-				
-			});
+			}, function () {});
 		};
 
-		// Private
+		$scope.createFolder = function() {
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'createFolderModal.html',
+				controller: 'createFolderModalController',
+				resolve: {
+					currentFolderId: function() {
+						return $scope.currentFolderId;
+					}
+				}
+			});
+
+			modalInstance.result.then(function () {}, function () {});
+		};
 
 		self.init();
 	};

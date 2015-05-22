@@ -5,7 +5,9 @@ namespace Cloud.Common.Interfaces
 {
     public interface IStorage
     {
-        bool Add(string userId, FullUserFile file);
+		  void AddFile(string userId, FullUserFile file);
+
+		  void AddFolder(string userId, IFolder file);
 
         IEnumerable<IFile> GetRootFiles(string userId);
 
@@ -19,8 +21,8 @@ namespace Cloud.Common.Interfaces
 
         FullUserFile GetFile(string userId, string fileId);
 
-        bool UpdateName(string userId, string fileId, string newfileName);
+        void UpdateName(string userId, string fileId, string newfileName);
 
-        bool Delete(string userId, string fileId);
+        void Delete(string userId, string fileId);
     }
 }

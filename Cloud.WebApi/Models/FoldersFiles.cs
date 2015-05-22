@@ -9,5 +9,6 @@ namespace Cloud.WebApi.Models
     {
         public IEnumerable<IFolder> Folders { get; set; }
         public IEnumerable<IFile> Files { get; set; }
+	     public string CurrentFolderId { get; set; }
     }
 }
