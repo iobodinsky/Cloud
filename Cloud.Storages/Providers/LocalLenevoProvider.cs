@@ -48,7 +48,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public FullUserFile GetFile( string userId, string fileId ) {
-			return _localFileServerManager.GetFile(userId, fileId);
+			return _localFileServerManager.GetFullFile(userId, fileId);
 		}
 
 		public void UpdateName( string userId, string fileId, string newfileName ) {

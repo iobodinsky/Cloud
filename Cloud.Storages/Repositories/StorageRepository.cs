@@ -77,10 +77,11 @@ namespace Cloud.Storages.Repositories {
 			// Rename file on servers
 			var oldfileName = fileToUpdate.Name;
 			var extention = Path.GetExtension(oldfileName);
+			newfileName = Path.GetFileNameWithoutExtension(newfileName);
 			newfileName += extention;
 			var serverManager = new LocalFileServerManager();
-			serverManager.RenameFile(userId, fileId, oldfileName, newfileName);
-
+			serverManager.RenameFile(userId, fileToUpdate, newfileName);
+			
 			// Rename file in Db
 			fileToUpdate.Name = newfileName;
 			Entities.UserFiles.Attach(fileToUpdate);
@@ -98,9 +99,8 @@ namespace Cloud.Storages.Repositories {
 			}
 
 			// Delete file from all servers
-
 			var serverManager = new LocalFileServerManager();
-			serverManager.DeleteFile(userId, fileToDelete.Name);
+			serverManager.DeleteFile(userId, fileToDelete);
 
 			// Delete file from db
 			Entities.UserFiles.Attach(fileToDelete);

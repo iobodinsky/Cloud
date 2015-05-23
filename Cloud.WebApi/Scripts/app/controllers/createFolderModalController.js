@@ -20,12 +20,24 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 			};
 
 			$http(createFolderRequest)
-				.success(function(data, status, headers, config) {
+				.success(function (data, status, headers, config) {
+					$modalInstance.close({
+						isSuccess: true,
+						data: data,
+						status: status,
+						headers: headers,
+						config: config
+					});
 				})
-				.error(function(data, status, headers, config) {
+				.error(function (data, status, headers, config) {
+					$modalInstance.close({
+						isSuccess: false,
+						data: data,
+						status: status,
+						headers: headers,
+						config: config
+					});
 				});
-
-			$modalInstance.close(0);
 		};
 
 		$scope.cancel = function() {

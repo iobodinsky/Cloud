@@ -73,40 +73,51 @@ namespace Cloud.Storages.Managers {
 		}
 
 		// todo: check if needed FileInfo or just Stream
-		public FullUserFile GetFile( string userId, string fileId ) {
-			FullUserFile file = null;
-			foreach (var fileServer in GetFileServers()) {
-				var filePath = GetFilePathById(fileServer.Path, userId, fileId);
-				if (string.IsNullOrEmpty(filePath)) continue;
-
-				file = new FullUserFile {
-					Stream = new FileStream(filePath, FileMode.Open)
-				};
+		public FullUserFile GetFullFile( string userId, string fileId ) {
+			var server = GetFileServers().First();
+			var file = _fileServerRepository.Entities.UserFiles
+				.SingleOrDefault(fileItem => fileItem.Id == fileId);
+			if (file == null) {
+				// todo: 
+				throw new Exception("todo");
 			}
 
-			return file;
+			var filePath = Path.Combine(
+				GetFolderServerPath(userId, file.FolderId, server), file.Name);
+				
+			var fullFile = new FullUserFile {
+				Stream = new FileStream(filePath, FileMode.Open)
+			};
+
+			return fullFile;
 		}
 
-		public void RenameFile( string userId, string fileId, string oldFileName, string newFileName ) {
-			//foreach (var fileServer in GetFileServers()) {
-			//	var fileServerPath = Get(fileServer.Path, userId, oldFileName);
-			//	var serverNewFilePath = GetFilePathByName(fileServer.Path, userId, newFileName);
-			//	if (File.Exists(serverNewFilePath)) {
-			//		// todo:
-			//		throw new Exception("todo");
-			//	}
+		public void RenameFile( string userId, IFile file, string newFileName ) {
+			foreach (var server in GetFileServers()) {
+				var folder = _fileServerRepository.Entities.UserFolders
+					.SingleOrDefault(folderItem => folderItem.Id == file.FolderId);
+				if (folder == null) {
+					// todo: 
+					throw new Exception("todo");
+				}
 
-			//	File.Move(fileServerPath, serverNewFilePath);
-			//}
+				var folderPath = GetFolderServerPath(userId, file.FolderId, server);
+				var oldFilePath = Path.Combine(folderPath, file.Name);
+				var newFilePath = Path.Combine(folderPath, newFileName);
+				if (File.Exists(newFilePath)) {
+					// todo:
+					throw new Exception("todo");
+				}
+
+				File.Move(oldFilePath, newFilePath);
+			}
 		}
 
-		public bool DeleteFile( string userId, string fileName ) {
-			//foreach (var fileServer in GetFileServers()) {
-			//	var serverFilePath = GetFilePathByName(fileServer.Path, userId, fileName);
-			//	File.Delete(serverFilePath);
-			//}
-
-			return true;
+		public void DeleteFile( string userId, IFile file ) {
+			foreach (var server in GetFileServers()) {
+				var filePath = GetFileServerPath(userId, file.Id, server);
+				File.Delete(filePath);
+			}
 		}
 
 		#endregion Public methods
@@ -119,7 +130,7 @@ namespace Cloud.Storages.Managers {
 				// todo:
 				throw new Exception("todo");
 			}
-			var folderPath = GetUserFolderPath(userId, folder.Name, folder.ParentId);
+			var folderPath = GetFolderPath(userId, folder.ParentId);
 			if (Directory.Exists(Path.Combine(servers.First().Path, folderPath))) {
 				// todo:
 				throw new Exception("todo");
@@ -129,19 +140,72 @@ namespace Cloud.Storages.Managers {
 			}
 		}
 
-		private string GetUserFolderPath(string userId, string folderName, string parentFolderId) {
+		private string GetFolderServerPath(string userId, string folderId, 
+			LocalFileServer server) {
+			return Path.Combine(server.Path, GetFolderPath(userId, folderId));
+		}
+
+		private string GetFileServerPath(string userId, string fileId,
+			LocalFileServer server) {
+				return Path.Combine(server.Path, GetFilePath(userId, fileId));
+		}
+
+		private string GetFolderPath(string userId, string folderId) {
+			var folder = _fileServerRepository.Entities.UserFolders
+					.SingleOrDefault(folderItem => folderItem.Id == folderId);
+			if (folder == null) {
+				// todo:
+				throw new Exception("todo");
+			}
+			if (folder.Name.Equals(GetUserRootFolderId(userId))) {
+				return folder.Name;
+			}
+
 			while (true) {
 				var currentFolder = _fileServerRepository.Entities.UserFolders
-					.SingleOrDefault(folder => folder.Id == parentFolderId);
+					.SingleOrDefault(folderItem => folderItem.Id == folderId);
 				if (currentFolder == null) {
 					// todo:
 					throw new Exception("todo");
 				}
 				if (currentFolder.Id.Equals(GetUserRootFolderId(userId))) {
-					return Path.Combine(currentFolder.Name, folderName);
+					return Path.Combine(currentFolder.Name, folder.Name);
 				}
-				folderName = Path.Combine(currentFolder.Name, folderName);
-				parentFolderId = currentFolder.ParentId;
+				folder.Name = Path.Combine(currentFolder.Name, folder.Name);
+				folderId = currentFolder.ParentId;
+			}
+		}
+
+		private string GetFilePath(string userId, string fileId) {
+			var file = _fileServerRepository.Entities.UserFiles
+					.SingleOrDefault(fileItem => fileItem.Id == fileId);
+			if (file == null) {
+				// todo:
+				throw new Exception("todo");
+			}
+			var folderId = file.FolderId;
+			var folder = _fileServerRepository.Entities.UserFolders
+					.SingleOrDefault(folderItem => folderItem.Id == folderId);
+			if (folder == null) {
+				// todo:
+				throw new Exception("todo");
+			}
+			if (folder.Name.Equals(GetUserRootFolderId(userId))) {
+				return Path.Combine(folder.Name, file.Name);
+			}
+
+			while (true) {
+				var currentFolder = _fileServerRepository.Entities.UserFolders
+					.SingleOrDefault(folderItem => folderItem.Id == folderId);
+				if (currentFolder == null) {
+					// todo:
+					throw new Exception("todo");
+				}
+				if (currentFolder.Id.Equals(GetUserRootFolderId(userId))) {
+					return Path.Combine(currentFolder.Name, folder.Name, file.Name);
+				}
+				folder.Name = Path.Combine(currentFolder.Name, folder.Name);
+				folderId = currentFolder.ParentId;
 			}
 		}
 
@@ -158,7 +222,6 @@ namespace Cloud.Storages.Managers {
 				using (var createdFileStream = File.Open(filePath, FileMode.CreateNew)) {
 					// Save the same file stream on all servers
 					fileStream.Position = 0;
-
 					fileStream.CopyTo(createdFileStream);
 				}
 			}
@@ -176,16 +239,6 @@ namespace Cloud.Storages.Managers {
 
 		private string GetUserRootPath(LocalFileServer server, string userId) {
 			return Path.Combine(server.Path, GetUserFolder(userId));
-		}
-
-		private string GetFilePathById( string serverPath, string userId, string fileId ) {
-			//var fileInfo = _fileServerRepository.Entities.UserFiles.
-			//	SingleOrDefault(file => file.UserId == userId && file.Id == fileId);
-			//if (fileInfo == null) return null;
-
-			//var fileName = fileInfo.Name;
-			//return GetFilePathByName(serverPath, userId, fileName);
-			return string.Empty;
 		}
 
 		private IEnumerable<LocalFileServer> GetFileServers() {

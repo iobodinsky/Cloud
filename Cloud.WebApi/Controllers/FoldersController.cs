@@ -16,7 +16,7 @@ namespace Cloud.WebApi.Controllers {
 			folder.UserId = userId;
 			FolderRepository.Add(userId, cloudId, folder);
 
-			return Ok();
+			return Ok(folder);
 		}
 	}
 }

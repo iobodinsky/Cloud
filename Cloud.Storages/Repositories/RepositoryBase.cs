@@ -25,7 +25,7 @@ namespace Cloud.Storages.Repositories {
 		public virtual void SaveChanges() {
 			try {
 				Entities.SaveChanges();
-			} catch (DbEntityValidationException ex) {
+			} catch (DbEntityValidationException) {
 			}
 
 		}

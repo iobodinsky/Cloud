@@ -74,7 +74,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				$scope.uploader.clearQueue();
 
 				$scope.files.push(uploadedItem.file);
-			}
+			};
 
 		$scope.isCloud = true;
 
@@ -109,7 +109,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				grant_type: 'password',
 				username: userLogin,
 				password: userPassword
-			}
+			};
 
 			var loginRequest = {
 				method: 'POST',
@@ -131,7 +131,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				.error(function(data, status, headers, config) {
 
 				});
-		}
+		};
 
 		$scope.delete = function(file) {
 			var cloudId = 2;
@@ -147,7 +147,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			$http(deleteRequest)
 				.success(function(data, status, headers, config) {
 					for (var i = 0; i < $scope.files.length; i++) {
-						if ($scope.files[i].id == file.id) {
+						if ($scope.files[i].id === file.id) {
 							$scope.files.splice(i, 1);
 						}
 					}
@@ -162,7 +162,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'renameFileModal.html',
-				controller: 'renameFileModalController',
+				controller: cloud.controllers.renameFileModalController,
 				resolve: {
 					file: function () {
 						return file;
@@ -170,16 +170,20 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				}
 			});
 
-			modalInstance.result.then(function () {
-					
-			}, function () {});
+			modalInstance.result.then(function(options) {
+				if (options.isSuccess) {
+					$scope.folders.push(options.data.name);
+				} else {
+					// todo:
+				}
+			});
 		};
 
 		$scope.createFolder = function() {
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'createFolderModal.html',
-				controller: 'createFolderModalController',
+				controller: cloud.controllers.createFolderModalController,
 				resolve: {
 					currentFolderId: function() {
 						return $scope.currentFolderId;
@@ -187,7 +191,13 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				}
 			});
 
-			modalInstance.result.then(function () {}, function () {});
+			modalInstance.result.then(function (options) {
+				if (options.isSuccess) {
+					$scope.folders.push(options.data);
+				} else {
+					// todo:
+				}
+			});
 		};
 
 		self.init();
