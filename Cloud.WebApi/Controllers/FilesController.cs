@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
@@ -26,8 +25,6 @@ namespace Cloud.WebApi.Controllers {
 			return model;
 		}
 
-		#region Download file
-
 		// From Cloud
 		// GET api/files/1/cloud/1/download/
 		[AllowAnonymous]
@@ -50,40 +47,34 @@ namespace Cloud.WebApi.Controllers {
 			throw new Exception();
 		}
 
-		#endregion Download file
-
 		// POST api/files/cloud/1/folder/1/upload
 		[Route( "cloud/{cloudId:int:min(0)}/folder/{folderId}/upload" )]
 		[HttpPost]
-		public HttpResponseMessage UploadFile( [FromUri] int cloudId,
+		public IHttpActionResult UploadFile( [FromUri] int cloudId,
 			[FromUri] string folderId ) {
 			var httpRequest = HttpContext.Current.Request;
 
-			foreach (string file in httpRequest.Files) {
-				var postedFile = httpRequest.Files[file];
-				if (postedFile == null) continue;
+			var postedFile = httpRequest.Files.Get(0);
+			var userFile = new Storages.DataContext.UserFile {
+				Id = new IdGenerator().ForFile(),
+				Name = postedFile.FileName,
+				AddedDateTime = DateTime.Now,
+				IsEditable = true,
+				UserId = User.Identity.GetUserId(),
+				Size = postedFile.ContentLength,
+				DownloadedTimes = 0,
+				LastModifiedDateTime = DateTime.Now,
+				FolderId = folderId,
+			};
 
-				var userFile = new Storages.DataContext.UserFile {
-					Id = new IdGenerator().ForFile(),
-					Name = postedFile.FileName,
-					AddedDateTime = DateTime.Now,
-					IsEditable = true,
-					UserId = User.Identity.GetUserId(),
-					Size = postedFile.ContentLength,
-					DownloadedTimes = 0,
-					LastModifiedDateTime = DateTime.Now,
-					FolderId = folderId,
-				};
+			var userFileModel = new FullUserFile {
+				UserFile = userFile,
+				Stream = postedFile.InputStream
+			};
 
-				var userFileModel = new FullUserFile {
-					UserFile = userFile,
-					Stream = postedFile.InputStream
-				};
-
-				FileRepository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
-			}
-
-			return new HttpResponseMessage(HttpStatusCode.OK);
+			FileRepository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
+			
+			return Ok(userFile);
 		}
 
 		// POST api/files/1/cloud/1/rename

@@ -65,7 +65,7 @@ textarea {
     border-color: #708090;
 }
 
-.box.file-container {
+.box.container {
 	border-color: green;
 	top: 0;
 	bottom: 0;
@@ -73,7 +73,7 @@ textarea {
 	line-height: 32px;
 }
 
-.box .file-name {
+.box .name {
 	width: 135px;
 	white-space: nowrap;
 	overflow: hidden !important;
@@ -83,7 +83,7 @@ textarea {
 	text-overflow: ellipsis;
 }
 
-.box .file-option {
+.box .option {
 	background: none;
 	border: none;
 	border-bottom: 31px solid transparent;
@@ -93,6 +93,6 @@ textarea {
 	padding: 0;
 }
 
-.box.file-container:hover .file-option { border-right: 32px solid green; }
+.box.container:hover .option { border-right: 32px solid green; }
 
-.box .file-option:focus { outline: none; }
+.box .option:focus { outline: none; }

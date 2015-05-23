@@ -16,6 +16,7 @@ cloud.app.controller('cloudController', [
 	'$scope',
 	'$http',
 	'$window',
+	'$log',
 	'constants',
 	'userTokenService',
 	'FileUploader',

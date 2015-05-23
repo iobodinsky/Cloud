@@ -94,13 +94,6 @@ namespace Cloud.Storages.Managers {
 
 		public void RenameFile( string userId, IFile file, string newFileName ) {
 			foreach (var server in GetFileServers()) {
-				var folder = _fileServerRepository.Entities.UserFolders
-					.SingleOrDefault(folderItem => folderItem.Id == file.FolderId);
-				if (folder == null) {
-					// todo: 
-					throw new Exception("todo");
-				}
-
 				var folderPath = GetFolderServerPath(userId, file.FolderId, server);
 				var oldFilePath = Path.Combine(folderPath, file.Name);
 				var newFilePath = Path.Combine(folderPath, newFileName);
@@ -120,6 +113,15 @@ namespace Cloud.Storages.Managers {
 			}
 		}
 
+		public void DeleteFolder(string userId, IFolder folder) {
+			foreach (var server in GetFileServers()) {
+				var folderPath = GetFolderServerPath(userId, folder.Id, server);
+				if (Directory.Exists(folderPath)) {
+					Directory.Delete(folderPath, true);	
+				}
+			}
+		}
+
 		#endregion Public methods
 
 		#region Private methods
@@ -130,12 +132,16 @@ namespace Cloud.Storages.Managers {
 				// todo:
 				throw new Exception("todo");
 			}
-			var folderPath = GetFolderPath(userId, folder.ParentId);
-			if (Directory.Exists(Path.Combine(servers.First().Path, folderPath))) {
-				// todo:
-				throw new Exception("todo");
-			}
+			var folderPath = Path.Combine(
+				GetFolderPath(userId, folder.ParentId),
+				folder.Name);
+			
 			foreach (var server in servers) {
+				if (Directory.Exists(Path.Combine(server.Path, folderPath))) {
+					// todo:
+					throw new Exception("todo");
+				}
+
 				Directory.CreateDirectory(Path.Combine(server.Path, folderPath));
 			}
 		}
@@ -161,6 +167,8 @@ namespace Cloud.Storages.Managers {
 				return folder.Name;
 			}
 
+			var folderName = folder.Name;
+
 			while (true) {
 				var currentFolder = _fileServerRepository.Entities.UserFolders
 					.SingleOrDefault(folderItem => folderItem.Id == folderId);
@@ -169,9 +177,11 @@ namespace Cloud.Storages.Managers {
 					throw new Exception("todo");
 				}
 				if (currentFolder.Id.Equals(GetUserRootFolderId(userId))) {
-					return Path.Combine(currentFolder.Name, folder.Name);
+					return Path.Combine(currentFolder.Name, folderName);
 				}
-				folder.Name = Path.Combine(currentFolder.Name, folder.Name);
+				if (!currentFolder.Name.Equals(folderName)) {
+					folderName = Path.Combine(currentFolder.Name, folderName);
+				}
 				folderId = currentFolder.ParentId;
 			}
 		}

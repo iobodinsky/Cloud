@@ -18,5 +18,16 @@ namespace Cloud.WebApi.Controllers {
 
 			return Ok(folder);
 		}
+
+		// DELETE: api/folders/1/cloud/1/delete
+		[Route("{folderId}/cloud/{cloudId:int:min(0)}/delete")]
+		[HttpDelete]
+		public IHttpActionResult Delete( [FromUri] string folderId, [FromUri] int cloudId ) {
+			var userId = User.Identity.GetUserId();
+			FolderRepository.Delete(userId, cloudId, folderId);
+
+			// todo: better return type
+			return Ok(folderId);
+		}
 	}
 }

@@ -8,7 +8,7 @@ cloud.controllers.renameFileModalController = cloud.controllers.renameFileModalC
 		$scope.rename = function (newFileName) {
 			var renameRequest = {
 				method: 'POST',
-				url: constants.urls.common.constructRename(file.id, 2),
+				url: constants.urls.cloud.files.constructRename(file.id, 2),
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader(),
 				},

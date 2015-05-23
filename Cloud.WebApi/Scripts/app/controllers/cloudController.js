@@ -3,7 +3,7 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function ($scope, $http, $window, constants, userTokenService, fileUploader, $modal) {
+	function ($scope, $http, $window, $log, constants, userTokenService, fileUploader, $modal) {
 		var self = this;
 
 		self.init = function() {
@@ -37,7 +37,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		self.getFiles = function() {
 			var filesFoldersRequest = {
 				method: 'GET',
-				url: constants.urls.cloud.files,
+				url: constants.urls.cloud.files.getAll,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
 				}
@@ -45,14 +45,14 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			$http(filesFoldersRequest)
 				.success(function(data, status, headers, config) {
-					$scope.currentFolderId = data.CurrentFolderId;
+					$scope.currentFolderId = data.currentFolderId;
 
-					for (var i = 0; i < data.Folders.length; i++) {
-						$scope.folders.push(data.Folders[i]);
+					for (var i = 0; i < data.folders.length; i++) {
+						$scope.folders.push(data.folders[i]);
 					}
 
-					for (var j = 0; j < data.Files.length; j++) {
-						$scope.files.push(data.Files[j]);
+					for (var j = 0; j < data.files.length; j++) {
+						$scope.files.push(data.files[j]);
 					}
 				})
 				.error(function(data, status, headers, config) {
@@ -64,16 +64,20 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		// TODO:
 		var cloudId = 2;
 		var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
-		$scope.uploader.url = constants.urls.common.constructUpload(cloudId, folderId);
+		$scope.uploader.url = constants.urls.cloud.files.constructUpload(cloudId, folderId);
 		$scope.uploader.headers = {
 			'Authorization': userTokenService.getAuthorizationHeader()
 		};
-
 		$scope.uploader.onCompleteItem =
-			function(uploadedItem, response, status, headers) {
-				$scope.uploader.clearQueue();
-
-				$scope.files.push(uploadedItem.file);
+			function (uploadedItem, response, status, headers) {
+				if (status === 200) {
+					$scope.uploader.clearQueue();
+					$scope.uploader.cancelAll();
+					$scope.files.push(response);
+				} else {
+					// todo:
+					$log.error("error");
+				}
 			};
 
 		$scope.isCloud = true;
@@ -133,27 +137,31 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				});
 		};
 
-		$scope.delete = function(file) {
-			var cloudId = 2;
-			var url = 'api/files/' + file.id + '/cloud/' + cloudId + '/delete';
-			var deleteRequest = {
-				method: 'DELETE',
-				url: url,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
-			};
-
-			$http(deleteRequest)
-				.success(function(data, status, headers, config) {
-					for (var i = 0; i < $scope.files.length; i++) {
-						if ($scope.files[i].id === file.id) {
-							$scope.files.splice(i, 1);
-						}
+		$scope.deleteFile = function (file) {
+			if (file.id) {
+				var cloudId = 2;
+				var url = constants.urls.cloud.files.constructDelete(file.id, cloudId);
+				var deleteRequest = {
+					method: 'DELETE',
+					url: url,
+					headers: {
+						'Authorization': userTokenService.getAuthorizationHeader()
 					}
-				})
-				.error(function(data, status, headers, config) {
-				});
+				};
+
+				$http(deleteRequest)
+					.success(function (data, status, headers, config) {
+						for (var i = 0; i < $scope.files.length; i++) {
+							if ($scope.files[i].id === file.id) {
+								$scope.files.splice(i, 1);
+							}
+						}
+					})
+					.error(function (data, status, headers, config) {
+					});
+			} else {
+				$log.error("userFile.id");
+			}
 		};
 		
 		$scope.animationsEnabled = true;
@@ -198,6 +206,29 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					// todo:
 				}
 			});
+		};
+
+		$scope.deleteFolder = function (folder) {
+			var cloudId = 2;
+			var url = constants.urls.cloud.folders.constructDelete(folder.id, cloudId);
+			var deleteRequest = {
+				method: 'DELETE',
+				url: url,
+				headers: {
+					'Authorization': userTokenService.getAuthorizationHeader()
+				}
+			};
+
+			$http(deleteRequest)
+				.success(function (data, status, headers, config) {
+					for (var i = 0; i < $scope.folders.length; i++) {
+						if ($scope.folders[i].id === data) {
+							$scope.folders.splice(i, 1);
+						}
+					}
+				})
+				.error(function (data, status, headers, config) {
+				});
 		};
 
 		self.init();

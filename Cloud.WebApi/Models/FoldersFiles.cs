@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Cloud.Common.Interfaces;
+using Newtonsoft.Json;
 
-namespace Cloud.WebApi.Models
-{
-    [CollectionDataContract]
-    public class FoldersFiles
-    {
-        public IEnumerable<IFolder> Folders { get; set; }
-        public IEnumerable<IFile> Files { get; set; }
-	     public string CurrentFolderId { get; set; }
-    }
+namespace Cloud.WebApi.Models {
+	[CollectionDataContract]
+	public class FoldersFiles {
+		[JsonProperty("folders")]
+		public IEnumerable<IFolder> Folders { get; set; }
+
+		[JsonProperty("files")]
+		public IEnumerable<IFile> Files { get; set; }
+
+		[JsonProperty("currentFolderId")]
+		public string CurrentFolderId { get; set; }
+	}
 }
