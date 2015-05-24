@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cloud.Common.Interfaces;
+using Cloud.Common.Models;
 using Cloud.Storages.Managers;
 
 namespace Cloud.Storages.Repositories {
-	public class FolderRepository : RepositoryBase, IFolderRepository {
+	public class FolderRepository : RepositoryBase {
 
 		#region IFileRepository implementation
 
 		public void Add( string userId, int cloudId, IFolder folder ) {
-			var cloud = ResolveStorageInstance(cloudId);
-			cloud.AddFolder(userId, folder);
+			throw new NotImplementedException();
 		}
 
 		public IFolder GetFolder( string userId, int cloudId, string folderId ) {
 			throw new NotImplementedException();
+		}
+
+		public FolderData GetFolderData( string userId, int cloudId, string folderId ) {
+			var cloud = ResolveStorageInstance(cloudId);
+			
+			return cloud.GetFolderData(userId, folderId);
 		}
 
 		public IEnumerable<IFile> GetRootFiles( string userId ) {
@@ -36,14 +42,14 @@ namespace Cloud.Storages.Repositories {
 
 		public void Delete( string userId, int cloudId, string folderId ) {
 			// Delete folder on servers
-			var serverManager = new LocalFileServerManager();
+			var serverManager = new FileServerManager();
 			var folder = Entities.UserFolders
 				.SingleOrDefault(folderItem => folderItem.Id == folderId);
 			if (folder == null) {
 				// todo: 
 				throw new Exception("todo");
 			}			
-			serverManager.DeleteFolder(userId, folder);
+			serverManager.DeleteFolder(userId, folder.Id);
 
 			// Delete folder from Db
 			Entities.UserFolders.Attach(folder);

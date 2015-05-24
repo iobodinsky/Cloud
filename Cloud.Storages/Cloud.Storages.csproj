@@ -146,7 +146,7 @@
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Managers\DriveManager.cs" />
-    <Compile Include="Managers\LocalFileServerManager.cs" />
+    <Compile Include="Managers\FileServerManager.cs" />
     <Compile Include="Models\DriveFile.cs" />
     <Compile Include="Models\ExtendedContextModels\UserFile.cs" />
     <Compile Include="Models\ExtendedContextModels\UserFolder.cs" />

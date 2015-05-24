@@ -24,13 +24,17 @@
 				</div>
 				<div class="col-md-8">
 					<div class="panel panel-primary">
-						<div class="panel-heading">folders & files</div>
+						<div class="panel-heading">{{folderPath}}</div>
 						<div class="panel-body container">
 							<div class="row">
 								<div class="text-center" ng-if="folders.length == 0">no folders</div>
-								<div class="box container relative folder" ng-repeat="folder in folders">
-									<div class="name absolute">{{folder.name}}</div>
-									<button class="option absolute" type="button" data-toggle="dropdown" aria-expanded="false"></button>
+								<div class="box folder container relative folder"
+								     ng-repeat="folder in folders">
+									@*todo: click entire folder*@
+									<div class="name absolute"
+									     ng-click="openFolder(folder)">{{folder.name}}</div>
+									<button class="option absolute" type="button" data-toggle="dropdown"
+									        aria-expanded="false"></button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a ng-click="deleteFolder(folder)">delete</a></li>
 									</ul>
@@ -38,9 +42,10 @@
 							</div>
 							<div class="row">
 								<div class="text-center" ng-if="files.length == 0">no files</div>
-								<div class="box container relative" ng-repeat="file in files">
+								<div class="box file container relative" ng-repeat="file in files">
 									<div class="name absolute">{{file.name}}</div>
-									<button class="option absolute" type="button" data-toggle="dropdown" aria-expanded="false">
+									<button class="option absolute" type="button" data-toggle="dropdown"
+											  aria-expanded="false">
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a ng-click="deleteFile(file)">delete</a></li>

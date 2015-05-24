@@ -3,7 +3,7 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function ($scope, $http, $window, $log, constants, userTokenService, fileUploader, $modal) {
+	function($scope, $http, $window, $log, constants, userTokenService, fileUploader, $modal) {
 		var self = this;
 
 		self.init = function() {
@@ -12,11 +12,32 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			var token = userTokenService.getToken();
 			if (token) {
+				self.initUploader();
 				self.getUserInfo();
 				self.getFiles();
 			} else {
 				$scope.isLogin = true;
 			}
+		};
+		self.initUploader = function() {
+			$scope.uploader = new fileUploader();
+			// TODO:
+			var cloudId = 2;
+			var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
+			$scope.uploader.url = constants.urls.cloud.files.constructUpload(folderId, cloudId);
+			$scope.uploader.headers = {
+				'Authorization': userTokenService.getAuthorizationHeader()
+			};
+			$scope.uploader.onCompleteItem =
+				function (uploadedItem, response, status, headers) {
+					if (status === 200) {
+						$scope.uploader.clearQueue();
+						$scope.files.push(response);
+					} else {
+						// todo:
+						$log.error("error");
+					}
+				};
 		};
 		self.getUserInfo = function() {
 			var userInfoRequest = {
@@ -45,8 +66,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			$http(filesFoldersRequest)
 				.success(function(data, status, headers, config) {
-					$scope.currentFolderId = data.currentFolderId;
-
+					$scope.currentFolder = data.folder;
+					$scope.folderPath = 'cloud ->';
 					for (var i = 0; i < data.folders.length; i++) {
 						$scope.folders.push(data.folders[i]);
 					}
@@ -59,26 +80,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 				});
 		};
-		
-		$scope.uploader = new fileUploader();
-		// TODO:
-		var cloudId = 2;
-		var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
-		$scope.uploader.url = constants.urls.cloud.files.constructUpload(cloudId, folderId);
-		$scope.uploader.headers = {
-			'Authorization': userTokenService.getAuthorizationHeader()
-		};
-		$scope.uploader.onCompleteItem =
-			function (uploadedItem, response, status, headers) {
-				if (status === 200) {
-					$scope.uploader.clearQueue();
-					$scope.uploader.cancelAll();
-					$scope.files.push(response);
-				} else {
-					// todo:
-					$log.error("error");
-				}
-			};
 
 		$scope.isCloud = true;
 
@@ -137,7 +138,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				});
 		};
 
-		$scope.deleteFile = function (file) {
+		$scope.deleteFile = function(file) {
 			if (file.id) {
 				var cloudId = 2;
 				var url = constants.urls.cloud.files.constructDelete(file.id, cloudId);
@@ -150,29 +151,29 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				};
 
 				$http(deleteRequest)
-					.success(function (data, status, headers, config) {
+					.success(function(data, status, headers, config) {
 						for (var i = 0; i < $scope.files.length; i++) {
 							if ($scope.files[i].id === file.id) {
 								$scope.files.splice(i, 1);
 							}
 						}
 					})
-					.error(function (data, status, headers, config) {
+					.error(function(data, status, headers, config) {
 					});
 			} else {
 				$log.error("userFile.id");
 			}
 		};
-		
+
 		$scope.animationsEnabled = true;
 
-		$scope.renameFile = function (file) {
+		$scope.renameFile = function(file) {
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'renameFileModal.html',
 				controller: cloud.controllers.renameFileModalController,
 				resolve: {
-					file: function () {
+					file: function() {
 						return file;
 					}
 				}
@@ -194,12 +195,12 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				controller: cloud.controllers.createFolderModalController,
 				resolve: {
 					currentFolderId: function() {
-						return $scope.currentFolderId;
+						return $scope.currentFolder.id;
 					}
 				}
 			});
 
-			modalInstance.result.then(function (options) {
+			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
 					$scope.folders.push(options.data);
 				} else {
@@ -208,7 +209,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			});
 		};
 
-		$scope.deleteFolder = function (folder) {
+		$scope.deleteFolder = function(folder) {
 			var cloudId = 2;
 			var url = constants.urls.cloud.folders.constructDelete(folder.id, cloudId);
 			var deleteRequest = {
@@ -220,14 +221,44 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			};
 
 			$http(deleteRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					for (var i = 0; i < $scope.folders.length; i++) {
 						if ($scope.folders[i].id === data) {
 							$scope.folders.splice(i, 1);
 						}
 					}
 				})
-				.error(function (data, status, headers, config) {
+				.error(function(data, status, headers, config) {
+				});
+		};
+
+		$scope.openFolder = function(folder) {
+			var cloudId = 2;
+			var openFolderRequest = {
+				method: 'GET',
+				url: constants.urls.cloud.folders.constructFolderData(folder.id, cloudId),
+				headers: {
+					'Authorization': userTokenService.getAuthorizationHeader()
+				}
+			};
+
+			$http(openFolderRequest)
+				.success(function(data, status, headers, config) {
+					$scope.folders = [];
+					$scope.files = [];
+					$scope.currentFolder = data.folder;
+					$scope.folderPath += folder.name;
+					$scope.uploader.url =
+						constants.urls.cloud.files.constructUpload(data.folder.id, 2);
+					for (var i = 0; i < data.folders.length; i++) {
+						$scope.folders.push(data.folders[i]);
+					}
+
+					for (var j = 0; j < data.files.length; j++) {
+						$scope.files.push(data.files[j]);
+					}
+				})
+				.error(function(data, status, headers, config) {
 				});
 		};
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Cloud.Common.Managers;
@@ -14,23 +13,25 @@ namespace Cloud.WebApi.Controllers {
 		// GET api/files
 		[Route( "" )]
 		[HttpGet]
-		public FoldersFiles GetRootFoldersFiles() {
+		public IHttpActionResult GetRootFolderData() {
 			var userId = User.Identity.GetUserId();
-			var model = new FoldersFiles {
-				Folders = FileRepository.GetRootFolders(userId).ToList(),
-				Files = FileRepository.GetRootFiles(userId),
-				CurrentFolderId = FileRepository.GetRootFolderId(userId)
+
+			var rootFolder = StorageRepository.GetRootFolder(userId);
+			var model = new FolderData {
+				Folders = StorageRepository.GetRootFolders(userId).ToList(),
+				Files = StorageRepository.GetRootFiles(userId),
+				Folder = rootFolder
 			};
 
-			return model;
+			return Ok(model);
 		}
 
-		// From Cloud
 		// GET api/files/1/cloud/1/download/
 		[AllowAnonymous]
 		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/download/url" )]
 		[HttpGet]
-		public HttpResponseMessage DownloadFile( [FromUri] string fileId, [FromUri] int cloudId ) {
+		public IHttpActionResult DownloadFile( [FromUri] string fileId,
+			[FromUri] int cloudId ) {
 			throw new NotImplementedException();
 			//var resporseResult = new HttpResponseMessage(HttpStatusCode.OK);
 			//var userId = "61b0b62a-fbdd-4d72-9a9f-1d95bc73765b";
@@ -40,10 +41,10 @@ namespace Cloud.WebApi.Controllers {
 			//return resporseResult;
 		}
 
-		//From Drive
 		// GET api/files/1/cloud/1/download/
 		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/download/url" )]
-		public HttpResponseMessage DownloadFile( [FromUri] string fileId, [FromUri] int cloudId, [FromUri] string url ) {
+		public IHttpActionResult DownloadFile( [FromUri] string fileId,
+			[FromUri] int cloudId, [FromUri] string url ) {
 			throw new Exception();
 		}
 
@@ -72,26 +73,32 @@ namespace Cloud.WebApi.Controllers {
 				Stream = postedFile.InputStream
 			};
 
-			FileRepository.Add(User.Identity.GetUserId(), cloudId, userFileModel);
-			
+			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
+			cloud.AddFile(User.Identity.GetUserId(), userFileModel);
+
 			return Ok(userFile);
 		}
 
 		// POST api/files/1/cloud/1/rename
 		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/rename" )]
 		[HttpPost]
-		public void RenameFile( [FromUri] string fileId, [FromUri] int cloudId, 
-			[FromBody] NewFolderModel newfile ) {
-				if (string.IsNullOrEmpty(newfile.Name)) return;
-			var userId = User.Identity.GetUserId();
-			FileRepository.UpdateName(userId, cloudId, fileId, newfile.Name);
+		public IHttpActionResult RenameFile( [FromUri] string fileId, [FromUri] int cloudId,
+			[FromBody] NewFileModel newfile ) {
+			if (string.IsNullOrEmpty(newfile.Name)) return BadRequest();
+			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
+			cloud.UpdateName(User.Identity.GetUserId(), fileId, newfile.Name);
+
+			return Ok();
 		}
 
 		// DELETE api/files/1/cloud/1/delete
 		[Route( "{fileId}/cloud/{cloudId:int:min(1)}/delete" )]
 		[HttpDelete]
-		public void DeleteFile( [FromUri] string fileId, [FromUri] int cloudId ) {
-			FileRepository.Delete(User.Identity.GetUserId(), cloudId, fileId);
+		public IHttpActionResult DeleteFile( [FromUri] string fileId, [FromUri] int cloudId ) {
+			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
+			cloud.DeleteFile(User.Identity.GetUserId(), fileId);
+
+			return Ok();
 		}
 	}
 }

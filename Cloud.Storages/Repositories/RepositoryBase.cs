@@ -48,7 +48,7 @@ namespace Cloud.Storages.Repositories {
 			}
 		}
 
-		protected IStorage ResolveStorageInstance( int cloudId ) {
+		public IStorage ResolveStorageInstance( int cloudId ) {
 			var cloudServer = Entities.CloudServers.
 				SingleOrDefault(server => server.Id == cloudId);
 			if (cloudServer == null) return null;

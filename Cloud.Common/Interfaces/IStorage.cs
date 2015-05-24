@@ -1,28 +1,26 @@
 ﻿using System.Collections.Generic;
 using Cloud.Common.Models;
 
-namespace Cloud.Common.Interfaces
-{
-    public interface IStorage
-    {
-		  void AddFile(string userId, FullUserFile file);
+namespace Cloud.Common.Interfaces {
+	public interface IStorage {
+		void AddFile( string userId, FullUserFile file );
 
-		  void AddFolder(string userId, IFolder file);
+		void AddFolder( string userId, IFolder folder );
 
-        IEnumerable<IFile> GetRootFiles(string userId);
+		IEnumerable<IFile> GetRootFiles( string userId );
 
-        IEnumerable<IFile> GetFilesIn(string userId,string folder);
-            
-        IEnumerable<IFolder> GetRootFolders(string userId);
+		IEnumerable<IFolder> GetRootFolders( string userId );
 
-        IEnumerable<IFolder> GetFoldersIn(string userId, string folder);
+		FolderData GetFolderData( string userId, string folderId );
 
-        IFile GetFileInfo(string userId, string fileId);
+		IFile GetFileInfo( string userId, string fileId );
 
-        FullUserFile GetFile(string userId, string fileId);
+		FullUserFile GetFile( string userId, string fileId );
 
-        void UpdateName(string userId, string fileId, string newfileName);
+		void UpdateName( string userId, string fileId, string newfileName );
 
-        void Delete(string userId, string fileId);
-    }
+		void DeleteFile(string userId, string fileId);
+
+		void DeleteFolder(string userId, string folderId);
+	}
 }

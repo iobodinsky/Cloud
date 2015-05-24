@@ -1,6 +1,5 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using Cloud.Common.Interfaces;
 using Cloud.Storages.Repositories;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -10,7 +9,7 @@ namespace Cloud.WebApi.Controllers
     {
         private ApplicationUserManager _userManager;
 
-        protected readonly IFileRepository Repository;
+		  protected readonly StorageRepository StorageRepository;
 
         protected ApplicationUserManager UserManager
         {
@@ -26,7 +25,7 @@ namespace Cloud.WebApi.Controllers
 
         protected ControllerBase()
         {
-            Repository = new StorageRepository();
+            StorageRepository = new StorageRepository();
         }
     }
 }

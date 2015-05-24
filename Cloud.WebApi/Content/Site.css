@@ -61,7 +61,15 @@ textarea {
     width: 150px;
 }
 
-.box.folder {
+.box.folder.container .option { border-right: 32px solid transparent; }
+
+.box.folder.container:hover { cursor: pointer; }
+
+.box.folder.container .option:hover { border-right: 32px solid #708090; }
+
+.box.file.container:hover .option { border-right: 32px solid green; }
+
+.box.folder.container {
     border-color: #708090;
 }
 
@@ -87,12 +95,10 @@ textarea {
 	background: none;
 	border: none;
 	border-bottom: 31px solid transparent;
-	
 	top: 0;
 	right: 0;
 	padding: 0;
+	z-index: 999;
 }
-
-.box.container:hover .option { border-right: 32px solid green; }
 
 .box .option:focus { outline: none; }

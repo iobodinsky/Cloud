@@ -12,7 +12,7 @@ cloud.models.constants = cloud.models.constants || {
 			userInfo: 'api/Account/UserInfo',
 			files: {
 				getAll: 'api/files',
-				constructUpload: function (cloudId, folderId) {
+				constructUpload: function (folderId, cloudId) {
 					return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
 				},
 				constructRename: function (fileId, cloudId) {
@@ -23,7 +23,12 @@ cloud.models.constants = cloud.models.constants || {
 				},
 			},
 			folders: {
-				create: 'api/folders/create',
+				constructCreate: function(cloudId) {
+					return 'api/folders/cloud/' + cloudId + '/create';
+				},
+				constructFolderData: function (folderId, cloudId) {
+					return 'api/folders/' + folderId + '/cloud/' + cloudId;
+				},
 				constructDelete: function (folderId, cloudId) {
 					return 'api/folders/' + folderId + '/cloud/' + cloudId + '/delete';
 				}
