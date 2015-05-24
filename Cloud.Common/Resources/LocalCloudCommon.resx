@@ -117,28 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FilesMaxResults" xml:space="preserve">
-    <value>DriveFileMaxResults</value>
-  </data>
-  <data name="FolderMimiType" xml:space="preserve">
-    <value>application/vnd.google-apps.folder</value>
-  </data>
-  <data name="FoldersMaxResults" xml:space="preserve">
-    <value>DriveFoldersMaxResults</value>
-  </data>
-  <data name="InParents" xml:space="preserve">
-    <value>in parents</value>
-  </data>
-  <data name="NoTrash" xml:space="preserve">
-    <value>trashed=false</value>
-  </data>
-  <data name="SearchFolders" xml:space="preserve">
-    <value>mimeType = 'application/vnd.google-apps.folder'</value>
-  </data>
-  <data name="SearchNotFolders" xml:space="preserve">
-    <value>mimeType != 'application/vnd.google-apps.folder'</value>
-  </data>
-  <data name="SearchRoot" xml:space="preserve">
-    <value>'root' in parents</value>
+  <data name="RootFolderId" xml:space="preserve">
+    <value>root</value>
   </data>
 </root>

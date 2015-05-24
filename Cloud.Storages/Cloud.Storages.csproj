@@ -147,7 +147,7 @@
     </Compile>
     <Compile Include="Managers\DriveManager.cs" />
     <Compile Include="Managers\FileServerManager.cs" />
-    <Compile Include="Models\DriveFile.cs" />
+    <Compile Include="Managers\StorageManager.cs" />
     <Compile Include="Models\ExtendedContextModels\UserFile.cs" />
     <Compile Include="Models\ExtendedContextModels\UserFolder.cs" />
     <Compile Include="Providers\DriveProvider.cs" />
@@ -206,6 +206,7 @@
     <EmbeddedResource Include="Resources\DriveSearchFilters.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DriveSearchFilters.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -4,8 +4,8 @@ using System.Configuration;
 using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
+using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
-using Cloud.Storages.Models;
 using Cloud.Storages.Resources;
 
 namespace Cloud.Storages.Providers {
@@ -39,10 +39,11 @@ namespace Cloud.Storages.Providers {
 			request.MaxResults = int.Parse(
 				ConfigurationManager.AppSettings[DriveSearchFilters.FilesMaxResults]);
 
-			request.Q = _manager.ConstructSearchQuery(
-				DriveSearchFilters.NoTrash, DriveSearchFilters.SearchRoot, DriveSearchFilters.SearchNotFolders);
+			request.Q = _manager.BuildSearchQuery(
+				DriveSearchFilters.NoTrash, DriveSearchFilters.SearchRoot, 
+				DriveSearchFilters.SearchNotFolders);
 
-			return request.Execute().Items.Select(file => new DriveFile {
+			return request.Execute().Items.Select(file => new UserFile {
 				Id = file.Id,
 				Name = file.Title,
 				LastModifiedDateTime = file.LastViewedByMeDate == null
@@ -51,7 +52,8 @@ namespace Cloud.Storages.Providers {
 				AddedDateTime = file.CreatedDate == null
 					? new DateTime()
 					: file.CreatedDate.Value,
-				DownloadUrl = file.WebContentLink
+				DownloadUrl = file.WebContentLink,
+				CloudId = 1
 			});
 		}
 
@@ -60,17 +62,58 @@ namespace Cloud.Storages.Providers {
 			var request = service.Files.List();
 
 			request.MaxResults = int.Parse(ConfigurationManager.AppSettings[DriveSearchFilters.FilesMaxResults]);
-			request.Q = _manager.ConstructSearchQuery(
+			request.Q = _manager.BuildSearchQuery(
 				DriveSearchFilters.NoTrash, DriveSearchFilters.SearchRoot, DriveSearchFilters.SearchFolders);
 
-			return request.Execute().Items.Select(file => new Folder {
+			return request.Execute().Items.Select(file => new UserFolder {
 				Id = file.Id,
-				Name = file.Title
+				Name = file.Title,
+				CloudId = 1
 			});
 		}
 
-		public FolderData GetFolderData( string userId, string folder ) {
-			throw new NotImplementedException();
+		public FolderData GetFolderData( string userId, string folderId ) {
+			var service = _manager.BuildServiceAsync(userId);
+			var request = service.Files.List();
+
+			request.MaxResults = int.Parse(
+				ConfigurationManager.AppSettings[DriveSearchFilters.FilesMaxResults]);
+			request.Q = _manager.BuildSearchQuery(
+				DriveSearchFilters.NoTrash,
+				_manager.ConstructInParentsQuery(folderId));
+
+			var foldersFiles = request.Execute().Items;
+			var files = foldersFiles.Where(
+				folderFile => !folderFile.MimeType.Equals(DriveSearchFilters.FolderMimiType))
+				.Select(file => new UserFile {
+					Id = file.Id,
+					Name = file.Title,
+					LastModifiedDateTime = file.LastViewedByMeDate == null
+						? new DateTime()
+						: file.LastViewedByMeDate.Value,
+					AddedDateTime = file.CreatedDate == null
+						? new DateTime()
+						: file.CreatedDate.Value,
+					DownloadUrl = file.WebContentLink,
+					CloudId = 1
+				});
+			var folders = foldersFiles.Where(
+				folderFile => folderFile.MimeType.Equals(DriveSearchFilters.FolderMimiType))
+				.Select(folder => new UserFolder {
+					Id = folder.Id,
+					Name = folder.Title,
+					CloudId = 1
+				});
+			var currentFolder = new UserFolder {
+				Id = folderId,
+				CloudId = 1
+			};
+
+			return new FolderData {
+				Files = files,
+				Folders = folders,
+				Folder = currentFolder
+			};
 		}
 
 		public IFile GetFileInfo( string userId, string fileId ) {

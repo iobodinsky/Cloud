@@ -70,11 +70,29 @@ namespace Cloud.Storages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to application/vnd.google-apps.folder.
+        /// </summary>
+        internal static string FolderMimiType {
+            get {
+                return ResourceManager.GetString("FolderMimiType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DriveFoldersMaxResults.
         /// </summary>
         internal static string FoldersMaxResults {
             get {
                 return ResourceManager.GetString("FoldersMaxResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in parents.
+        /// </summary>
+        internal static string InParents {
+            get {
+                return ResourceManager.GetString("InParents", resourceCulture);
             }
         }
         

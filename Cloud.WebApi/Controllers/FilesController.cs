@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Cloud.Common.Interfaces;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
+using Cloud.Storages.Managers;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -15,11 +18,17 @@ namespace Cloud.WebApi.Controllers {
 		[HttpGet]
 		public IHttpActionResult GetRootFolderData() {
 			var userId = User.Identity.GetUserId();
-
+			var files = new List<IFile>();
+			var folders = new List<IFolder>();
+			var clouds = new StorageManager().GetStorages();
+			foreach (var cloud in clouds) {
+				folders.AddRange(cloud.GetRootFolders(userId));
+				files.AddRange(cloud.GetRootFiles(userId));
+			}
 			var rootFolder = StorageRepository.GetRootFolder(userId);
 			var model = new FolderData {
-				Folders = StorageRepository.GetRootFolders(userId).ToList(),
-				Files = StorageRepository.GetRootFiles(userId),
+				Folders = folders,
+				Files = files,
 				Folder = rootFolder
 			};
 
@@ -66,6 +75,7 @@ namespace Cloud.WebApi.Controllers {
 				DownloadedTimes = 0,
 				LastModifiedDateTime = DateTime.Now,
 				FolderId = folderId,
+				CloudId = 2
 			};
 
 			var userFileModel = new FullUserFile {

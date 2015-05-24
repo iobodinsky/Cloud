@@ -4,23 +4,9 @@ using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Resources;
 using Cloud.Storages.Managers;
-using Cloud.Storages.Providers;
 
 namespace Cloud.Storages.Repositories {
 	public class StorageRepository : RepositoryBase {
-		#region Fields
-
-		private readonly IList<IStorage> _storages;
-
-		#endregion Fields
-
-		public StorageRepository() {
-			// todo: implement MEF
-			_storages = new List<IStorage> {
-				new LocalLenevoProvider(), 
-				//new DriveProvider()
-			};
-		}
 
 		#region IFileRepository implementation
 
@@ -31,15 +17,6 @@ namespace Cloud.Storages.Repositories {
 		public IFile Get( string userId, string fileId ) {
 			return Entities.UserFiles.SingleOrDefault(
 				file => file.UserId == userId && file.Id == fileId);
-		}
-
-		public IEnumerable<IFile> GetRootFiles( string userId ) {
-			var files = new List<IFile>();
-			foreach (var storage in _storages) {
-				files.AddRange(storage.GetRootFiles(userId));
-			}
-
-			return files;
 		}
 
 		public IEnumerable<IFolder> GetRootFolders( string userId ) {

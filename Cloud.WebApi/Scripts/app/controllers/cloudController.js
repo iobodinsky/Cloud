@@ -67,7 +67,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			$http(filesFoldersRequest)
 				.success(function(data, status, headers, config) {
 					$scope.currentFolder = data.folder;
-					$scope.folderPath = 'cloud ->';
+					$scope.folderPath = 'cloud';
 					for (var i = 0; i < data.folders.length; i++) {
 						$scope.folders.push(data.folders[i]);
 					}
@@ -140,8 +140,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		$scope.deleteFile = function(file) {
 			if (file.id) {
-				var cloudId = 2;
-				var url = constants.urls.cloud.files.constructDelete(file.id, cloudId);
+				var url = constants.urls.cloud.files.constructDelete(file.id, file.cloudId);
 				var deleteRequest = {
 					method: 'DELETE',
 					url: url,
@@ -210,8 +209,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFolder = function(folder) {
-			var cloudId = 2;
-			var url = constants.urls.cloud.folders.constructDelete(folder.id, cloudId);
+			var url = constants.urls.cloud.folders.constructDelete(folder.id, folder.cloudId);
 			var deleteRequest = {
 				method: 'DELETE',
 				url: url,
@@ -233,10 +231,9 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.openFolder = function(folder) {
-			var cloudId = 2;
 			var openFolderRequest = {
 				method: 'GET',
-				url: constants.urls.cloud.folders.constructFolderData(folder.id, cloudId),
+				url: constants.urls.cloud.folders.constructFolderData(folder.id, folder.cloudId),
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
 				}
@@ -247,7 +244,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					$scope.folders = [];
 					$scope.files = [];
 					$scope.currentFolder = data.folder;
-					$scope.folderPath += folder.name;
+					$scope.folderPath += ' -> ' + folder.name;
 					$scope.uploader.url =
 						constants.urls.cloud.files.constructUpload(data.folder.id, 2);
 					for (var i = 0; i < data.folders.length; i++) {

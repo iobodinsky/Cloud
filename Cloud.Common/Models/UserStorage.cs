@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Cloud.Common.Interfaces;
-using Cloud.WebApi.Models;
 using Newtonsoft.Json;
 
 namespace Cloud.Common.Models

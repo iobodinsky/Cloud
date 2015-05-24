@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Cloud.Common.Resources;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
 using Cloud.Storages.Repositories;
@@ -289,12 +290,10 @@ namespace Cloud.WebApi.Controllers {
 			}
 
 			// Create user root directory on servers
-			var serverManager = new FileServerManager();
-			serverManager.CreateUserRootDirectory(user.Id);
 			var userRootFolder = new UserFolder {
 				Id = user.Id,
 				Name = user.Id,
-				ParentId = string.Empty,
+				ParentId = LocalCloudCommon.RootFolderId,
 				UserId = user.Id
 			};
 

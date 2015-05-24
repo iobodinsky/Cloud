@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using Cloud.Common.Interfaces;
@@ -35,7 +36,7 @@ namespace Cloud.Storages.Providers {
 
 		public void AddFolder( string userId, IFolder folder ) {
 			// Save folder on all physical servers
-			_fileServerManager.AddFolder(userId, folder, true);
+			_fileServerManager.AddFolder(userId, folder);
 
 			// todo: try catch for undo if db failed
 			// todo: entity as UserFolder
@@ -45,27 +46,50 @@ namespace Cloud.Storages.Providers {
 
 		public IEnumerable<IFile> GetRootFiles( string userId ) {
 			var rootFolderId = _fileServerManager.GetUserRootFolderId(userId);
-			return _storageRepository.Entities.UserFiles
+			var files  = _storageRepository.Entities.UserFiles
 				.Where(file => file.UserId == userId && file.FolderId == rootFolderId);
+			// todo: Db
+			foreach (var file in files) {
+				file.CloudId = 2;
+			}
+
+			return files;
 		}
 
 		public IEnumerable<IFolder> GetRootFolders( string userId ) {
 			var rootFolderId = _fileServerManager.GetUserRootFolderId(userId);
-			return _storageRepository.Entities.UserFolders
+			var folders = _storageRepository.Entities.UserFolders
 				.Where(folder => folder.UserId == userId &&
-				                 folder.ParentId == rootFolderId);
+					folder.ParentId == rootFolderId).ToList();
+			// todo: Db
+			foreach (var folder in folders) {
+				folder.CloudId = 2;
+			}
+
+			return folders;
 		}
 
 		public FolderData GetFolderData( string userId, string folderId ) {
 			var folders = _storageRepository.Entities.UserFolders
 				.Where(folder => folder.UserId == userId &&
-									  folder.ParentId == folderId);
+					folder.ParentId == folderId).ToList();
 			var files = _storageRepository.Entities.UserFiles
 				.Where(file => file.UserId == userId &&
-									file.FolderId == folderId);
+					file.FolderId == folderId).ToList();
 			var currentFolder = _storageRepository.Entities.UserFolders
 				.SingleOrDefault(folder => folder.UserId == userId &&
-													folder.Id == folderId);
+					folder.Id == folderId);
+			if (currentFolder == null) {
+				// todo: 
+				throw new Exception("todo");
+			}
+			currentFolder.CloudId = 2;
+			foreach (var folder in folders) {
+				folder.CloudId = 2;
+			}
+			foreach (var file in files) {
+				file.CloudId = 2;
+			}
 			var folderData = new FolderData {
 				Folders = folders,
 				Files = files,
@@ -108,11 +132,39 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public void DeleteFile(string userId, string fileId) {
-			throw new NotImplementedException();
+			// Delete file from servers
+			var file = _storageRepository.Entities.UserFiles
+				.SingleOrDefault(fileItem => fileItem.UserId == userId &&
+					fileItem.Id == fileId);
+			if (file == null) {
+				// todo:
+				throw new Exception("todo");
+			}
+			_fileServerManager.DeleteFile(userId, file.Id);
+
+			// Delete file from Db
+			_storageRepository.Entities.UserFiles.Attach(file);
+			_storageRepository.Entities.UserFiles.Remove(file);
+			_storageRepository.SaveChanges();
 		}
 
 		public void DeleteFolder(string userId, string folderId) {
-			_fileServerManager.DeleteFolder(userId, folderId);
+			var folder = _storageRepository.Entities.UserFolders
+				.SingleOrDefault(folderItem => folderItem.UserId == userId &&
+					folderItem.Id == folderId);
+			if (folder == null) {
+				// todo: 
+				throw new Exception("todo");
+			}
+
+			// Delete folder from servers
+			_fileServerManager.DeleteFolder(userId, folder.Id);
+
+			// todo: remove all subfolders and subfiles
+			// Delete folder, subfolders and subfiles from Db
+			_storageRepository.Entities.UserFolders.Attach(folder);
+			_storageRepository.Entities.UserFolders.Remove(folder);
+			_storageRepository.SaveChanges();
 		}
 
 		#endregion IStorage implementation

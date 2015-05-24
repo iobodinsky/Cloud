@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
+using Cloud.Common.Resources;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Repositories;
 
@@ -58,16 +59,22 @@ namespace Cloud.Storages.Managers {
 			}
 		}
 
-		public void AddFolder( string userId, IFolder folder, bool isAutoSave ) {
+		public void AddFolder( string userId, IFolder folder ) {
 			var servers = GetFileServers();
 			if (!servers.Any()) {
 				// todo:
 				throw new Exception("todo");
 			}
-			var folderPath = Path.Combine(
-				GetFolderPath(userId, folder.ParentId),
-				folder.Name);
-
+			string folderPath;
+			
+			if (folder.ParentId.Equals(LocalCloudCommon.RootFolderId)) {
+				// For creating root folder
+				folderPath = userId;
+			} else {
+				folderPath = Path.Combine(
+					GetFolderPath(userId, folder.ParentId), folder.Name);
+			}
+			
 			foreach (var server in servers) {
 				if (Directory.Exists(Path.Combine(server.Path, folderPath))) {
 					// todo:
@@ -75,12 +82,6 @@ namespace Cloud.Storages.Managers {
 				}
 
 				Directory.CreateDirectory(Path.Combine(server.Path, folderPath));
-			}
-		}
-
-		public void CreateUserRootDirectory( string userId ) {
-			foreach (var fileServer in GetFileServers()) {
-				Directory.CreateDirectory(GetUserRootPath(fileServer, userId));
 			}
 		}
 
@@ -105,9 +106,9 @@ namespace Cloud.Storages.Managers {
 			}
 		}
 
-		public void DeleteFile( string userId, IFile file ) {
+		public void DeleteFile( string userId, string fileId ) {
 			foreach (var server in GetFileServers()) {
-				var filePath = GetFileServerPath(userId, file.Id, server);
+				var filePath = GetFileServerPath(userId, fileId, server);
 				if (!File.Exists(filePath)) {
 					// todo:
 					throw new Exception("todo");
@@ -199,7 +200,7 @@ namespace Cloud.Storages.Managers {
 		}
 
 		private string GetFolderPath(string userId, string folderId) {
-			var folder = _storageRepository.Entities.UserFolders
+						var folder = _storageRepository.Entities.UserFolders
 				.SingleOrDefault(folderItem => folderItem.Id == folderId);
 			if (folder == null) {
 				// todo:

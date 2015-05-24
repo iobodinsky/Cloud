@@ -27,6 +27,8 @@ namespace Cloud.WebApi.Controllers {
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
 			var folderId = new IdGenerator().ForFolder();
 			folder.Id = folderId;
+			folder.UserId = userId;
+			folder.CloudId = 2;
 			cloud.AddFolder(userId, folder);
 
 			return Ok(folder);

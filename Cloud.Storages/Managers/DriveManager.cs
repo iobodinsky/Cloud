@@ -10,84 +10,79 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 
-namespace Cloud.Storages.Managers
-{
-    internal class DriveManager
-    {
-        #region Public methods
+namespace Cloud.Storages.Managers {
+	internal class DriveManager {
+		#region Public methods
 
-        /// <summary>
-        /// Returns Drive service
-        /// </summary>
-        public DriveService BuildServiceAsync(string userId)
-        {
-            var initializer = GetInitializerFor(userId).Result;
-            return new DriveService(initializer);
-        }
+		/// <summary>
+		/// Returns Drive service
+		/// </summary>
+		public DriveService BuildServiceAsync( string userId ) {
+			var initializer = GetInitializerFor(userId).Result;
+			return new DriveService(initializer);
+		}
 
-        /// <summary>
-        /// Constructs quesry for searching spesific files
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        public string ConstructSearchQuery(params string[] parameters)
-        {
-            if (parameters == null || !parameters.Any()) return string.Empty;
+		/// <summary>
+		/// Constructs quesry for searching spesific files
+		/// </summary>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		public string BuildSearchQuery( params string[] parameters ) {
+			if (parameters == null || !parameters.Any()) return string.Empty;
 
-            var query = new StringBuilder();
-            foreach (var parameter in parameters)
-            {
-                query.Append(" and");
-                query.Append(parameter);
-            }
+			var query = new StringBuilder();
+			foreach (var parameter in parameters) {
+				query.Append(" and ");
+				query.Append(parameter);
+			}
 
-            //Remove first word ' and'
-            query.Remove(0, 4);
+			//Remove first word ' and '
+			query.Remove(0, 5);
 
-            return query.ToString();
-        }
+			return query.ToString();
+		}
 
-        #endregion Public methods
+		public string ConstructInParentsQuery( string filderId ) {
+			return string.Format("'{0}' {1}", filderId, DriveSearchFilters.InParents);
+		}
 
-        #region Private methods
+		#endregion Public methods
 
-        /// <summary> 
-        /// Returns the request initializer required for authorized requests. 
-        /// </summary>
-        private async Task<BaseClientService.Initializer> GetInitializerFor(string userId)
-        {
-          var secrets = new ClientSecrets
-            {
-                ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientId],
-                ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientSecret]
-            };
+		#region Private methods
 
-            var credentialPersistanceStore = GetPersistentCredentialStore();
+		/// <summary> 
+		/// Returns the request initializer required for authorized requests. 
+		/// </summary>
+		private async Task<BaseClientService.Initializer> GetInitializerFor( string userId ) {
+			var secrets = new ClientSecrets {
+				ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientId],
+				ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientSecret]
+			};
 
-            var userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-					secrets, new[] { DriveService.Scope.Drive }, userId, 
-					CancellationToken.None, credentialPersistanceStore);
+			var credentialPersistanceStore = GetPersistentCredentialStore();
 
-            var initializer = new BaseClientService.Initializer
-            {
-                HttpClientInitializer = userCredential,
-                ApplicationName = ConfigurationManager.AppSettings[AppSettingKeys.DriveApplicationUserAgent]
-            };
+			var userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+				secrets, new[] {DriveService.Scope.Drive}, userId,
+				CancellationToken.None, credentialPersistanceStore);
 
-            return initializer;
-        }
+			var initializer = new BaseClientService.Initializer {
+				HttpClientInitializer = userCredential,
+				ApplicationName = ConfigurationManager.AppSettings[AppSettingKeys.DriveApplicationUserAgent]
+			};
 
-        // todo: get server folder path from Db
-        /// <summary> 
-        /// Returns a persistent data store for user's credentials.
-        /// </summary>
-        private IDataStore GetPersistentCredentialStore()
-        {
-            var folderName = ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder];
-            var serverDataStore = new FileDataStore(folderName, true);
-            return serverDataStore;
-        }
+			return initializer;
+		}
 
-        #endregion Private methods
-    }
+		// todo: get server folder path from Db
+		/// <summary> 
+		/// Returns a persistent data store for user's credentials.
+		/// </summary>
+		private IDataStore GetPersistentCredentialStore() {
+			var folderName = ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder];
+			var serverDataStore = new FileDataStore(folderName, true);
+			return serverDataStore;
+		}
+
+		#endregion Private methods
+	}
 }
