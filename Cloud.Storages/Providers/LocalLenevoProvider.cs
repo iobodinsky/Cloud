@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using Cloud.Common.Interfaces;
@@ -44,29 +42,36 @@ namespace Cloud.Storages.Providers {
 			_storageRepository.Add(folder as UserFolder, true);
 		}
 
-		public IEnumerable<IFile> GetRootFiles( string userId ) {
-			var rootFolderId = _fileServerManager.GetUserRootFolderId(userId);
-			var files  = _storageRepository.Entities.UserFiles
-				.Where(file => file.UserId == userId && file.FolderId == rootFolderId);
-			// todo: Db
-			foreach (var file in files) {
-				file.CloudId = 2;
-			}
-
-			return files;
-		}
-
-		public IEnumerable<IFolder> GetRootFolders( string userId ) {
+		public FolderData GetRootFolderData(string userId) {
 			var rootFolderId = _fileServerManager.GetUserRootFolderId(userId);
 			var folders = _storageRepository.Entities.UserFolders
 				.Where(folder => folder.UserId == userId &&
 					folder.ParentId == rootFolderId).ToList();
-			// todo: Db
+			var files = _storageRepository.Entities.UserFiles
+				.Where(file => file.UserId == userId &&
+					file.FolderId == rootFolderId).ToList();
+			var currentFolder = _storageRepository.Entities.UserFolders
+				.SingleOrDefault(folder => folder.UserId == userId &&
+					folder.Id == rootFolderId);
+			if (currentFolder == null) {
+				// todo: 
+				throw new Exception("todo");
+			}
+			currentFolder.CloudId = 2;
 			foreach (var folder in folders) {
 				folder.CloudId = 2;
 			}
+			foreach (var file in files) {
+				file.CloudId = 2;
+			}
+			var folderData = new FolderData {
+				Folders = folders,
+				Files = files,
+				Folder = currentFolder,
+				CloudId = 2
+			};
 
-			return folders;
+			return folderData;
 		}
 
 		public FolderData GetFolderData( string userId, string folderId ) {

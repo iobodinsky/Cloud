@@ -27,28 +27,27 @@
 						<div class="panel-heading">{{folderPath}}</div>
 						<div class="panel-body container">
 							<div class="row">
-								<div class="text-center" ng-if="folders.length == 0">no folders</div>
+								<div class="text-center" ng-if="folders.length === 0">no folders</div>
 								<div class="box folder container relative folder"
-								     ng-repeat="folder in folders">
+									  ng-repeat="folder in folders track by folder.id">
 									@*todo: click entire folder*@
 									<div class="name absolute" title="{{folder.name}}"
-									     ng-click="openFolder(folder)">{{folder.name}}</div>
+										  ng-click="openFolder(folder)">{{folder.name}}</div>
 									<button class="option absolute" type="button" data-toggle="dropdown"
-									        aria-expanded="false"></button>
+											  aria-expanded="false"></button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a ng-click="deleteFolder(folder)">delete</a></li>
 									</ul>
 								</div>
 							</div>
 							<div class="row">
-								<div class="text-center" ng-if="files.length == 0">no files</div>
-								<div class="box file container relative" ng-repeat="file in files">
+								<div class="text-center" ng-if="files.length === 0">no files</div>
+								<div class="box file container relative" ng-repeat="file in files track by file.id">
 									<div class="name absolute" title="{{getFileNameWithoutExtention(file.name)}}">
 										{{getFileNameWithoutExtention(file.name)}}
 									</div>
 									<button class="option absolute" type="button" data-toggle="dropdown"
-									        aria-expanded="false">
-									</button>
+											  aria-expanded="false"></button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a ng-click="deleteFile(file)">delete</a></li>
 										<li><a ng-click="renameFile(file)">rename</a></li>

@@ -10,10 +10,9 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 				'Name': $scope.folderName,
 				'ParentId': currentFolderId
 			};
-			var cloudId = 2;
 			var createFolderRequest = {
 				method: 'POST',
-				url: constants.urls.cloud.folders.constructCreate(cloudId),
+				url: constants.urls.cloud.folders.constructCreate(constants.cloudId),
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
 				},

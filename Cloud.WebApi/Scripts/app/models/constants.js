@@ -4,6 +4,7 @@ cloud.models = cloud.models || {};
 cloud.models.constants = cloud.models.constants || {
 	userTokenKey: 'CloudUserBearerToken',
 	userTokenType: 'Bearer',
+	cloudId: 2,
 	urls: {
 		cloud: {
 			home: '',

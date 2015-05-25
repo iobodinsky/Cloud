@@ -3,7 +3,8 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function($scope, $http, $window, $log, constants, userTokenService, fileUploader, $modal) {
+	function ($scope, $http, $window, $log, constants, userTokenService,
+		fileUploader, $modal) {
 		var self = this;
 
 		self.init = function() {
@@ -21,10 +22,9 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 		self.initUploader = function() {
 			$scope.uploader = new fileUploader();
-			// TODO:
-			var cloudId = 2;
 			var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
-			$scope.uploader.url = constants.urls.cloud.files.constructUpload(folderId, cloudId);
+			$scope.uploader.url = constants.urls.cloud.files.constructUpload(
+				folderId, constants.cloudId);
 			$scope.uploader.headers = {
 				'Authorization': userTokenService.getAuthorizationHeader()
 			};
@@ -66,14 +66,18 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			$http(filesFoldersRequest)
 				.success(function(data, status, headers, config) {
-					$scope.currentFolder = data.folder;
+					
 					$scope.folderPath = 'cloud';
-					for (var i = 0; i < data.folders.length; i++) {
-						$scope.folders.push(data.folders[i]);
-					}
-
-					for (var j = 0; j < data.files.length; j++) {
-						$scope.files.push(data.files[j]);
+					for (var i = 0; i < data.length; i++) {
+						for (var j = 0; j < data[i].folders.length; j++) {
+							$scope.folders.push(data[i].folders[j]);
+						}
+						for (var k = 0; k < data[i].files.length; k++) {
+							$scope.files.push(data[i].files[k]);
+						}
+						if (data[i].folder.cloudId === constants.cloudId) {
+							$scope.cloudCurrentFolder = data[i].folder;
+						}
 					}
 				})
 				.error(function(data, status, headers, config) {
@@ -144,7 +148,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		$scope.deleteFile = function(file) {
 			if (file.id) {
-				var url = constants.urls.cloud.files.constructDelete(file.id, file.cloudId);
+				var url = constants.urls.cloud.files.constructDelete(
+					file.id, file.cloudId);
 				var deleteRequest = {
 					method: 'DELETE',
 					url: url,
@@ -201,7 +206,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				controller: cloud.controllers.createFolderModalController,
 				resolve: {
 					currentFolderId: function() {
-						return $scope.currentFolder.id;
+						return $scope.cloudCurrentFolder.id;
 					}
 				}
 			});
@@ -216,7 +221,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFolder = function(folder) {
-			var url = constants.urls.cloud.folders.constructDelete(folder.id, folder.cloudId);
+			var url = constants.urls.cloud.folders.constructDelete(
+				folder.id, folder.cloudId);
 			var deleteRequest = {
 				method: 'DELETE',
 				url: url,
@@ -240,7 +246,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		$scope.openFolder = function(folder) {
 			var openFolderRequest = {
 				method: 'GET',
-				url: constants.urls.cloud.folders.constructFolderData(folder.id, folder.cloudId),
+				url: constants.urls.cloud.folders.constructFolderData(
+					folder.id, folder.cloudId),
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
 				}
@@ -250,7 +257,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				.success(function(data, status, headers, config) {
 					$scope.folders = [];
 					$scope.files = [];
-					$scope.currentFolder = data.folder;
+					$scope.cloudCurrentFolder = data.folder;
 					$scope.folderPath += ' -> ' + folder.name;
 					$scope.uploader.url =
 						constants.urls.cloud.files.constructUpload(data.folder.id, 2);

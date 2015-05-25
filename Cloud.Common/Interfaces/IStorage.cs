@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Cloud.Common.Models;
+﻿using Cloud.Common.Models;
 
 namespace Cloud.Common.Interfaces {
 	public interface IStorage {
@@ -7,9 +6,7 @@ namespace Cloud.Common.Interfaces {
 
 		void AddFolder( string userId, IFolder folder );
 
-		IEnumerable<IFile> GetRootFiles( string userId );
-
-		IEnumerable<IFolder> GetRootFolders( string userId );
+		FolderData GetRootFolderData( string userId );
 
 		FolderData GetFolderData( string userId, string folderId );
 
