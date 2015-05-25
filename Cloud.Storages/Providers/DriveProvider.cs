@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Cloud.Common.Interfaces;
@@ -12,9 +11,13 @@ namespace Cloud.Storages.Providers {
 	public class DriveProvider : IStorage {
 		#region Private fields
 
-		private readonly DriveManager _manager = new DriveManager();
+		private readonly DriveManager _manager;
 
 		#endregion Private fields
+
+		public DriveProvider() {
+			_manager = new DriveManager();
+		}
 
 		#region IStorage implementation
 
@@ -135,11 +138,12 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public void DeleteFile( string userId, string fileId ) {
-			throw new NotImplementedException();
+			var service = _manager.BuildServiceAsync(userId);
+			service.Files.Delete(fileId).Execute();
 		}
 
 		public void DeleteFolder(string userId, string folderId) {
-			throw new NotImplementedException();
+			DeleteFile(userId, folderId);
 		}
 
 		#endregion IStorage implementation
