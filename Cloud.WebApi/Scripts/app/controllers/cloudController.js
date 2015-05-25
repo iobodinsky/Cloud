@@ -83,6 +83,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		$scope.isCloud = true;
 
+		// Account
+
 		$scope.register = function() {
 			var registrationData = {
 				Email: this.userRegistrationEmail,
@@ -138,6 +140,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				});
 		};
 
+		// Files
+
 		$scope.deleteFile = function(file) {
 			if (file.id) {
 				var url = constants.urls.cloud.files.constructDelete(file.id, file.cloudId);
@@ -166,7 +170,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		$scope.animationsEnabled = true;
 
-		$scope.renameFile = function(file) {
+		$scope.renameFile = function (file) {
+			file.name = $scope.getFileNameWithoutExtention(file.name);
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'renameFileModal.html',
@@ -186,6 +191,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				}
 			});
 		};
+
+		// Folders
 
 		$scope.createFolder = function() {
 			var modalInstance = $modal.open({
@@ -257,6 +264,17 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				})
 				.error(function(data, status, headers, config) {
 				});
+		};
+
+		// Helpers
+
+		$scope.getFileNameWithoutExtention = function(fileName) {
+			var lastIndexOfDot = fileName.lastIndexOf('.');
+			if (lastIndexOfDot >= 0) {
+				return fileName.substr(0, lastIndexOfDot);
+			} else {
+				return fileName;
+			}
 		};
 
 		self.init();

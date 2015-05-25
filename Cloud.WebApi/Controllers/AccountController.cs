@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -9,7 +8,6 @@ using System.Web;
 using System.Web.Http;
 using Cloud.Common.Resources;
 using Cloud.Storages.DataContext;
-using Cloud.Storages.Managers;
 using Cloud.Storages.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -419,9 +417,9 @@ namespace Cloud.WebApi.Controllers {
 					throw new ArgumentException("strengthInBits must be evenly divisible by 8.", "strengthInBits");
 				}
 
-				int strengthInBytes = strengthInBits/bitsPerByte;
+				var strengthInBytes = strengthInBits/bitsPerByte;
 
-				byte[] data = new byte[strengthInBytes];
+				var data = new byte[strengthInBytes];
 				_random.GetBytes(data);
 				return HttpServerUtility.UrlTokenEncode(data);
 			}
