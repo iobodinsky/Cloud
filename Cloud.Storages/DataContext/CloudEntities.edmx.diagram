@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.UserFile" Width="1.5" PointX="2.5" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.UserFolder" Width="1.5" PointX="0.5" PointY="4.25" />
+        <EntityTypeShape EntityType="CloudDbModel.DropboxUserToken" Width="1.5" PointX="2.5" PointY="3.875" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

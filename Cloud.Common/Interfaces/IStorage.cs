@@ -2,6 +2,8 @@
 
 namespace Cloud.Common.Interfaces {
 	public interface IStorage {
+		void Authorize();
+
 		void AddFile( string userId, FullUserFile file );
 
 		void AddFolder( string userId, IFolder folder );

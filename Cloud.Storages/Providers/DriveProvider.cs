@@ -21,6 +21,10 @@ namespace Cloud.Storages.Providers {
 
 		#region IStorage implementation
 
+		public void Authorize() {
+			throw new NotImplementedException();
+		}
+
 		public void AddFile( string userId, FullUserFile file ) {
 
 			// todo: Adding files only to cloud

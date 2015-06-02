@@ -58,5 +58,13 @@ namespace Cloud.Storages.Repositories {
 
 			return cloud;
 		}
+
+		public IStorage ResolveStorageInstance(int cloudId, string className) {
+			var cloudType = Type.GetType(className);
+			if (cloudType == null) return null;
+			var cloud = Activator.CreateInstance(cloudType) as IStorage;
+
+			return cloud;
+		}
 	}
 }

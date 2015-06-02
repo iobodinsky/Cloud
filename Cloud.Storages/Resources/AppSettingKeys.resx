@@ -129,4 +129,19 @@
   <data name="DriveUserCredentalsFolder" xml:space="preserve">
     <value>DriveUserCredentalsFolder</value>
   </data>
+  <data name="DropboxAccessToken" xml:space="preserve">
+    <value>DropboxAccessToken</value>
+  </data>
+  <data name="DropboxAppKey" xml:space="preserve">
+    <value>DropboxAppKey</value>
+  </data>
+  <data name="DropboxAppName" xml:space="preserve">
+    <value>DropboxAppName</value>
+  </data>
+  <data name="DropboxAppSecret" xml:space="preserve">
+    <value>DropboxAppSecret</value>
+  </data>
+  <data name="DropboxRedirectUri" xml:space="preserve">
+    <value>DropboxRedirectUri</value>
+  </data>
 </root>

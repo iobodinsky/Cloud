@@ -23,6 +23,10 @@ namespace Cloud.Storages.Providers {
 
 		#region IStorage implementation
 
+		public void Authorize() {
+			throw new NotImplementedException();
+		}
+
 		public void AddFile( string userId, FullUserFile file ) {
 			// Save file on all servers
 			_fileServerManager.AddFile(userId, file);

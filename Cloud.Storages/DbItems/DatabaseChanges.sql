@@ -464,13 +464,79 @@ BEGIN
 END
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-06-02
+-- Description:	Add active status for cloud starages
+-- =============================================================
+SET @newSchemaVersion = 23
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	ALTER TABLE dbo.CloudServers
+	ADD IsActive BIT NOT NULL
+	CONSTRAINT DF_IsActive DEFAULT(1)
+	
+	ALTER TABLE dbo.CloudServers	DROP 
+	CONSTRAINT DF_IsActive
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-06-02
+-- Description:	Add Dropbox cloud to CloudServers
+-- =============================================================
+SET @newSchemaVersion = 24
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	INSERT INTO dbo.CloudServers
+	(Name, ClassName, IsActive)
+	VALUES ('Dropbox', 'Cloud.Storages.Providers.DropboxProvider', 1) 
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-06-03
+-- Description:	Create table for access tokens for Dropbox users
+-- =============================================================
+SET @newSchemaVersion = 25
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	CREATE TABLE dbo.DropboxUserTokens
+	(
+		[Id] int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+		[UserId] nvarchar(128) NOT NULL,
+		[AccessToken] nvarchar(256) NOT NULL,
+		[TeamId] nvarchar(256),
+		[TokenType] nvarchar(256) NOT NULL,
+		[Uid] nvarchar(256) NOT NULL
+	)
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 23
+SET @newSchemaVersion = 26
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

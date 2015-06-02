@@ -31,5 +31,6 @@ namespace Cloud.Storages.DataContext
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<UserFile> UserFiles { get; set; }
         public virtual DbSet<UserFolder> UserFolders { get; set; }
+        public virtual DbSet<DropboxUserToken> DropboxUserTokens { get; set; }
     }
 }

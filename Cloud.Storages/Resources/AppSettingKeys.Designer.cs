@@ -22,7 +22,7 @@ namespace Cloud.Storages.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppSettingKeys {
+    public class AppSettingKeys {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cloud.Storages.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cloud.Storages.Resources.AppSettingKeys", typeof(AppSettingKeys).Assembly);
@@ -51,7 +51,7 @@ namespace Cloud.Storages.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Cloud.Storages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to DriveApplicationUserAgent.
         /// </summary>
-        internal static string DriveApplicationUserAgent {
+        public static string DriveApplicationUserAgent {
             get {
                 return ResourceManager.GetString("DriveApplicationUserAgent", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Cloud.Storages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to DriveClientId.
         /// </summary>
-        internal static string DriveClientId {
+        public static string DriveClientId {
             get {
                 return ResourceManager.GetString("DriveClientId", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Cloud.Storages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to DriveClientSecret.
         /// </summary>
-        internal static string DriveClientSecret {
+        public static string DriveClientSecret {
             get {
                 return ResourceManager.GetString("DriveClientSecret", resourceCulture);
             }
@@ -90,9 +90,54 @@ namespace Cloud.Storages.Resources {
         /// <summary>
         ///   Looks up a localized string similar to DriveUserCredentalsFolder.
         /// </summary>
-        internal static string DriveUserCredentalsFolder {
+        public static string DriveUserCredentalsFolder {
             get {
                 return ResourceManager.GetString("DriveUserCredentalsFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DropboxAccessToken.
+        /// </summary>
+        public static string DropboxAccessToken {
+            get {
+                return ResourceManager.GetString("DropboxAccessToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DropboxAppKey.
+        /// </summary>
+        public static string DropboxAppKey {
+            get {
+                return ResourceManager.GetString("DropboxAppKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DropboxAppName.
+        /// </summary>
+        public static string DropboxAppName {
+            get {
+                return ResourceManager.GetString("DropboxAppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DropboxAppSecret.
+        /// </summary>
+        public static string DropboxAppSecret {
+            get {
+                return ResourceManager.GetString("DropboxAppSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DropboxRedirectUri.
+        /// </summary>
+        public static string DropboxRedirectUri {
+            get {
+                return ResourceManager.GetString("DropboxRedirectUri", resourceCulture);
             }
         }
     }

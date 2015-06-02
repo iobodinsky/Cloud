@@ -29,6 +29,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="ClassName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DropboxUserTokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AccessToken" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="TeamId" Type="nvarchar" MaxLength="256" />
+          <Property Name="TokenType" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Uid" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="LocalFileServers">
           <Key>
@@ -74,6 +86,7 @@
         <EntityContainer Name="CloudDbModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CloudServers" EntityType="Self.CloudServers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DropboxUserTokens" EntityType="Self.DropboxUserTokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
@@ -90,6 +103,7 @@
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
           <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           <EntitySet Name="UserFolders" EntityType="CloudDbModel.UserFolder" />
+          <EntitySet Name="DropboxUserTokens" EntityType="CloudDbModel.DropboxUserToken" />
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -115,6 +129,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
@@ -157,6 +172,17 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="DropboxUserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AccessToken" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TeamId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TokenType" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uid" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -185,6 +211,7 @@
           <EntitySetMapping Name="CloudServers">
             <EntityTypeMapping TypeName="CloudDbModel.CloudServer">
               <MappingFragment StoreEntitySet="CloudServers">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -231,6 +258,18 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DropboxUserTokens">
+            <EntityTypeMapping TypeName="CloudDbModel.DropboxUserToken">
+              <MappingFragment StoreEntitySet="DropboxUserTokens">
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="TokenType" ColumnName="TokenType" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

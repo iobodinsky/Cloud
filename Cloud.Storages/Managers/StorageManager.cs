@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using Cloud.Common.Interfaces;
-using Cloud.Storages.Providers;
+using Cloud.Storages.Repositories;
 
 namespace Cloud.Storages.Managers {
 	public class StorageManager {
+		private readonly CloudRepository _cloudRepository;
+
+		public StorageManager() {
+			_cloudRepository = new CloudRepository();
+		}
+
 		public IEnumerable<IStorage> GetStorages() {
-			return new List<IStorage> {
-				new DriveProvider(),
-				new LocalLenevoProvider()
-			};
-			 
-		} 
+			return _cloudRepository.GetCloudStorages();
+		}
 	}
 }

@@ -12,11 +12,13 @@ namespace Cloud.Storages.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class CloudServer
+    public partial class DropboxUserToken
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ClassName { get; set; }
-        public bool IsActive { get; set; }
+        public string UserId { get; set; }
+        public string AccessToken { get; set; }
+        public string TeamId { get; set; }
+        public string TokenType { get; set; }
+        public string Uid { get; set; }
     }
 }
