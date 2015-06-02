@@ -217,6 +217,9 @@
     <Content Include="DbItems\DatabaseChanges[EXAPMLES].sql" />
     <Content Include="DbItems\DummyDataQuery.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Providers\OneDrive\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
