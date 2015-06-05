@@ -11,20 +11,6 @@ using Microsoft.AspNet.Identity;
 namespace Cloud.WebApi.Controllers {
 	[RoutePrefix( "api/files" )]
 	public class FilesController : ApiControllerBase {
-		// GET api/files
-		[Route( "" )]
-		[HttpGet]
-		public IHttpActionResult GetRootFolderData() {
-			var userId = User.Identity.GetUserId();
-			var clouds = new StorageManager().GetStorages();
-			var folderDatas = new List<FolderData>();
-			foreach (var cloud in clouds) {
-				folderDatas.Add(cloud.GetRootFolderData(userId));
-			}
-
-			return Ok(folderDatas);
-		}
-
 		// GET api/files/1/cloud/1/download/
 		[AllowAnonymous]
 		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/download/url" )]

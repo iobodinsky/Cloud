@@ -4,11 +4,14 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.renameFileModalController = cloud.controllers.renameFileModalController ||
 	function ($scope, $http, $modalInstance, constants, userTokenService, file) {
+		var self = this;
+		self.oldFileName = file.name;
+
 		$scope.file = file;
 		$scope.rename = function (newFileName) {
 			var renameRequest = {
 				method: 'POST',
-				url: constants.urls.cloud.files.constructRename(file.id, 2),
+				url: constants.urls.cloud.files.constructRename(file.id, file.cloudId),
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader(),
 				},
@@ -22,7 +25,7 @@ cloud.controllers.renameFileModalController = cloud.controllers.renameFileModalC
 
 				})
 				.error(function(data, status, headers, config) {
-
+					$scope.file.name = self.oldFileName;
 				});
 			
 

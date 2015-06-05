@@ -12,7 +12,6 @@ cloud.models.constants = cloud.models.constants || {
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
 			files: {
-				getAll: 'api/files',
 				constructUpload: function (folderId, cloudId) {
 					return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
 				},
@@ -24,6 +23,7 @@ cloud.models.constants = cloud.models.constants || {
 				},
 			},
 			folders: {
+				getRoot: 'api/folders/root',
 				constructCreate: function(cloudId) {
 					return 'api/folders/cloud/' + cloudId + '/create';
 				},

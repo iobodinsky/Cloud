@@ -75,9 +75,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 						for (var k = 0; k < data[i].files.length; k++) {
 							$scope.files.push(data[i].files[k]);
 						}
-						if (data[i].folder.cloudId === constants.cloudId) {
-							$scope.cloudCurrentFolder = data[i].folder;
-						}
+						// todo:
+						//if (data[i].folder.cloudId === constants.cloudId) {
+						//	$scope.cloudCurrentFolder = data[i].folder;
+						//}
 					}
 				})
 				.error(function(data, status, headers, config) {
@@ -88,7 +89,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		$scope.isCloud = true;
 
 		// Account
-
 		$scope.register = function() {
 			var registrationData = {
 				Email: this.userRegistrationEmail,
@@ -145,7 +145,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		// Files
-
 		$scope.getStorageImageClass = function(cloudId) {
 			return 'logo-' + cloudId;
 		};
@@ -202,7 +201,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		// Folders
-
 		$scope.createFolder = function() {
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
@@ -278,7 +276,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		// Helpers
-
 		$scope.getFileNameWithoutExtention = function(fileName) {
 			var lastIndexOfDot = fileName.lastIndexOf('.');
 			if (lastIndexOfDot >= 0) {
