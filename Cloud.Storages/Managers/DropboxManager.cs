@@ -9,11 +9,10 @@ namespace Cloud.Storages.Managers {
 			var options = new Options {
 				ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppKey],
 				ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppSecret],
-				AccessToken = "9kJKtEcgWjIAAAAAAAAAR6p1BUBGG2pLN5LPc79DHbZLiezIMTI5TPAHgqqS3SbE",
+				AccessToken = "9kJKtEcgWjIAAAAAAAAAUsuhDgbx0T-V0eICdkd8cgi5gifdJYYql3zmlmYqvn-4",
 				RedirectUri = ConfigurationManager.AppSettings[AppSettingKeys.DropboxRedirectUri]
 			};
 
-			// Initialize a new Client (without an AccessToken)
 			var client = new Client(options);
 
 			//// Get the OAuth Request Url
@@ -23,5 +22,17 @@ namespace Cloud.Storages.Managers {
 			return client;
 		}
 
+		public string ConstructFileId(string path) {
+			return path.Replace('/', '|');
+		}
+
+		public string ConstructFilePath(string path) {
+			return path.Replace('|', '/');
+		}
+
+		public string MakeValidPath( string path ) {
+			return path.Replace("\\", "/")
+				.Replace("//", "/");
+		}
 	}
 }
