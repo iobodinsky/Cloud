@@ -58,7 +58,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		self.getFiles = function() {
 			var filesFoldersRequest = {
 				method: 'GET',
-				url: constants.urls.cloud.files.getAll,
+				url: constants.urls.cloud.folders.getRoot,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
 				}
@@ -113,8 +113,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.login = function() {
-			var userLogin = this.userLogin;
-			var userPassword = this.userPassword;
+			var userLogin = this.userLoginName;
+			var userPassword = this.userLoginPassword;
 
 			var loginData = {
 				grant_type: 'password',
@@ -145,6 +145,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		// Files
+
+		$scope.getStorageImageClass = function(cloudId) {
+			return 'logo-' + cloudId;
+		};
 
 		$scope.deleteFile = function(file) {
 			if (file.id) {

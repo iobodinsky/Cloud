@@ -54,12 +54,13 @@ textarea {
 
 .box {
     display: inline-block;
-    text-align: center;
     margin: 5px;
     padding: 0 5px;
     border: 1px solid #000;
-    width: 150px;
+    width: 175px;
 }
+
+.box.container { border-radius: 3px; }
 
 .box.folder.container .option { border-right: 32px solid transparent; }
 
@@ -89,6 +90,7 @@ textarea {
 	-ms-text-overflow: ellipsis;
 	-o-text-overflow: ellipsis;
 	text-overflow: ellipsis;
+	padding-left: 30px;
 }
 
 .box .option {
@@ -102,3 +104,27 @@ textarea {
 }
 
 .box .option:focus { outline: none; }
+
+.logo { 
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: 5px;
+	right: 5px;
+	background-size: cover;
+}
+
+.logo-2 { 
+	background: url("ServerImages/logo-cloud.png") top left no-repeat;
+	background-size: contain;
+}
+
+.logo-1 { 
+	background: url("ServerImages/logo-drive.png") top left no-repeat;
+	background-size: contain;
+}
+
+.logo-3 { 
+	background: url("ServerImages/logo-dropbox.png") top left no-repeat;
+	background-size: contain;
+}
