@@ -5,6 +5,16 @@ cloud.models.constants = cloud.models.constants || {
 	userTokenKey: 'CloudUserBearerToken',
 	userTokenType: 'Bearer',
 	cloudId: 2,
+	alert: {
+		timeout: 5000,
+		type: {
+			success: 'success',
+			info: 'info',
+			warning: 'warning',
+			danger: 'danger'
+		},
+		maxCount: 3
+	},
 	urls: {
 		cloud: {
 			home: '',

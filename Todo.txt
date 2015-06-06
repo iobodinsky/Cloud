@@ -6,5 +6,8 @@
 6. rename dbropbox failed for second attempt to rename
 7. change layout
 8. implement history on folder browsing
+9. $scope.alerts.splice(index, 1); for remove (not for())
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+10. var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
 
 Stoped on:

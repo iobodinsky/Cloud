@@ -11,12 +11,19 @@ cloud.app.service('userTokenService', [
 	cloud.services.userTokenService
 ]);
 
+cloud.app.service('alertService', [
+	'$timeout',
+	'constants',
+	cloud.services.alertService
+]);
+
 // controllers
 cloud.app.controller('cloudController', [
 	'$scope',
 	'$http',
 	'$window',
 	'$log',
+	'alertService',
 	'constants',
 	'userTokenService',
 	'FileUploader',

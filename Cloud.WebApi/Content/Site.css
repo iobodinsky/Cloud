@@ -129,3 +129,12 @@ textarea {
 	background: url("Images/ServerImages/logo-dropbox.png") top left no-repeat;
 	background-size: contain;
 }
+
+.alert-container {
+	position: fixed;
+	top: 10px;
+	right: 33%;
+	left: 33%;
+	width: 33%;
+	z-index: 9999;
+}

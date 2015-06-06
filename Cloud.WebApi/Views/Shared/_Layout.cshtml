@@ -60,7 +60,14 @@
 			<p>&copy; @DateTime.Now.Year - cloud, all rights reserved</p>
 		</footer>
 	</div>
-
+	<div class="alert-container">
+		<alert
+				 ng-repeat="alert in alerts"
+				 type="{{alert.type}}"
+				 close="closeAlert($index)">
+			{{alert.msg}}
+		</alert>
+	</div>
 	@Scripts.Render("~/bundles/common")
 	@Scripts.Render("~/bundles/ng")
 </body>

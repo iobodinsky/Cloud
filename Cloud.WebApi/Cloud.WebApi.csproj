@@ -304,6 +304,7 @@
     <Content Include="Scripts\app\controllers\renameModalController.js" />
     <Content Include="Scripts\app\controllers\userAccountController.js" />
     <Content Include="Scripts\app\models\constants.js" />
+    <Content Include="Scripts\app\services\alertService.js" />
     <Content Include="Scripts\app\services\userTokenService.js" />
     <Content Include="Scripts\assets\js\angular-file-upload.js" />
     <Content Include="Scripts\assets\js\angular.js" />

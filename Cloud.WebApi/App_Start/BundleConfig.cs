@@ -19,6 +19,7 @@ namespace Cloud.WebApi
 					 "~/Scripts/assets/js/ui-bootstrap-tpls-0.13.0.js",
 					 "~/Scripts/app/models/constants.js",
 					 "~/Scripts/app/services/userTokenService.js",
+					 "~/Scripts/app/services/alertService.js",
 					 "~/Scripts/app/controllers/cloudController.js",
 					 "~/Scripts/app/controllers/userAccountController.js",
 					 "~/Scripts/app/controllers/renameModalController.js",

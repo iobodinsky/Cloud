@@ -3,7 +3,7 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function ($scope, $http, $window, $log, constants,
+	function ($scope, $http, $window, $log, alertService, constants,
 		userTokenService, fileUploader, $modal) {
 		var self = this;
 
@@ -80,9 +80,12 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				.error(function (data, status, headers, config) {
 				});
 		};
+
 		$scope.userInfo = {
 			Name: ''
 		};
+
+		$scope.alerts = alertService.alerts;
 
 		// todo: should make as private 
 		$scope.initialize = function () {
