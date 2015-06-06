@@ -5,6 +5,7 @@ using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
+using Cloud.Storages.Resources;
 
 namespace Cloud.Storages.Providers {
 	internal class DropboxProvider : IStorage {
@@ -31,7 +32,8 @@ namespace Cloud.Storages.Providers {
 
 		public FolderData GetRootFolderData( string userId ) {
 			var client = _manager.GetClient().Result;
-			var rootFilesFolders = client.Core.Metadata.MetadataAsync("/").Result;
+			var rootFilesFolders = client.Core.Metadata.MetadataAsync(
+				DropboxKeys.RootFolderPath).Result;
 			var folders = new List<IFolder>();
 			var files = new List<IFile>();
 			var folderData = new FolderData { CloudId = 3 };
@@ -40,7 +42,6 @@ namespace Cloud.Storages.Providers {
 					folders.Add(new UserFolder {
 						CloudId = 3,
 						Id =  _manager.ConstructFileId(folderFile.path),
-						//ParentId = "",Name = folder.Name,
 						UserId = userId,
 						Name = folderFile.Name,
 					});
@@ -50,12 +51,16 @@ namespace Cloud.Storages.Providers {
 						Name = folderFile.Name,
 						Id = _manager.ConstructFileId(folderFile.path),
 						UserId = userId,
-						//Size = folderFile.size
 					});
 				}
 			}
+			var folder = new UserFolder {
+				Id = DropboxKeys.RootFolderPath,
+				CloudId = 3
+			};
 			folderData.Folders = folders;
 			folderData.Files = files;
+			folderData.Folder = folder;
 
 			return folderData;
 		}
@@ -72,7 +77,7 @@ namespace Cloud.Storages.Providers {
 			throw new NotImplementedException();
 		}
 
-		public void UpdateName( string userId, string fileId, string newfileName ) {
+		public void UpdateFileName(string userId, string fileId, string newfileName) {
 			var client = _manager.GetClient().Result;
 			var oldfilePathWithName = _manager.ConstructFilePath(fileId);
 			var fileExtention = Path.GetExtension(oldfilePathWithName);
@@ -90,6 +95,10 @@ namespace Cloud.Storages.Providers {
 			//if (responce) {
 				
 			//}
+		}
+
+		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
+			throw new NotImplementedException();
 		}
 
 		public void DeleteFile( string userId, string fileId ) {

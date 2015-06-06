@@ -106,6 +106,20 @@ namespace Cloud.Storages.Managers {
 			}
 		}
 
+		public void RenameFolder(string userId, string folderId, string oldFolderName, string newFolderName) {
+			foreach (var server in GetFileServers()) {
+				var oldFolderPath = GetFolderServerPath(userId, folderId, server);
+				var newFolderPath = Path.Combine(
+					Directory.GetParent(oldFolderPath).FullName, newFolderName);
+				if (Directory.Exists(newFolderPath)) {
+					// todo:
+					throw new Exception("todo");
+				}
+
+				Directory.Move(oldFolderPath, newFolderPath);
+			}
+		}
+
 		public void DeleteFile( string userId, string fileId ) {
 			foreach (var server in GetFileServers()) {
 				var filePath = GetFileServerPath(userId, fileId, server);

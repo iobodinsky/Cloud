@@ -16,7 +16,9 @@ namespace Cloud.Common.Interfaces {
 
 		FullUserFile GetFile( string userId, string fileId );
 
-		void UpdateName( string userId, string fileId, string newfileName );
+		void UpdateFileName(string userId, string fileId, string newfileName);
+
+		void UpdateFolderName(string userId, string folderId, string newFolderName);
 
 		void DeleteFile(string userId, string fileId);
 

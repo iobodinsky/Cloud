@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
-using Cloud.Storages.Managers;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -72,7 +70,7 @@ namespace Cloud.WebApi.Controllers {
 			[FromBody] NewNameModel newfile ) {
 			if (string.IsNullOrEmpty(newfile.Name)) return BadRequest();
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			cloud.UpdateName(User.Identity.GetUserId(), fileId, newfile.Name);
+			cloud.UpdateFileName(User.Identity.GetUserId(), fileId, newfile.Name);
 
 			return Ok();
 		}

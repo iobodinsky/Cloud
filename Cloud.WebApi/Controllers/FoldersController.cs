@@ -52,11 +52,11 @@ namespace Cloud.WebApi.Controllers {
 		// POST api/folders/1/cloud/1/rename
 		[Route("{folderId}/cloud/{cloudId:int:min(0)}/rename")]
 		[HttpPost]
-		public IHttpActionResult RenameFile([FromUri] string folderId, [FromUri] int cloudId,
-		  [FromBody] NewNameModel newfile) {
-			if (string.IsNullOrEmpty(newfile.Name)) return BadRequest();
+		public IHttpActionResult RenameFolder([FromUri] string folderId, [FromUri] int cloudId,
+		  [FromBody] NewNameModel newFolder) {
+			if (string.IsNullOrEmpty(newFolder.Name)) return BadRequest();
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			cloud.UpdateName(User.Identity.GetUserId(), folderId, newfile.Name);
+			cloud.UpdateFolderName(User.Identity.GetUserId(), folderId, newFolder.Name);
 
 			return Ok();
 		}

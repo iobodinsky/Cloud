@@ -130,7 +130,7 @@ textarea {
 	background-size: contain;
 }
 
-.alert-container {
+.alert.alert-container {
 	position: fixed;
 	top: 10px;
 	right: 33%;

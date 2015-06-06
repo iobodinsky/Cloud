@@ -20,6 +20,9 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					if (status === 200) {
 						$scope.uploader.clearQueue();
 						$scope.files.push(response);
+
+						alertService.show(constants.alert.type.success,
+							constants.message.successUploadFile);
 					} else {
 						alertService.show(constants.alert.type.danger,
 							constants.message.failUploadFile);
@@ -37,8 +40,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			$http(rootfolderDataRequest)
 				.success(function(data, status, headers, config) {
-					$scope.cloudFolderPath = 'cloud';
-
 					for (var i = 0; i < data.length; i++) {
 						for (var j = 0; j < data[i].folders.length; j++) {
 							$scope.folders.push(data[i].folders[j]);
@@ -46,9 +47,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 						for (var k = 0; k < data[i].files.length; k++) {
 							$scope.files.push(data[i].files[k]);
 						}
-						//if (data[i].folder.cloudId === constants.cloudId) {
-						//	$scope.cloudCurrentFolder = data[i].folder;
-						//}
+						if (data[i].folder.cloudId === constants.cloudId) {
+							$scope.cloudFolder = data[i].folder;
+							$scope.cloudFolder.path = 'cloud';
+						}
 					}
 				})
 				.error(function(data, status, headers, config) {
@@ -59,8 +61,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		self.clearCloudData = function() {
 			$scope.files = [];
 			$scope.folders = [];
-			$scope.cloudCurrentFolder = null;
-			$scope.cloudFolderPath = null;
+			$scope.cloudFolder = null;
+			$scope.cloudFolder.path = '';
 			$scope.uploader = null;
 			$scope.userName = null;
 		};
@@ -83,6 +85,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 						constants.message.failLoadUserInfo);
 				});
 		};
+
+		self.cloudFolder = null;
+		self.driveFolder = null;
+		self.dropboxFolder = null;
 
 		$scope.userInfo = {
 			Name: ''
@@ -226,27 +232,32 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		// Folders
 		$scope.createFolder = function() {
-			var modalInstance = $modal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'createFolderModal.html',
-				controller: cloud.controllers.createFolderModalController,
-				resolve: {
-					currentFolderId: function() {
-						return $scope.cloudCurrentFolder.id;
+			if ($scope.cloudFolder && $scope.cloudFolder.id) {
+				var modalInstance = $modal.open({
+					animation: $scope.animationsEnabled,
+					templateUrl: 'createFolderModal.html',
+					controller: cloud.controllers.createFolderModalController,
+					resolve: {
+						folderId: function() {
+							return $scope.cloudFolder.id;
+						}
 					}
-				}
-			});
+				});
 
-			modalInstance.result.then(function(options) {
-				if (options.isSuccess) {
-					$scope.folders.push(options.data);
-					alertService.show(constants.alert.type.success,
-						constants.message.successfolderCreate);
-				} else {
-					alertService.show(constants.alert.type.success,
-						constants.message.failCreatFolder);
-				}
-			});
+				modalInstance.result.then(function(options) {
+					if (options.isSuccess) {
+						$scope.folders.push(options.data);
+						alertService.show(constants.alert.type.success,
+							constants.message.successfolderCreate);
+					} else {
+						alertService.show(constants.alert.type.success,
+							constants.message.failCreatFolder);
+					}
+				});
+			} else {
+				alertService.show(constants.alert.type.warning,
+					constants.message.warningNotInCloudFolder);
+			}
 		};
 
 		$scope.deleteFolder = function(folder) {
@@ -290,8 +301,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				.success(function(data, status, headers, config) {
 					$scope.folders = [];
 					$scope.files = [];
-					$scope.cloudCurrentFolder = data.folder;
-					$scope.cloudFolderPath += ' -> ' + folder.name;
+					$scope.cloudFolder = data.folder;
+					$scope.cloudFolder.path += ' -> ' + folder.name;
 					$scope.uploader.url =
 						constants.urls.cloud.files.constructUpload(data.folder.id, 2);
 					for (var i = 0; i < data.folders.length; i++) {

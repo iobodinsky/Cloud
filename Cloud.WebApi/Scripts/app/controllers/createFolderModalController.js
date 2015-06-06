@@ -3,12 +3,12 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.createFolderModalController = cloud.controllers.createFolderModalController ||
-	function ($scope, $http, $modalInstance, constants, userTokenService, currentFolderId) {
+	function ($scope, $http, $modalInstance, constants, userTokenService, folderId) {
 
 		$scope.create = function() {
 			var folder = {
 				'Name': $scope.folderName,
-				'ParentId': currentFolderId
+				'ParentId': folderId
 			};
 			var createFolderRequest = {
 				method: 'POST',
@@ -38,8 +38,6 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 						config: config
 					});
 				});
-
-			$modalInstance.close();
 		};
 
 		$scope.cancel = function() {

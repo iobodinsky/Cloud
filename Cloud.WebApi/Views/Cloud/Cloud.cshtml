@@ -9,7 +9,8 @@
 					<div class="panel-heading">options</div>
 					<div class="panel-body">
 						<div>
-							<button class="btn btn-group" ng-click="createFolder()">new folder</button>
+							<button class="btn btn-group"
+									  ng-click="createFolder()">new folder</button>
 						</div>
 						<div>
 							<input type="file" nv-file-select uploader="uploader" />
@@ -23,14 +24,16 @@
 			</div>
 			<div class="col-md-8">
 				<div class="panel panel-primary">
-					<div class="panel-heading">{{cloudFolderPath}}</div>
+					<div class="panel-heading">{{cloudFolder.path}}</div>
 					<div class="panel-body container">
 						<div class="row">
-							<div class="text-center" ng-if="folders.length === 0">no folders</div>
+							<div class="text-center"
+								  ng-if="folders.length === 0">no folders</div>
 							<div class="box folder container relative folder"
 								  ng-repeat="folder in folders track by folder.id">
 								@*todo: click entire folder*@
-								<div class="logo" ng-class="getStorageImageClass(folder.cloudId)"></div>
+								<div class="logo"
+									  ng-class="getStorageImageClass(folder.cloudId)"></div>
 								<div class="name absolute" title="{{folder.name}}"
 									  ng-click="openFolder(folder)">{{folder.name}}</div>
 								<button class="option absolute" type="button" data-toggle="dropdown"
@@ -43,9 +46,12 @@
 						</div>
 						<div class="row">
 							<div class="text-center" ng-if="files.length === 0">no files</div>
-							<div class="box file container relative" ng-repeat="file in files track by file.id">
-								<div class="logo" ng-class="getStorageImageClass(file.cloudId)"></div>
-								<div class="name absolute" title="{{getFileNameWithoutExtention(file.name)}}">
+							<div class="box file container relative" 
+								  ng-repeat="file in files track by file.id">
+								<div class="logo" 
+									  ng-class="getStorageImageClass(file.cloudId)"></div>
+								<div class="name absolute" 
+									  title="{{getFileNameWithoutExtention(file.name)}}">
 									{{getFileNameWithoutExtention(file.name)}}
 								</div>
 								<button class="option absolute" type="button" data-toggle="dropdown"

@@ -6,7 +6,7 @@ cloud.models.constants = cloud.models.constants || {
 	userTokenType: 'Bearer',
 	cloudId: 2,
 	alert: {
-		timeout: 5000,
+		timeout: 3000,
 		type: {
 			success: 'success',
 			info: 'info',
@@ -39,7 +39,7 @@ cloud.models.constants = cloud.models.constants || {
 					return 'api/folders/cloud/' + cloudId + '/create';
 				},
 				constructRename: function (folderId, cloudId) {
-					return 'api/files/' + folderId + '/cloud/' + cloudId + '/rename';
+					return 'api/folders/' + folderId + '/cloud/' + cloudId + '/rename';
 				},
 				constructFolderData: function (folderId, cloudId) {
 					return 'api/folders/' + folderId + '/cloud/' + cloudId;
@@ -70,7 +70,10 @@ cloud.models.constants = cloud.models.constants || {
 		failLogin: 'fail to login',
 
 		successfolderCreate: 'folder created',
+		successUploadFile: 'file upload successed',
 		successDelete: 'delete successed',
-		successRename: 'rename successed'
+		successRename: 'rename successed',
+
+		warningNotInCloudFolder: 'you cannot add new item in non cloud folder'
 	}
 };

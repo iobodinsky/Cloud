@@ -1,6 +1,5 @@
-1. Confirm dialog for each delete/rename
+1. Confirm dialog for each delete
 2. LastModifyingDate
-3. Hendle error on rename/delete
 4. Check url parameter {cloudId:int:min(0)}
 5. Loader on long time actions
 6. rename dbropbox failed for second attempt to rename
@@ -9,8 +8,13 @@
 9. $scope.alerts.splice(index, 1); for remove (not for())
 	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 10. var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
+11. inmplement ngMessages
+12. close alert
+13. add description for alert
 
 Stoped on:
+// todo: why only 'options.data.name' pushes ?
+after rename folder addes new empty folder to array
 
 
 green: #398439

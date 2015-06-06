@@ -54,8 +54,6 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 
 					$scope.entity.name = self.oldName;
 				});
-
-			$modalInstance.close();
 		};
 
 		$scope.cancel = function() {

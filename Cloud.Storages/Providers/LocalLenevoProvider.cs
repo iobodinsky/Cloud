@@ -116,7 +116,7 @@ namespace Cloud.Storages.Providers {
 			return _fileServerManager.GetFile(userId, fileId);
 		}
 
-		public void UpdateName( string userId, string fileId, string newfileName ) {
+		public void UpdateFileName( string userId, string fileId, string newfileName ) {
 			var fileToUpdate = _storageRepository.Entities.UserFiles
 				.SingleOrDefault(file => file.Id == fileId && file.UserId == userId);
 			if (fileToUpdate == null) {
@@ -136,6 +136,27 @@ namespace Cloud.Storages.Providers {
 			fileToUpdate.Name = newfileName;
 			_storageRepository.Entities.UserFiles.Attach(fileToUpdate);
 			var entry = _storageRepository.Entities.Entry(fileToUpdate);
+			entry.Property(file => file.Name).IsModified = true;
+			_storageRepository.SaveChanges();
+		}
+
+		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
+			var folderToUpdate = _storageRepository.Entities.UserFolders
+				.SingleOrDefault(folder => folder.Id == folderId && folder.UserId == userId);
+			if (folderToUpdate == null) {
+				// todo
+				throw new Exception("todo");
+			}
+
+			// Rename folder on servers
+			var oldFolderName = folderToUpdate.Name;
+			var serverManager = new FileServerManager();
+			serverManager.RenameFolder(userId, folderId, oldFolderName, newFolderName);
+
+			// Rename folder in Db
+			folderToUpdate.Name = newFolderName;
+			_storageRepository.Entities.UserFolders.Attach(folderToUpdate);
+			var entry = _storageRepository.Entities.Entry(folderToUpdate);
 			entry.Property(file => file.Name).IsModified = true;
 			_storageRepository.SaveChanges();
 		}

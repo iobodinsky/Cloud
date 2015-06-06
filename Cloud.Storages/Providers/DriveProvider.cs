@@ -137,7 +137,11 @@ namespace Cloud.Storages.Providers {
 			throw new NotImplementedException();
 		}
 
-		public void UpdateName( string userId, string fileId, string newfileName ) {
+		public void UpdateFileName( string userId, string fileId, string newfileName ) {
+			throw new NotImplementedException();
+		}
+
+		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
 			throw new NotImplementedException();
 		}
 
