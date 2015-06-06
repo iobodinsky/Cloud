@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 namespace Cloud.WebApi.Models {
-	public class NewFileModel {
+	public class NewNameModel {
 		[JsonProperty("name")]
 		public string Name { get; set; }
 	}

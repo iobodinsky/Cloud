@@ -20,7 +20,8 @@ namespace Cloud.WebApi
 					 "~/Scripts/app/models/constants.js",
 					 "~/Scripts/app/services/userTokenService.js",
 					 "~/Scripts/app/controllers/cloudController.js",
-					 "~/Scripts/app/controllers/renameFileModalController.js",
+					 "~/Scripts/app/controllers/userAccountController.js",
+					 "~/Scripts/app/controllers/renameModalController.js",
 					 "~/Scripts/app/controllers/createFolderModalController.js",
                 "~/Scripts/app/cloud.js"));
 

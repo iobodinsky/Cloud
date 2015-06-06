@@ -4,13 +4,14 @@ using Cloud.Common.Managers;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
+using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
 namespace Cloud.WebApi.Controllers {
 	[RoutePrefix( "api/folders" )]
 	public class FoldersController : ApiControllerBase {
-		// GET api/folders/root
-		[Route("root")]
+		// GET api/folders
+		[Route("")]
 		public IHttpActionResult GetRootFolderData() {
 			var userId = User.Identity.GetUserId();
 			var clouds = new StorageManager().GetStorages();
@@ -46,6 +47,18 @@ namespace Cloud.WebApi.Controllers {
 			cloud.AddFolder(userId, folder);
 
 			return Ok(folder);
+		}
+
+		// POST api/folders/1/cloud/1/rename
+		[Route("{folderId}/cloud/{cloudId:int:min(0)}/rename")]
+		[HttpPost]
+		public IHttpActionResult RenameFile([FromUri] string folderId, [FromUri] int cloudId,
+		  [FromBody] NewNameModel newfile) {
+			if (string.IsNullOrEmpty(newfile.Name)) return BadRequest();
+			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
+			cloud.UpdateName(User.Identity.GetUserId(), folderId, newfile.Name);
+
+			return Ok();
 		}
 
 		// DELETE: api/folders/1/cloud/1/delete

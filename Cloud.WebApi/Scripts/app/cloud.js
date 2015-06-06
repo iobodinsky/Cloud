@@ -24,14 +24,23 @@ cloud.app.controller('cloudController', [
 	cloud.controllers.cloudController
 ]);
 
-cloud.app.controller('renameFileModalController', [
+cloud.app.controller('userAccountController', [
+	'$scope',
+	'$http',
+	'$window',
+	'constants',
+	'userTokenService',
+	cloud.controllers.userAccountController
+]);
+
+cloud.app.controller('renameModalController', [
 	'$scope',
 	'$http',
 	'$modalInstance',
 	'constants',
 	'userTokenService',
-	'file',
-	cloud.controllers.renameFileModalController
+	'entity',
+	cloud.controllers.renameModalController
 ]);
 
 cloud.app.controller('createFolderModalController', [

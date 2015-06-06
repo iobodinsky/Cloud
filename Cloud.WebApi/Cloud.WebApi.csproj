@@ -277,7 +277,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\NewFileModel.cs" />
+    <Compile Include="Models\NewNameModel.cs" />
     <Compile Include="Models\UserFileDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -286,21 +286,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\ServerImages\logo-cloud.png" />
-    <Content Include="Content\ServerImages\logo-dropbox.png" />
+    <Content Include="Content\Images\background.png" />
+    <Content Include="Content\Images\ServerImages\logo-cloud.png" />
+    <Content Include="Content\Images\ServerImages\logo-dropbox.png" />
     <Content Include="favicon.ico" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\ServerImages\logo-drive.png" />
+    <Content Include="Content\Images\ServerImages\logo-drive.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.js" />
     <Content Include="Scripts\app\controllers\cloudController.js" />
     <Content Include="Scripts\app\controllers\createFolderModalController.js" />
-    <Content Include="Scripts\app\controllers\renameFileModalController.js" />
+    <Content Include="Scripts\app\controllers\renameModalController.js" />
+    <Content Include="Scripts\app\controllers\userAccountController.js" />
     <Content Include="Scripts\app\models\constants.js" />
     <Content Include="Scripts\app\services\userTokenService.js" />
     <Content Include="Scripts\assets\js\angular-file-upload.js" />

@@ -1,0 +1,10 @@
+1. Confirm dialog for each delete/rename
+2. LastModifyingDate
+3. Hendle error on rename/delete
+4. Check url parameter {cloudId:int:min(0)}
+5. Loader on long time actions
+6. rename dbropbox failed for second attempt to rename
+7. change layout
+8. implement history on folder browsing
+
+Stoped on:

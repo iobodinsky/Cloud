@@ -3,23 +3,10 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function ($scope, $http, $window, $log, constants, userTokenService,
-		fileUploader, $modal) {
+	function ($scope, $http, $window, $log, constants,
+		userTokenService, fileUploader, $modal) {
 		var self = this;
 
-		self.init = function() {
-			$scope.folders = [];
-			$scope.files = [];
-
-			var token = userTokenService.getToken();
-			if (token) {
-				self.initUploader();
-				self.getUserInfo();
-				self.getFiles();
-			} else {
-				$scope.isLogin = true;
-			}
-		};
 		self.initUploader = function() {
 			$scope.uploader = new fileUploader();
 			var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
@@ -39,35 +26,19 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					}
 				};
 		};
-		self.getUserInfo = function() {
-			var userInfoRequest = {
+		self.getRootFolderData = function () {
+			var rootfolderDataRequest = {
 				method: 'GET',
-				url: constants.urls.cloud.userInfo,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
-			};
-			$http(userInfoRequest)
-				.success(function(data, status, headers, config) {
-					$scope.userName = data.Email;
-				})
-				.error(function(data, status, headers, config) {
-
-				});
-		};
-		self.getFiles = function() {
-			var filesFoldersRequest = {
-				method: 'GET',
-				url: constants.urls.cloud.folders.getRoot,
+				url: constants.urls.cloud.folders.rootFolderData,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
 				}
 			};
 
-			$http(filesFoldersRequest)
+			$http(rootfolderDataRequest)
 				.success(function(data, status, headers, config) {
-					
-					$scope.folderPath = 'cloud';
+					$scope.cloudFolderPath = 'cloud';
+
 					for (var i = 0; i < data.length; i++) {
 						for (var j = 0; j < data[i].folders.length; j++) {
 							$scope.folders.push(data[i].folders[j]);
@@ -75,7 +46,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 						for (var k = 0; k < data[i].files.length; k++) {
 							$scope.files.push(data[i].files[k]);
 						}
-						// todo:
 						//if (data[i].folder.cloudId === constants.cloudId) {
 						//	$scope.cloudCurrentFolder = data[i].folder;
 						//}
@@ -85,62 +55,70 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 				});
 		};
-
-		$scope.isCloud = true;
-
-		// Account
-		$scope.register = function() {
-			var registrationData = {
-				Email: this.userRegistrationEmail,
-				Password: this.userRegistrationPassword,
-				ConfirmPassword: this.userRegistrationConfirmPassword
+		self.clearCloudData = function () {
+			$scope.files = [];
+			$scope.folders = [];
+			$scope.cloudCurrentFolder = null;
+			$scope.cloudFolderPath = null;
+			$scope.uploader = null;
+			$scope.userName = null;
+		};
+		self.getUserInfo = function () {
+			var userInfoRequest = {
+				method: 'GET',
+				url: constants.urls.cloud.userInfo,
+				headers: {
+					'Authorization': userTokenService.getAuthorizationHeader()
+				}
 			};
-
-			var registerRequest = {
-				method: 'POST',
-				url: constants.urls.cloud.register,
-				contentType: 'application/json; charset=utf-8',
-				data: JSON.stringify(registrationData)
-			};
-
-			$http(registerRequest)
-				.success(function(data, status, headers, config) {
-
+			$http(userInfoRequest)
+				.success(function (data, status, headers, config) {
+					$scope.userInfo = {
+						Name: data.Email
+					}
 				})
-				.error(function(data, status, headers, config) {
-
+				.error(function (data, status, headers, config) {
 				});
 		};
+		$scope.userInfo = {
+			Name: ''
+		};
 
-		$scope.login = function() {
-			var userLogin = this.userLoginName;
-			var userPassword = this.userLoginPassword;
+		// todo: should make as private 
+		$scope.initialize = function () {
+			$scope.folders = [];
+			$scope.files = [];
 
-			var loginData = {
-				grant_type: 'password',
-				username: userLogin,
-				password: userPassword
-			};
+			if (userTokenService.isTokenExist()) {
+				self.getUserInfo();
+				self.getRootFolderData();
+				self.initUploader();
+				$scope.isLoginView = false;
+			} else {
+				$scope.isLoginView = true;
+			}
+		};
 
-			var loginRequest = {
+		$scope.setLoginView = function() {
+			$scope.isLoginView = true;
+		};
+
+		$scope.logout = function () {
+			var logoutRequest = {
 				method: 'POST',
-				url: constants.urls.cloud.token,
+				url: constants.urls.cloud.logout,
 				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				data: 'grant_type=password&username=' + loginData.username +
-					'&password=' + loginData.password
+					'Authorization': userTokenService.getAuthorizationHeader()
+				}
 			};
 
-			$http(loginRequest)
-				.success(function(data, status, headers, config) {
-					$window.sessionStorage.setItem(
-						constants.userTokenKey, data.access_token);
-					$scope.isLogin = false;
-					self.init();
+			$http(logoutRequest)
+				.success(function (data, status, headers, config) {
+					userTokenService.removeToken();
+					self.clearCloudData();
+					$scope.isLoginView = true;
 				})
-				.error(function(data, status, headers, config) {
-
+				.error(function (data, status, headers, config) {
 				});
 		};
 
@@ -179,19 +157,48 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		$scope.animationsEnabled = true;
 
 		$scope.renameFile = function (file) {
+			var entity = {
+				type: constants.renameEntities.file,
+				data: file
+			};
 			file.name = $scope.getFileNameWithoutExtention(file.name);
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'renameFileModal.html',
-				controller: cloud.controllers.renameFileModalController,
+				templateUrl: 'renameModal.html',
+				controller: cloud.controllers.renameModalController,
 				resolve: {
-					file: function() {
-						return file;
+					entity: function () {
+						return entity;
 					}
 				}
 			});
 
 			modalInstance.result.then(function(options) {
+				if (options.isSuccess) {
+					$scope.files.push(options.data.name);
+				} else {
+					// todo:
+				}
+			});
+		};
+
+		$scope.renameFolder = function (folder) {
+			var entity = {
+				type: constants.renameEntities.folder,
+				data: folder
+			};
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'renameModal.html',
+				controller: cloud.controllers.renameModalController,
+				resolve: {
+					entity: function () {
+						return entity;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (options) {
 				if (options.isSuccess) {
 					$scope.folders.push(options.data.name);
 				} else {
@@ -199,7 +206,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				}
 			});
 		};
-
+		
 		// Folders
 		$scope.createFolder = function() {
 			var modalInstance = $modal.open({
@@ -260,7 +267,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					$scope.folders = [];
 					$scope.files = [];
 					$scope.cloudCurrentFolder = data.folder;
-					$scope.folderPath += ' -> ' + folder.name;
+					$scope.cloudFolderPath += ' -> ' + folder.name;
 					$scope.uploader.url =
 						constants.urls.cloud.files.constructUpload(data.folder.id, 2);
 					for (var i = 0; i < data.folders.length; i++) {
@@ -285,5 +292,5 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			}
 		};
 
-		self.init();
+		$scope.initialize();
 	};

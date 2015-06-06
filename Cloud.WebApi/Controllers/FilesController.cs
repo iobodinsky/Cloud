@@ -69,7 +69,7 @@ namespace Cloud.WebApi.Controllers {
 		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/rename" )]
 		[HttpPost]
 		public IHttpActionResult RenameFile( [FromUri] string fileId, [FromUri] int cloudId,
-			[FromBody] NewFileModel newfile ) {
+			[FromBody] NewNameModel newfile ) {
 			if (string.IsNullOrEmpty(newfile.Name)) return BadRequest();
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
 			cloud.UpdateName(User.Identity.GetUserId(), fileId, newfile.Name);

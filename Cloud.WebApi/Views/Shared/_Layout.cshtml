@@ -18,8 +18,9 @@
 				@Html.ActionLink("cloud", "Cloud", "Cloud", new { area = "" }, new { @class = "navbar-brand" })
 			</div>
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav pull-right">
-					<li><a>{{userName}}</a></li>
+				<ul class="nav navbar-nav pull-right" ng-if="!isLoginView">
+					<li><a>{{userInfo.Name}}</a></li>
+					<li><a ng-click="logout()">logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -41,17 +42,17 @@
 				<button class="btn btn-warning" ng-click="cancel()">cancel</button>
 			</div>
 		</script>
-		<script type="text/ng-template" id="renameFileModal.html">
+		<script type="text/ng-template" id="renameModal.html">
 			<div class="modal-header">
-				<h3 class="modal-title">rename file</h3>
+				<h3 class="modal-title">rename</h3>
 			</div>
 			<div class="modal-body">
 				<div>
-					<input type="text" class="form-control" ng-model="file.name" />
+					<input type="text" class="form-control" ng-model="entity.name" />
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="rename(file.name)">rename</button>
+				<button class="btn btn-primary" ng-click="rename(entity.name)">rename</button>
 				<button class="btn btn-warning" ng-click="cancel()">cancel</button>
 			</div>
 		</script>
