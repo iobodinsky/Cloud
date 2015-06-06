@@ -36,6 +36,7 @@ cloud.app.controller('userAccountController', [
 	'$http',
 	'$window',
 	'constants',
+	'alertService',
 	'userTokenService',
 	cloud.controllers.userAccountController
 ]);

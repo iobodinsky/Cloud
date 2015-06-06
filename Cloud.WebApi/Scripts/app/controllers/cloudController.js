@@ -3,7 +3,7 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function ($scope, $http, $window, $log, alertService, constants,
+	function($scope, $http, $window, $log, alertService, constants,
 		userTokenService, fileUploader, $modal) {
 		var self = this;
 
@@ -16,17 +16,17 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				'Authorization': userTokenService.getAuthorizationHeader()
 			};
 			$scope.uploader.onCompleteItem =
-				function (uploadedItem, response, status, headers) {
+				function(uploadedItem, response, status, headers) {
 					if (status === 200) {
 						$scope.uploader.clearQueue();
 						$scope.files.push(response);
 					} else {
-						// todo:
-						$log.error("error");
+						alertService.show(constants.alert.type.danger,
+							constants.message.failUploadFile);
 					}
 				};
 		};
-		self.getRootFolderData = function () {
+		self.getRootFolderData = function() {
 			var rootfolderDataRequest = {
 				method: 'GET',
 				url: constants.urls.cloud.folders.rootFolderData,
@@ -52,10 +52,11 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					}
 				})
 				.error(function(data, status, headers, config) {
-
+					alertService.show(constants.alert.type.danger,
+						constants.message.failGetRootFolderData);
 				});
 		};
-		self.clearCloudData = function () {
+		self.clearCloudData = function() {
 			$scope.files = [];
 			$scope.folders = [];
 			$scope.cloudCurrentFolder = null;
@@ -63,7 +64,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			$scope.uploader = null;
 			$scope.userName = null;
 		};
-		self.getUserInfo = function () {
+		self.getUserInfo = function() {
 			var userInfoRequest = {
 				method: 'GET',
 				url: constants.urls.cloud.userInfo,
@@ -72,12 +73,14 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				}
 			};
 			$http(userInfoRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					$scope.userInfo = {
 						Name: data.Email
 					}
 				})
-				.error(function (data, status, headers, config) {
+				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failLoadUserInfo);
 				});
 		};
 
@@ -88,7 +91,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		$scope.alerts = alertService.alerts;
 
 		// todo: should make as private 
-		$scope.initialize = function () {
+		$scope.initialize = function() {
 			$scope.folders = [];
 			$scope.files = [];
 
@@ -106,7 +109,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			$scope.isLoginView = true;
 		};
 
-		$scope.logout = function () {
+		$scope.logout = function() {
 			var logoutRequest = {
 				method: 'POST',
 				url: constants.urls.cloud.logout,
@@ -116,12 +119,14 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			};
 
 			$http(logoutRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					userTokenService.removeToken();
 					self.clearCloudData();
 					$scope.isLoginView = true;
 				})
-				.error(function (data, status, headers, config) {
+				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failLogout);
 				});
 		};
 
@@ -131,46 +136,47 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFile = function(file) {
-			if (file.id) {
-				var url = constants.urls.cloud.files.constructDelete(
-					file.id, file.cloudId);
-				var deleteRequest = {
-					method: 'DELETE',
-					url: url,
-					headers: {
-						'Authorization': userTokenService.getAuthorizationHeader()
-					}
-				};
+			var url = constants.urls.cloud.files.constructDelete(
+				file.id, file.cloudId);
+			var deleteRequest = {
+				method: 'DELETE',
+				url: url,
+				headers: {
+					'Authorization': userTokenService.getAuthorizationHeader()
+				}
+			};
 
-				$http(deleteRequest)
-					.success(function(data, status, headers, config) {
-						for (var i = 0; i < $scope.files.length; i++) {
-							if ($scope.files[i].id === file.id) {
-								$scope.files.splice(i, 1);
-							}
+			$http(deleteRequest)
+				.success(function(data, status, headers, config) {
+					for (var i = 0; i < $scope.files.length; i++) {
+						if ($scope.files[i].id === file.id) {
+							$scope.files.splice(i, 1);
 						}
-					})
-					.error(function(data, status, headers, config) {
-					});
-			} else {
-				$log.error("userFile.id");
-			}
+					}
+					alertService.show(constants.alert.type.success,
+						constants.message.successDelete);
+				})
+				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failDelete);
+				});
 		};
 
 		$scope.animationsEnabled = true;
 
-		$scope.renameFile = function (file) {
+		$scope.renameFile = function(file) {
 			var entity = {
 				type: constants.renameEntities.file,
 				data: file
 			};
-			file.name = $scope.getFileNameWithoutExtention(file.name);
+			// todo: is it need?
+			//file.name = $scope.getFileNameWithoutExtention(file.name);
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'renameModal.html',
 				controller: cloud.controllers.renameModalController,
 				resolve: {
-					entity: function () {
+					entity: function() {
 						return entity;
 					}
 				}
@@ -178,14 +184,18 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
+					// todo: why only 'options.data.name' pushes ?
 					$scope.files.push(options.data.name);
+					alertService.show(constants.alert.type.success,
+						constants.message.successRename);
 				} else {
-					// todo:
+					alertService.show(constants.alert.type.danger,
+						constants.message.failRename);
 				}
 			});
 		};
 
-		$scope.renameFolder = function (folder) {
+		$scope.renameFolder = function(folder) {
 			var entity = {
 				type: constants.renameEntities.folder,
 				data: folder
@@ -195,21 +205,25 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				templateUrl: 'renameModal.html',
 				controller: cloud.controllers.renameModalController,
 				resolve: {
-					entity: function () {
+					entity: function() {
 						return entity;
 					}
 				}
 			});
 
-			modalInstance.result.then(function (options) {
+			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
+					// todo: why only 'options.data.name' pushes ?
 					$scope.folders.push(options.data.name);
+					alertService.show(constants.alert.type.success,
+						constants.message.successRename);
 				} else {
-					// todo:
+					alertService.show(constants.alert.type.danger,
+						constants.message.failRename);
 				}
 			});
 		};
-		
+
 		// Folders
 		$scope.createFolder = function() {
 			var modalInstance = $modal.open({
@@ -226,8 +240,11 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
 					$scope.folders.push(options.data);
+					alertService.show(constants.alert.type.success,
+						constants.message.successfolderCreate);
 				} else {
-					// todo:
+					alertService.show(constants.alert.type.success,
+						constants.message.failCreatFolder);
 				}
 			});
 		};
@@ -250,8 +267,12 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 							$scope.folders.splice(i, 1);
 						}
 					}
+					alertService.show(constants.alert.type.success,
+						constants.message.successDelete);
 				})
 				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failDelete);
 				});
 		};
 
@@ -282,6 +303,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					}
 				})
 				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failOpenFolder);
 				});
 		};
 

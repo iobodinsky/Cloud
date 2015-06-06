@@ -11,3 +11,9 @@
 10. var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
 
 Stoped on:
+
+
+green: #398439
+blue: #3276B1
+red: #D9534F
+orange: #E0A147

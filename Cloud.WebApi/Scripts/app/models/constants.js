@@ -56,5 +56,21 @@ cloud.models.constants = cloud.models.constants || {
 	renameEntities: {
 		folder: 'folder',
 		file: 'file'
+	},
+	message: {
+		failLoadUserInfo: 'fail to load user info',
+		failLogout: 'fail to logout',
+		failDelete: 'fail to delete',
+		failOpenFolder: 'fail to open folder',
+		failUploadFile: 'fail to uploadFile',
+		failGetRootFolderData: 'fail to get root folder',
+		failCreatFolder: 'fail to create folder',
+		failRename: 'fail to rename',
+		failRegister: 'fail to register',
+		failLogin: 'fail to login',
+
+		successfolderCreate: 'folder created',
+		successDelete: 'delete successed',
+		successRename: 'rename successed'
 	}
 };

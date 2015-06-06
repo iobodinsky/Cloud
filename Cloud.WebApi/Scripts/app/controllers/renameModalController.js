@@ -35,12 +35,25 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 
 			$http(renameRequest)
 				.success(function(data, status, headers, config) {
-
+					$modalInstance.close({
+						isSuccess: true,
+						data: data,
+						status: status,
+						headers: headers,
+						config: config
+					});
 				})
-				.error(function(data, status, headers, config) {
+				.error(function (data, status, headers, config) {
+					$modalInstance.close({
+						isSuccess: false,
+						data: data,
+						status: status,
+						headers: headers,
+						config: config
+					});
+
 					$scope.entity.name = self.oldName;
 				});
-
 
 			$modalInstance.close();
 		};

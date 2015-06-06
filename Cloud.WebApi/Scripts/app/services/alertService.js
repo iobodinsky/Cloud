@@ -6,7 +6,7 @@ cloud.services.alertService = cloud.services.alertService ||
 	function($timeout, constants) {
 		var alerts = [];
 
-		function add(type, message) {
+		function show(type, message) {
 			if (alerts.length >= constants.alert.maxCount) {
 				alerts.shift();
 			}
@@ -24,6 +24,6 @@ cloud.services.alertService = cloud.services.alertService ||
 
 		return {
 			alerts: alerts,
-			add: add
+			show: show
 		}
 	};

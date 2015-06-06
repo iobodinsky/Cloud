@@ -38,6 +38,8 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 						config: config
 					});
 				});
+
+			$modalInstance.close();
 		};
 
 		$scope.cancel = function() {

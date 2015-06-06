@@ -4,32 +4,10 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.userAccountController =
 	cloud.controllers.userAccountController ||
-	function ($scope, $http, $window, constants, userTokenService) {
+	function($scope, $http, $window, constants, alertService, userTokenService) {
 		var self = this;
 
-		self.initialize = function () {
-			$scope.isLoginView = true;
-			if (userTokenService.isTokenExist()) {
-				self.getUserInfo();
-			}
-		};
-		self.getUserInfo = function() {
-			var userInfoRequest = {
-				method: 'GET',
-				url: constants.urls.cloud.userInfo,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
-			};
-			$http(userInfoRequest)
-				.success(function(data, status, headers, config) {
-					$scope.userInfo = {
-						Name: data.Email
-					}
-				})
-				.error(function(data, status, headers, config) {
-				});
-		};
+		self.initialize = function() {};
 
 		$scope.userRegistrationName = '';
 		$scope.userRegistrationEmail = '';
@@ -38,7 +16,7 @@ cloud.controllers.userAccountController =
 		$scope.userLoginName = '';
 		$scope.userLoginPassword = '';
 
-		$scope.register = function () {
+		$scope.register = function() {
 			var registrationData = {
 				UserName: $scope.userRegistrationName,
 				Email: $scope.userRegistrationEmail,
@@ -54,17 +32,18 @@ cloud.controllers.userAccountController =
 			};
 
 			$http(registerRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					$scope.userLoginName = registrationData.UserName;
 					$scope.userLoginPassword = registrationData.Password;
 					$scope.login();
 				})
-				.error(function (data, status, headers, config) {
-
+				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.success,
+						constants.message.failRegister);
 				});
 		};
 
-		$scope.login = function () {
+		$scope.login = function() {
 			var userLogin = $scope.userLoginName;
 			var userPassword = $scope.userLoginPassword;
 
@@ -85,12 +64,14 @@ cloud.controllers.userAccountController =
 			};
 
 			$http(loginRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					userTokenService.storeToken(data.access_token);
 					self.initialize();
 					$scope.initialize();
 				})
-				.error(function (data, status, headers, config) {
+				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.success,
+						constants.message.failLogin);
 				});
 		};
 
