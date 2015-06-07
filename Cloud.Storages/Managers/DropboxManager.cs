@@ -22,11 +22,11 @@ namespace Cloud.Storages.Managers {
 			return client;
 		}
 
-		public string ConstructFileId(string path) {
+		public string ConstructEntityId(string path) {
 			return path.Replace('/', '|');
 		}
 
-		public string ConstructFilePath(string path) {
+		public string ConstructEntityPath(string path) {
 			return path.Replace('|', '/');
 		}
 

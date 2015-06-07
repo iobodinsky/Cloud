@@ -41,7 +41,7 @@ namespace Cloud.Storages.Providers {
 				if (folderFile.is_dir) {
 					folders.Add(new UserFolder {
 						CloudId = 3,
-						Id =  _manager.ConstructFileId(folderFile.path),
+						Id =  _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
 						Name = folderFile.Name,
 					});
@@ -49,7 +49,7 @@ namespace Cloud.Storages.Providers {
 					files.Add(new UserFile {
 						CloudId = 3,
 						Name = folderFile.Name,
-						Id = _manager.ConstructFileId(folderFile.path),
+						Id = _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
 					});
 				}
@@ -79,7 +79,7 @@ namespace Cloud.Storages.Providers {
 
 		public void UpdateFileName(string userId, string fileId, string newfileName) {
 			var client = _manager.GetClient().Result;
-			var oldfilePathWithName = _manager.ConstructFilePath(fileId);
+			var oldfilePathWithName = _manager.ConstructEntityPath(fileId);
 			var fileExtention = Path.GetExtension(oldfilePathWithName);
 			var oldfilePath = Path.GetDirectoryName(oldfilePathWithName);
 			if (string.IsNullOrEmpty(oldfilePath)) {
@@ -98,13 +98,28 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
-			throw new NotImplementedException();
+			var client = _manager.GetClient().Result;
+			var oldFolderPathWithName = _manager.ConstructEntityPath(folderId);
+			var oldfilePath = Path.GetDirectoryName(oldFolderPathWithName);
+			if (string.IsNullOrEmpty(oldfilePath)) {
+				// todo:
+				throw new Exception("todo");
+			}
+
+			var newFilePathWithName = _manager.MakeValidPath(
+				Path.Combine(oldfilePath, newFolderName));
+			var responce = client.Core.FileOperations.MoveAsync(oldFolderPathWithName, newFilePathWithName);
+
+			// todo: validation
+			//if (responce) {
+
+			//}
 		}
 
 		public void DeleteFile( string userId, string fileId ) {
 			var client = _manager.GetClient().Result;
 			var response = client.Core.FileOperations.DeleteAsync(
-				_manager.ConstructFilePath(fileId)).Result;
+				_manager.ConstructEntityPath(fileId)).Result;
 			if (response.is_deleted == false) {
 				// todo:
 				throw new Exception("todo");
@@ -114,7 +129,7 @@ namespace Cloud.Storages.Providers {
 		public void DeleteFolder( string userId, string folderId ) {
 			var client = _manager.GetClient().Result;
 			var response = client.Core.FileOperations.DeleteAsync(
-				_manager.ConstructFilePath(folderId)).Result;
+				_manager.ConstructEntityPath(folderId)).Result;
 			if (response.is_deleted == false) {
 				// todo:
 				throw new Exception("todo");
