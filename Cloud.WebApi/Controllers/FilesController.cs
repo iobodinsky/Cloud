@@ -72,7 +72,7 @@ namespace Cloud.WebApi.Controllers {
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
 			cloud.UpdateFileName(User.Identity.GetUserId(), fileId, newfile.Name);
 
-			return Ok();
+			return Ok(newfile.Name);
 		}
 
 		// DELETE api/files/1/cloud/1/delete

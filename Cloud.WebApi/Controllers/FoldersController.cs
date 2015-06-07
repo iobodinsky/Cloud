@@ -58,7 +58,7 @@ namespace Cloud.WebApi.Controllers {
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
 			cloud.UpdateFolderName(User.Identity.GetUserId(), folderId, newFolder.Name);
 
-			return Ok();
+			return Ok(newFolder.Name);
 		}
 
 		// DELETE: api/folders/1/cloud/1/delete

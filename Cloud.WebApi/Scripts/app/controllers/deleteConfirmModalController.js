@@ -55,12 +55,12 @@ cloud.controllers.deleteConfirmModalController =
 		};
 
 		// todo: duplicated in cloudController
-		$scope.getFileNameWithoutExtention = function(fileName) {
-			var lastIndexOfDot = fileName.lastIndexOf('.');
+		$scope.getFileNameWithoutExtention = function(name) {
+			var lastIndexOfDot = name.lastIndexOf('.');
 			if (lastIndexOfDot >= 0) {
-				return fileName.substr(0, lastIndexOfDot);
+				return name.substr(0, lastIndexOfDot);
 			} else {
-				return fileName;
+				return name;
 			}
 		}
 	};

@@ -16,7 +16,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				'Authorization': userTokenService.getAuthorizationHeader()
 			};
 			$scope.uploader.onCompleteItem =
-				function (uploadedItem, response, status, headers) {
+				function(uploadedItem, response, status, headers) {
 					$scope.uploader.clearQueue();
 
 					if (status === 200) {
@@ -177,13 +177,12 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		$scope.animationsEnabled = true;
 
-		$scope.renameFile = function(file) {
+		$scope.renameFile = function(file, $index) {
 			var entity = {
 				type: constants.cloudEntities.file,
 				data: file
 			};
-			// todo: is it need?
-			//file.name = $scope.getFileNameWithoutExtention(file.name);
+
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'renameModal.html',
@@ -197,8 +196,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
-					// todo: why only 'options.data.name' pushes ?
-					$scope.files.push(options.data.name);
+					$scope.files[$index].name = options.newName;
 					alertService.show(constants.alert.type.success,
 						constants.message.successRename);
 				} else {
@@ -208,7 +206,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			});
 		};
 
-		$scope.renameFolder = function(folder) {
+		$scope.renameFolder = function(folder, $index) {
 			var entity = {
 				type: constants.cloudEntities.folder,
 				data: folder
@@ -226,8 +224,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
-					// todo: why only 'options.data.name' pushes ?
-					$scope.folders.push(options.data.name);
+					$scope.folders[$index].name = options.newName;
 					alertService.show(constants.alert.type.success,
 						constants.message.successRename);
 				} else {

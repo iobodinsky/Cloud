@@ -1,3 +1,5 @@
+1. RENAME FILE WOTHOUT FILEE EXTANTION
+2. validate to not write dot for renaming
 2. LastModifyingDate
 5. Loader on long time actions
 6. rename dbropbox failed for second attempt to rename
@@ -12,9 +14,6 @@
 14. no files - make nicer
 
 Stoped on:
-// todo: why only 'options.data.name' pushes ?
-after rename folder addes new empty folder to array
-
 
 green: #398439
 blue: #3276B1

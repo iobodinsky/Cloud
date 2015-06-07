@@ -37,7 +37,7 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 				.success(function(data, status, headers, config) {
 					$modalInstance.close({
 						isSuccess: true,
-						data: data,
+						newName: data,
 						status: status,
 						headers: headers,
 						config: config

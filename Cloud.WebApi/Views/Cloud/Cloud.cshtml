@@ -40,7 +40,7 @@
 										  aria-expanded="false"></button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a ng-click="deleteFolder(folder)">delete</a></li>
-									<li><a ng-click="renameFolder(folder)">rename</a></li>
+									<li><a ng-click="renameFolder(folder, $index)">rename</a></li>
 								</ul>
 							</div>
 						</div>
@@ -58,7 +58,7 @@
 										  aria-expanded="false"></button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a ng-click="deleteFile(file)">delete</a></li>
-									<li><a ng-click="renameFile(file)">rename</a></li>
+									<li><a ng-click="renameFile(file, $index)">rename</a></li>
 								</ul>
 							</div>
 						</div>
