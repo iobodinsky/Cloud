@@ -6,6 +6,7 @@ using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Managers;
 using Cloud.Storages.Resources;
+using Google.Apis.Drive.v2.Data;
 
 namespace Cloud.Storages.Providers {
 	public class DriveProvider : IStorage {
@@ -138,11 +139,21 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public void UpdateFileName( string userId, string fileId, string newfileName ) {
-			throw new NotImplementedException();
+			var service = _manager.BuildServiceAsync(userId);
+			var file = new File {
+				Title = newfileName
+			};
+			var request = service.Files.Patch(file, fileId);
+			request.Execute();
 		}
 
 		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
-			throw new NotImplementedException();
+			var service = _manager.BuildServiceAsync(userId);
+			var file = new File {
+				Title = newFolderName
+			};
+			var request = service.Files.Patch(file, folderId);
+			request.Execute();
 		}
 
 		public void DeleteFile( string userId, string fileId ) {
