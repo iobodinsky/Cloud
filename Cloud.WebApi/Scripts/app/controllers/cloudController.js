@@ -142,18 +142,24 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFile = function(file) {
-			var url = constants.urls.cloud.files.constructDelete(
-				file.id, file.cloudId);
-			var deleteRequest = {
-				method: 'DELETE',
-				url: url,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
+			var entity = {
+				type: constants.cloudEntities.file,
+				data: file
 			};
 
-			$http(deleteRequest)
-				.success(function(data, status, headers, config) {
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'deleteConfirmModal.html',
+				controller: cloud.controllers.deleteConfirmModalController,
+				resolve: {
+					entity: function() {
+						return entity;
+					}
+				}
+			});
+
+			modalInstance.result.then(function(options) {
+				if (options.isSuccess) {
 					for (var i = 0; i < $scope.files.length; i++) {
 						if ($scope.files[i].id === file.id) {
 							$scope.files.splice(i, 1);
@@ -161,18 +167,18 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					}
 					alertService.show(constants.alert.type.success,
 						constants.message.successDelete);
-				})
-				.error(function(data, status, headers, config) {
+				} else {
 					alertService.show(constants.alert.type.danger,
 						constants.message.failDelete);
-				});
+				}
+			});
 		};
 
 		$scope.animationsEnabled = true;
 
 		$scope.renameFile = function(file) {
 			var entity = {
-				type: constants.renameEntities.file,
+				type: constants.cloudEntities.file,
 				data: file
 			};
 			// todo: is it need?
@@ -203,7 +209,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		$scope.renameFolder = function(folder) {
 			var entity = {
-				type: constants.renameEntities.folder,
+				type: constants.cloudEntities.folder,
 				data: folder
 			};
 			var modalInstance = $modal.open({
@@ -261,30 +267,36 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFolder = function(folder) {
-			var url = constants.urls.cloud.folders.constructDelete(
-				folder.id, folder.cloudId);
-			var deleteRequest = {
-				method: 'DELETE',
-				url: url,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
+			var entity = {
+				type: constants.cloudEntities.folder,
+				data: folder
 			};
 
-			$http(deleteRequest)
-				.success(function(data, status, headers, config) {
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'deleteConfirmModal.html',
+				controller: cloud.controllers.deleteConfirmModalController,
+				resolve: {
+					entity: function() {
+						return entity;
+					}
+				}
+			});
+
+			modalInstance.result.then(function(options) {
+				if (options.isSuccess) {
 					for (var i = 0; i < $scope.folders.length; i++) {
-						if ($scope.folders[i].id === data) {
+						if ($scope.folders[i].id === options.data) {
 							$scope.folders.splice(i, 1);
 						}
 					}
 					alertService.show(constants.alert.type.success,
 						constants.message.successDelete);
-				})
-				.error(function(data, status, headers, config) {
+				} else {
 					alertService.show(constants.alert.type.danger,
 						constants.message.failDelete);
-				});
+				}
+			});
 		};
 
 		$scope.openFolder = function(folder) {

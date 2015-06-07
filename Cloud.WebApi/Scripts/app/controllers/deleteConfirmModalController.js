@@ -2,38 +2,34 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.renameModalController = cloud.controllers.renameModalController ||
+cloud.controllers.deleteConfirmModalController =
+	cloud.controllers.deleteConfirmModalController ||
 	function($scope, $http, $modalInstance, constants, userTokenService, entity) {
-		var self = this;
-		self.oldName = entity.data.name;
-
 		$scope.entity = entity.data;
-		$scope.rename = function(newFileName) {
+
+		$scope.delete = function() {
 			var url = '';
 			switch (entity.type) {
 			case constants.cloudEntities.folder:
-				url = constants.urls.cloud.folders.constructRename(
+				url = constants.urls.cloud.folders.constructDelete(
 					entity.data.id, entity.data.cloudId);
 				break;
 			case constants.cloudEntities.file:
-				url = constants.urls.cloud.files.constructRename(
+				url = constants.urls.cloud.files.constructDelete(
 					entity.data.id, entity.data.cloudId);
 				break;
 			default:
 			};
 
-			var renameRequest = {
-				method: 'POST',
+			var deleteRequest = {
+				method: 'DELETE',
 				url: url,
 				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader(),
-				},
-				data: {
-					name: newFileName
+					'Authorization': userTokenService.getAuthorizationHeader()
 				}
 			};
 
-			$http(renameRequest)
+			$http(deleteRequest)
 				.success(function(data, status, headers, config) {
 					$modalInstance.close({
 						isSuccess: true,
@@ -51,12 +47,20 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 						headers: headers,
 						config: config
 					});
-
-					$scope.entity.name = self.oldName;
 				});
 		};
 
 		$scope.cancel = function() {
 			$modalInstance.dismiss('cancel');
 		};
+
+		// todo: duplicated in cloudController
+		$scope.getFileNameWithoutExtention = function(fileName) {
+			var lastIndexOfDot = fileName.lastIndexOf('.');
+			if (lastIndexOfDot >= 0) {
+				return fileName.substr(0, lastIndexOfDot);
+			} else {
+				return fileName;
+			}
+		}
 	};

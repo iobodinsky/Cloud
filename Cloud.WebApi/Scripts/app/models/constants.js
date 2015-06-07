@@ -23,13 +23,13 @@ cloud.models.constants = cloud.models.constants || {
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
 			files: {
-				constructUpload: function (folderId, cloudId) {
+				constructUpload: function(folderId, cloudId) {
 					return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
 				},
-				constructRename: function (fileId, cloudId) {
+				constructRename: function(fileId, cloudId) {
 					return 'api/files/' + fileId + '/cloud/' + cloudId + '/rename';
 				},
-				constructDelete: function (fileId, cloudId) {
+				constructDelete: function(fileId, cloudId) {
 					return 'api/files/' + fileId + '/cloud/' + cloudId + '/delete';
 				},
 			},
@@ -38,13 +38,13 @@ cloud.models.constants = cloud.models.constants || {
 				constructCreate: function(cloudId) {
 					return 'api/folders/cloud/' + cloudId + '/create';
 				},
-				constructRename: function (folderId, cloudId) {
+				constructRename: function(folderId, cloudId) {
 					return 'api/folders/' + folderId + '/cloud/' + cloudId + '/rename';
 				},
-				constructFolderData: function (folderId, cloudId) {
+				constructFolderData: function(folderId, cloudId) {
 					return 'api/folders/' + folderId + '/cloud/' + cloudId;
 				},
-				constructDelete: function (folderId, cloudId) {
+				constructDelete: function(folderId, cloudId) {
 					return 'api/folders/' + folderId + '/cloud/' + cloudId + '/delete';
 				}
 			},
@@ -53,7 +53,7 @@ cloud.models.constants = cloud.models.constants || {
 			driveUpload: 'https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart'
 		}
 	},
-	renameEntities: {
+	cloudEntities: {
 		folder: 'folder',
 		file: 'file'
 	},

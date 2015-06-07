@@ -301,6 +301,7 @@
     <Content Include="Scripts\app\cloud.js" />
     <Content Include="Scripts\app\controllers\cloudController.js" />
     <Content Include="Scripts\app\controllers\createFolderModalController.js" />
+    <Content Include="Scripts\app\controllers\deleteConfirmModalController.js" />
     <Content Include="Scripts\app\controllers\renameModalController.js" />
     <Content Include="Scripts\app\controllers\userAccountController.js" />
     <Content Include="Scripts\app\models\constants.js" />

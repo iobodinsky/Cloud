@@ -57,6 +57,16 @@ cloud.app.controller('createFolderModalController', [
 	'$modalInstance',
 	'constants',
 	'userTokenService',
-	'currentFolderId',
+	'folderId',
 	cloud.controllers.createFolderModalController
+]);
+
+cloud.app.controller('deleteConfirmModalController', [
+	'$scope',
+	'$http',
+	'$modalInstance',
+	'constants',
+	'userTokenService',
+	'entity',
+	cloud.controllers.deleteConfirmModalController
 ]);
