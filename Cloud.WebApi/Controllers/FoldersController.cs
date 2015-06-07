@@ -24,7 +24,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// GET api/folders/1/cloud/1
-		[Route( "{folderId}/cloud/{cloudId:int:min(0)}" )]
+		[Route( "{folderId}/cloud/{cloudId:int}" )]
 		public IHttpActionResult GetFolderData([FromUri] string folderId, 
 			[FromUri] int cloudId) {
 			var userId = User.Identity.GetUserId();
@@ -35,7 +35,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// POST: api/folders/cloud/1/create
-		[Route( "cloud/{cloudId:int:min(0)}/create" )]
+		[Route( "cloud/{cloudId:int}/create" )]
 		[HttpPost]
 		public IHttpActionResult Create([FromUri] int cloudId, [FromBody] UserFolder folder ) {
 			var userId = User.Identity.GetUserId();
@@ -50,7 +50,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// POST api/folders/1/cloud/1/rename
-		[Route("{folderId}/cloud/{cloudId:int:min(0)}/rename")]
+		[Route("{folderId}/cloud/{cloudId:int}/rename")]
 		[HttpPost]
 		public IHttpActionResult RenameFolder([FromUri] string folderId, [FromUri] int cloudId,
 		  [FromBody] NewNameModel newFolder) {
@@ -62,7 +62,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// DELETE: api/folders/1/cloud/1/delete
-		[Route( "{folderId}/cloud/{cloudId:int:min(0)}/delete" )]
+		[Route( "{folderId}/cloud/{cloudId:int}/delete" )]
 		public IHttpActionResult Delete( [FromUri] string folderId, [FromUri] int cloudId ) {
 			var userId = User.Identity.GetUserId();
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);

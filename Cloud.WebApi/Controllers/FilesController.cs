@@ -11,7 +11,7 @@ namespace Cloud.WebApi.Controllers {
 	public class FilesController : ApiControllerBase {
 		// GET api/files/1/cloud/1/download/
 		[AllowAnonymous]
-		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/download/url" )]
+		[Route( "{fileId}/cloud/{cloudId:int}/download/url" )]
 		[HttpGet]
 		public IHttpActionResult DownloadFile( [FromUri] string fileId,
 			[FromUri] int cloudId ) {
@@ -25,14 +25,14 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// GET api/files/1/cloud/1/download/
-		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/download/url" )]
+		[Route( "{fileId}/cloud/{cloudId:int}/download/url" )]
 		public IHttpActionResult DownloadFile( [FromUri] string fileId,
 			[FromUri] int cloudId, [FromUri] string url ) {
 			throw new Exception();
 		}
 
 		// POST api/files/cloud/1/folder/1/upload
-		[Route( "cloud/{cloudId:int:min(0)}/folder/{folderId}/upload" )]
+		[Route( "cloud/{cloudId:int}/folder/{folderId}/upload" )]
 		[HttpPost]
 		public IHttpActionResult UploadFile( [FromUri] int cloudId,
 			[FromUri] string folderId ) {
@@ -64,7 +64,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// POST api/files/1/cloud/1/rename
-		[Route( "{fileId}/cloud/{cloudId:int:min(0)}/rename" )]
+		[Route( "{fileId}/cloud/{cloudId:int}/rename" )]
 		[HttpPost]
 		public IHttpActionResult RenameFile( [FromUri] string fileId, [FromUri] int cloudId,
 			[FromBody] NewNameModel newfile ) {

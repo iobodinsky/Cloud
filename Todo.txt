@@ -1,6 +1,4 @@
-1. Confirm dialog for each delete
 2. LastModifyingDate
-4. Check url parameter {cloudId:int:min(0)}
 5. Loader on long time actions
 6. rename dbropbox failed for second attempt to rename
 7. change layout
