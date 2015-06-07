@@ -4,10 +4,21 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.renameModalController = cloud.controllers.renameModalController ||
 	function($scope, $http, $modalInstance, constants, userTokenService, entity) {
+		// todo: duplicated in cloudController
+		$scope.getFileNameWithoutExtention = function(name) {
+			var lastIndexOfDot = name.lastIndexOf('.');
+			if (lastIndexOfDot >= 0) {
+				return name.substr(0, lastIndexOfDot);
+			} else {
+				return name;
+			}
+		}
+
 		var self = this;
-		self.oldName = entity.data.name;
+		self.oldName = $scope.getFileNameWithoutExtention(entity.data.name);
 
 		$scope.entity = entity.data;
+		$scope.entity.name = $scope.getFileNameWithoutExtention(entity.data.name);
 		$scope.rename = function(newFileName) {
 			var url = '';
 			switch (entity.type) {
