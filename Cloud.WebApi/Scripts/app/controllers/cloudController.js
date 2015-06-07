@@ -16,9 +16,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				'Authorization': userTokenService.getAuthorizationHeader()
 			};
 			$scope.uploader.onCompleteItem =
-				function(uploadedItem, response, status, headers) {
+				function (uploadedItem, response, status, headers) {
+					$scope.uploader.clearQueue();
+
 					if (status === 200) {
-						$scope.uploader.clearQueue();
 						$scope.files.push(response);
 
 						alertService.show(constants.alert.type.success,
