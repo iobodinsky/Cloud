@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -20,17 +19,17 @@ namespace Cloud.WebApi.Controllers {
 		[HttpGet]
 		public IHttpActionResult RequestDownloadFileLink([FromUri] string fileId) {
 			var userId = User.Identity.GetUserId();
-			var downloadUrl = ConstractDownloadFileUrl(fileId, userId);
+			var downloadUrl = ConstractCloudDownloadFileUrl(fileId, userId);
 
 			return Ok(downloadUrl);
 		}
 
 		// GET api/files/1/users/1/download
-		[Route("{fileId}/users/{userId}/download")]
+		[Route( "{fileId}/users/{userId}/download" )]
 		[HttpGet]
 		[AllowAnonymous]
-		public HttpResponseMessage DownloadFile([FromUri] string fileId,
-			[FromUri] string userId) {
+		public HttpResponseMessage DownloadFile( [FromUri] string fileId,
+			[FromUri] string userId ) {
 			var resporseResult = new HttpResponseMessage(HttpStatusCode.OK);
 			var file = StorageRepository.GetFullFile(userId, fileId);
 			resporseResult.Content = new StreamContent(file.Stream);
@@ -43,7 +42,7 @@ namespace Cloud.WebApi.Controllers {
 
 			return resporseResult;
 		}
-		
+
 		// POST api/files/cloud/1/folder/1/upload
 		[Route( "cloud/{cloudId:int}/folder/{folderId}/upload" )]
 		[HttpPost]
@@ -67,7 +66,7 @@ namespace Cloud.WebApi.Controllers {
 
 			var userFileModel = new FullUserFile {
 				UserFile = userFile,
-				Stream = postedFile.InputStream as FileStream
+				Stream = postedFile.InputStream
 			};
 
 			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
@@ -99,7 +98,7 @@ namespace Cloud.WebApi.Controllers {
 			return Ok();
 		}
 
-		private string ConstractDownloadFileUrl( string fileId, string userId ) {
+		private string ConstractCloudDownloadFileUrl( string fileId, string userId ) {
 			return string.Format("api/files/{0}/users/{1}/download", fileId, userId);
 		}
 	}

@@ -73,6 +73,9 @@ cloud.models.constants = cloud.models.constants || {
 		failLogin: 'fail to login',
 		failRequestDownloadLink: 'fail to download file',
 
+		infoDriveFileDownloadingNotAllowed: 'download file not allowed',
+		infoDropboxDownloadNotAllowed: 'download file from Dropbox not allowed',
+
 		successfolderCreate: 'folder created',
 		successUploadFile: 'file upload successed',
 		successDelete: 'delete successed',

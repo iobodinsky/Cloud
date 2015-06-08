@@ -148,23 +148,44 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		// Files
 		$scope.download = function(file) {
-			var url = constants.urls.cloud.files.constructDownloadLink(file.id);
-			var downloadFileRequest = {
-				method: 'GET',
-				url: url,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
-			};
+			switch (file.cloudId) {
+				case 1: // Drive
+					if (file.downloadUrl) {
+						$window.open(file.downloadUrl, '_blank');
+					} else {
+						alertService.show(constants.alert.type.info,
+							constants.message.infoDriveFileDownloadingNotAllowed);
+					}
+				break;
+			case 2: // Cloud
+				var url = constants.urls.cloud.files.constructDownloadLink(file.id);
+				var downloadFileRequest = {
+					method: 'GET',
+					url: url,
+					headers: {
+						'Authorization': userTokenService.getAuthorizationHeader()
+					}
+				};
 
-			$http(downloadFileRequest)
-				.success(function(data, status, headers, config) {
-					$window.open(data, '_self');
-				})
-				.error(function(data, status, headers, config) {
+				$http(downloadFileRequest)
+					.success(function(data, status, headers, config) {
+						$window.open(data, '_self');
+					})
+					.error(function(data, status, headers, config) {
+						alertService.show(constants.alert.type.danger,
+							constants.message.failRequestDownloadLink);
+					});
+
+				break;
+				case 3: // Dropbox
 					alertService.show(constants.alert.type.danger,
-						constants.message.failRequestDownloadLink);
-				});
+						constants.message.failDelete);
+				break;
+			default:
+				alertService.show(constants.alert.type.danger,
+					'cloudId no specified');
+				break;
+			}
 		};
 
 		$scope.getStorageImageClass = function(cloudId) {
