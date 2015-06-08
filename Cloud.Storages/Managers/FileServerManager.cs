@@ -25,7 +25,8 @@ namespace Cloud.Storages.Managers {
 		public FullUserFile GetFile(string userId, string fileId) {
 			var server = GetFileServers().First();
 			var file = _storageRepository.Entities.UserFiles
-				.SingleOrDefault(fileItem => fileItem.Id == fileId);
+				.SingleOrDefault(fileItem => fileItem.UserId == userId &&
+					fileItem.Id == fileId);
 			if (file == null) {
 				// todo: 
 				throw new Exception("todo");
@@ -35,7 +36,8 @@ namespace Cloud.Storages.Managers {
 				GetFolderServerPath(userId, file.FolderId, server), file.Name);
 
 			var fullFile = new FullUserFile {
-				Stream = new FileStream(filePath, FileMode.Open)
+				Stream = new FileStream(filePath, FileMode.Open),
+				UserFile = file
 			};
 
 			return fullFile;

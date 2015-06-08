@@ -68,5 +68,14 @@ namespace Cloud.Common.Resources {
                 return ResourceManager.GetString("Authorization", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to attachment.
+        /// </summary>
+        public static string ContentDispositionAttachment {
+            get {
+                return ResourceManager.GetString("ContentDispositionAttachment", resourceCulture);
+            }
+        }
     }
 }

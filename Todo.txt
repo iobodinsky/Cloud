@@ -10,6 +10,8 @@
 12. close alert
 13. add description for alert
 15. remove alert displaying
+16. hover style on file
+17. add more width for file/folder name
 
 Stoped on:
 rename dbropbox failed for second attempt to rename

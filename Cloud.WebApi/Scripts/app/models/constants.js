@@ -23,8 +23,11 @@ cloud.models.constants = cloud.models.constants || {
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
 			files: {
-				constructUpload: function(folderId, cloudId) {
+				constructUpload: function (folderId, cloudId) {
 					return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
+				},
+				constructDownloadLink: function (fileId) {
+					return 'api/files/' + fileId + '/requestlink';
 				},
 				constructRename: function(fileId, cloudId) {
 					return 'api/files/' + fileId + '/cloud/' + cloudId + '/rename';
@@ -68,6 +71,7 @@ cloud.models.constants = cloud.models.constants || {
 		failRename: 'fail to rename',
 		failRegister: 'fail to register',
 		failLogin: 'fail to login',
+		failRequestDownloadLink: 'fail to download file',
 
 		successfolderCreate: 'folder created',
 		successUploadFile: 'file upload successed',

@@ -120,4 +120,7 @@
   <data name="Authorization" xml:space="preserve">
     <value>Authorization</value>
   </data>
+  <data name="ContentDispositionAttachment" xml:space="preserve">
+    <value>attachment</value>
+  </data>
 </root>

@@ -147,6 +147,26 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		// Files
+		$scope.download = function(file) {
+			var url = constants.urls.cloud.files.constructDownloadLink(file.id);
+			var downloadFileRequest = {
+				method: 'GET',
+				url: url,
+				headers: {
+					'Authorization': userTokenService.getAuthorizationHeader()
+				}
+			};
+
+			$http(downloadFileRequest)
+				.success(function(data, status, headers, config) {
+					$window.open(data, '_self');
+				})
+				.error(function(data, status, headers, config) {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failRequestDownloadLink);
+				});
+		};
+
 		$scope.getStorageImageClass = function(cloudId) {
 			return 'logo-' + cloudId;
 		};

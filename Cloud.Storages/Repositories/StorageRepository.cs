@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cloud.Common.Interfaces;
+using Cloud.Common.Models;
 using Cloud.Common.Resources;
 using Cloud.Storages.Managers;
 
@@ -17,6 +18,10 @@ namespace Cloud.Storages.Repositories {
 		public IFile Get( string userId, string fileId ) {
 			return Entities.UserFiles.SingleOrDefault(
 				file => file.UserId == userId && file.Id == fileId);
+		}
+
+		public FullUserFile GetFullFile(string userId, string fileId) {
+			return new FileServerManager().GetFile(userId, fileId);
 		}
 
 		public IEnumerable<IFolder> GetRootFolders( string userId ) {
