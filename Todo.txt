@@ -2,7 +2,6 @@
 2. LastModifyingDate
 5. Loader on long time actions
 6. rename dbropbox failed for second attempt to rename
-7. change layout
 8. implement history on folder browsing
 9. $scope.alerts.splice(index, 1); for remove (not for())
 	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -10,7 +9,6 @@
 11. inmplement ngMessages
 12. close alert
 13. add description for alert
-14. no files - make nicer
 15. remove alert displaying
 
 Stoped on:

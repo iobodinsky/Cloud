@@ -68,6 +68,12 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			$scope.folders = [];
 			$scope.uploader = null;
 			$scope.userName = null;
+			self.driveFolder = null;
+			self.dropboxFolder = null;
+			$scope.cloudFolders = [];
+			$scope.userInfo = {
+				Name: ''
+			};
 		};
 		self.getUserInfo = function() {
 			var userInfoRequest = {
