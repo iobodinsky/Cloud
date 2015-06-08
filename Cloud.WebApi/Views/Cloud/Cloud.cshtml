@@ -1,77 +1,64 @@
-﻿<div>
+﻿<div class="cloud container">
 	<div ng-if="!isLoginView">
-		<div class="row margin-bottom-s">
-			<div class="col-md-12"></div>
-		</div>
 		<div class="row">
-			<div class="col-md-2">
-				<div class="panel panel-info">
-					<div class="panel-heading">options</div>
-					<div class="panel-body">
-						<div>
-							<button class="btn btn-group"
-									  ng-click="createFolder()">new folder</button>
+			<div class="col-md-2 cloud-block options text-center">
+				<button class="btn btn-danger create-folder-button"
+				        ng-click="createFolder()">
+					new folder
+					<span class="glyphicon glyphicon-plus pull-left new-folder"></span>
+				</button>
+				<input type="file" class=""
+						 nv-file-select uploader="uploader" />
+				<div ng-if="uploader.queue[0]">
+					name: <span ng-bind="uploader.queue[0].file.name"></span><br />
+					<button ng-click="uploader.queue[0].upload()">upload</button>
+				</div>
+			</div>
+			<div class="col-md-8 cloud-block content">
+				<div class="entity-container">
+					<div class="text-center no-entities"
+						  ng-if="folders.length === 0">no folders</div>
+					<div class="box folder container relative folder"
+					     ng-repeat="folder in folders track by folder.id">
+						<div class="logo"
+						     ng-class="getStorageImageClass(folder.cloudId)"></div>
+						<div class="name absolute" title="{{folder.name}}"
+						     ng-click="openFolder(folder)">{{folder.name}}</div>
+						<button class="option absolute" type="button" data-toggle="dropdown"
+						        aria-expanded="false">
+							<span class="glyphicon glyphicon-cog open-options"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a ng-click="deleteFolder(folder)">delete</a></li>
+							<li><a ng-click="renameFolder(folder, $index)">rename</a></li>
+						</ul>
+					</div>
+				</div>
+				<hr />
+				<div class="entity-container">
+					<div class="text-center no-entities"
+						  ng-if="files.length === 0">no files</div>
+					<div class="box file container relative"
+						  ng-repeat="file in files track by file.id">
+						<div class="logo"
+							  ng-class="getStorageImageClass(file.cloudId)"></div>
+						<div class="name absolute"
+							  title="{{getFileNameWithoutExtention(file.name)}}">
+							{{getFileNameWithoutExtention(file.name)}}
 						</div>
-						<div>
-							<input type="file" nv-file-select uploader="uploader" />
-							<div ng-if="uploader.queue[0]">
-								name: <span ng-bind="uploader.queue[0].file.name"></span><br />
-								<button ng-click="uploader.queue[0].upload()">upload</button>
-							</div>
-						</div>
+						<button class="option absolute" type="button" data-toggle="dropdown"
+						        aria-expanded="false">
+							<span class="glyphicon glyphicon-cog open-options"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a ng-click="deleteFile(file)">delete</a></li>
+							<li><a ng-click="renameFile(file, $index)">rename</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-8">
-				<div class="panel panel-primary">
-					<div class="panel-heading">{{cloudFolder.path}}</div>
-					<div class="panel-body container">
-						<div class="row">
-							<div class="text-center"
-								  ng-if="folders.length === 0">no folders</div>
-							<div class="box folder container relative folder"
-								  ng-repeat="folder in folders track by folder.id">
-								@*todo: click entire folder*@
-								<div class="logo"
-									  ng-class="getStorageImageClass(folder.cloudId)"></div>
-								<div class="name absolute" title="{{folder.name}}"
-									  ng-click="openFolder(folder)">{{folder.name}}</div>
-								<button class="option absolute" type="button" data-toggle="dropdown"
-										  aria-expanded="false"></button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a ng-click="deleteFolder(folder)">delete</a></li>
-									<li><a ng-click="renameFolder(folder, $index)">rename</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="row">
-							<div class="text-center" ng-if="files.length === 0">no files</div>
-							<div class="box file container relative" 
-								  ng-repeat="file in files track by file.id">
-								<div class="logo" 
-									  ng-class="getStorageImageClass(file.cloudId)"></div>
-								<div class="name absolute" 
-									  title="{{getFileNameWithoutExtention(file.name)}}">
-									{{getFileNameWithoutExtention(file.name)}}
-								</div>
-								<button class="option absolute" type="button" data-toggle="dropdown"
-										  aria-expanded="false"></button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a ng-click="deleteFile(file)">delete</a></li>
-									<li><a ng-click="renameFile(file, $index)">rename</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<div class="panel panel-success">
-					<div class="panel-heading">details</div>
-					<div class="panel-body">
-						<div class=""></div>
-					</div>
-				</div>
+			<div class="col-md-2 cloud-block details">
+				
 			</div>
 		</div>
 	</div>
@@ -84,37 +71,37 @@
 			<div class="form-login col-md-6">
 				<div class="form-group">
 					<input type="text" placeholder="name" class="form-control"
-							 ng-model="userLoginName" />
+					       ng-model="userLoginName" />
 				</div>
 				<div class="form-group">
 					<input type="password" placeholder="*******" class="form-control"
-							 ng-model="userLoginPassword" />
+					       ng-model="userLoginPassword" />
 				</div>
 				<div class="form-group">
 					<input type="submit" class="btn btn-default" value="let's go"
-							 ng-click="login()" />
+					       ng-click="login()" />
 				</div>
 				<h4><a href="#">lost password ?</a></h4>
 			</div>
 			<div class="form-login col-md-6">
 				<div class="form-group">
 					<input type="text" placeholder="name" class="form-control"
-							 ng-model="userRegistrationName" />
+					       ng-model="userRegistrationName" />
 				</div>
 				<div class="form-group">
 					<input type="email" placeholder="e-mail" class="form-control"
-							 ng-model="userRegistrationEmail" />
+					       ng-model="userRegistrationEmail" />
 				</div>
 				<div class="form-group">
 					<input type="text" placeholder="*******" class="form-control"
-							 ng-model="userRegistrationPassword" />
+					       ng-model="userRegistrationPassword" />
 				</div>
 				<div class="form-group">
 					<input type="text" placeholder="*******" class="form-control"
-							 ng-model="userRegistrationConfirmPassword" />
+					       ng-model="userRegistrationConfirmPassword" />
 				</div>
 				<button type="button" class="btn btn-default"
-						  ng-click="register()">
+				        ng-click="register()">
 					register
 				</button>
 			</div>

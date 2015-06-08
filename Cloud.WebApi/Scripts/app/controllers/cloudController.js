@@ -40,7 +40,11 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			};
 
 			$http(rootfolderDataRequest)
-				.success(function(data, status, headers, config) {
+				.success(function (data, status, headers, config) {
+					$scope.folders = [];
+					$scope.files = [];
+					$scope.cloudFolders = [];
+
 					for (var i = 0; i < data.length; i++) {
 						for (var j = 0; j < data[i].folders.length; j++) {
 							$scope.folders.push(data[i].folders[j]);
@@ -49,8 +53,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 							$scope.files.push(data[i].files[k]);
 						}
 						if (data[i].folder.cloudId === constants.cloudId) {
-							$scope.cloudFolder = data[i].folder;
-							$scope.cloudFolder.path = 'cloud';
+							data[i].folder.name = 'Cloud';
+							$scope.cloudFolders.push(data[i].folder);
 						}
 					}
 				})
@@ -62,8 +66,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		self.clearCloudData = function() {
 			$scope.files = [];
 			$scope.folders = [];
-			$scope.cloudFolder = null;
-			$scope.cloudFolder.path = '';
 			$scope.uploader = null;
 			$scope.userName = null;
 		};
@@ -87,13 +89,14 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				});
 		};
 
-		self.cloudFolder = null;
 		self.driveFolder = null;
 		self.dropboxFolder = null;
 
 		$scope.userInfo = {
 			Name: ''
 		};
+
+		$scope.cloudFolders = [];
 
 		$scope.alerts = alertService.alerts;
 
@@ -236,14 +239,15 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		// Folders
 		$scope.createFolder = function() {
-			if ($scope.cloudFolder && $scope.cloudFolder.id) {
+			var currentFolder = $scope.cloudFolders[$scope.cloudFolders.length - 1];
+			if (currentFolder && currentFolder.id) {
 				var modalInstance = $modal.open({
 					animation: $scope.animationsEnabled,
 					templateUrl: 'createFolderModal.html',
 					controller: cloud.controllers.createFolderModalController,
 					resolve: {
 						folderId: function() {
-							return $scope.cloudFolder.id;
+							return currentFolder.id;
 						}
 					}
 				});
@@ -254,7 +258,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 						alertService.show(constants.alert.type.success,
 							constants.message.successfolderCreate);
 					} else {
-						alertService.show(constants.alert.type.success,
+						alertService.show(constants.alert.type.danger,
 							constants.message.failCreatFolder);
 					}
 				});
@@ -311,8 +315,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				.success(function(data, status, headers, config) {
 					$scope.folders = [];
 					$scope.files = [];
-					$scope.cloudFolder = data.folder;
-					$scope.cloudFolder.path += ' -> ' + folder.name;
+					if (!data.folder.name) {
+						data.folder.name = folder.name;
+					}
+					$scope.cloudFolders.push(data.folder);
 					$scope.uploader.url =
 						constants.urls.cloud.files.constructUpload(data.folder.id, 2);
 					for (var i = 0; i < data.folders.length; i++) {
@@ -327,6 +333,15 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					alertService.show(constants.alert.type.danger,
 						constants.message.failOpenFolder);
 				});
+		};
+
+		$scope.openFolderFromHeader = function(folder, $index) {
+			if (folder.name === 'Cloud') {
+				self.getRootFolderData();
+			} else {
+				$scope.cloudFolders.length = $index;
+				$scope.openFolder(folder);
+			}
 		};
 
 		// Helpers

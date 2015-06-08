@@ -85,13 +85,6 @@ namespace Cloud.Storages.Managers {
 			}
 		}
 
-		public IFolder GetRootFolder( string userId ) {
-			var userRootFolderId = GetUserRootFolderId(userId);
-			var folder = _storageRepository.Entities.UserFolders
-				.SingleOrDefault(folderItem => folderItem.Id == userRootFolderId);
-			return folder;
-		}
-
 		public void RenameFile( string userId, IFile file, string newFileName ) {
 			foreach (var server in GetFileServers()) {
 				var folderPath = GetFolderServerPath(userId, file.FolderId, server);
@@ -214,7 +207,7 @@ namespace Cloud.Storages.Managers {
 		}
 
 		private string GetFolderPath(string userId, string folderId) {
-						var folder = _storageRepository.Entities.UserFolders
+			var folder = _storageRepository.Entities.UserFolders
 				.SingleOrDefault(folderItem => folderItem.Id == folderId);
 			if (folder == null) {
 				// todo:

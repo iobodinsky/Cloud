@@ -1,13 +1,11 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
-	 background: url(Images/background.png) top left repeat;
+    padding-bottom: 0;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, 
@@ -21,7 +19,26 @@
     padding-left: 5px;
 }
 
+.navbar-inverse {
+	background-color: #fff;
+	border-bottom: none;
+	background-image: none;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a { text-shadow: none; }
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-nav > li > a:hover { 
+	color: #000;
+	cursor: pointer;
+}
+
 .margin-bottom-s { margin-bottom: 10px; }
+
+.navbar-brand.logo-text { margin-right: 40px; }
+
+.navbar-fixed-top, .navbar-fixed-bottom { z-index: 0; background-color: #F2F1F4; }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -30,16 +47,39 @@ textarea {
     max-width: 280px;
 }
 
+.cloud-logo {
+	margin-left: -10px;
+	margin-right: 100px;
+}
+
+.cloud.container { width: 100%; margin-top: 10px; }
+
+.cloud-block {
+	height: 100%;
+}
+
+.cloud-block.options { 
+	border-right: #BDB9B9 solid 1px;
+}
+
+.cloud-block.content {
+	border-right: #BDB9B9 solid 1px;
+}
+
+.cloud-block.details {
+	
+}
+
 .login-head {
     background: #6D4A70;
     padding: 2em 0;
 }
 
 .login-head h1 {
-      color: #fff;
-  font-size: 1.5em;
-  text-align: left;
-  margin: 0 23px;
+	color: #fff;
+	font-size: 1.5em;
+	text-align: left;
+	margin: 0 23px;
 }
 
 .form-login {
@@ -53,34 +93,46 @@ textarea {
 
 .cursor-pointer { cursor: pointer; }
 
-.box {
-    display: inline-block;
-    margin: 5px;
-    padding: 0 5px;
-    border: 1px solid #000;
-    width: 175px;
+.cloud-path.navbar-brand {
+	color: black;
+	font-size: 20px;
+	padding-right: 5px;
 }
 
-.box.container { border-radius: 3px; }
+.box {
+	display: inline-block;
+	margin: 5px;
+	padding: 0 5px;
+	width: 200px;
+	background-color: #BBBABD;
+	color: #fff;
+}
 
-.box.folder.container .option { border-right: 32px solid transparent; }
+.box.container { border-radius: 2px; }
+
+.box.file.container .option,
+.box.folder.container .option { color: #BBBABD; }
+
+.box.file.container .option .open-options,
+.box.folder.container .option .open-options {
+	font-size: 25px;
+	line-height: inherit;
+}
+
+.box.file.container .option:hover,
+.box.folder.container .option:hover { color: #fff; }
 
 .box.folder.container:hover { cursor: pointer; }
 
-.box.folder.container .option:hover { border-right: 32px solid #708090; }
-
-.box.file.container:hover .option { border-right: 32px solid green; }
-
 .box.folder.container {
-    border-color: #708090;
+ 
 }
 
 .box.container {
-	border-color: green;
 	top: 0;
 	bottom: 0;
-	height: 32px;
-	line-height: 32px;
+	height: 45px;
+	line-height: 45px;
 }
 
 .box .name {
@@ -91,27 +143,27 @@ textarea {
 	-ms-text-overflow: ellipsis;
 	-o-text-overflow: ellipsis;
 	text-overflow: ellipsis;
-	padding-left: 30px;
+	padding-left: 40px;
 }
 
 .box .option {
 	background: none;
 	border: none;
-	border-bottom: 31px solid transparent;
 	top: 0;
-	right: 0;
+	right: 5px;
 	padding: 0;
-	z-index: 999;
 }
 
 .box .option:focus { outline: none; }
 
+.no-entities { font-size: 20px; }
+
 .logo { 
 	position: absolute;
-	top: 5px;
-	bottom: 5px;
-	left: 5px;
-	right: 5px;
+	top: 10px;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
 	background-size: cover;
 }
 
@@ -130,11 +182,19 @@ textarea {
 	background-size: contain;
 }
 
-.alert.alert-container {
+.alert-container {
 	position: fixed;
 	top: 10px;
 	right: 33%;
 	left: 33%;
 	width: 33%;
-	z-index: 9999;
 }
+
+.create-folder-button { 
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.glyphicon.new-folder { margin-right: 10px; }
+
+.entity-container { margin: 10px; }

@@ -27,8 +27,10 @@ namespace Cloud.Storages.Repositories {
 		}
 
 		public IFolder GetRootFolder( string userId ) {
-			var serverManager = new FileServerManager();
-			return serverManager.GetRootFolder(userId);
+			var userRootFolderId = GetUserRootFolderId(userId);
+			var folder = Entities.UserFolders
+				.SingleOrDefault(folderItem => folderItem.Id == userRootFolderId);
+			return folder;
 		}
 
 		#endregion IFileRepository implementation

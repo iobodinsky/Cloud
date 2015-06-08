@@ -10,12 +10,14 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				@Html.ActionLink("cloud", "Cloud", "Cloud", new { area = "" }, new { @class = "navbar-brand" })
+				<img src="~/Content/Images/ServerImages/logo-cloud.png"
+					  alt="cloud logo" class="cloud-logo pull-left"/>
+				<span class="cloud-path navbar-brand pull-left"
+						ng-repeat="folder in cloudFolders"
+						ng-click="openFolderFromHeader(folder, $index)">
+					{{folder.name}}
+					<span class="glyphicon glyphicon-menu-right pull-right"></span>
+				</span>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right" ng-if="!isLoginView">
@@ -25,63 +27,62 @@
 			</div>
 		</div>
 	</div>
-	<div class="container body-content">
+	<div class="body-content">
 		@RenderBody()
-		<hr />
-		<script type="text/ng-template" id="createFolderModal.html">
-			<div class="modal-header">
-				<h3 class="modal-title">create folder</h3>
-			</div>
-			<div class="modal-body">
-				<div>
-					<input type="text" class="form-control" ng-model="folderName" />
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="create(file.name)">create</button>
-				<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-			</div>
-		</script>
-		<script type="text/ng-template" id="renameModal.html">
-			<div class="modal-header">
-				<h3 class="modal-title">rename</h3>
-			</div>
-			<div class="modal-body">
-				<div>
-					<input type="text" class="form-control" ng-model="entity.name" />
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="rename(entity.name)">rename</button>
-				<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-			</div>
-		</script>
-		<script type="text/ng-template" id="deleteConfirmModal.html">
-			<div class="modal-header">
-				<h3 class="modal-title">delete</h3>
-			</div>
-			<div class="modal-body">
-				<div>
-					shure to delete '{{getFileNameWithoutExtention(entity.name)}}' ?
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="delete()">delete</button>
-				<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-			</div>
-		</script>
-		<footer>
-			<p>&copy; @DateTime.Now.Year - cloud, all rights reserved</p>
-		</footer>
 	</div>
-	<div class="alert alert-container">
-		<alert
-				 ng-repeat="alert in alerts"
+	
+	<script type="text/ng-template" id="createFolderModal.html">
+		<div class="modal-header">
+			<h3 class="modal-title">create folder</h3>
+		</div>
+		<div class="modal-body">
+			<div>
+				<input type="text" class="form-control" ng-model="folderName" />
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="create(file.name)">create</button>
+			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
+		</div>
+	</script>
+	<script type="text/ng-template" id="renameModal.html">
+		<div class="modal-header">
+			<h3 class="modal-title">rename</h3>
+		</div>
+		<div class="modal-body">
+			<div>
+				<input type="text" class="form-control" ng-model="entity.name" />
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="rename(entity.name)">rename</button>
+			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
+		</div>
+	</script>
+	<script type="text/ng-template" id="deleteConfirmModal.html">
+		<div class="modal-header">
+			<h3 class="modal-title">confirm</h3>
+		</div>
+		<div class="modal-body">
+			<div>
+				shure to delete '{{getFileNameWithoutExtention(entity.name)}}' ?
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="delete()">delete</button>
+			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
+		</div>
+	</script>
+	
+	<div class="alert-container" ng-show="alerts.length">
+		<alert ng-repeat="alert in alerts"
+				 class="alert"
 				 type="{{alert.type}}"
 				 close="closeAlert($index)">
 			{{alert.msg}}
 		</alert>
 	</div>
+
 	@Scripts.Render("~/bundles/common")
 	@Scripts.Render("~/bundles/ng")
 </body>
