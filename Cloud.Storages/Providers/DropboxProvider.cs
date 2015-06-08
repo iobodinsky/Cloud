@@ -43,6 +43,41 @@ namespace Cloud.Storages.Providers {
 						CloudId = 3,
 						Id =  _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
+						Name = folderFile.Name
+					});
+				} else {
+					files.Add(new UserFile {
+						CloudId = 3,
+						Name = folderFile.Name,
+						Id = _manager.ConstructEntityId(folderFile.path),
+						UserId = userId
+					});
+				}
+			}
+			var folder = new UserFolder {
+				Id = _manager.ConstructEntityId(DropboxKeys.RootFolderPath),
+				CloudId = 3
+			};
+			folderData.Folders = folders;
+			folderData.Files = files;
+			folderData.Folder = folder;
+
+			return folderData;
+		}
+
+		public FolderData GetFolderData( string userId, string folderId ) {
+			var client = _manager.GetClient().Result;
+			var filesFolders = client.Core.Metadata.MetadataAsync(
+				_manager.ConstructEntityPath(folderId)).Result;
+			var folders = new List<IFolder>();
+			var files = new List<IFile>();
+			var folderData = new FolderData { CloudId = 3 };
+			foreach (var folderFile in filesFolders.contents) {
+				if (folderFile.is_dir) {
+					folders.Add(new UserFolder {
+						CloudId = 3,
+						Id = _manager.ConstructEntityId(folderFile.path),
+						UserId = userId,
 						Name = folderFile.Name,
 					});
 				} else {
@@ -55,7 +90,7 @@ namespace Cloud.Storages.Providers {
 				}
 			}
 			var folder = new UserFolder {
-				Id = DropboxKeys.RootFolderPath,
+				Id = _manager.ConstructEntityId(folderId),
 				CloudId = 3
 			};
 			folderData.Folders = folders;
@@ -63,10 +98,6 @@ namespace Cloud.Storages.Providers {
 			folderData.Folder = folder;
 
 			return folderData;
-		}
-
-		public FolderData GetFolderData( string userId, string folderId ) {
-			throw new NotImplementedException();
 		}
 
 		public IFile GetFileInfo( string userId, string fileId ) {

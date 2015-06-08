@@ -9,7 +9,7 @@ using Cloud.Storages.Resources;
 using Google.Apis.Drive.v2.Data;
 
 namespace Cloud.Storages.Providers {
-	public class DriveProvider : IStorage {
+	internal class DriveProvider : IStorage {
 		#region Private fields
 
 		private readonly DriveManager _manager;
