@@ -5,6 +5,14 @@ cloud.app = cloud.app || angular.module('cloud', ['angularFileUpload', 'ui.boots
 cloud.app.constant('constants', cloud.models.constants);
 
 // services
+cloud.app.service('httpService', [
+	'$http',
+	'loaderService',
+	'userTokenService',
+	'constants',
+	cloud.services.httpService
+]);
+
 cloud.app.service('userTokenService', [
 	'$window',
 	'constants',
@@ -24,9 +32,8 @@ cloud.app.service('loaderService', [
 // controllers
 cloud.app.controller('cloudController', [
 	'$scope',
-	'$http',
 	'$window',
-	'$log',
+	'httpService',
 	'alertService',
 	'loaderService',
 	'constants',
@@ -38,29 +45,29 @@ cloud.app.controller('cloudController', [
 
 cloud.app.controller('userAccountController', [
 	'$scope',
-	'$http',
 	'$window',
-	'constants',
+	'httpService',
 	'alertService',
 	'userTokenService',
 	'loaderService',
+	'constants',
 	cloud.controllers.userAccountController
 ]);
 
 cloud.app.controller('renameModalController', [
 	'$scope',
-	'$http',
 	'$modalInstance',
-	'constants',
+	'httpService',
 	'userTokenService',
-	'entity',
+	'constants',
+	'renameEntity',
 	cloud.controllers.renameModalController
 ]);
 
 cloud.app.controller('createFolderModalController', [
 	'$scope',
-	'$http',
 	'$modalInstance',
+	'httpService',
 	'constants',
 	'userTokenService',
 	'folderId',
@@ -69,10 +76,10 @@ cloud.app.controller('createFolderModalController', [
 
 cloud.app.controller('deleteConfirmModalController', [
 	'$scope',
-	'$http',
 	'$modalInstance',
-	'constants',
+	'httpService',
 	'userTokenService',
-	'entity',
+	'constants',
+	'deleteEntity',
 	cloud.controllers.deleteConfirmModalController
 ]);

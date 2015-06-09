@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Cloud.WebApi.Models
 {
@@ -26,6 +27,7 @@ namespace Cloud.WebApi.Models
 
     public class UserInfoViewModel
     {
+        [JsonProperty("email")]
         public string Email { get; set; }
 
         public bool HasRegistered { get; set; }

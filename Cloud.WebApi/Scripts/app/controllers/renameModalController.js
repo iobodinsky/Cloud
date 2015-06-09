@@ -3,7 +3,7 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.renameModalController = cloud.controllers.renameModalController ||
-	function($scope, $http, $modalInstance, constants, userTokenService, entity) {
+	function($scope, $modalInstance, httpService, userTokenService, constants, renameEntity) {
 		// todo: duplicated in cloudController
 		$scope.getFileNameWithoutExtention = function(name) {
 			var lastIndexOfDot = name.lastIndexOf('.');
@@ -15,56 +15,48 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 		}
 
 		var self = this;
-		self.oldName = $scope.getFileNameWithoutExtention(entity.data.name);
+		self.oldName = $scope.getFileNameWithoutExtention(renameEntity.data.name);
 
-		$scope.entity = entity.data;
-		$scope.entity.name = $scope.getFileNameWithoutExtention(entity.data.name);
+		$scope.entity = renameEntity.data;
+		$scope.entity.name = $scope.getFileNameWithoutExtention(renameEntity.data.name);
 		$scope.rename = function(newFileName) {
 			var url = '';
-			switch (entity.type) {
+			switch (renameEntity.type) {
 			case constants.cloudEntities.folder:
 				url = constants.urls.cloud.folders.constructRename(
-					entity.data.id, entity.data.cloudId);
+					renameEntity.data.id, renameEntity.data.cloudId);
 				break;
 			case constants.cloudEntities.file:
 				url = constants.urls.cloud.files.constructRename(
-					entity.data.id, entity.data.cloudId);
+					renameEntity.data.id, renameEntity.data.cloudId);
 				break;
 			default:
 			};
 
-			var renameRequest = {
-				method: constants.httpMethod.post,
-				url: url,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader(),
-				},
-				data: {
-					name: newFileName
-				}
+			function success(data, status, headers, config) {
+				$modalInstance.close({
+					isSuccess: true,
+					newName: data,
+					status: status,
+					headers: headers,
+					config: config
+				});
 			};
 
-			$http(renameRequest)
-				.success(function(data, status, headers, config) {
-					$modalInstance.close({
-						isSuccess: true,
-						newName: data,
-						status: status,
-						headers: headers,
-						config: config
-					});
-				})
-				.error(function(data, status, headers, config) {
-					$modalInstance.close({
-						isSuccess: false,
-						data: data,
-						status: status,
-						headers: headers,
-						config: config
-					});
-
-					$scope.entity.name = self.oldName;
+			function error(data, status, headers, config) {
+				$modalInstance.close({
+					isSuccess: false,
+					data: data,
+					status: status,
+					headers: headers,
+					config: config
 				});
+
+				$scope.entity.name = self.oldName;
+			};
+
+			httpService.makeRequest(
+				constants.httpMethod.post, url, null, { name: newFileName }, success, error);
 		};
 
 		$scope.cancel = function() {

@@ -3,20 +3,20 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function($scope, $http, $window, $log, alertService, loaderService,
-		constants, userTokenService, fileUploader, $modal) {
+	function($scope, $window, httpService, alertService,
+		loaderService, constants, userTokenService, fileUploader, $modal) {
 		var self = this;
 
 		self.initUploader = function() {
 			$scope.uploader = new fileUploader();
-			var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
-			$scope.uploader.url = constants.urls.cloud.files.constructUpload(
-				folderId, constants.cloudId);
-			$scope.uploader.headers = {
-				'Authorization': userTokenService.getAuthorizationHeader()
-			};
+			$scope.uploader.removeAfterUpload = true;
+			$scope.uploader.url = '';
+			$scope.uploader.headers = {};
+			$scope.uploader.headers[constants.httpHeader.name.authorization] =
+				userTokenService.getAuthorizationToken();
+
 			$scope.uploader.onCompleteItem =
-				function(uploadedItem, response, status, headers) {
+				function(uploadedItem, response, status) {
 					$scope.uploader.clearQueue();
 
 					if (status === 200) {
@@ -31,42 +31,37 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				};
 		};
 		self.getRootFolderData = function() {
-			loaderService.show();
+			httpService.makeRequest(
+				constants.httpMethod.get,
+				constants.urls.cloud.folders.rootFolderData,
+				null, null, success, error);
 
-			var rootfolderDataRequest = {
-				method: constants.httpMethod.get,
-				url: constants.urls.cloud.folders.rootFolderData,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
+			function success(data) {
+				$scope.folders = [];
+				$scope.files = [];
+				$scope.cloudFolders = [];
+
+				for (var i = 0; i < data.length; i++) {
+					for (var j = 0; j < data[i].folders.length; j++) {
+						$scope.folders.push(data[i].folders[j]);
+					}
+					for (var k = 0; k < data[i].files.length; k++) {
+						$scope.files.push(data[i].files[k]);
+					}
+					if (data[i].folder.cloudId === constants.cloudId) {
+						data[i].folder.name = constants.rootCloudFolderName;
+						$scope.cloudFolders.push(data[i].folder);
+					}
 				}
+
+				$scope.uploader.url = constants.urls.cloud.files.constructUpload(
+					$scope.cloudFolders[0].id, constants.cloudId);
 			};
 
-			$http(rootfolderDataRequest)
-				.success(function(data, status, headers, config) {
-					$scope.folders = [];
-					$scope.files = [];
-					$scope.cloudFolders = [];
-
-					for (var i = 0; i < data.length; i++) {
-						for (var j = 0; j < data[i].folders.length; j++) {
-							$scope.folders.push(data[i].folders[j]);
-						}
-						for (var k = 0; k < data[i].files.length; k++) {
-							$scope.files.push(data[i].files[k]);
-						}
-						if (data[i].folder.cloudId === constants.cloudId) {
-							data[i].folder.name = constants.rootCloudFolderName;
-							$scope.cloudFolders.push(data[i].folder);
-						}
-					}
-
-					loaderService.remove();
-				})
-				.error(function(data, status, headers, config) {
-					alertService.show(constants.alert.type.danger,
-						constants.message.failGetRootFolderData);
-					loaderService.remove();
-				});
+			function error() {
+				alertService.show(constants.alert.type.danger,
+					constants.message.failGetRootFolderData);
+			};
 		};
 		self.clearCloudData = function() {
 			$scope.files = [];
@@ -81,23 +76,23 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			};
 		};
 		self.getUserInfo = function() {
-			var userInfoRequest = {
-				method: constants.httpMethod.get,
-				url: constants.urls.cloud.userInfo,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
+			httpService.makeRequest(
+				constants.httpMethod.get,
+				constants.urls.cloud.userInfo,
+				null,
+				null,
+				success, error);
+
+			function success(data) {
+				$scope.userInfo = {
+					Name: data.email
 				}
 			};
-			$http(userInfoRequest)
-				.success(function(data, status, headers, config) {
-					$scope.userInfo = {
-						Name: data.Email
-					}
-				})
-				.error(function(data, status, headers, config) {
-					alertService.show(constants.alert.type.danger,
-						constants.message.failLoadUserInfo);
-				});
+
+			function error() {
+				alertService.show(constants.alert.type.danger,
+					constants.message.failLoadUserInfo);
+			};
 		};
 
 		self.driveFolder = null;
@@ -113,7 +108,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		// todo: should make as private 
 		$scope.initialize = function() {
-			loaderService.show();
 			if (userTokenService.isTokenExist()) {
 				self.getUserInfo();
 				self.getRootFolderData();
@@ -122,7 +116,6 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			} else {
 				$scope.isLoginView = true;
 			}
-			loaderService.remove();
 		};
 
 		$scope.setLoginView = function() {
@@ -130,28 +123,23 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.logout = function() {
-			loaderService.show();
-
-			var logoutRequest = {
-				method: constants.httpMethod.post,
-				url: constants.urls.cloud.logout,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
+			function success() {
+				userTokenService.removeToken();
+				self.clearCloudData();
+				$scope.isLoginView = true;
 			};
 
-			$http(logoutRequest)
-				.success(function(data, status, headers, config) {
-					userTokenService.removeToken();
-					self.clearCloudData();
-					$scope.isLoginView = true;
-					loaderService.remove();
-				})
-				.error(function(data, status, headers, config) {
-					loaderService.remove();
-					alertService.show(constants.alert.type.danger,
-						constants.message.failLogout);
-				});
+			function error() {
+				alertService.show(constants.alert.type.danger,
+					constants.message.failLogout);
+			};
+
+			httpService.makeRequest(
+				constants.httpMethod.post,
+				constants.urls.cloud.logout,
+				null,
+				null,
+				success, error);
 		};
 
 		// Files
@@ -167,22 +155,18 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				break;
 			case 2: // Cloud
 				var url = constants.urls.cloud.files.constructDownloadLink(file.id);
-				var downloadFileRequest = {
-					method: constants.httpMethod.get,
-					url: url,
-					headers: {
-						'Authorization': userTokenService.getAuthorizationHeader()
-					}
+
+				function success(data) {
+					$window.open(data, '_self');
 				};
 
-				$http(downloadFileRequest)
-					.success(function(data, status, headers, config) {
-						$window.open(data, '_self');
-					})
-					.error(function(data, status, headers, config) {
-						alertService.show(constants.alert.type.danger,
-							constants.message.failRequestDownloadLink);
-					});
+				function error() {
+					alertService.show(constants.alert.type.danger,
+						constants.message.failRequestDownloadLink);
+				};
+
+				httpService.makeRequest(
+					constants.httpMethod.get, url, null, null, success, error);
 
 				break;
 			case 3: // Dropbox
@@ -191,7 +175,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				break;
 			default:
 				alertService.show(constants.alert.type.danger,
-					'cloudId no specified');
+					constants.message.failCloudNotFound);
 				break;
 			}
 		};
@@ -201,7 +185,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFile = function(file) {
-			var entity = {
+			var deleteEntity = {
 				type: constants.cloudEntities.file,
 				data: file
 			};
@@ -211,8 +195,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				templateUrl: 'deleteConfirmModal.html',
 				controller: cloud.controllers.deleteConfirmModalController,
 				resolve: {
-					entity: function() {
-						return entity;
+					deleteEntity: function() {
+						return deleteEntity;
 					}
 				}
 			});
@@ -236,7 +220,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		$scope.animationsEnabled = true;
 
 		$scope.renameFile = function(file, $index) {
-			var entity = {
+			var renameEntity = {
 				type: constants.cloudEntities.file,
 				data: file
 			};
@@ -246,8 +230,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				templateUrl: 'renameModal.html',
 				controller: cloud.controllers.renameModalController,
 				resolve: {
-					entity: function() {
-						return entity;
+					renameEntity: function() {
+						return renameEntity;
 					}
 				}
 			});
@@ -265,7 +249,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.renameFolder = function(folder, $index) {
-			var entity = {
+			var renameEntity = {
 				type: constants.cloudEntities.folder,
 				data: folder
 			};
@@ -274,8 +258,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				templateUrl: 'renameModal.html',
 				controller: cloud.controllers.renameModalController,
 				resolve: {
-					entity: function() {
-						return entity;
+					renameEntity: function() {
+						return renameEntity;
 					}
 				}
 			});
@@ -324,7 +308,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.deleteFolder = function(folder) {
-			var entity = {
+			var deleteEntity = {
 				type: constants.cloudEntities.folder,
 				data: folder
 			};
@@ -334,8 +318,8 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				templateUrl: 'deleteConfirmModal.html',
 				controller: cloud.controllers.deleteConfirmModalController,
 				resolve: {
-					entity: function() {
-						return entity;
+					deleteEntity: function() {
+						return deleteEntity;
 					}
 				}
 			});
@@ -357,40 +341,34 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.openFolder = function(folder) {
-			loaderService.show();
-			var openFolderRequest = {
-				method: constants.httpMethod.get,
-				url: constants.urls.cloud.folders.constructFolderData(
-					folder.id, folder.cloudId),
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
+			function success(data) {
+				$scope.folders = [];
+				$scope.files = [];
+				if (!data.folder.name) {
+					data.folder.name = folder.name;
+				}
+				$scope.cloudFolders.push(data.folder);
+				$scope.uploader.url =
+					constants.urls.cloud.files.constructUpload(data.folder.id, 2);
+				for (var i = 0; i < data.folders.length; i++) {
+					$scope.folders.push(data.folders[i]);
+				}
+
+				for (var j = 0; j < data.files.length; j++) {
+					$scope.files.push(data.files[j]);
 				}
 			};
 
-			$http(openFolderRequest)
-				.success(function(data, status, headers, config) {
-					$scope.folders = [];
-					$scope.files = [];
-					if (!data.folder.name) {
-						data.folder.name = folder.name;
-					}
-					$scope.cloudFolders.push(data.folder);
-					$scope.uploader.url =
-						constants.urls.cloud.files.constructUpload(data.folder.id, 2);
-					for (var i = 0; i < data.folders.length; i++) {
-						$scope.folders.push(data.folders[i]);
-					}
+			function error() {
+				alertService.show(constants.alert.type.danger,
+					constants.message.failOpenFolder);
+			};
 
-					for (var j = 0; j < data.files.length; j++) {
-						$scope.files.push(data.files[j]);
-					}
-					loaderService.remove();
-				})
-				.error(function(data, status, headers, config) {
-					loaderService.remove();
-					alertService.show(constants.alert.type.danger,
-						constants.message.failOpenFolder);
-				});
+			var url = constants.urls.cloud.folders.constructFolderData(
+				folder.id, folder.cloudId);
+
+			httpService.makeRequest(
+				constants.httpMethod.get, url, null, null, success, error);
 		};
 
 		$scope.openFolderFromHeader = function(folder, $index) {

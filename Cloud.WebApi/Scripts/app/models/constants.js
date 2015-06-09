@@ -21,6 +21,16 @@ cloud.models.constants = cloud.models.constants || {
 		post: 'POST',
 		deleteMethod: 'DELETE',
 	},
+	httpHeader: {
+		name: {
+			authorization: 'Authorization',
+			contentType: 'Content-Type'
+		},
+		value: {
+			formUrlencoded: 'application/x-www-form-urlencoded;',
+			json: 'application/json;'
+		}
+	},
 	urls: {
 		cloud: {
 			home: '',
@@ -29,10 +39,10 @@ cloud.models.constants = cloud.models.constants || {
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
 			files: {
-				constructUpload: function (folderId, cloudId) {
+				constructUpload: function(folderId, cloudId) {
 					return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
 				},
-				constructDownloadLink: function (fileId) {
+				constructDownloadLink: function(fileId) {
 					return 'api/files/' + fileId + '/requestlink';
 				},
 				constructRename: function(fileId, cloudId) {
@@ -78,6 +88,7 @@ cloud.models.constants = cloud.models.constants || {
 		failRegister: 'fail to register',
 		failLogin: 'fail to login',
 		failRequestDownloadLink: 'fail to download file',
+		failCloudNotFound: 'cloud not found',
 
 		infoDriveFileDownloadingNotAllowed: 'download file not allowed',
 		infoDropboxDownloadNotAllowed: 'download file from Dropbox not allowed',

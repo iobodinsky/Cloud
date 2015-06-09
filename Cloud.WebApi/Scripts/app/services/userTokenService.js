@@ -3,7 +3,7 @@
 cloud.services = cloud.services || {};
 
 cloud.services.userTokenService = cloud.services.userTokenService ||
-	function ($window, constants) {
+	function($window, constants) {
 		function storeToken(token) {
 			$window.sessionStorage.setItem(constants.userTokenKey, token);
 		};
@@ -21,15 +21,14 @@ cloud.services.userTokenService = cloud.services.userTokenService ||
 			$window.sessionStorage.removeItem(constants.userTokenKey);
 		}
 
-		function getAuthorizationHeader() {
+		function getAuthorizationToken() {
 			return constants.userTokenType + ' ' + getToken();
 		};
 
 		return {
 			storeToken: storeToken,
-			getToken: getToken,
 			isTokenExist: isTokenExist,
 			removeToken: removeToken,
-			getAuthorizationHeader: getAuthorizationHeader
+			getAuthorizationToken: getAuthorizationToken
 		}
 	};

@@ -4,8 +4,8 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.userAccountController =
 	cloud.controllers.userAccountController ||
-	function ($scope, $http, $window, constants,
-		alertService, userTokenService, loaderService) {
+	function($scope, $window, httpService, alertService,
+		userTokenService, loaderService, constants) {
 		var self = this;
 
 		self.initialize = function() {};
@@ -17,8 +17,7 @@ cloud.controllers.userAccountController =
 		$scope.userLoginName = '';
 		$scope.userLoginPassword = '';
 
-		$scope.register = function () {
-			loaderService.show();
+		$scope.register = function() {
 			var registrationData = {
 				UserName: $scope.userRegistrationName,
 				Email: $scope.userRegistrationEmail,
@@ -26,28 +25,30 @@ cloud.controllers.userAccountController =
 				ConfirmPassword: $scope.userRegistrationConfirmPassword
 			};
 
-			var registerRequest = {
-				method: constants.httpMethod.post,
-				url: constants.urls.cloud.register,
-				contentType: 'application/json; charset=utf-8',
-				data: JSON.stringify(registrationData)
+			function success() {
+				$scope.userLoginName = registrationData.UserName;
+				$scope.userLoginPassword = registrationData.Password;
+				$scope.login();
 			};
 
-			$http(registerRequest)
-				.success(function(data, status, headers, config) {
-					$scope.userLoginName = registrationData.UserName;
-					$scope.userLoginPassword = registrationData.Password;
-					$scope.login();
-				})
-				.error(function (data, status, headers, config) {
-					loaderService.remove();
-					alertService.show(constants.alert.type.success,
-						constants.message.failRegister);
-				});
+			function error() {
+				alertService.show(constants.alert.type.success,
+					constants.message.failRegister);
+			};
+
+			var requestHeaders = {};
+			requestHeaders[constants.httpHeader.name.contentType] =
+				constants.httpHeader.value.json;
+
+			httpService.makeRequest(
+				constants.httpMethod.post,
+				constants.urls.cloud.register,
+				requestHeaders,
+				JSON.stringify(registrationData),
+				success, error);
 		};
 
-		$scope.login = function () {
-			loaderService.show();
+		$scope.login = function() {
 			var userLogin = $scope.userLoginName;
 			var userPassword = $scope.userLoginPassword;
 
@@ -57,28 +58,30 @@ cloud.controllers.userAccountController =
 				password: userPassword
 			};
 
-			var loginRequest = {
-				method: constants.httpMethod.post,
-				url: constants.urls.cloud.token,
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				data: 'grant_type=password&username=' + loginData.username +
-					'&password=' + loginData.password
+			function success(data) {
+				userTokenService.storeToken(data.access_token);
+				self.initialize();
+				$scope.initialize();
 			};
 
-			$http(loginRequest)
-				.success(function(data, status, headers, config) {
-					userTokenService.storeToken(data.access_token);
-					self.initialize();
-					$scope.initialize();
-					loaderService.remove();
-				})
-				.error(function (data, status, headers, config) {
-					loaderService.remove();
-					alertService.show(constants.alert.type.success,
-						constants.message.failLogin);
-				});
+			function error() {
+				alertService.show(constants.alert.type.danger,
+					constants.message.failLogin);
+			};
+
+			var requestHeaders = {};
+			requestHeaders[constants.httpHeader.name.contentType] =
+				constants.httpHeader.value.formUrlencoded;
+
+			var requestData = 'grant_type=password&username=' + loginData.username +
+				'&password=' + loginData.password;
+
+			httpService.makeRequest(
+				constants.httpMethod.post,
+				constants.urls.cloud.token,
+				requestHeaders,
+				requestData,
+				success, error);
 		};
 
 		self.initialize();

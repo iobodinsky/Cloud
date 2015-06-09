@@ -3,7 +3,7 @@
 cloud.services = cloud.services || {};
 
 cloud.services.loaderService =
-	cloud.services.loaderService || function () {
+	cloud.services.loaderService || function() {
 		var loadersQueue = [];
 
 		function isLoader() {

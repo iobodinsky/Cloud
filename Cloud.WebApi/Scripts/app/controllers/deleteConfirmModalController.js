@@ -4,50 +4,45 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.deleteConfirmModalController =
 	cloud.controllers.deleteConfirmModalController ||
-	function($scope, $http, $modalInstance, constants, userTokenService, entity) {
-		$scope.entity = entity.data;
+	function($scope, $modalInstance, httpService, userTokenService, constants, deleteEntity) {
+		$scope.entity = deleteEntity.data;
 
 		$scope.delete = function() {
 			var url = '';
-			switch (entity.type) {
+			switch (deleteEntity.type) {
 			case constants.cloudEntities.folder:
 				url = constants.urls.cloud.folders.constructDelete(
-					entity.data.id, entity.data.cloudId);
+					deleteEntity.data.id, deleteEntity.data.cloudId);
 				break;
 			case constants.cloudEntities.file:
 				url = constants.urls.cloud.files.constructDelete(
-					entity.data.id, entity.data.cloudId);
+					deleteEntity.data.id, deleteEntity.data.cloudId);
 				break;
 			default:
 			};
 
-			var deleteRequest = {
-				method: constants.httpMethod.deleteMethod,
-				url: url,
-				headers: {
-					'Authorization': userTokenService.getAuthorizationHeader()
-				}
+			function success(data, status, headers, config) {
+				$modalInstance.close({
+					isSuccess: true,
+					data: data,
+					status: status,
+					headers: headers,
+					config: config
+				});
 			};
 
-			$http(deleteRequest)
-				.success(function(data, status, headers, config) {
-					$modalInstance.close({
-						isSuccess: true,
-						data: data,
-						status: status,
-						headers: headers,
-						config: config
-					});
-				})
-				.error(function(data, status, headers, config) {
-					$modalInstance.close({
-						isSuccess: false,
-						data: data,
-						status: status,
-						headers: headers,
-						config: config
-					});
+			function error(data, status, headers, config) {
+				$modalInstance.close({
+					isSuccess: false,
+					data: data,
+					status: status,
+					headers: headers,
+					config: config
 				});
+			};
+
+			httpService.makeRequest(
+				constants.httpMethod.deleteMethod, url, null, null, success, error);
 		};
 
 		$scope.cancel = function() {
@@ -56,11 +51,15 @@ cloud.controllers.deleteConfirmModalController =
 
 		// todo: duplicated in cloudController
 		$scope.getFileNameWithoutExtention = function(name) {
-			var lastIndexOfDot = name.lastIndexOf('.');
-			if (lastIndexOfDot >= 0) {
-				return name.substr(0, lastIndexOfDot);
-			} else {
-				return name;
+			if (name) {
+				var lastIndexOfDot = name.lastIndexOf('.');
+				if (lastIndexOfDot >= 0) {
+					return name.substr(0, lastIndexOfDot);
+				} else {
+					return name;
+				}
 			}
-		}
+
+			return '';
+		};
 	};
