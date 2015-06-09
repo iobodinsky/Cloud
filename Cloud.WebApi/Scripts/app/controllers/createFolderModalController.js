@@ -11,7 +11,7 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 				'ParentId': folderId
 			};
 			var createFolderRequest = {
-				method: 'POST',
+				method: constants.httpMethod.post,
 				url: constants.urls.cloud.folders.constructCreate(constants.cloudId),
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()

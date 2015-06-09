@@ -4,7 +4,8 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.userAccountController =
 	cloud.controllers.userAccountController ||
-	function($scope, $http, $window, constants, alertService, userTokenService) {
+	function ($scope, $http, $window, constants,
+		alertService, userTokenService, loaderService) {
 		var self = this;
 
 		self.initialize = function() {};
@@ -16,7 +17,8 @@ cloud.controllers.userAccountController =
 		$scope.userLoginName = '';
 		$scope.userLoginPassword = '';
 
-		$scope.register = function() {
+		$scope.register = function () {
+			loaderService.show();
 			var registrationData = {
 				UserName: $scope.userRegistrationName,
 				Email: $scope.userRegistrationEmail,
@@ -25,7 +27,7 @@ cloud.controllers.userAccountController =
 			};
 
 			var registerRequest = {
-				method: 'POST',
+				method: constants.httpMethod.post,
 				url: constants.urls.cloud.register,
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify(registrationData)
@@ -37,13 +39,15 @@ cloud.controllers.userAccountController =
 					$scope.userLoginPassword = registrationData.Password;
 					$scope.login();
 				})
-				.error(function(data, status, headers, config) {
+				.error(function (data, status, headers, config) {
+					loaderService.remove();
 					alertService.show(constants.alert.type.success,
 						constants.message.failRegister);
 				});
 		};
 
-		$scope.login = function() {
+		$scope.login = function () {
+			loaderService.show();
 			var userLogin = $scope.userLoginName;
 			var userPassword = $scope.userLoginPassword;
 
@@ -54,7 +58,7 @@ cloud.controllers.userAccountController =
 			};
 
 			var loginRequest = {
-				method: 'POST',
+				method: constants.httpMethod.post,
 				url: constants.urls.cloud.token,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
@@ -68,8 +72,10 @@ cloud.controllers.userAccountController =
 					userTokenService.storeToken(data.access_token);
 					self.initialize();
 					$scope.initialize();
+					loaderService.remove();
 				})
-				.error(function(data, status, headers, config) {
+				.error(function (data, status, headers, config) {
+					loaderService.remove();
 					alertService.show(constants.alert.type.success,
 						constants.message.failLogin);
 				});

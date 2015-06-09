@@ -3,8 +3,8 @@
 cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.cloudController = cloud.controllers.cloudController ||
-	function($scope, $http, $window, $log, alertService, constants,
-		userTokenService, fileUploader, $modal) {
+	function($scope, $http, $window, $log, alertService, loaderService,
+		constants, userTokenService, fileUploader, $modal) {
 		var self = this;
 
 		self.initUploader = function() {
@@ -31,8 +31,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 				};
 		};
 		self.getRootFolderData = function() {
+			loaderService.show();
+
 			var rootfolderDataRequest = {
-				method: 'GET',
+				method: constants.httpMethod.get,
 				url: constants.urls.cloud.folders.rootFolderData,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
@@ -40,7 +42,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			};
 
 			$http(rootfolderDataRequest)
-				.success(function (data, status, headers, config) {
+				.success(function(data, status, headers, config) {
 					$scope.folders = [];
 					$scope.files = [];
 					$scope.cloudFolders = [];
@@ -53,14 +55,17 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 							$scope.files.push(data[i].files[k]);
 						}
 						if (data[i].folder.cloudId === constants.cloudId) {
-							data[i].folder.name = 'Cloud';
+							data[i].folder.name = constants.rootCloudFolderName;
 							$scope.cloudFolders.push(data[i].folder);
 						}
 					}
+
+					loaderService.remove();
 				})
 				.error(function(data, status, headers, config) {
 					alertService.show(constants.alert.type.danger,
 						constants.message.failGetRootFolderData);
+					loaderService.remove();
 				});
 		};
 		self.clearCloudData = function() {
@@ -77,7 +82,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 		self.getUserInfo = function() {
 			var userInfoRequest = {
-				method: 'GET',
+				method: constants.httpMethod.get,
 				url: constants.urls.cloud.userInfo,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
@@ -97,20 +102,18 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 		self.driveFolder = null;
 		self.dropboxFolder = null;
-
 		$scope.userInfo = {
 			Name: ''
 		};
 
 		$scope.cloudFolders = [];
-
 		$scope.alerts = alertService.alerts;
+		$scope.isLoader = loaderService.isLoader();
+		$scope.isLoadingData = false;
 
 		// todo: should make as private 
 		$scope.initialize = function() {
-			$scope.folders = [];
-			$scope.files = [];
-
+			loaderService.show();
 			if (userTokenService.isTokenExist()) {
 				self.getUserInfo();
 				self.getRootFolderData();
@@ -119,6 +122,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			} else {
 				$scope.isLoginView = true;
 			}
+			loaderService.remove();
 		};
 
 		$scope.setLoginView = function() {
@@ -126,8 +130,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.logout = function() {
+			loaderService.show();
+
 			var logoutRequest = {
-				method: 'POST',
+				method: constants.httpMethod.post,
 				url: constants.urls.cloud.logout,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()
@@ -139,8 +145,10 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					userTokenService.removeToken();
 					self.clearCloudData();
 					$scope.isLoginView = true;
+					loaderService.remove();
 				})
 				.error(function(data, status, headers, config) {
+					loaderService.remove();
 					alertService.show(constants.alert.type.danger,
 						constants.message.failLogout);
 				});
@@ -149,18 +157,18 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		// Files
 		$scope.download = function(file) {
 			switch (file.cloudId) {
-				case 1: // Drive
-					if (file.downloadUrl) {
-						$window.open(file.downloadUrl, '_blank');
-					} else {
-						alertService.show(constants.alert.type.info,
-							constants.message.infoDriveFileDownloadingNotAllowed);
-					}
+			case 1: // Drive
+				if (file.downloadUrl) {
+					$window.open(file.downloadUrl, '_blank');
+				} else {
+					alertService.show(constants.alert.type.info,
+						constants.message.infoDriveFileDownloadingNotAllowed);
+				}
 				break;
 			case 2: // Cloud
 				var url = constants.urls.cloud.files.constructDownloadLink(file.id);
 				var downloadFileRequest = {
-					method: 'GET',
+					method: constants.httpMethod.get,
 					url: url,
 					headers: {
 						'Authorization': userTokenService.getAuthorizationHeader()
@@ -177,9 +185,9 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					});
 
 				break;
-				case 3: // Dropbox
-					alertService.show(constants.alert.type.danger,
-						constants.message.failDelete);
+			case 3: // Dropbox
+				alertService.show(constants.alert.type.danger,
+					constants.message.failDelete);
 				break;
 			default:
 				alertService.show(constants.alert.type.danger,
@@ -349,8 +357,9 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 		};
 
 		$scope.openFolder = function(folder) {
+			loaderService.show();
 			var openFolderRequest = {
-				method: 'GET',
+				method: constants.httpMethod.get,
 				url: constants.urls.cloud.folders.constructFolderData(
 					folder.id, folder.cloudId),
 				headers: {
@@ -375,15 +384,17 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 					for (var j = 0; j < data.files.length; j++) {
 						$scope.files.push(data.files[j]);
 					}
+					loaderService.remove();
 				})
 				.error(function(data, status, headers, config) {
+					loaderService.remove();
 					alertService.show(constants.alert.type.danger,
 						constants.message.failOpenFolder);
 				});
 		};
 
 		$scope.openFolderFromHeader = function(folder, $index) {
-			if (folder.name === 'Cloud') {
+			if (folder.name === constants.rootCloudFolderName) {
 				self.getRootFolderData();
 			} else {
 				$scope.cloudFolders.length = $index;

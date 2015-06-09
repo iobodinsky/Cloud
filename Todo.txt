@@ -12,6 +12,11 @@
 15. remove alert displaying
 16. hover style on file
 17. add more width for file/folder name
+18. add styles for choose file
+19. make IStorage asynk
+20. add is root cloud folder for ability to add new foder and upload file
+21. responcive design for header and cloud path
+22. position fixed for left and rigth containers on scroll
 
 Stoped on:
 rename dbropbox failed for second attempt to rename

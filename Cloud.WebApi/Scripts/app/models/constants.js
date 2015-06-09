@@ -5,6 +5,7 @@ cloud.models.constants = cloud.models.constants || {
 	userTokenKey: 'CloudUserBearerToken',
 	userTokenType: 'Bearer',
 	cloudId: 2,
+	rootCloudFolderName: 'Cloud',
 	alert: {
 		timeout: 3000,
 		type: {
@@ -14,6 +15,11 @@ cloud.models.constants = cloud.models.constants || {
 			danger: 'danger'
 		},
 		maxCount: 3
+	},
+	httpMethod: {
+		get: 'GET',
+		post: 'POST',
+		deleteMethod: 'DELETE',
 	},
 	urls: {
 		cloud: {

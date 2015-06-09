@@ -22,7 +22,7 @@ cloud.controllers.deleteConfirmModalController =
 			};
 
 			var deleteRequest = {
-				method: 'DELETE',
+				method: constants.httpMethod.deleteMethod,
 				url: url,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader()

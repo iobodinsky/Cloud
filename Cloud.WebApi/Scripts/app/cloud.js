@@ -17,6 +17,10 @@ cloud.app.service('alertService', [
 	cloud.services.alertService
 ]);
 
+cloud.app.service('loaderService', [
+	cloud.services.loaderService
+]);
+
 // controllers
 cloud.app.controller('cloudController', [
 	'$scope',
@@ -24,6 +28,7 @@ cloud.app.controller('cloudController', [
 	'$window',
 	'$log',
 	'alertService',
+	'loaderService',
 	'constants',
 	'userTokenService',
 	'FileUploader',
@@ -38,6 +43,7 @@ cloud.app.controller('userAccountController', [
 	'constants',
 	'alertService',
 	'userTokenService',
+	'loaderService',
 	cloud.controllers.userAccountController
 ]);
 

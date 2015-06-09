@@ -34,7 +34,7 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 			};
 
 			var renameRequest = {
-				method: 'POST',
+				method: constants.httpMethod.post,
 				url: url,
 				headers: {
 					'Authorization': userTokenService.getAuthorizationHeader(),
