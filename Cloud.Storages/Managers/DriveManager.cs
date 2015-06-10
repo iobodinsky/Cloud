@@ -42,8 +42,8 @@ namespace Cloud.Storages.Managers {
 			return query.ToString();
 		}
 
-		public string ConstructInParentsQuery( string filderId ) {
-			return string.Format("'{0}' {1}", filderId, DriveSearchFilters.InParents);
+		public string ConstructInParentsQuery( string folderId ) {
+			return string.Format("'{0}' {1}", folderId, DriveSearchFilters.InParents);
 		}
 
 		#endregion Public methods

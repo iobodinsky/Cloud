@@ -236,7 +236,6 @@
   <ItemGroup>
     <Content Include="DbItems\DatabaseChanges.sql" />
     <Content Include="DbItems\DatabaseChanges[EXAPMLES].sql" />
-    <Content Include="DbItems\DummyDataQuery.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
