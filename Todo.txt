@@ -1,6 +1,5 @@
 2. validate to not write dot for renaming
 2. LastModifyingDate
-5. Loader on long time actions
 6. rename dbropbox failed for second attempt to rename
 8. implement history on folder browsing
 9. $scope.alerts.splice(index, 1); for remove (not for())

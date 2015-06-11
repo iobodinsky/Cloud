@@ -184,7 +184,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			return 'logo-' + cloudId;
 		};
 
-		$scope.deleteFile = function(file) {
+		$scope.deleteFile = function(file, $index) {
 			var deleteEntity = {
 				type: constants.cloudEntities.file,
 				data: file
@@ -203,11 +203,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
-					for (var i = 0; i < $scope.files.length; i++) {
-						if ($scope.files[i].id === file.id) {
-							$scope.files.splice(i, 1);
-						}
-					}
+					$scope.files.splice($index, 1);
 					alertService.show(constants.alert.type.success,
 						constants.message.successDelete);
 				} else {
@@ -307,7 +303,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 			}
 		};
 
-		$scope.deleteFolder = function(folder) {
+		$scope.deleteFolder = function(folder, $index) {
 			var deleteEntity = {
 				type: constants.cloudEntities.folder,
 				data: folder
@@ -326,11 +322,7 @@ cloud.controllers.cloudController = cloud.controllers.cloudController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
-					for (var i = 0; i < $scope.folders.length; i++) {
-						if ($scope.folders[i].id === options.data) {
-							$scope.folders.splice(i, 1);
-						}
-					}
+					$scope.folders.splice($index, 1);
 					alertService.show(constants.alert.type.success,
 						constants.message.successDelete);
 				} else {
