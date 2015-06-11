@@ -18,6 +18,10 @@
 22. position fixed for left and rigth containers on scroll
 23. test fail rename
 24. implement not any active storages
+25. catch (GoogleApiRequestException e) {
+      if (e.HttpStatusCode == HttpStatusCode.Unauthorized) {
+        // Credentials have been revoked.
+        // TODO: Redirect the user to the authorization URL.
 
 Stoped on:
 rename dbropbox failed for second attempt to rename
