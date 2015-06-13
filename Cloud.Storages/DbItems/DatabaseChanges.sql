@@ -530,13 +530,35 @@ BEGIN
 END
 
 
+-- =============================================================
+-- Author:		Ivan Obodianskyi
+-- Update date:	2015-06-03
+-- Description:	Create table for access tokens for Google Drive users
+-- =============================================================
+SET @newSchemaVersion = 26
+IF @schemaVersion < @newSchemaVersion
+BEGIN
+	BEGIN TRANSACTION
+
+	CREATE TABLE dbo.GoogleDriveUserTokens
+	(
+		[Id] int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+		[UserId] nvarchar(128) NOT NULL,
+		[Tokens] nvarchar(500) NOT NULL
+	)
+
+	UPDATE [dbo].[DatabaseSettings] SET SchemaVersion = @newSchemaVersion
+	COMMIT
+END
+
+
 /*
 -- =============================================================
 -- Author:		<full name>
 -- Update date:	<yyyy-mm-dd>
 -- Description:	<desc>
 -- =============================================================
-SET @newSchemaVersion = 26
+SET @newSchemaVersion = 27
 IF @schemaVersion < @newSchemaVersion
 BEGIN
 	BEGIN TRANSACTION

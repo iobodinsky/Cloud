@@ -24,6 +24,7 @@
 27. fail to register - green alert
 28. fail to uploadFile
 29. scrolling main page
+30. make public CloudDbEntities Entities PROTECTED
 
 Stoped on:
 rename dbropbox failed for second attempt to rename

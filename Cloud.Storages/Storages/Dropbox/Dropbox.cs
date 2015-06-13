@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
-using Cloud.Storages.Managers;
 using Cloud.Storages.Resources;
 
-namespace Cloud.Storages.Providers {
-	internal class DropboxProvider : IStorage {
+namespace Cloud.Storages.Storages.Dropbox {
+	internal class Dropbox : IStorage {
 
 		private readonly DropboxManager _manager;
 
-		public DropboxProvider() {
+		public Dropbox() {
 			_manager = new DropboxManager();
 		}
 
@@ -32,7 +31,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public async Task<FolderData> GetRootFolderDataAsync( string userId ) {
-			var client = await _manager.GetClient();
+			var client = await _manager.GetClient(userId);
 			var rootFilesFolders = await client.Core.Metadata.MetadataAsync(
 				DropboxKeys.RootFolderPath);
 			var folders = new List<IFolder>();
@@ -67,7 +66,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public async Task<FolderData> GetFolderDataAsync( string userId, string folderId ) {
-			var client = await _manager.GetClient();
+			var client = await _manager.GetClient(userId);
 			var filesFolders = await client.Core.Metadata.MetadataAsync(
 				_manager.ConstructEntityPath(folderId));
 			var folders = new List<IFolder>();
@@ -110,7 +109,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public async Task<string> UpdateFileNameAsync( string userId, string fileId, string newfileName ) {
-			var client = await _manager.GetClient();
+			var client = await _manager.GetClient(userId);
 			var oldfilePathWithName = _manager.ConstructEntityPath(fileId);
 			var fileExtention = Path.GetExtension(oldfilePathWithName);
 			var oldfilePath = Path.GetDirectoryName(oldfilePathWithName);
@@ -132,7 +131,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public async Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName ) {
-			var client = await _manager.GetClient();
+			var client = await _manager.GetClient(userId);
 			var oldFolderPathWithName = _manager.ConstructEntityPath(folderId);
 			var oldfilePath = Path.GetDirectoryName(oldFolderPathWithName);
 			if (string.IsNullOrEmpty(oldfilePath)) {
@@ -153,7 +152,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public async Task<bool> DeleteFileAsync( string userId, string fileId ) {
-			var client = await _manager.GetClient();
+			var client = await _manager.GetClient(userId);
 			var response = await client.Core.FileOperations.DeleteAsync(
 				_manager.ConstructEntityPath(fileId));
 			if (response.is_deleted == false) {
@@ -165,7 +164,7 @@ namespace Cloud.Storages.Providers {
 		}
 
 		public async Task<bool> DeleteFolderAsync( string userId, string folderId ) {
-			var client = await _manager.GetClient();
+			var client = await _manager.GetClient(userId);
 			var response = await client.Core.FileOperations.DeleteAsync(
 				_manager.ConstructEntityPath(folderId));
 			if (response.is_deleted == false) {

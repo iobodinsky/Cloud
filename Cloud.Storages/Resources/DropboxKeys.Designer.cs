@@ -61,6 +61,15 @@ namespace Cloud.Storages.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to code.
+        /// </summary>
+        internal static string AuthorizeResponceType {
+            get {
+                return ResourceManager.GetString("AuthorizeResponceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /.
         /// </summary>
         internal static string RootFolderPath {

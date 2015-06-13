@@ -2,7 +2,7 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.cloudController = cloud.controllers.cloudController ||
+cloud.controllers.appController = cloud.controllers.appController ||
 	function($scope, $window, httpService, alertService,
 		loaderService, constants, userTokenService, fileUploader, $modal) {
 		var self = this;

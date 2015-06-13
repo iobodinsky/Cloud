@@ -8,6 +8,7 @@ namespace Cloud.WebApi.Models {
 		[JsonProperty( "stackTrace" )]
 		public string StackTrace { get; set; }
 
+		[JsonProperty("innerServerError")]
 		public ServerError InnerServerError { get; set; }
 	}
 }

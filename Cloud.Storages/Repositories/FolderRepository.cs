@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
-using Cloud.Storages.Managers;
+using Cloud.Storages.Storages.LocalLenevo;
 
 namespace Cloud.Storages.Repositories {
 	public class FolderRepository : RepositoryBase {

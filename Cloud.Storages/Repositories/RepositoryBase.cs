@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Storages.DataContext;
 
@@ -36,16 +37,18 @@ namespace Cloud.Storages.Repositories {
 		/// <param name="entity">The entity that has to be added to the data context</param>
 		/// <param name="isAutoSave">If AutoSave is true the entity will utomatically be saved to the database</param>
 		/// <typeparam name="T">Entity type</typeparam>
-		public void Add<T>( T entity, bool isAutoSave ) where T : class {
-			var dbSet = Entities.Set<T>();
-			if (dbSet == null) {
-				// todo
-				throw new Exception("todo");
-			}
-			dbSet.Add(entity);
-			if (isAutoSave) {
-				SaveChanges();
-			}
+		public async Task AddAsync<T>( T entity, bool isAutoSave ) where T : class {
+			await Task.Run(() => {
+				var dbSet = Entities.Set<T>();
+				if (dbSet == null) {
+					// todo
+					throw new Exception("todo");
+				}
+				dbSet.Add(entity);
+				if (isAutoSave) {
+					SaveChanges();
+				}
+			});
 		}
 
 		public IStorage ResolveStorageInstance( int cloudId ) {
@@ -60,7 +63,7 @@ namespace Cloud.Storages.Repositories {
 		}
 
 		public IStorage ResolveStorageInstance(int cloudId, string className) {
-			var cloudType = Type.GetType(className);
+			var cloudType = Type.GetType(className,  true);
 			if (cloudType == null) return null;
 			var cloud = Activator.CreateInstance(cloudType) as IStorage;
 

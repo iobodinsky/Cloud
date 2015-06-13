@@ -8,7 +8,7 @@ using Cloud.Common.Resources;
 using Cloud.Storages.DataContext;
 using Cloud.Storages.Repositories;
 
-namespace Cloud.Storages.Managers {
+namespace Cloud.Storages.Storages.LocalLenevo {
 	public class FileServerManager {
 		#region Fields
 

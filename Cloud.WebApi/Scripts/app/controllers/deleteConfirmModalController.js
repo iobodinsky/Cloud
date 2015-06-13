@@ -49,7 +49,7 @@ cloud.controllers.deleteConfirmModalController =
 			$modalInstance.dismiss('cancel');
 		};
 
-		// todo: duplicated in cloudController
+		// todo: duplicated in appController
 		$scope.getFileNameWithoutExtention = function(name) {
 			if (name) {
 				var lastIndexOfDot = name.lastIndexOf('.');

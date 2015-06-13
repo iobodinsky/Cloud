@@ -4,7 +4,7 @@ cloud.controllers = cloud.controllers || {};
 
 cloud.controllers.renameModalController = cloud.controllers.renameModalController ||
 	function($scope, $modalInstance, httpService, userTokenService, constants, renameEntity) {
-		// todo: duplicated in cloudController
+		// todo: duplicated in appController
 		$scope.getFileNameWithoutExtention = function(name) {
 			var lastIndexOfDot = name.lastIndexOf('.');
 			if (lastIndexOfDot >= 0) {

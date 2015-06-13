@@ -1,15 +1,17 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Cloud.Storages.Resources;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 
-namespace Cloud.Storages.Managers {
+namespace Cloud.Storages.Storages.GoogleDrive {
 	internal class DriveManager {
 		#region Public methods
 
@@ -53,23 +55,29 @@ namespace Cloud.Storages.Managers {
 		/// Returns the request initializer required for authorized requests. 
 		/// </summary>
 		private async Task<BaseClientService.Initializer> GetInitializerFor( string userId ) {
-			var secrets = new ClientSecrets {
-				ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientId],
-				ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientSecret]
-			};
+			try {
+				var secrets = new ClientSecrets {
+					ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientId],
+					ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DriveClientSecret]
+				};
 
-			var credentialPersistanceStore = GetPersistentCredentialStore();
+				var credentialPersistanceStore = GetPersistentCredentialStore();
 
-			var userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-				secrets, new[] {DriveService.Scope.Drive}, userId,
-				CancellationToken.None, credentialPersistanceStore);
+				var userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+					secrets, new[] {DriveService.Scope.Drive}, userId,
+					CancellationToken.None, credentialPersistanceStore);
 
-			var initializer = new BaseClientService.Initializer {
-				HttpClientInitializer = userCredential,
-				ApplicationName = ConfigurationManager.AppSettings[AppSettingKeys.DriveApplicationUserAgent]
-			};
+				var initializer = new BaseClientService.Initializer {
+					HttpClientInitializer = userCredential,
+					ApplicationName = ConfigurationManager.AppSettings[AppSettingKeys.DriveApplicationUserAgent]
+				};
 
-			return initializer;
+				return initializer;
+			} catch (TokenResponseException) {
+				throw new Exception("todo: Google rejected");
+			} catch (Exception ex) {
+				return null;
+			}
 		}
 
 		// todo: get server folder path from Db
@@ -77,9 +85,7 @@ namespace Cloud.Storages.Managers {
 		/// Returns a persistent data store for user's credentials.
 		/// </summary>
 		private IDataStore GetPersistentCredentialStore() {
-			var folderName = ConfigurationManager.AppSettings[AppSettingKeys.DriveUserCredentalsFolder];
-			var serverDataStore = new FileDataStore(folderName, true);
-			return serverDataStore;
+			return new DbDataStore();
 		}
 
 		#endregion Private methods

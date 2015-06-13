@@ -2,7 +2,7 @@
 using Cloud.Common.Interfaces;
 using Cloud.Storages.Repositories;
 
-namespace Cloud.Storages.Managers {
+namespace Cloud.Storages {
 	public class StorageManager {
 		private readonly CloudRepository _cloudRepository;
 

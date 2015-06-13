@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
+using Cloud.Storages;
 using Cloud.Storages.DataContext;
-using Cloud.Storages.Managers;
 using Cloud.WebApi.Models;
 using Microsoft.AspNet.Identity;
 

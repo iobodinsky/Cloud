@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Http;
 using Cloud.Storages.Repositories;
-using Cloud.WebApi.ExceptionFilters;
+using Cloud.WebApi.ActionFilters;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Cloud.WebApi.Controllers {

@@ -274,7 +274,7 @@
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\CloudController.cs" />
     <Compile Include="Controllers\FoldersController.cs" />
-    <Compile Include="ExceptionFilters\ExceptionFilter.cs" />
+    <Compile Include="ActionFilters\ExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -303,7 +303,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.js" />
-    <Content Include="Scripts\app\controllers\cloudController.js" />
+    <Content Include="Scripts\app\controllers\appController.js" />
     <Content Include="Scripts\app\controllers\createFolderModalController.js" />
     <Content Include="Scripts\app\controllers\deleteConfirmModalController.js" />
     <Content Include="Scripts\app\controllers\renameModalController.js" />

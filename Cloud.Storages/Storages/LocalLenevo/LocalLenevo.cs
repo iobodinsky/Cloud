@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
-using Cloud.Storages.Managers;
 using Cloud.Storages.Repositories;
 
-namespace Cloud.Storages.Providers {
-	internal class LocalLenevoProvider : IStorage {
+namespace Cloud.Storages.Storages.LocalLenevo {
+	internal class LocalLenevo : IStorage {
 		#region Private fields
 
 		private readonly StorageRepository _storageRepository;
@@ -17,7 +16,7 @@ namespace Cloud.Storages.Providers {
 
 		#endregion Private fields
 
-		public LocalLenevoProvider() {
+		public LocalLenevo() {
 			_fileServerManager = new FileServerManager();
 			_storageRepository = new StorageRepository();
 		}
@@ -33,10 +32,13 @@ namespace Cloud.Storages.Providers {
 				// Save file on all servers
 				_fileServerManager.AddFile(userId, file);
 
-				// todo: try catch (in catch undo) for undo if db failed
-				// Save file info to Db
-				_storageRepository.Add(file.UserFile as UserFile, true);
+				
+				
 			});
+
+			// todo: try catch (in catch undo) for undo if db failed
+			// Save file info to Db
+			await _storageRepository.AddAsync(file.UserFile as UserFile, true);
 
 			return file.UserFile;
 		}
@@ -49,7 +51,7 @@ namespace Cloud.Storages.Providers {
 				// todo: try catch for undo if db failed
 				// todo: entity as UserFolder
 				// Save file info to Db
-				_storageRepository.Add(folder as UserFolder, true);
+				_storageRepository.AddAsync(folder as UserFolder, true);
 			});
 
 			return folder;

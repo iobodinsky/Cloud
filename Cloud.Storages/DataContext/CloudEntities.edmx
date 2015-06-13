@@ -42,6 +42,14 @@
           <Property Name="TokenType" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Uid" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="GoogleDriveUserTokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Tokens" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="LocalFileServers">
           <Key>
             <PropertyRef Name="ServerId" />
@@ -87,6 +95,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CloudServers" EntityType="Self.CloudServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DropboxUserTokens" EntityType="Self.DropboxUserTokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoogleDriveUserTokens" EntityType="Self.GoogleDriveUserTokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
@@ -104,6 +113,7 @@
           <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
           <EntitySet Name="UserFolders" EntityType="CloudDbModel.UserFolder" />
           <EntitySet Name="DropboxUserTokens" EntityType="CloudDbModel.DropboxUserToken" />
+          <EntitySet Name="GoogleDriveUserTokens" EntityType="CloudDbModel.GoogleDriveUserToken" />
           </EntityContainer>
         <EntityType Name="UserFileType">
           <Key>
@@ -182,6 +192,14 @@
           <Property Name="TeamId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="TokenType" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Uid" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GoogleDriveUserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Tokens" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -269,6 +287,15 @@
                 <ScalarProperty Name="TokenType" ColumnName="TokenType" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoogleDriveUserTokens">
+            <EntityTypeMapping TypeName="CloudDbModel.GoogleDriveUserToken">
+              <MappingFragment StoreEntitySet="GoogleDriveUserTokens">
+                <ScalarProperty Name="Tokens" ColumnName="Tokens" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

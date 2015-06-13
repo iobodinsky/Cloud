@@ -1,24 +1,32 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
+using Cloud.Storages.Repositories;
 using Cloud.Storages.Resources;
 using DropboxRestAPI;
 
-namespace Cloud.Storages.Managers {
+namespace Cloud.Storages.Storages.Dropbox {
 	internal class DropboxManager {
-		public async Task<Client> GetClient() {
+		public async Task<Client> GetClient( string userId ) {
 			var options = new Options {
 				ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppKey],
 				ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppSecret],
-				AccessToken = "9kJKtEcgWjIAAAAAAAAAUsuhDgbx0T-V0eICdkd8cgi5gifdJYYql3zmlmYqvn-4",
 				RedirectUri = ConfigurationManager.AppSettings[AppSettingKeys.DropboxRedirectUri]
 			};
-
 			var client = new Client(options);
 
-			//// Get the OAuth Request Url
-			//var authRequestUrl = await client.Core.OAuth2.AuthorizeAsync("code");
-			//Process.Start(authRequestUrl.AbsoluteUri);
+			var userToken = await new DropboxUserTokenRepository()
+				.GetTokenAsync(userId);
+			if (userToken == null) {
+				var authRequestUrl = await client.Core.OAuth2
+					.AuthorizeAsync(DropboxKeys.AuthorizeResponceType);
+				// todo
+				throw new Exception("Dropbox account unauthorised", 
+					new Exception(authRequestUrl.AbsoluteUri));
+			}
 
+			client.UserAccessToken = userToken.AccessToken;
+			
 			return client;
 		}
 

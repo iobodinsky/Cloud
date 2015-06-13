@@ -4,7 +4,7 @@ using System.Linq;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Common.Resources;
-using Cloud.Storages.Managers;
+using Cloud.Storages.Storages.LocalLenevo;
 
 namespace Cloud.Storages.Repositories {
 	public class StorageRepository : RepositoryBase {
