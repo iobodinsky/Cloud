@@ -160,17 +160,17 @@ textarea {
 }
 
 .logo-2 { 
-	background: url("Images/ServerImages/logo-cloud.png") top left no-repeat;
+	background: url("Images/Storages/logo-cloud.png") top left no-repeat;
 	background-size: contain;
 }
 
 .logo-1 { 
-	background: url("Images/ServerImages/logo-drive.png") top left no-repeat;
+	background: url("Images/Storages/logo-drive.png") top left no-repeat;
 	background-size: contain;
 }
 
 .logo-3 { 
-	background: url("Images/ServerImages/logo-dropbox.png") top left no-repeat;
+	background: url("Images/Storages/logo-dropbox.png") top left no-repeat;
 	background-size: contain;
 }
 
