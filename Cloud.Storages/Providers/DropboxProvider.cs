@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
@@ -22,26 +23,26 @@ namespace Cloud.Storages.Providers {
 			throw new NotImplementedException();
 		}
 
-		public void AddFile( string userId, FullUserFile file ) {
+		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
 			throw new NotImplementedException();
 		}
 
-		public void AddFolder( string userId, IFolder folder ) {
+		public async Task<IFolder> AddFolderAsync( string userId, IFolder folder ) {
 			throw new NotImplementedException();
 		}
 
-		public FolderData GetRootFolderData( string userId ) {
-			var client = _manager.GetClient().Result;
-			var rootFilesFolders = client.Core.Metadata.MetadataAsync(
-				DropboxKeys.RootFolderPath).Result;
+		public async Task<FolderData> GetRootFolderDataAsync( string userId ) {
+			var client = await _manager.GetClient();
+			var rootFilesFolders = await client.Core.Metadata.MetadataAsync(
+				DropboxKeys.RootFolderPath);
 			var folders = new List<IFolder>();
 			var files = new List<IFile>();
-			var folderData = new FolderData { CloudId = 3 };
+			var folderData = new FolderData {CloudId = 3};
 			foreach (var folderFile in rootFilesFolders.contents) {
 				if (folderFile.is_dir) {
 					folders.Add(new UserFolder {
 						CloudId = 3,
-						Id =  _manager.ConstructEntityId(folderFile.path),
+						Id = _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
 						Name = folderFile.Name
 					});
@@ -65,13 +66,13 @@ namespace Cloud.Storages.Providers {
 			return folderData;
 		}
 
-		public FolderData GetFolderData( string userId, string folderId ) {
-			var client = _manager.GetClient().Result;
-			var filesFolders = client.Core.Metadata.MetadataAsync(
-				_manager.ConstructEntityPath(folderId)).Result;
+		public async Task<FolderData> GetFolderDataAsync( string userId, string folderId ) {
+			var client = await _manager.GetClient();
+			var filesFolders = await client.Core.Metadata.MetadataAsync(
+				_manager.ConstructEntityPath(folderId));
 			var folders = new List<IFolder>();
 			var files = new List<IFile>();
-			var folderData = new FolderData { CloudId = 3 };
+			var folderData = new FolderData {CloudId = 3};
 			foreach (var folderFile in filesFolders.contents) {
 				if (folderFile.is_dir) {
 					folders.Add(new UserFolder {
@@ -100,16 +101,16 @@ namespace Cloud.Storages.Providers {
 			return folderData;
 		}
 
-		public IFile GetFileInfo( string userId, string fileId ) {
+		public async Task<IFile> GetFileInfoAsync( string userId, string fileId ) {
 			throw new NotImplementedException();
 		}
 
-		public FullUserFile GetFile( string userId, string fileId ) {
+		public async Task<FullUserFile> GetFileAsync( string userId, string fileId ) {
 			throw new NotImplementedException();
 		}
 
-		public void UpdateFileName(string userId, string fileId, string newfileName) {
-			var client = _manager.GetClient().Result;
+		public async Task<string> UpdateFileNameAsync( string userId, string fileId, string newfileName ) {
+			var client = await _manager.GetClient();
 			var oldfilePathWithName = _manager.ConstructEntityPath(fileId);
 			var fileExtention = Path.GetExtension(oldfilePathWithName);
 			var oldfilePath = Path.GetDirectoryName(oldfilePathWithName);
@@ -120,16 +121,18 @@ namespace Cloud.Storages.Providers {
 
 			var newFilePathWithName = _manager.MakeValidPath(
 				Path.Combine(oldfilePath, string.Concat(newfileName, fileExtention)));
-			var responce = client.Core.FileOperations.MoveAsync(oldfilePathWithName, newFilePathWithName);
+			var responce = await client.Core.FileOperations.MoveAsync(oldfilePathWithName, newFilePathWithName);
 
 			// todo: validation
 			//if (responce) {
-				
+
 			//}
+			// todo:
+			return responce.Name;
 		}
 
-		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
-			var client = _manager.GetClient().Result;
+		public async Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName ) {
+			var client = await _manager.GetClient();
 			var oldFolderPathWithName = _manager.ConstructEntityPath(folderId);
 			var oldfilePath = Path.GetDirectoryName(oldFolderPathWithName);
 			if (string.IsNullOrEmpty(oldfilePath)) {
@@ -139,32 +142,38 @@ namespace Cloud.Storages.Providers {
 
 			var newFilePathWithName = _manager.MakeValidPath(
 				Path.Combine(oldfilePath, newFolderName));
-			var responce = client.Core.FileOperations.MoveAsync(oldFolderPathWithName, newFilePathWithName);
+			var responce = await client.Core.FileOperations.MoveAsync(oldFolderPathWithName, newFilePathWithName);
 
 			// todo: validation
 			//if (responce) {
 
 			//}
+
+			return responce.Name;
 		}
 
-		public void DeleteFile( string userId, string fileId ) {
-			var client = _manager.GetClient().Result;
-			var response = client.Core.FileOperations.DeleteAsync(
-				_manager.ConstructEntityPath(fileId)).Result;
+		public async Task<bool> DeleteFileAsync( string userId, string fileId ) {
+			var client = await _manager.GetClient();
+			var response = await client.Core.FileOperations.DeleteAsync(
+				_manager.ConstructEntityPath(fileId));
 			if (response.is_deleted == false) {
 				// todo:
 				throw new Exception("todo");
 			}
+
+			return true;
 		}
 
-		public void DeleteFolder( string userId, string folderId ) {
-			var client = _manager.GetClient().Result;
-			var response = client.Core.FileOperations.DeleteAsync(
-				_manager.ConstructEntityPath(folderId)).Result;
+		public async Task<bool> DeleteFolderAsync( string userId, string folderId ) {
+			var client = await _manager.GetClient();
+			var response = await client.Core.FileOperations.DeleteAsync(
+				_manager.ConstructEntityPath(folderId));
 			if (response.is_deleted == false) {
 				// todo:
 				throw new Exception("todo");
 			}
+
+			return true;
 		}
 
 		#endregion IStorage implementation

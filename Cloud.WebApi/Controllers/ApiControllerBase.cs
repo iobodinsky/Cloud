@@ -1,10 +1,12 @@
 ﻿using System.Web;
 using System.Web.Http;
 using Cloud.Storages.Repositories;
+using Cloud.WebApi.ExceptionFilters;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Cloud.WebApi.Controllers {
 	[Authorize]
+	[ExceptionFilter]
 	public abstract class ApiControllerBase : ApiController {
 		private ApplicationUserManager _userManager;
 

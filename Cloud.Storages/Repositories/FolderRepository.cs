@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.Managers;
@@ -18,10 +19,10 @@ namespace Cloud.Storages.Repositories {
 			throw new NotImplementedException();
 		}
 
-		public FolderData GetFolderData( string userId, int cloudId, string folderId ) {
+		public async Task<FolderData> GetFolderData( string userId, int cloudId, string folderId ) {
 			var cloud = ResolveStorageInstance(cloudId);
-			
-			return cloud.GetFolderData(userId, folderId);
+
+			return await cloud.GetFolderDataAsync(userId, folderId);
 		}
 
 		public IEnumerable<IFile> GetRootFiles( string userId ) {
@@ -48,7 +49,7 @@ namespace Cloud.Storages.Repositories {
 			if (folder == null) {
 				// todo: 
 				throw new Exception("todo");
-			}			
+			}
 			serverManager.DeleteFolder(userId, folder.Id);
 
 			// Delete folder from Db

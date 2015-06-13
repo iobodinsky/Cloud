@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -17,8 +16,8 @@ namespace Cloud.Storages.Managers {
 		/// <summary>
 		/// Returns Drive service
 		/// </summary>
-		public DriveService BuildServiceAsync( string userId ) {
-			var initializer = GetInitializerFor(userId).Result;
+		public async Task<DriveService> BuildServiceAsync( string userId ) {
+			var initializer = await GetInitializerFor(userId);
 			return new DriveService(initializer);
 		}
 

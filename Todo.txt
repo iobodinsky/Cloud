@@ -2,8 +2,6 @@
 2. LastModifyingDate
 6. rename dbropbox failed for second attempt to rename
 8. implement history on folder browsing
-9. $scope.alerts.splice(index, 1); for remove (not for())
-	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 10. var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
 11. inmplement ngMessages
 12. close alert
@@ -22,6 +20,10 @@
       if (e.HttpStatusCode == HttpStatusCode.Unauthorized) {
         // Credentials have been revoked.
         // TODO: Redirect the user to the authorization URL.
+26. Is it good idia to wrap whole async method code to awaitable Task.Run method ?
+27. fail to register - green alert
+28. fail to uploadFile
+29. scrolling main page
 
 Stoped on:
 rename dbropbox failed for second attempt to rename

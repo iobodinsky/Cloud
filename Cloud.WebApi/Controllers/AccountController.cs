@@ -276,6 +276,7 @@ namespace Cloud.WebApi.Controllers {
 		[Route( "Register" )]
 		public async Task<IHttpActionResult> Register( RegisterBindingModel model ) {
 			if (!ModelState.IsValid) {
+				// todo:
 				return BadRequest(ModelState);
 			}
 
@@ -299,7 +300,7 @@ namespace Cloud.WebApi.Controllers {
 			};
 
 			var cloud = new StorageRepository().ResolveStorageInstance(2);
-			cloud.AddFolder(user.Id, userRootFolder);
+			await cloud.AddFolderAsync(user.Id, userRootFolder);
 
 			return Ok();
 		}

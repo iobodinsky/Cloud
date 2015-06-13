@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.DataContext;
@@ -26,7 +27,7 @@ namespace Cloud.Storages.Providers {
 			throw new NotImplementedException();
 		}
 
-		public void AddFile( string userId, FullUserFile file ) {
+		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
 
 			// todo: Adding files only to cloud
 			//var body = new Google.Apis.Drive.v2.Data.File {
@@ -36,14 +37,16 @@ namespace Cloud.Storages.Providers {
 			//var service = _manager.BuildServiceAsync(userId);
 			//var request = service.Files.Insert(body, file.Stream, string.Empty);
 			//request.Upload();
-		}
 
-		public void AddFolder( string userId, IFolder file ) {
 			throw new NotImplementedException();
 		}
 
-		public FolderData GetRootFolderData(string userId) {
-			var service = _manager.BuildServiceAsync(userId);
+		public async Task<IFolder> AddFolderAsync( string userId, IFolder file ) {
+			throw new NotImplementedException();
+		}
+
+		public async Task<FolderData> GetRootFolderDataAsync( string userId ) {
+			var service = await _manager.BuildServiceAsync(userId);
 			var request = service.Files.List();
 
 			request.MaxResults = int.Parse(
@@ -86,8 +89,8 @@ namespace Cloud.Storages.Providers {
 			};
 		}
 
-		public FolderData GetFolderData( string userId, string folderId ) {
-			var service = _manager.BuildServiceAsync(userId);
+		public async Task<FolderData> GetFolderDataAsync( string userId, string folderId ) {
+			var service = await _manager.BuildServiceAsync(userId);
 			var request = service.Files.List();
 
 			request.MaxResults = int.Parse(
@@ -130,39 +133,38 @@ namespace Cloud.Storages.Providers {
 			};
 		}
 
-		public IFile GetFileInfo( string userId, string fileId ) {
+		public async Task<IFile> GetFileInfoAsync( string userId, string fileId ) {
 			throw new NotImplementedException();
 		}
 
-		public FullUserFile GetFile( string userId, string fileId ) {
+		public async Task<FullUserFile> GetFileAsync( string userId, string fileId ) {
 			throw new NotImplementedException();
 		}
 
-		public void UpdateFileName( string userId, string fileId, string newfileName ) {
-			var service = _manager.BuildServiceAsync(userId);
+		public async Task<string> UpdateFileNameAsync( string userId, string fileId, string newfileName ) {
+			var service = await _manager.BuildServiceAsync(userId);
 			var file = new File {
 				Title = newfileName
 			};
 			var request = service.Files.Patch(file, fileId);
-			request.Execute();
+			var responce = request.Execute();
+
+			return responce.Title;
 		}
 
-		public void UpdateFolderName(string userId, string folderId, string newFolderName) {
-			var service = _manager.BuildServiceAsync(userId);
-			var file = new File {
-				Title = newFolderName
-			};
-			var request = service.Files.Patch(file, folderId);
-			request.Execute();
+		public async Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName ) {
+			return await UpdateFileNameAsync(userId, folderId, newFolderName);
 		}
 
-		public void DeleteFile( string userId, string fileId ) {
-			var service = _manager.BuildServiceAsync(userId);
+		public async Task<bool> DeleteFileAsync( string userId, string fileId ) {
+			var service = await _manager.BuildServiceAsync(userId);
 			service.Files.Delete(fileId).Execute();
+
+			return true;
 		}
 
-		public void DeleteFolder(string userId, string folderId) {
-			DeleteFile(userId, folderId);
+		public async Task<bool> DeleteFolderAsync( string userId, string folderId ) {
+			return await DeleteFileAsync(userId, folderId);
 		}
 
 		#endregion IStorage implementation
