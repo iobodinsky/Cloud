@@ -116,62 +116,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\AspNetUser.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\CloudEntities.Context.cs">
-      <DependentUpon>CloudEntities.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="DataContext\CloudEntities.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="DataContext\CloudEntities.Designer.cs">
-      <DependentUpon>CloudEntities.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="DataContext\CloudServer.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\DropboxUserToken.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\GoogleDriveUserToken.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\LocalFileServer.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\UserFile.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\UserFileType.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\UserFolder.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repositories\GoogleDriveTokenRepository.cs" />
-    <Compile Include="Storages\GoogleDrive\DbDataStore.cs" />
-    <Compile Include="Storages\GoogleDrive\DriveManager.cs" />
-    <Compile Include="Storages\Dropbox\DropboxManager.cs" />
-    <Compile Include="Storages\LocalLenevo\FileServerManager.cs" />
+    <Compile Include="GoogleDrive\DbDataStore.cs" />
+    <Compile Include="GoogleDrive\DriveManager.cs" />
+    <Compile Include="Dropbox\DropboxManager.cs" />
     <Compile Include="StorageManager.cs" />
-    <Compile Include="Models\ExtendedContextModels\UserFile.cs" />
-    <Compile Include="Models\ExtendedContextModels\UserFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Storages\Dropbox\Dropbox.cs" />
-    <Compile Include="Storages\LocalLenevo\LocalLenevo.cs" />
-    <Compile Include="Repositories\CloudRepository.cs" />
-    <Compile Include="Repositories\DropboxUserTokenRepository.cs" />
-    <Compile Include="Repositories\FileServerRepository.cs" />
-    <Compile Include="Repositories\FolderRepository.cs" />
-    <Compile Include="Repositories\RepositoryBase.cs" />
-    <Compile Include="Repositories\StorageRepository.cs" />
+    <Compile Include="Dropbox\Dropbox.cs" />
+    <Compile Include="LocalLenevo\LocalLenevo.cs" />
     <Compile Include="Resources\AppSettingKeys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -187,30 +138,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DropboxKeys.resx</DependentUpon>
     </Compile>
-    <Compile Include="Storages\GoogleDrive\GoogleDrive.cs" />
+    <Compile Include="GoogleDrive\GoogleDrive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="DataContext\CloudEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CloudEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DataContext\CloudEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CloudEntities.edmx</DependentUpon>
-      <LastGenOutput>CloudEntities.Context.cs</LastGenOutput>
-    </None>
-    <None Include="DataContext\CloudEntities.edmx.diagram">
-      <DependentUpon>CloudEntities.edmx</DependentUpon>
-    </None>
-    <None Include="DataContext\CloudEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CloudEntities.edmx</DependentUpon>
-      <LastGenOutput>CloudEntities.cs</LastGenOutput>
-    </None>
-    <None Include="DbItems\CloudDb.bak" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -219,6 +152,10 @@
     <ProjectReference Include="..\Cloud.Common\Cloud.Common.csproj">
       <Project>{8168b5e5-976c-4d63-8641-dd864b7d5673}</Project>
       <Name>Cloud.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cloud.Repositories\Cloud.Repositories.csproj">
+      <Project>{aaf038ca-910f-4d4d-bda2-cd7a5414bc95}</Project>
+      <Name>Cloud.Repositories</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -239,10 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DbItems\DatabaseChanges.sql" />
-    <Content Include="DbItems\DatabaseChanges[EXAPMLES].sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

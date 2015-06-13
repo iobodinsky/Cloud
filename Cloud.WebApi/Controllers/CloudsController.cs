@@ -1,8 +1,8 @@
 ﻿using System.Configuration;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Cloud.Storages.DataContext;
-using Cloud.Storages.Repositories;
+using Cloud.Repositories.DataContext;
+using Cloud.Repositories.Repositories;
 using Cloud.Storages.Resources;
 using DropboxRestAPI;
 using Microsoft.AspNet.Identity;

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Cloud.Common.Resources;
-using Cloud.Storages.DataContext;
-using Cloud.Storages.Repositories;
+using Cloud.Repositories.DataContext;
+using Cloud.Repositories.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -241,8 +241,8 @@ namespace Cloud.WebApi.Controllers {
 		[AllowAnonymous]
 		[Route( "ExternalLogins" )]
 		public IEnumerable<ExternalLoginViewModel> GetExternalLogins( string returnUrl, bool generateState = false ) {
-			IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
-			List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
+			var descriptions = Authentication.GetExternalAuthenticationTypes();
+			var logins = new List<ExternalLoginViewModel>();
 
 			string state;
 
@@ -254,7 +254,7 @@ namespace Cloud.WebApi.Controllers {
 			}
 
 			foreach (AuthenticationDescription description in descriptions) {
-				ExternalLoginViewModel login = new ExternalLoginViewModel {
+				var login = new ExternalLoginViewModel {
 					Name = description.Caption,
 					Url = Url.Route("ExternalLogin", new {
 						provider = description.AuthenticationType,
@@ -412,7 +412,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		private static class RandomOAuthStateGenerator {
-			private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
+			private static readonly RandomNumberGenerator _random = new RNGCryptoServiceProvider();
 
 			public static string Generate( int strengthInBits ) {
 				const int bitsPerByte = 8;

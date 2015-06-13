@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AAF038CA-910F-4D4D-BDA2-CD7A5414BC95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cloud.Repositories</RootNamespace>
+    <AssemblyName>Cloud.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContext\AspNetUser.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\CloudEntities.Context.cs">
+      <DependentUpon>CloudEntities.Context.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DataContext\CloudEntities.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DataContext\CloudEntities.Designer.cs">
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DataContext\DropboxUserToken.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\GoogleDriveUserToken.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\LocalFileServer.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Storage.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\UserFile.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\UserFileType.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\UserFolder.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FileServerManager.cs" />
+    <Compile Include="Models\ExtendedContextModels\UserFile.cs" />
+    <Compile Include="Models\ExtendedContextModels\UserFolder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CloudRepository.cs" />
+    <Compile Include="Repositories\DropboxUserTokenRepository.cs" />
+    <Compile Include="Repositories\FileServerRepository.cs" />
+    <Compile Include="Repositories\FolderRepository.cs" />
+    <Compile Include="Repositories\GoogleDriveTokenRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\StorageRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataContext\CloudEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CloudEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="DataContext\CloudEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+      <LastGenOutput>CloudEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataContext\CloudEntities.edmx.diagram">
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+    </None>
+    <None Include="DataContext\CloudEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CloudEntities.edmx</DependentUpon>
+      <LastGenOutput>CloudEntities.cs</LastGenOutput>
+    </None>
+    <None Include="DbItems\CloudDb.bak" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbItems\DatabaseChanges.sql" />
+    <Content Include="DbItems\DatabaseChanges[EXAPMLES].sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cloud.Common\Cloud.Common.csproj">
+      <Project>{8168b5e5-976c-4d63-8641-dd864b7d5673}</Project>
+      <Name>Cloud.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

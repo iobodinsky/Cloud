@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cloud.Common.Interfaces;
-using Cloud.Storages.Repositories;
+using Cloud.Repositories.Repositories;
 
 namespace Cloud.Storages {
 	public class StorageManager {

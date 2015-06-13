@@ -348,6 +348,10 @@
       <Project>{8168b5e5-976c-4d63-8641-dd864b7d5673}</Project>
       <Name>Cloud.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cloud.Repositories\Cloud.Repositories.csproj">
+      <Project>{aaf038ca-910f-4d4d-bda2-cd7a5414bc95}</Project>
+      <Name>Cloud.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cloud.Storages\Cloud.Storages.csproj">
       <Project>{a7077baf-c941-49e9-8952-2bf55d5f8caf}</Project>
       <Name>Cloud.Storages</Name>
