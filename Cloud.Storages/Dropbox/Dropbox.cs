@@ -8,7 +8,7 @@ using Cloud.Repositories.DataContext;
 using Cloud.Storages.Resources;
 
 namespace Cloud.Storages.Dropbox {
-	internal class Dropbox : IStorage {
+	public class Dropbox : IStorage {
 		private readonly int _id;
 
 		private readonly DropboxManager _manager;
@@ -16,6 +16,12 @@ namespace Cloud.Storages.Dropbox {
 		public Dropbox( int id ) {
 			_id = id;
 			_manager = new DropboxManager(id);
+		}
+
+		public async Task<string> GetDownloadUrl(string userId, string fileId) {
+			var client = await _manager.GetClient(userId);
+			return (await client.Core.Metadata.MediaAsync(
+				_manager.ConstructEntityPath(fileId))).url;
 		}
 
 		#region IStorage implementation

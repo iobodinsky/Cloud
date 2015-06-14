@@ -8,6 +8,7 @@ using System.Web.Http;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
 using Cloud.Common.Resources;
+using Cloud.Storages.Dropbox;
 using Cloud.WebApi.Models;
 using HttpHeaders = Cloud.Common.Resources.HttpHeaders;
 
@@ -42,6 +43,15 @@ namespace Cloud.WebApi.Controllers {
 				};
 
 			return resporseResult;
+		}
+
+		// GET api/files/1/download/dropbox
+		[Route("{fileId}/download/dropbox")]
+		public async Task<IHttpActionResult> GetDownloadUrlDropbox([FromUri] string fileId) {
+			var downloadUrl = await new Dropbox(Constants.DropboxStorageId)
+				.GetDownloadUrl(UserId, fileId);
+
+			return Ok(downloadUrl);
 		}
 
 		// POST api/files/cloud/1/folder/1/upload

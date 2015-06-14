@@ -159,7 +159,7 @@ cloud.controllers.appController = cloud.controllers.appController ||
 		// Files
 		$scope.download = function(file) {
 			switch (file.storageId) {
-			case 1: // Drive
+			case constants.storages.googleDriveId: // Drive
 				if (file.downloadUrl) {
 					$window.open(file.downloadUrl, '_blank');
 				} else {
@@ -167,12 +167,8 @@ cloud.controllers.appController = cloud.controllers.appController ||
 						constants.message.infoDriveFileDownloadingNotAllowed);
 				}
 				break;
-			case 2: // Cloud
+			case constants.storages.cloudId: // Cloud
 				var url = constants.urls.cloud.files.constructDownloadLink(file.id);
-
-				function success(data) {
-					$window.open(data, '_self');
-				};
 
 				function error() {
 					alertService.show(constants.alert.type.danger,
@@ -183,15 +179,21 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					constants.httpMethod.get, url, null, null, success, error);
 
 				break;
-			case 3: // Dropbox
-				alertService.show(constants.alert.type.warning,
-					constants.message.warningDelete);
+			case constants.storages.dropboxId: // Dropbox
+				httpService.makeRequest(
+					constants.httpMethod.get,
+					constants.urls.dropbox.constructDownload(file.id),
+					null, null, success);
 				break;
 			default:
 				alertService.show(constants.alert.type.danger,
 					constants.message.failCloudNotFound);
 				break;
 			}
+
+			function success(data) {
+				$window.open(data, '_self');
+			};
 		};
 
 		$scope.deleteFile = function(file, $index) {

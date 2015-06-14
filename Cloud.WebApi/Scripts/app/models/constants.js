@@ -75,10 +75,13 @@ cloud.models.constants = cloud.models.constants || {
 			},
 		},
 		drive: {
-			authorize: 'api/storages/authorize/googledrive',
+			authorize: 'api/storages/authorize/googledrive'
 		},
 		dropbox: {
 			authorize: 'api/storages/authorize/dropbox',
+			constructDownload: function(fileId) {
+				return 'api/files/' + fileId + '/download/dropbox';
+			}
 		}
 	},
 	cloudEntities: {

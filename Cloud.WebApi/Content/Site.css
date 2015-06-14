@@ -125,7 +125,8 @@ textarea {
 .box.file.container .option:hover,
 .box.folder.container .option:hover { color: #fff; }
 
-.box.folder.container:hover { cursor: pointer; }
+.box.folder.container:hover,
+.box.file.container:hover { cursor: pointer; }
 
 .box.container {
 	top: 0;
