@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Cloud.Common.Models;
 using Cloud.Repositories.Repositories;
+using Cloud.WebApi.Models;
 using Cloud.WebApi.Resources;
 
 namespace Cloud.WebApi.Controllers {
@@ -13,14 +14,17 @@ namespace Cloud.WebApi.Controllers {
 			_userStoragesRepository = new UserStoragesRepository();
 		}
 
-		// GET api/storages/available
-		[Route( "available" )]
-		[AllowAnonymous]
-		public async Task<IHttpActionResult> GetAvailableUserStorages() {
-			var storages = await Task.Run(() =>
-				_userStoragesRepository.GetAvailableUserStorages("baba2553-f024-4afb-aa8d-358b9e1ebf4a"));
-
-			return Ok(storages);
+		// GET api/storages
+		[Route("")]
+		public async Task<IHttpActionResult> GetUserStorages() {
+			var userStorages = new UserStorages {
+				Connected = await Task.Run(() =>
+					_userStoragesRepository.GetConnectedUserStorages(UserId)),
+				Available = await Task.Run(() =>
+					_userStoragesRepository.GetAvailableUserStorages(UserId))
+			};
+			
+			return Ok(userStorages);
 		}
 
 		// GET api/storages/dropbox/authorize

@@ -50,7 +50,6 @@
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\FolderData.cs" />
     <Compile Include="Models\UserInfo.cs" />
-    <Compile Include="Models\UserStorage.cs" />
     <Compile Include="Resources\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
