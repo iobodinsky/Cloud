@@ -22,6 +22,14 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="AspNetUsers_Storages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="StorageId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DropboxUserTokens">
           <Key>
             <PropertyRef Name="Id" />
@@ -73,15 +81,6 @@
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="FolderId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserFileTypes">
-          <Key>
-            <PropertyRef Name="FileTypeId" />
-          </Key>
-          <Property Name="FileTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Extension" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IconUrl" Type="nvarchar" MaxLength="500" />
-        </EntityType>
         <EntityType Name="UserFolders">
           <Key>
             <PropertyRef Name="Id" />
@@ -91,39 +90,150 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AspNetUsers_Storages_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers_Storages" Type="Self.AspNetUsers_Storages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers_Storages">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Storages_Storages">
+          <End Role="Storages" Type="Self.Storages" Multiplicity="1" />
+          <End Role="AspNetUsers_Storages" Type="Self.AspNetUsers_Storages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers_Storages">
+              <PropertyRef Name="StorageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DropboxUserTokens_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="DropboxUserTokens" Type="Self.DropboxUserTokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DropboxUserTokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoogleDriveUserTokens_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="GoogleDriveUserTokens" Type="Self.GoogleDriveUserTokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoogleDriveUserTokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFiles_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserFiles" Type="Self.UserFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFiles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFolders_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserFolders" Type="Self.UserFolders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFolders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CloudDbModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers_Storages" EntityType="Self.AspNetUsers_Storages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DropboxUserTokens" EntityType="Self.DropboxUserTokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleDriveUserTokens" EntityType="Self.GoogleDriveUserTokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserFileTypes" EntityType="Self.UserFileTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFolders" EntityType="Self.UserFolders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AspNetUsers_Storages_AspNetUsers" Association="Self.FK_AspNetUsers_Storages_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Storages_Storages" Association="Self.FK_AspNetUsers_Storages_Storages">
+            <End Role="Storages" EntitySet="Storages" />
+            <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DropboxUserTokens_AspNetUsers" Association="Self.FK_DropboxUserTokens_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DropboxUserTokens" EntitySet="DropboxUserTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoogleDriveUserTokens_AspNetUsers" Association="Self.FK_GoogleDriveUserTokens_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="GoogleDriveUserTokens" EntitySet="GoogleDriveUserTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="Self.FK_UserFiles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserFiles" EntitySet="UserFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFolders_AspNetUsers" Association="Self.FK_UserFolders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserFolders" EntitySet="UserFolders" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CloudDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CloudDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="UserFileTypes" EntityType="CloudDbModel.UserFileType" />
           <EntitySet Name="LocalFileServers" EntityType="CloudDbModel.LocalFileServer" />
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
-          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
-          <EntitySet Name="UserFolders" EntityType="CloudDbModel.UserFolder" />
+          <EntitySet Name="AspNetUsers_Storages" EntityType="CloudDbModel.AspNetUsers_Storages" />
           <EntitySet Name="DropboxUserTokens" EntityType="CloudDbModel.DropboxUserToken" />
           <EntitySet Name="GoogleDriveUserTokens" EntityType="CloudDbModel.GoogleDriveUserToken" />
           <EntitySet Name="Storages" EntityType="CloudDbModel.Storage" />
+          <EntitySet Name="UserFiles" EntityType="CloudDbModel.UserFile" />
+          <AssociationSet Name="FK_AspNetUsers_Storages_AspNetUsers" Association="CloudDbModel.FK_AspNetUsers_Storages_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DropboxUserTokens_AspNetUsers" Association="CloudDbModel.FK_DropboxUserTokens_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="DropboxUserToken" EntitySet="DropboxUserTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoogleDriveUserTokens_AspNetUsers" Association="CloudDbModel.FK_GoogleDriveUserTokens_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="GoogleDriveUserToken" EntitySet="GoogleDriveUserTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFiles_AspNetUsers" Association="CloudDbModel.FK_UserFiles_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserFile" EntitySet="UserFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Storages_Storages" Association="CloudDbModel.FK_AspNetUsers_Storages_Storages">
+            <End Role="Storage" EntitySet="Storages" />
+            <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
+          </AssociationSet>
+          <EntitySet Name="UserFolders" EntityType="CloudDbModel.UserFolder" />
+          <AssociationSet Name="FK_UserFolders_AspNetUsers" Association="CloudDbModel.FK_UserFolders_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserFolder" EntitySet="UserFolders" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="UserFileType">
-          <Key>
-            <PropertyRef Name="FileTypeId" />
-          </Key>
-          <Property Name="FileTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Extension" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IconUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="LocalFileServer">
           <Key>
             <PropertyRef Name="ServerId" />
@@ -148,6 +258,52 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers_Storages" Relationship="CloudDbModel.FK_AspNetUsers_Storages_AspNetUsers" FromRole="AspNetUser" ToRole="AspNetUsers_Storages" />
+          <NavigationProperty Name="DropboxUserTokens" Relationship="CloudDbModel.FK_DropboxUserTokens_AspNetUsers" FromRole="AspNetUser" ToRole="DropboxUserToken" />
+          <NavigationProperty Name="GoogleDriveUserTokens" Relationship="CloudDbModel.FK_GoogleDriveUserTokens_AspNetUsers" FromRole="AspNetUser" ToRole="GoogleDriveUserToken" />
+          <NavigationProperty Name="UserFiles" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="AspNetUser" ToRole="UserFile" />
+          <NavigationProperty Name="UserFolders" Relationship="CloudDbModel.FK_UserFolders_AspNetUsers" FromRole="AspNetUser" ToRole="UserFolder" />
+        </EntityType>
+        <EntityType Name="AspNetUsers_Storages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StorageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_AspNetUsers_Storages_AspNetUsers" FromRole="AspNetUsers_Storages" ToRole="AspNetUser" />
+          <NavigationProperty Name="Storage" Relationship="CloudDbModel.FK_AspNetUsers_Storages_Storages" FromRole="AspNetUsers_Storages" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="DropboxUserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AccessToken" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TeamId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TokenType" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Uid" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_DropboxUserTokens_AspNetUsers" FromRole="DropboxUserToken" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="GoogleDriveUserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Tokens" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_GoogleDriveUserTokens_AspNetUsers" FromRole="GoogleDriveUserToken" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers_Storages" Relationship="CloudDbModel.FK_AspNetUsers_Storages_Storages" FromRole="Storage" ToRole="AspNetUsers_Storages" />
         </EntityType>
         <EntityType Name="UserFile">
           <Key>
@@ -163,7 +319,68 @@
           <Property Name="DownloadedTimes" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="FolderId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_UserFiles_AspNetUsers" FromRole="UserFile" ToRole="AspNetUser" />
         </EntityType>
+        <Association Name="FK_AspNetUsers_Storages_AspNetUsers">
+          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="CloudDbModel.AspNetUsers_Storages" Role="AspNetUsers_Storages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers_Storages">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DropboxUserTokens_AspNetUsers">
+          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="CloudDbModel.DropboxUserToken" Role="DropboxUserToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DropboxUserToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoogleDriveUserTokens_AspNetUsers">
+          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="CloudDbModel.GoogleDriveUserToken" Role="GoogleDriveUserToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoogleDriveUserToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFiles_AspNetUsers">
+          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="CloudDbModel.UserFile" Role="UserFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Storages_Storages">
+          <End Type="CloudDbModel.Storage" Role="Storage" Multiplicity="1" />
+          <End Type="CloudDbModel.AspNetUsers_Storages" Role="AspNetUsers_Storages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers_Storages">
+              <PropertyRef Name="StorageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="UserFolder">
           <Key>
             <PropertyRef Name="Id" />
@@ -172,51 +389,26 @@
           <Property Name="ParentId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_UserFolders_AspNetUsers" FromRole="UserFolder" ToRole="AspNetUser" />
         </EntityType>
-        <EntityType Name="DropboxUserToken">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="AccessToken" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TeamId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TokenType" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Uid" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="GoogleDriveUserToken">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Tokens" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Storage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
+        <Association Name="FK_UserFolders_AspNetUsers">
+          <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="CloudDbModel.UserFolder" Role="UserFolder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFolder">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CloudDbModelStoreContainer" CdmEntityContainer="CloudDbEntities">
-          <EntitySetMapping Name="UserFileTypes">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFileType">
-              <MappingFragment StoreEntitySet="UserFileTypes">
-                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
-                <ScalarProperty Name="Extension" ColumnName="Extension" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="FileTypeId" ColumnName="FileTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="LocalFileServers">
             <EntityTypeMapping TypeName="CloudDbModel.LocalFileServer">
               <MappingFragment StoreEntitySet="LocalFileServers">
@@ -244,28 +436,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserFiles">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
-              <MappingFragment StoreEntitySet="UserFiles">
-                <ScalarProperty Name="FolderId" ColumnName="FolderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
-                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
-                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="AspNetUsers_Storages">
+            <EntityTypeMapping TypeName="CloudDbModel.AspNetUsers_Storages">
+              <MappingFragment StoreEntitySet="AspNetUsers_Storages">
+                <ScalarProperty Name="StorageId" ColumnName="StorageId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFolders">
-            <EntityTypeMapping TypeName="CloudDbModel.UserFolder">
-              <MappingFragment StoreEntitySet="UserFolders">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -297,6 +472,32 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFiles">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFile">
+              <MappingFragment StoreEntitySet="UserFiles">
+                <ScalarProperty Name="FolderId" ColumnName="FolderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DownloadedTimes" ColumnName="DownloadedTimes" />
+                <ScalarProperty Name="AddedDateTime" ColumnName="AddedDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFolders">
+            <EntityTypeMapping TypeName="CloudDbModel.UserFolder">
+              <MappingFragment StoreEntitySet="UserFolders">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

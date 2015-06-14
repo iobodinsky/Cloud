@@ -53,6 +53,9 @@
     <Compile Include="DataContext\AspNetUser.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\AspNetUsers_Storages.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\CloudEntities.Context.cs">
       <DependentUpon>CloudEntities.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -83,9 +86,6 @@
     <Compile Include="DataContext\UserFile.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataContext\UserFileType.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataContext\UserFolder.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
@@ -100,6 +100,7 @@
     <Compile Include="Repositories\GoogleDriveTokenRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\StorageRepository.cs" />
+    <Compile Include="Repositories\UserStoragesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DataContext\CloudEntities.edmx">

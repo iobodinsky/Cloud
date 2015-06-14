@@ -4,16 +4,16 @@ using Newtonsoft.Json;
 
 namespace Cloud.Common.Models {
 	public class FolderData {
-		[JsonProperty("folders")]
+		[JsonProperty( "folders" )]
 		public IEnumerable<IFolder> Folders { get; set; }
 
-		[JsonProperty("files")]
+		[JsonProperty( "files" )]
 		public IEnumerable<IFile> Files { get; set; }
 
-		[JsonProperty("folder")]
+		[JsonProperty( "folder" )]
 		public IFolder Folder { get; set; }
 
-		[JsonProperty("cloudId")]
-		public int CloudId { get; set; }
+		[JsonProperty( "storageId" )]
+		public int StorageId { get; set; }
 	}
 }

@@ -13,17 +13,19 @@ namespace Cloud.Storages.GoogleDrive {
 	internal class GoogleDrive : IStorage {
 		#region Private fields
 
+		private readonly int _id;
 		private readonly DriveManager _manager;
 
 		#endregion Private fields
 
-		public GoogleDrive() {
+		public GoogleDrive( int id ) {
+			_id = id;
 			_manager = new DriveManager();
 		}
 
 		#region IStorage implementation
 
-		public void Authorize() {
+		public async Task AuthorizeAsync( string userId, string code ) {
 			throw new NotImplementedException();
 		}
 
@@ -68,25 +70,25 @@ namespace Cloud.Storages.GoogleDrive {
 							? new DateTime()
 							: file.CreatedDate.Value,
 						DownloadUrl = file.WebContentLink,
-						CloudId = 1
+						StorageId = _id
 					});
 				var folders = foldersFiles.Where(
 					folderFile => folderFile.MimeType.Equals(DriveSearchFilters.FolderMimiType))
 					.Select(folder => new UserFolder {
 						Id = folder.Id,
 						Name = folder.Title,
-						CloudId = 1
+						StorageId = _id
 					});
 				var currentFolder = new UserFolder {
 					Id = "root",
-					CloudId = 1
+					StorageId = _id
 				};
 
 				return new FolderData {
 					Files = files,
 					Folders = folders,
 					Folder = currentFolder,
-					CloudId = 1
+					StorageId = _id
 				};
 			} catch (TokenResponseException ex) {
 				throw;
@@ -117,18 +119,18 @@ namespace Cloud.Storages.GoogleDrive {
 							? new DateTime()
 							: file.CreatedDate.Value,
 						DownloadUrl = file.WebContentLink,
-						CloudId = 1
+						StorageId = _id
 					});
 				var folders = foldersFiles.Where(
 					folderFile => folderFile.MimeType.Equals(DriveSearchFilters.FolderMimiType))
 					.Select(folder => new UserFolder {
 						Id = folder.Id,
 						Name = folder.Title,
-						CloudId = 1
+						StorageId = _id
 					});
 				var currentFolder = new UserFolder {
 					Id = folderId,
-					CloudId = 1
+					StorageId = _id
 				};
 
 				return new FolderData {

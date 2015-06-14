@@ -20,5 +20,7 @@ namespace Cloud.Repositories.DataContext
         public string TeamId { get; set; }
         public string TokenType { get; set; }
         public string Uid { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

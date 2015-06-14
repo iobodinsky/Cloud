@@ -47,6 +47,7 @@
     <Compile Include="Interfaces\IFolder.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
     <Compile Include="Managers\IdGenerator.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\FolderData.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\UserStorage.cs" />

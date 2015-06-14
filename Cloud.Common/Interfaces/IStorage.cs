@@ -3,7 +3,7 @@ using Cloud.Common.Models;
 
 namespace Cloud.Common.Interfaces {
 	public interface IStorage {
-		void Authorize();
+		Task AuthorizeAsync( string userId, string code );
 
 		Task<IFile> AddFileAsync( string userId, FullUserFile file );
 

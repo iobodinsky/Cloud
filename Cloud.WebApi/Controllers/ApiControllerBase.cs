@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Cloud.Repositories.Repositories;
 using Cloud.WebApi.ActionFilters;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Cloud.WebApi.Controllers {
@@ -10,6 +11,7 @@ namespace Cloud.WebApi.Controllers {
 	public abstract class ApiControllerBase : ApiController {
 		private ApplicationUserManager _userManager;
 
+		protected readonly string UserId;
 		protected readonly StorageRepository StorageRepository;
 		protected readonly FolderRepository FolderRepository;
 
@@ -24,6 +26,14 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		protected ApiControllerBase() {
+			UserId = User.Identity.GetUserId();
+			StorageRepository = new StorageRepository();
+			FolderRepository = new FolderRepository();
+		}
+
+		protected ApiControllerBase( ApplicationUserManager userManager ) {
+			_userManager = userManager;
+			UserId = User.Identity.GetUserId();
 			StorageRepository = new StorageRepository();
 			FolderRepository = new FolderRepository();
 		}

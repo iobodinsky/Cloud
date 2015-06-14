@@ -33,7 +33,7 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 
 			httpService.makeRequest(
 				constants.httpMethod.post,
-				constants.urls.cloud.folders.constructCreate(constants.cloudId),
+				constants.urls.cloud.folders.constructCreate(constants.storageId),
 				null, folder, success, error);
 		};
 

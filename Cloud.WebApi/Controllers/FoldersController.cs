@@ -6,7 +6,6 @@ using Cloud.Common.Models;
 using Cloud.Storages;
 using Cloud.Repositories.DataContext;
 using Cloud.WebApi.Models;
-using Microsoft.AspNet.Identity;
 
 namespace Cloud.WebApi.Controllers {
 	[RoutePrefix( "api/folders" )]
@@ -14,61 +13,57 @@ namespace Cloud.WebApi.Controllers {
 		// GET api/folders
 		[Route( "" )]
 		public async Task<IHttpActionResult> GetRootFolderData() {
-			var userId = User.Identity.GetUserId();
 			var clouds = new StorageManager().GetStorages();
 			var folderDatas = new List<FolderData>();
 			foreach (var cloud in clouds) {
-				folderDatas.Add(await cloud.GetRootFolderDataAsync(userId));
+				folderDatas.Add(await cloud.GetRootFolderDataAsync(UserId));
 			}
 
 			return Ok(folderDatas);
 		}
 
 		// GET api/folders/1/cloud/1
-		[Route( "{folderId}/cloud/{cloudId:int}" )]
+		[Route( "{folderId}/cloud/{storageId:int}" )]
 		public async Task<IHttpActionResult> GetFolderData( [FromUri] string folderId,
-			[FromUri] int cloudId ) {
-			var userId = User.Identity.GetUserId();
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			var folderDada = await cloud.GetFolderDataAsync(userId, folderId);
+			[FromUri] int storageId ) {
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+			var folderDada = await cloud.GetFolderDataAsync(UserId, folderId);
 
 			return Ok(folderDada);
 		}
 
 		// POST: api/folders/cloud/1/create
-		[Route( "cloud/{cloudId:int}/create" )]
+		[Route( "cloud/{storageId:int}/create" )]
 		[HttpPost]
 		public async Task<IHttpActionResult> Create(
-			[FromUri] int cloudId, [FromBody] UserFolder folder ) {
-			var userId = User.Identity.GetUserId();
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
+			[FromUri] int storageId, [FromBody] UserFolder folder ) {
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
 			var folderId = new IdGenerator().ForFolder();
 			folder.Id = folderId;
-			folder.UserId = userId;
-			folder.CloudId = 2;
-			var createdFolder = await cloud.AddFolderAsync(userId, folder);
+			folder.UserId = UserId;
+			folder.StorageId = storageId;
+			var createdFolder = await cloud.AddFolderAsync(UserId, folder);
 
 			return Ok(createdFolder);
 		}
 
 		// POST api/folders/1/cloud/1/rename
-		[Route( "{folderId}/cloud/{cloudId:int}/rename" )]
+		[Route( "{folderId}/cloud/{storageId:int}/rename" )]
 		[HttpPost]
-		public IHttpActionResult RenameFolder( [FromUri] string folderId, [FromUri] int cloudId,
+		public IHttpActionResult RenameFolder( [FromUri] string folderId, [FromUri] int storageId,
 			[FromBody] NewNameModel newFolder ) {
 			if (string.IsNullOrEmpty(newFolder.Name)) return BadRequest();
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			cloud.UpdateFolderNameAsync(User.Identity.GetUserId(), folderId, newFolder.Name);
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+			cloud.UpdateFolderNameAsync(UserId, folderId, newFolder.Name);
 
 			return Ok(newFolder.Name);
 		}
 
 		// DELETE: api/folders/1/cloud/1/delete
-		[Route( "{folderId}/cloud/{cloudId:int}/delete" )]
-		public IHttpActionResult Delete( [FromUri] string folderId, [FromUri] int cloudId ) {
-			var userId = User.Identity.GetUserId();
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			cloud.DeleteFolderAsync(userId, folderId);
+		[Route( "{folderId}/cloud/{storageId:int}/delete" )]
+		public IHttpActionResult Delete( [FromUri] string folderId, [FromUri] int storageId ) {
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+			cloud.DeleteFolderAsync(UserId, folderId);
 
 			// todo: better return type
 			return Ok(folderId);

@@ -36,7 +36,7 @@ namespace Cloud.Common.Interfaces {
 		[JsonProperty( "downloadUrl" )]
 		string DownloadUrl { get; set; }
 
-		[JsonProperty( "cloudId" )]
-		int CloudId { get; set; }
+		[JsonProperty( "storageId" )]
+		int StorageId { get; set; }
 	}
 }

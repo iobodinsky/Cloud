@@ -1,25 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Repositories.DataContext;
+using Cloud.Repositories.Repositories;
 using Cloud.Storages.Resources;
+using DropboxRestAPI;
 
 namespace Cloud.Storages.Dropbox {
 	internal class Dropbox : IStorage {
-
+		private readonly int _id;
+		private readonly DropboxUserTokenRepository _tokenRepository;
+		private readonly UserStoragesRepository _userStoragesRepository;
+		
 		private readonly DropboxManager _manager;
 
-		public Dropbox() {
+		public Dropbox(int id) {
+			_id = id;
 			_manager = new DropboxManager();
+			_tokenRepository = new DropboxUserTokenRepository();
+			_userStoragesRepository = new UserStoragesRepository();
 		}
 
 		#region IStorage implementation
 
-		public void Authorize() {
-			throw new NotImplementedException();
+		public async Task AuthorizeAsync(string userId, string code) {
+			var options = new Options {
+				ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppKey],
+				ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppSecret],
+				RedirectUri = ConfigurationManager.AppSettings[AppSettingKeys.DropboxRedirectUri]
+			};
+
+			var client = new Client(options);
+			var token = await client.Core.OAuth2.TokenAsync(code);
+			var dropboxToken = new DropboxUserToken {
+				UserId = userId,
+				AccessToken = token.access_token,
+				TeamId = token.team_id,
+				TokenType = token.token_type,
+				Uid = token.uid
+			};
+
+			await _tokenRepository.AddOrUpdateAsunc(dropboxToken, userId);
+			await _userStoragesRepository.AddAsync(userId, _id);
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
@@ -36,18 +62,18 @@ namespace Cloud.Storages.Dropbox {
 				DropboxKeys.RootFolderPath);
 			var folders = new List<IFolder>();
 			var files = new List<IFile>();
-			var folderData = new FolderData {CloudId = 3};
+			var folderData = new FolderData { StorageId = _id };
 			foreach (var folderFile in rootFilesFolders.contents) {
 				if (folderFile.is_dir) {
 					folders.Add(new UserFolder {
-						CloudId = 3,
+						StorageId = _id,
 						Id = _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
 						Name = folderFile.Name
 					});
 				} else {
 					files.Add(new UserFile {
-						CloudId = 3,
+						StorageId = _id,
 						Name = folderFile.Name,
 						Id = _manager.ConstructEntityId(folderFile.path),
 						UserId = userId
@@ -56,7 +82,7 @@ namespace Cloud.Storages.Dropbox {
 			}
 			var folder = new UserFolder {
 				Id = _manager.ConstructEntityId(DropboxKeys.RootFolderPath),
-				CloudId = 3
+				StorageId = _id
 			};
 			folderData.Folders = folders;
 			folderData.Files = files;
@@ -71,18 +97,18 @@ namespace Cloud.Storages.Dropbox {
 				_manager.ConstructEntityPath(folderId));
 			var folders = new List<IFolder>();
 			var files = new List<IFile>();
-			var folderData = new FolderData {CloudId = 3};
+			var folderData = new FolderData {StorageId = _id};
 			foreach (var folderFile in filesFolders.contents) {
 				if (folderFile.is_dir) {
 					folders.Add(new UserFolder {
-						CloudId = 3,
+						StorageId = _id,
 						Id = _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
 						Name = folderFile.Name,
 					});
 				} else {
 					files.Add(new UserFile {
-						CloudId = 3,
+						StorageId = _id,
 						Name = folderFile.Name,
 						Id = _manager.ConstructEntityId(folderFile.path),
 						UserId = userId,
@@ -91,7 +117,7 @@ namespace Cloud.Storages.Dropbox {
 			}
 			var folder = new UserFolder {
 				Id = _manager.ConstructEntityId(folderId),
-				CloudId = 3
+				StorageId = _id
 			};
 			folderData.Folders = folders;
 			folderData.Files = files;

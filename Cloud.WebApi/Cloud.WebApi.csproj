@@ -241,10 +241,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
-    <Compile Include="Controllers\CloudsController.cs" />
+    <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\FilesController.cs" />
-    <Compile Include="Controllers\CloudController.cs" />
+    <Compile Include="Controllers\CloudHomeController.cs" />
     <Compile Include="Controllers\FoldersController.cs" />
     <Compile Include="ActionFilters\ExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -258,6 +258,11 @@
     <Compile Include="Models\UserFileDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Resources\Routes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Routes.resx</DependentUpon>
+    </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -334,7 +339,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Cloud\Cloud.cshtml" />
+    <Content Include="Views\CloudHome\Cloud.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
@@ -353,6 +358,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\somee.com.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Routes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Routes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

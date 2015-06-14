@@ -11,18 +11,18 @@ using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Cloud.WebApi.Models;
 using Cloud.WebApi.Providers;
 using Cloud.WebApi.Results;
+using Constants = Cloud.Common.Models.Constants;
 
 namespace Cloud.WebApi.Controllers {
 	[Authorize]
 	[RoutePrefix( "api/Account" )]
-	public class AccountController : ApiController {
+	public class AccountController : ApiControllerBase {
 		private const string LocalLoginProvider = "Local";
 		private ApplicationUserManager _userManager;
 
@@ -30,18 +30,9 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		public AccountController( ApplicationUserManager userManager,
-			ISecureDataFormat<AuthenticationTicket> accessTokenFormat ) {
-			UserManager = userManager;
+			ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+			: base(userManager) {
 			AccessTokenFormat = accessTokenFormat;
-		}
-
-		public ApplicationUserManager UserManager {
-			get {
-				if (_userManager != null) return _userManager;
-				_userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-				return _userManager;
-			}
-			private set { _userManager = value; }
 		}
 
 		public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
@@ -69,7 +60,7 @@ namespace Cloud.WebApi.Controllers {
 		// GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
 		[Route( "ManageInfo" )]
 		public async Task<ManageInfoViewModel> GetManageInfo( string returnUrl, bool generateState = false ) {
-			IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+			IdentityUser user = await UserManager.FindByIdAsync(UserId);
 
 			if (user == null) {
 				return null;
@@ -106,7 +97,7 @@ namespace Cloud.WebApi.Controllers {
 				return BadRequest(ModelState);
 			}
 
-			IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+			IdentityResult result = await UserManager.ChangePasswordAsync(UserId, model.OldPassword,
 				model.NewPassword);
 
 			if (!result.Succeeded) {
@@ -123,7 +114,7 @@ namespace Cloud.WebApi.Controllers {
 				return BadRequest(ModelState);
 			}
 
-			IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+			IdentityResult result = await UserManager.AddPasswordAsync(UserId, model.NewPassword);
 
 			if (!result.Succeeded) {
 				return GetErrorResult(result);
@@ -155,7 +146,7 @@ namespace Cloud.WebApi.Controllers {
 				return BadRequest("The external login is already associated with an account.");
 			}
 
-			IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
+			IdentityResult result = await UserManager.AddLoginAsync(UserId,
 				new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
 
 			if (!result.Succeeded) {
@@ -175,9 +166,9 @@ namespace Cloud.WebApi.Controllers {
 			IdentityResult result;
 
 			if (model.LoginProvider == LocalLoginProvider) {
-				result = await UserManager.RemovePasswordAsync(User.Identity.GetUserId());
+				result = await UserManager.RemovePasswordAsync(UserId);
 			} else {
-				result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
+				result = await UserManager.RemoveLoginAsync(UserId,
 					new UserLoginInfo(model.LoginProvider, model.ProviderKey));
 			}
 
@@ -299,7 +290,8 @@ namespace Cloud.WebApi.Controllers {
 				UserId = user.Id
 			};
 
-			var cloud = new StorageRepository().ResolveStorageInstance(2);
+			var cloud = new StorageRepository().ResolveStorageInstance(
+				Constants.LocalLenovoStorageId);
 			await cloud.AddFolderAsync(user.Id, userRootFolder);
 
 			return Ok();

@@ -12,30 +12,26 @@ namespace Cloud.Storages.LocalLenevo {
 	internal class LocalLenevo : IStorage {
 		#region Private fields
 
+		private readonly int _id;
 		private readonly StorageRepository _storageRepository;
 		private readonly FileServerManager _fileServerManager;
 
 		#endregion Private fields
 
-		public LocalLenevo() {
+		public LocalLenevo(int id) {
+			_id = id;
 			_fileServerManager = new FileServerManager();
 			_storageRepository = new StorageRepository();
 		}
 
 		#region IStorage implementation
 
-		public void Authorize() {
+		public async Task AuthorizeAsync(string userId, string code) {
 			throw new NotImplementedException();
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
-			await Task.Run(() => {
-				// Save file on all servers
-				_fileServerManager.AddFile(userId, file);
-
-
-
-			});
+			await Task.Run(() => _fileServerManager.AddFile(userId, file));
 
 			// todo: try catch (in catch undo) for undo if db failed
 			// Save file info to Db
@@ -45,16 +41,14 @@ namespace Cloud.Storages.LocalLenevo {
 		}
 
 		public async Task<IFolder> AddFolderAsync( string userId, IFolder folder ) {
-			await Task.Run(() => {
-				// Save folder on all physical servers
-				_fileServerManager.AddFolder(userId, folder);
+			// Save folder on all physical servers
+			_fileServerManager.AddFolder(userId, folder);
 
-				// todo: try catch for undo if db failed
-				// todo: entity as UserFolder
-				// Save file info to Db
-				_storageRepository.AddAsync(folder as UserFolder, true);
-			});
-
+			// todo: try catch for undo if db failed
+			// todo: entity as UserFolder
+			// Save file info to Db
+			await _storageRepository.AddAsync(folder as UserFolder, true);
+			
 			return folder;
 		}
 
@@ -73,18 +67,18 @@ namespace Cloud.Storages.LocalLenevo {
 				// todo: 
 				throw new Exception("todo");
 			}
-			currentFolder.CloudId = 2;
+			currentFolder.StorageId = _id;
 			foreach (var folder in folders) {
-				folder.CloudId = 2;
+				folder.StorageId = _id;
 			}
 			foreach (var file in files) {
-				file.CloudId = 2;
+				file.StorageId = _id;
 			}
 			var folderData = new FolderData {
 				Folders = folders,
 				Files = files,
 				Folder = currentFolder,
-				CloudId = 2
+				StorageId = _id
 			};
 
 			return folderData;
@@ -104,12 +98,12 @@ namespace Cloud.Storages.LocalLenevo {
 				// todo: 
 				throw new Exception("todo");
 			}
-			currentFolder.CloudId = 2;
+			currentFolder.StorageId = _id;
 			foreach (var folder in folders) {
-				folder.CloudId = 2;
+				folder.StorageId = _id;
 			}
 			foreach (var file in files) {
-				file.CloudId = 2;
+				file.StorageId = _id;
 			}
 			var folderData = new FolderData {
 				Folders = folders,

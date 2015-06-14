@@ -9,7 +9,6 @@ using Cloud.Common.Managers;
 using Cloud.Common.Models;
 using Cloud.Common.Resources;
 using Cloud.WebApi.Models;
-using Microsoft.AspNet.Identity;
 using HttpHeaders = Cloud.Common.Resources.HttpHeaders;
 
 namespace Cloud.WebApi.Controllers {
@@ -20,10 +19,8 @@ namespace Cloud.WebApi.Controllers {
 		[HttpGet]
 		public async Task<IHttpActionResult> RequestDownloadFileLink(
 			[FromUri] string fileId ) {
-			var downloadUrl = await Task.Run(() => {
-				var userId = User.Identity.GetUserId();
-				return ConstractCloudDownloadFileUrl(fileId, userId);
-			});
+			var downloadUrl = await Task.Run(() =>
+				ConstractCloudDownloadFileUrl(fileId, UserId));
 
 			return Ok(downloadUrl);
 		}
@@ -48,9 +45,9 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// POST api/files/cloud/1/folder/1/upload
-		[Route( "cloud/{cloudId:int}/folder/{folderId}/upload" )]
+		[Route( "cloud/{storageId:int}/folder/{folderId}/upload" )]
 		[HttpPost]
-		public async Task<IHttpActionResult> UploadFile( [FromUri] int cloudId,
+		public async Task<IHttpActionResult> UploadFile( [FromUri] int storageId,
 			[FromUri] string folderId ) {
 
 			var httpRequest = HttpContext.Current.Request;
@@ -61,12 +58,12 @@ namespace Cloud.WebApi.Controllers {
 				Name = postedFile.FileName,
 				AddedDateTime = DateTime.Now,
 				IsEditable = true,
-				UserId = User.Identity.GetUserId(),
+				UserId = UserId,
 				Size = postedFile.ContentLength,
 				DownloadedTimes = 0,
 				LastModifiedDateTime = DateTime.Now,
 				FolderId = folderId,
-				CloudId = 2
+				StorageId = storageId
 			};
 
 			var userFileModel = new FullUserFile {
@@ -74,35 +71,35 @@ namespace Cloud.WebApi.Controllers {
 				Stream = postedFile.InputStream
 			};
 
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
 			var createdFile = await cloud.AddFileAsync(
-				User.Identity.GetUserId(), userFileModel);
+				UserId, userFileModel);
 
 			return Ok(createdFile);
 		}
 
 		// POST api/files/1/cloud/1/rename
-		[Route( "{fileId}/cloud/{cloudId:int}/rename" )]
+		[Route( "{fileId}/cloud/{storageId:int}/rename" )]
 		[HttpPost]
 		public async Task<IHttpActionResult> RenameFile( [FromUri] string fileId,
-			[FromUri] int cloudId, [FromBody] NewNameModel newfile ) {
+			[FromUri] int storageId, [FromBody] NewNameModel newfile ) {
 			if (string.IsNullOrEmpty(newfile.Name)) {
 				// todo:
 				return BadRequest();
 			}
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			var newFileName = await cloud.UpdateFileNameAsync(User.Identity.GetUserId(), fileId, newfile.Name);
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+			var newFileName = await cloud.UpdateFileNameAsync(UserId, fileId, newfile.Name);
 
 			return Ok(newFileName);
 		}
 
 		// DELETE api/files/1/cloud/1/delete
-		[Route( "{fileId}/cloud/{cloudId:int:min(1)}/delete" )]
+		[Route( "{fileId}/cloud/{storageId:int:min(1)}/delete" )]
 		[HttpDelete]
 		public async Task<IHttpActionResult> DeleteFile( [FromUri] string fileId,
-			[FromUri] int cloudId ) {
-			var cloud = StorageRepository.ResolveStorageInstance(cloudId);
-			var result = await cloud.DeleteFileAsync(User.Identity.GetUserId(), fileId);
+			[FromUri] int storageId ) {
+			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+			var result = await cloud.DeleteFileAsync(UserId, fileId);
 
 			return Ok(result);
 		}

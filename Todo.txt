@@ -10,7 +10,6 @@
 16. hover style on file
 17. add more width for file/folder name
 18. add styles for choose file
-19. make IStorage asynk
 20. add is root cloud folder for ability to add new foder and upload file
 21. responcive design for header and cloud path
 22. position fixed for left and rigth containers on scroll
@@ -25,9 +24,10 @@
 28. fail to uploadFile
 29. scrolling main page
 30. make public CloudDbEntities Entities PROTECTED
+31. make repository async, Entities.SaveChangesAsync
 
 Stoped on:
-rename dbropbox failed for second attempt to rename
+
 
 green: #398439
 blue: #3276B1

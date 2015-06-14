@@ -24,5 +24,7 @@ namespace Cloud.Repositories.DataContext
         public int DownloadedTimes { get; set; }
         public string Id { get; set; }
         public string FolderId { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

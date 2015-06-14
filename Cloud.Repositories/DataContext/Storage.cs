@@ -14,9 +14,16 @@ namespace Cloud.Repositories.DataContext
     
     public partial class Storage
     {
+        public Storage()
+        {
+            this.AspNetUsers_Storages = new HashSet<AspNetUsers_Storages>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string ClassName { get; set; }
         public bool IsActive { get; set; }
+    
+        public virtual ICollection<AspNetUsers_Storages> AspNetUsers_Storages { get; set; }
     }
 }

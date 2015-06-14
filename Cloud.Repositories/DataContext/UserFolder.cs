@@ -18,5 +18,7 @@ namespace Cloud.Repositories.DataContext
         public string ParentId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

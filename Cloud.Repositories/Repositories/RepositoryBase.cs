@@ -3,6 +3,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
+using Cloud.Common.Models;
 using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Repositories {
@@ -51,21 +52,23 @@ namespace Cloud.Repositories.Repositories {
 			});
 		}
 
-		public IStorage ResolveStorageInstance( int cloudId ) {
-			var cloudServer = Entities.Storages.
-				SingleOrDefault(server => server.Id == cloudId);
-			if (cloudServer == null) return null;
-			var cloudType = Type.GetType(cloudServer.ClassName);
-			if (cloudType == null) return null;
-			var storage = Activator.CreateInstance(cloudType) as IStorage;
+		public IStorage ResolveStorageInstance( int storageId ) {
+			var storage = Entities.Storages.
+				SingleOrDefault(server => server.Id == storageId);
+			if (storage == null) return null;
+			var storageType = Type.GetType(string.Concat(
+				storage.ClassName, ", ", Constants.CloudStoragesAssemblyName), true);
+			if (storageType == null) return null;
+			var storageInstance = Activator.CreateInstance(storageType, storageId) as IStorage;
 
-			return storage;
+			return storageInstance;
 		}
 
-		public IStorage ResolveStorageInstance( int cloudId, string className ) {
-			var cloudType = Type.GetType(string.Concat(className, ", ", "Cloud.Storages"), true);
-			if (cloudType == null) return null;
-			var storage = Activator.CreateInstance(cloudType) as IStorage;
+		public IStorage ResolveStorageInstance( int storageId, string className ) {
+			var storageType = Type.GetType(string.Concat(
+				className, ", ", Constants.CloudStoragesAssemblyName), true);
+			if (storageType == null) return null;
+			var storage = Activator.CreateInstance(storageType, storageId) as IStorage;
 
 			return storage;
 		}

@@ -12,11 +12,11 @@ cloud.controllers.deleteConfirmModalController =
 			switch (deleteEntity.type) {
 			case constants.cloudEntities.folder:
 				url = constants.urls.cloud.folders.constructDelete(
-					deleteEntity.data.id, deleteEntity.data.cloudId);
+					deleteEntity.data.id, deleteEntity.data.storageId);
 				break;
 			case constants.cloudEntities.file:
 				url = constants.urls.cloud.files.constructDelete(
-					deleteEntity.data.id, deleteEntity.data.cloudId);
+					deleteEntity.data.id, deleteEntity.data.storageId);
 				break;
 			default:
 			};

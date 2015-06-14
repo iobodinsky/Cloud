@@ -24,11 +24,11 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 			switch (renameEntity.type) {
 			case constants.cloudEntities.folder:
 				url = constants.urls.cloud.folders.constructRename(
-					renameEntity.data.id, renameEntity.data.cloudId);
+					renameEntity.data.id, renameEntity.data.storageId);
 				break;
 			case constants.cloudEntities.file:
 				url = constants.urls.cloud.files.constructRename(
-					renameEntity.data.id, renameEntity.data.cloudId);
+					renameEntity.data.id, renameEntity.data.storageId);
 				break;
 			default:
 			};

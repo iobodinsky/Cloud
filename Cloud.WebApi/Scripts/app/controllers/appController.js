@@ -48,14 +48,15 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					for (var k = 0; k < data[i].files.length; k++) {
 						$scope.files.push(data[i].files[k]);
 					}
-					if (data[i].folder.cloudId === constants.cloudId) {
+					if (data[i].folder.storageId === constants.storageId) {
 						data[i].folder.name = constants.rootCloudFolderName;
 						$scope.cloudFolders.push(data[i].folder);
 					}
 				}
 
-				$scope.uploader.url = constants.urls.cloud.files.constructUpload(
-					$scope.cloudFolders[0].id, constants.cloudId);
+				//todo:
+				//$scope.uploader.url = constants.urls.cloud.files.constructUpload(
+				//	$scope.cloudFolders[0].id, constants.storageId);
 			};
 
 			function error() {
@@ -144,7 +145,7 @@ cloud.controllers.appController = cloud.controllers.appController ||
 
 		// Files
 		$scope.download = function(file) {
-			switch (file.cloudId) {
+			switch (file.storageId) {
 			case 1: // Drive
 				if (file.downloadUrl) {
 					$window.open(file.downloadUrl, '_blank');
@@ -180,8 +181,8 @@ cloud.controllers.appController = cloud.controllers.appController ||
 			}
 		};
 
-		$scope.getStorageImageClass = function(cloudId) {
-			return 'logo-' + cloudId;
+		$scope.getStorageImageClass = function(storageId) {
+			return 'logo-' + storageId;
 		};
 
 		$scope.deleteFile = function(file, $index) {
@@ -357,7 +358,7 @@ cloud.controllers.appController = cloud.controllers.appController ||
 			};
 
 			var url = constants.urls.cloud.folders.constructFolderData(
-				folder.id, folder.cloudId);
+				folder.id, folder.storageId);
 
 			httpService.makeRequest(
 				constants.httpMethod.get, url, null, null, success, error);
