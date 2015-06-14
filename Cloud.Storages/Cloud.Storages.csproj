@@ -119,6 +119,7 @@
     <Compile Include="GoogleDrive\DbDataStore.cs" />
     <Compile Include="GoogleDrive\DriveManager.cs" />
     <Compile Include="Dropbox\DropboxManager.cs" />
+    <Compile Include="LocalLenevo\LocalLenovoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dropbox\Dropbox.cs" />
     <Compile Include="LocalLenevo\LocalLenevo.cs" />

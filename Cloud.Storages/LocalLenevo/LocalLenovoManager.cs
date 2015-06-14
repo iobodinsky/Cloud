@@ -8,25 +8,25 @@ using Cloud.Common.Resources;
 using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Repositories;
 
-namespace Cloud.Repositories {
-	public class FileServerManager {
-		#region Fields
+namespace Cloud.Storages.LocalLenevo {
+	public class LocalLenovoManager {
+		#region Private fields
 
 		private readonly StorageRepository _storageRepository;
 
 		#endregion Fields
 
-		public FileServerManager() {
+		public LocalLenovoManager() {
 			_storageRepository = new StorageRepository();
 		}
 
 		#region Public methods
 
-		public FullUserFile GetFile(string userId, string fileId) {
+		public FullUserFile GetFile( string userId, string fileId ) {
 			var server = GetFileServers().First();
 			var file = _storageRepository.Entities.UserFiles
 				.SingleOrDefault(fileItem => fileItem.UserId == userId &&
-					fileItem.Id == fileId);
+				                             fileItem.Id == fileId);
 			if (file == null) {
 				// todo: 
 				throw new Exception("todo");
@@ -43,7 +43,7 @@ namespace Cloud.Repositories {
 			return fullFile;
 		}
 
-		public void AddFile(string userId, FullUserFile file) {
+		public void AddFile( string userId, FullUserFile file ) {
 			if (!HasUserEnoughFreeSpace()) {
 				// todo:
 				throw new Exception("todo");
@@ -68,7 +68,7 @@ namespace Cloud.Repositories {
 				throw new Exception("todo");
 			}
 			string folderPath;
-			
+
 			if (folder.ParentId.Equals(LocalCloudCommon.RootFolderId)) {
 				// For creating root folder
 				folderPath = userId;
@@ -76,14 +76,11 @@ namespace Cloud.Repositories {
 				folderPath = Path.Combine(
 					GetFolderPath(userId, folder.ParentId), folder.Name);
 			}
-			
-			foreach (var server in servers) {
-				if (Directory.Exists(Path.Combine(server.Path, folderPath))) {
-					// todo:
-					throw new Exception("todo");
-				}
 
-				Directory.CreateDirectory(Path.Combine(server.Path, folderPath));
+			foreach (var server in servers) {
+				if (!Directory.Exists(Path.Combine(server.Path, folderPath))) {
+					Directory.CreateDirectory(Path.Combine(server.Path, folderPath));
+				}
 			}
 		}
 
@@ -101,7 +98,7 @@ namespace Cloud.Repositories {
 			}
 		}
 
-		public void RenameFolder(string userId, string folderId, string oldFolderName, string newFolderName) {
+		public void RenameFolder( string userId, string folderId, string oldFolderName, string newFolderName ) {
 			foreach (var server in GetFileServers()) {
 				var oldFolderPath = GetFolderServerPath(userId, folderId, server);
 				var newFolderPath = Path.Combine(
@@ -135,7 +132,7 @@ namespace Cloud.Repositories {
 			}
 		}
 
-		public string GetUserRootFolderId(string userId) {
+		public string GetUserRootFolderId( string userId ) {
 			return userId;
 		}
 
@@ -203,12 +200,12 @@ namespace Cloud.Repositories {
 		//	return Path.Combine(server.Path, GetUserRootFolderName(userId));
 		//}
 
-		private string GetFolderServerPath(string userId, string folderId,
-			LocalFileServer server) {
+		private string GetFolderServerPath( string userId, string folderId,
+			LocalFileServer server ) {
 			return Path.Combine(server.Path, GetFolderPath(userId, folderId));
 		}
 
-		private string GetFolderPath(string userId, string folderId) {
+		private string GetFolderPath( string userId, string folderId ) {
 			var folder = _storageRepository.Entities.UserFolders
 				.SingleOrDefault(folderItem => folderItem.Id == folderId);
 			if (folder == null) {

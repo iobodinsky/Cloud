@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Models;
@@ -79,28 +78,15 @@ namespace Cloud.WebApi.Controllers {
 			return Ok();
 		}
 
-		// POST api/storages/disconnect/cloud
-		[Route("disconnect/cloud")]
+		// POST api/storages/1/disconnect
+		[Route( "{storageId}/disconnect" )]
 		[HttpPost]
 		public async Task<IHttpActionResult> DisconnectCloud(
-			[FromUri] string code = null, [FromUri] string error = null) {
-			throw new NotImplementedException();
-		}
+			[FromUri] int storageId ) {
+			var storage = StorageRepository.ResolveStorageInstance(storageId);
+			await storage.DisconnectAsync(UserId);
 
-		// GET api/storages/disconnect/dropbox
-		[Route("disconnect/dropbox")]
-		[HttpGet]
-		public async Task<IHttpActionResult> DisconnectDropbox(
-			[FromUri] string code = null, [FromUri] string error = null) {
-				throw new NotImplementedException();
-		}
-
-		// GET api/storages/disconnect/googledrive
-		[Route("disconnect/googledrive")]
-		[HttpGet]
-		public async Task<IHttpActionResult> DisconnectGoogleDrive(
-			[FromUri] string code = null, [FromUri] string error = null) {
-				throw new NotImplementedException();
+			return Ok();
 		}
 	}
 }

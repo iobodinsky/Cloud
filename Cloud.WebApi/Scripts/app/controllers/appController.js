@@ -431,8 +431,13 @@ cloud.controllers.appController = cloud.controllers.appController ||
 		};
 
 		$scope.disconnect = function(storageId) {
-			alertService.show(constants.alert.type.warning,
-				constants.message.warningCannotDisconnectStorage);
+			httpService.makeRequest(
+				constants.httpMethod.post,
+				constants.urls.common.constructDisconnect(storageId), null, null, success);
+
+			function success() {
+				$scope.initialize();
+			}
 		};
 
 		$scope.manageStorages = function() {

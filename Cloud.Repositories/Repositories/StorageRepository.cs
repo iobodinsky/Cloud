@@ -32,9 +32,6 @@ namespace Cloud.Repositories.Repositories {
 				file => file.UserId == userId && file.Id == fileId);
 		}
 
-		public FullUserFile GetFullFile( string userId, string fileId ) {
-			return new FileServerManager().GetFile(userId, fileId);
-		}
 
 		public IEnumerable<IFolder> GetRootFolders( string userId ) {
 			var rootFolderId = GetUserRootFolderId(userId);

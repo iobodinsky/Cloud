@@ -16,13 +16,13 @@ namespace Cloud.Storages.LocalLenevo {
 		private readonly int _id;
 		private readonly StorageRepository _storageRepository;
 		private readonly UserStoragesRepository _userStoragesRepository;
-		private readonly FileServerManager _fileServerManager;
+		private readonly LocalLenovoManager _fileServerManager;
 
 		#endregion Private fields
 
 		public LocalLenevo( int id ) {
 			_id = id;
-			_fileServerManager = new FileServerManager();
+			_fileServerManager = new LocalLenovoManager();
 			_userStoragesRepository = new UserStoragesRepository();
 			_storageRepository = new StorageRepository();
 		}
@@ -46,8 +46,8 @@ namespace Cloud.Storages.LocalLenevo {
 				userId, Constants.LocalLenovoStorageId);
 		}
 
-		public Task DisconnectAsync( string userId ) {
-			throw new NotImplementedException();
+		public async Task DisconnectAsync( string userId ) {
+			await _userStoragesRepository.DeleteAsync(userId, _id);
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
@@ -67,6 +67,11 @@ namespace Cloud.Storages.LocalLenevo {
 			// todo: try catch for undo if db failed
 			// todo: entity as UserFolder
 			// Save file info to Db
+			if (_storageRepository.Entities.UserFolders
+				.Any(folderItem => folderItem.UserId == userId &&
+				                   folderItem.Name == folder.Name &&
+				                   folderItem.ParentId == folder.ParentId)) return null;
+
 			await _storageRepository.AddAsync(folder as UserFolder, true);
 
 			return folder;
@@ -139,7 +144,7 @@ namespace Cloud.Storages.LocalLenevo {
 		}
 
 		public async Task<FullUserFile> GetFileAsync( string userId, string fileId ) {
-			return _fileServerManager.GetFile(userId, fileId);
+			return await Task.Run(() => _fileServerManager.GetFile(userId, fileId));
 		}
 
 		public async Task<string> UpdateFileNameAsync( string userId, string fileId, string newfileName ) {
@@ -155,7 +160,7 @@ namespace Cloud.Storages.LocalLenevo {
 			var extention = Path.GetExtension(oldfileName);
 			newfileName = Path.GetFileNameWithoutExtension(newfileName);
 			newfileName += extention;
-			var serverManager = new FileServerManager();
+			var serverManager = new LocalLenovoManager();
 			serverManager.RenameFile(userId, fileToUpdate, newfileName);
 
 			// Rename file in Db
@@ -179,7 +184,7 @@ namespace Cloud.Storages.LocalLenevo {
 
 				// Rename folder on servers
 				var oldFolderName = folderToUpdate.Name;
-				var serverManager = new FileServerManager();
+				var serverManager = new LocalLenovoManager();
 				serverManager.RenameFolder(userId, folderId, oldFolderName, newFolderName);
 
 				// Rename folder in Db

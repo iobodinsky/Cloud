@@ -13,7 +13,6 @@ namespace Cloud.WebApi.Controllers {
 
 		protected readonly string UserId;
 		protected readonly StorageRepository StorageRepository;
-		protected readonly FolderRepository FolderRepository;
 
 		public ApplicationUserManager UserManager {
 			get {
@@ -28,14 +27,12 @@ namespace Cloud.WebApi.Controllers {
 		protected ApiControllerBase() {
 			UserId = User.Identity.GetUserId();
 			StorageRepository = new StorageRepository();
-			FolderRepository = new FolderRepository();
 		}
 
 		protected ApiControllerBase( ApplicationUserManager userManager ) {
 			_userManager = userManager;
 			UserId = User.Identity.GetUserId();
 			StorageRepository = new StorageRepository();
-			FolderRepository = new FolderRepository();
 		}
 	}
 }

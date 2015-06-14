@@ -30,10 +30,12 @@ namespace Cloud.WebApi.Controllers {
 		[Route( "{fileId}/users/{userId}/download" )]
 		[HttpGet]
 		[AllowAnonymous]
-		public HttpResponseMessage DownloadFile( [FromUri] string fileId,
+		public async Task<HttpResponseMessage> DownloadFile( [FromUri] string fileId,
 			[FromUri] string userId ) {
 			var resporseResult = new HttpResponseMessage(HttpStatusCode.OK);
-			var file = StorageRepository.GetFullFile(userId, fileId);
+			var cloudStorage = StorageRepository.ResolveStorageInstance(
+				Constants.LocalLenovoStorageId);
+			var file = await cloudStorage.GetFileAsync(userId, fileId);
 			resporseResult.Content = new StreamContent(file.Stream);
 			resporseResult.Content.Headers.ContentType =
 				new MediaTypeHeaderValue(InternetMediaTypes.AppStreem);
@@ -46,8 +48,8 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// GET api/files/1/download/dropbox
-		[Route("{fileId}/download/dropbox")]
-		public async Task<IHttpActionResult> GetDownloadUrlDropbox([FromUri] string fileId) {
+		[Route( "{fileId}/download/dropbox" )]
+		public async Task<IHttpActionResult> GetDownloadUrlDropbox( [FromUri] string fileId ) {
 			var downloadUrl = await new Dropbox(Constants.DropboxStorageId)
 				.GetDownloadUrl(UserId, fileId);
 

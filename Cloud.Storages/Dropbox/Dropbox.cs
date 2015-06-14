@@ -18,7 +18,7 @@ namespace Cloud.Storages.Dropbox {
 			_manager = new DropboxManager(id);
 		}
 
-		public async Task<string> GetDownloadUrl(string userId, string fileId) {
+		public async Task<string> GetDownloadUrl( string userId, string fileId ) {
 			var client = await _manager.GetClient(userId);
 			return (await client.Core.Metadata.MediaAsync(
 				_manager.ConstructEntityPath(fileId))).url;
@@ -30,8 +30,8 @@ namespace Cloud.Storages.Dropbox {
 			await _manager.AuthorizeAsync(userId, code);
 		}
 
-		public Task DisconnectAsync( string userId ) {
-			throw new NotImplementedException();
+		public async Task DisconnectAsync( string userId ) {
+			await _manager.DisconnectAsync(userId, _id);
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {

@@ -36,6 +36,11 @@ cloud.models.constants = cloud.models.constants || {
 		}
 	},
 	urls: {
+		common: {
+			constructDisconnect: function(storageId) {
+				return 'api/storages/' + storageId + '/disconnect';
+			}
+		},
 		cloud: {
 			home: '',
 			token: '/Token',

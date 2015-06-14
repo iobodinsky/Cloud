@@ -79,5 +79,10 @@ namespace Cloud.Storages.Dropbox {
 			return path.Replace("\\", "/")
 				.Replace("//", "/");
 		}
+
+		public async Task DisconnectAsync( string userId, int id ) {
+			await _tokenRepository.DeleteAsync(userId);
+			await _userStoragesRepository.DeleteAsync(userId, id);
+		}
 	}
 }
