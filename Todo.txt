@@ -4,7 +4,6 @@
 8. implement history on folder browsing
 10. var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
 11. inmplement ngMessages
-12. close alert
 13. add description for alert
 15. remove alert displaying
 16. hover style on file

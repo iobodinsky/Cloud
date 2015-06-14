@@ -5,6 +5,8 @@ namespace Cloud.Common.Interfaces {
 	public interface IStorage {
 		Task AuthorizeAsync( string userId, string code );
 
+		Task DisconnectAsync( string userId );
+
 		Task<IFile> AddFileAsync( string userId, FullUserFile file );
 
 		Task<IFolder> AddFolderAsync( string userId, IFolder folder );

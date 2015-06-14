@@ -11,7 +11,6 @@ namespace Cloud.Storages.Dropbox {
 	internal class Dropbox : IStorage {
 		private readonly int _id;
 
-
 		private readonly DropboxManager _manager;
 
 		public Dropbox( int id ) {
@@ -23,6 +22,10 @@ namespace Cloud.Storages.Dropbox {
 
 		public async Task AuthorizeAsync( string userId, string code ) {
 			await _manager.AuthorizeAsync(userId, code);
+		}
+
+		public Task DisconnectAsync( string userId ) {
+			throw new NotImplementedException();
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {

@@ -18,4 +18,26 @@ cloud.controllers.storagesModalController =
 		$scope.cancel = function() {
 			$modalInstance.dismiss('cancel');
 		};
+
+		$scope.authorizeStorage = function (storageId) {
+			var data = {
+				authorize: true,
+				storageId: storageId
+			}
+
+			$modalInstance.close({
+				data: data
+			});
+		};
+
+		$scope.disconnect = function (storageId) {
+			var data = {
+				disconnect: true,
+				storageId: storageId
+			}
+
+			$modalInstance.close({
+				data: data
+			});
+		}
 	};

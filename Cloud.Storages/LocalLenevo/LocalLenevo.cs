@@ -46,6 +46,10 @@ namespace Cloud.Storages.LocalLenevo {
 				userId, Constants.LocalLenovoStorageId);
 		}
 
+		public Task DisconnectAsync( string userId ) {
+			throw new NotImplementedException();
+		}
+
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
 			await Task.Run(() => _fileServerManager.AddFile(userId, file));
 

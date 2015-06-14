@@ -47,6 +47,8 @@ textarea {
     max-width: 280px;
 }
 
+.centered { margin: 0 auto; }
+
 .welcome { 
 	font-size: 40px;
 	color: #bdb9b9;

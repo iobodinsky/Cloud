@@ -51,12 +51,10 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					if (data[i].folder.storageId === constants.storages.cloudId) {
 						data[i].folder.name = constants.rootCloudFolderName;
 						$scope.cloudFolders.push(data[i].folder);
+						$scope.uploader.url = constants.urls.cloud.files.constructUpload(
+							$scope.cloudFolders[0].id, constants.storages.cloudId);
 					}
 				}
-
-				//todo:
-				//$scope.uploader.url = constants.urls.cloud.files.constructUpload(
-				//	$scope.cloudFolders[0].id, constants.storages.cloudId);
 			};
 
 			function error() {
@@ -64,7 +62,7 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					constants.message.failGetRootFolderData);
 			};
 		};
-		self.clearCloudData = function() {
+		self.clearAppData = function() {
 			$scope.files = [];
 			$scope.folders = [];
 			$scope.uploader = null;
@@ -74,6 +72,10 @@ cloud.controllers.appController = cloud.controllers.appController ||
 			$scope.cloudFolders = [];
 			$scope.userInfo = {
 				name: ''
+			};
+			$scope.storages = {
+				connected: [],
+				available: []
 			};
 		};
 		self.getUserInfo = function() {
@@ -119,10 +121,10 @@ cloud.controllers.appController = cloud.controllers.appController ||
 		$scope.cloudFolders = [];
 		$scope.alerts = alertService.alerts;
 		$scope.isLoader = loaderService.isLoader();
-		$scope.isLoadingData = false;
 
 		// todo: should make as private 
 		$scope.initialize = function() {
+			self.clearAppData();
 			if (userTokenService.isTokenExist()) {
 				self.getUserInfo();
 				self.getUserStorages();
@@ -134,14 +136,10 @@ cloud.controllers.appController = cloud.controllers.appController ||
 			}
 		};
 
-		$scope.setLoginView = function() {
-			$scope.isLoginView = true;
-		};
-
 		$scope.logout = function() {
 			function success() {
 				userTokenService.removeToken();
-				self.clearCloudData();
+				self.clearAppData();
 				$scope.isLoginView = true;
 			};
 
@@ -388,25 +386,34 @@ cloud.controllers.appController = cloud.controllers.appController ||
 			case constants.storages.cloudId: // cloud
 				httpService.makeRequest(
 					constants.httpMethod.post,
-					constants.urls.cloud.authorize);
+					constants.urls.cloud.authorize, null, null, success);
 				break;
-			case constants.storages.googleDriveId:
-				break;
-			case constants.storages.dropboxId:
+			case constants.storages.googleDriveId: // google drive
 				httpService.makeRequest(constants.httpMethod.get,
-					constants.urls.dropbox.authorize, null, null, null, error);
+					constants.urls.drive.authorize, null, null, success);
+				break;
+			case constants.storages.dropboxId: // dropbox
+				httpService.makeRequest(constants.httpMethod.get,
+					constants.urls.dropbox.authorize, null, null, success, dropboxError);
 
-				function error(data) {
+				function dropboxError(data) {
 					if (data.message === 'Dropbox account unauthorised') {
 						$window.location.href = data.innerServerError.message;
 					}
 				};
 
 				break;
-
 			default:
 				break;
 			}
+
+			function success() {
+				$scope.initialize();
+			};
+		};
+
+		$scope.disconnect = function(storageId) {
+			httpService.makeRequest();
 		};
 
 		$scope.manageStorages = function() {
@@ -421,7 +428,18 @@ cloud.controllers.appController = cloud.controllers.appController ||
 				}
 			});
 
-			//modalInstance.result.then(function (options) {});
+			modalInstance.result.then(function(options) {
+				if (options.data.authorize) {
+					$scope.authorizeStorage(options.data.storageId);
+				}
+				if (options.data.disconnect) {
+					$scope.disconnect(options.data.storageId);
+				}
+			});
+		};
+
+		$scope.closeAlert = function($index) {
+			alertService.alerts.splice($index);
 		};
 
 		// Helpers

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Repositories.DataContext;
+using Cloud.Repositories.Repositories;
 using Cloud.Storages.Resources;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v2.Data;
@@ -15,17 +16,24 @@ namespace Cloud.Storages.GoogleDrive {
 
 		private readonly int _id;
 		private readonly DriveManager _manager;
+		private readonly UserStoragesRepository _userStoragesRepository;
 
 		#endregion Private fields
 
 		public GoogleDrive( int id ) {
 			_id = id;
 			_manager = new DriveManager();
+			_userStoragesRepository = new UserStoragesRepository();
 		}
 
 		#region IStorage implementation
 
 		public async Task AuthorizeAsync( string userId, string code ) {
+			await _manager.BuildServiceAsync(userId);
+			await _userStoragesRepository.AddAsync(userId, _id);
+		}
+
+		public Task DisconnectAsync( string userId ) {
 			throw new NotImplementedException();
 		}
 

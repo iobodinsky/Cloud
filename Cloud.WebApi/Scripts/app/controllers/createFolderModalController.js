@@ -33,8 +33,8 @@ cloud.controllers.createFolderModalController = cloud.controllers.createFolderMo
 
 			httpService.makeRequest(
 				constants.httpMethod.post,
-				constants.urls.cloud.folders.constructCreate(constants.storageId),
-				null, folder, success, error);
+				constants.urls.cloud.folders.constructCreate(
+					constants.storages.cloudId), null, folder, success, error);
 		};
 
 		$scope.cancel = function() {

@@ -46,7 +46,7 @@
 		</div>
 		<div class="modal-body">
 			<div>
-				<input type="text" class="form-control" ng-model="folderName" />
+				<input type="text" class="form-control centered" ng-model="folderName" />
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -60,7 +60,7 @@
 		</div>
 		<div class="modal-body">
 			<div>
-				<input type="text" class="form-control" ng-model="entity.name" />
+				<input type="text" class="form-control centered" ng-model="entity.name" />
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -73,7 +73,7 @@
 			<h3 class="modal-title text-center">confirm</h3>
 		</div>
 		<div class="modal-body">
-			<div>
+			<div class="text-center">
 				sure to delete '{{getFileNameWithoutExtention(entity.name)}}' ?
 			</div>
 		</div>
@@ -124,7 +124,7 @@
 
 	<div class="alert-container" ng-show="alerts.length">
 		<alert ng-repeat="alert in alerts"
-				 class="alert"
+				 class="alert text-center"
 				 type="{{alert.type}}"
 				 close="closeAlert($index)">
 			{{alert.msg}}
