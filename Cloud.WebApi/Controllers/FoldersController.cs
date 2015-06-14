@@ -49,20 +49,20 @@ namespace Cloud.WebApi.Controllers {
 		// POST api/folders/1/cloud/1/rename
 		[Route( "{folderId}/cloud/{storageId:int}/rename" )]
 		[HttpPost]
-		public IHttpActionResult RenameFolder( [FromUri] string folderId, [FromUri] int storageId,
+		public async Task<IHttpActionResult> RenameFolder( [FromUri] string folderId, [FromUri] int storageId,
 			[FromBody] NewNameModel newFolder ) {
 			if (string.IsNullOrEmpty(newFolder.Name)) return BadRequest();
 			var cloud = StorageRepository.ResolveStorageInstance(storageId);
-			cloud.UpdateFolderNameAsync(UserId, folderId, newFolder.Name);
+			var newName = await cloud.UpdateFolderNameAsync(UserId, folderId, newFolder.Name);
 
-			return Ok(newFolder.Name);
+			return Ok(newName);
 		}
 
 		// DELETE: api/folders/1/cloud/1/delete
 		[Route( "{folderId}/cloud/{storageId:int}/delete" )]
-		public IHttpActionResult Delete( [FromUri] string folderId, [FromUri] int storageId ) {
+		public async  Task<IHttpActionResult> Delete( [FromUri] string folderId, [FromUri] int storageId ) {
 			var cloud = StorageRepository.ResolveStorageInstance(storageId);
-			cloud.DeleteFolderAsync(UserId, folderId);
+			await cloud.DeleteFolderAsync(UserId, folderId);
 
 			// todo: better return type
 			return Ok(folderId);

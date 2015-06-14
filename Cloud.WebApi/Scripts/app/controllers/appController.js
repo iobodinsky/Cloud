@@ -184,8 +184,8 @@ cloud.controllers.appController = cloud.controllers.appController ||
 
 				break;
 			case 3: // Dropbox
-				alertService.show(constants.alert.type.danger,
-					constants.message.failDelete);
+				alertService.show(constants.alert.type.warning,
+					constants.message.warningDelete);
 				break;
 			default:
 				alertService.show(constants.alert.type.danger,
@@ -244,7 +244,14 @@ cloud.controllers.appController = cloud.controllers.appController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
-					$scope.files[$index].name = options.newName;
+					if (file.storageId == constants.storages.dropboxId) {
+						$scope.files[$index].id = options.newName;
+						$scope.files[$index].name =
+							options.newName.substring(options.newName.lastIndexOf('|') + 1);
+					} else {
+						$scope.files[$index].name = options.newName;
+					}
+
 					alertService.show(constants.alert.type.success,
 						constants.message.successRename);
 				} else {
@@ -272,12 +279,21 @@ cloud.controllers.appController = cloud.controllers.appController ||
 
 			modalInstance.result.then(function(options) {
 				if (options.isSuccess) {
-					$scope.folders[$index].name = options.newName;
-					alertService.show(constants.alert.type.success,
-						constants.message.successRename);
-				} else {
-					alertService.show(constants.alert.type.danger,
-						constants.message.failRename);
+					if (options.isSuccess) {
+						if (folder.storageId == constants.storages.dropboxId) {
+							$scope.folders[$index].id = options.newName;
+							$scope.folders[$index].name =
+								options.newName.substring(options.newName.lastIndexOf('|') + 1);
+						} else {
+							$scope.folders[$index].name = options.newName;
+						}
+
+						alertService.show(constants.alert.type.success,
+							constants.message.successRename);
+					} else {
+						alertService.show(constants.alert.type.danger,
+							constants.message.failRename);
+					}
 				}
 			});
 		};
@@ -413,7 +429,8 @@ cloud.controllers.appController = cloud.controllers.appController ||
 		};
 
 		$scope.disconnect = function(storageId) {
-			httpService.makeRequest();
+			alertService.show(constants.alert.type.warning,
+				constants.message.warningCannotDisconnectStorage);
 		};
 
 		$scope.manageStorages = function() {

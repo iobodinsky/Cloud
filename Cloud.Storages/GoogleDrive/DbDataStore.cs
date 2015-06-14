@@ -20,6 +20,7 @@ namespace Cloud.Storages.GoogleDrive {
 				Tokens = contents
 			};
 
+			await _repository.DeleteAsync(key);
 			await _repository.AddAsync(token, true);
 		}
 

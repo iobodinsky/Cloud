@@ -88,7 +88,6 @@ cloud.models.constants = cloud.models.constants || {
 	message: {
 		failLoadUserInfo: 'fail to load user info',
 		failLogout: 'fail to logout',
-		failDelete: 'fail to delete',
 		failOpenFolder: 'fail to open folder',
 		failUploadFile: 'fail to uploadFile',
 		failGetRootFolderData: 'fail to get root folder',
@@ -107,6 +106,8 @@ cloud.models.constants = cloud.models.constants || {
 		successDelete: 'delete successed',
 		successRename: 'rename successed',
 
-		warningNotInCloudFolder: 'you cannot add new item in non cloud folder'
+		warningNotInCloudFolder: 'you cannot add new item in non cloud folder',
+		warningCannotDisconnectStorage: 'you cannot disconnect storage',
+		warningDelete: 'you cannot download from Dropbox',
 	}
 };

@@ -14,12 +14,10 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 			}
 		}
 
-		var self = this;
-		self.oldName = $scope.getFileNameWithoutExtention(renameEntity.data.name);
+		$scope.entryNewName = $scope.getFileNameWithoutExtention(renameEntity.data.name);
 
 		$scope.entity = renameEntity.data;
-		$scope.entity.name = $scope.getFileNameWithoutExtention(renameEntity.data.name);
-		$scope.rename = function(newFileName) {
+		$scope.rename = function() {
 			var url = '';
 			switch (renameEntity.type) {
 			case constants.cloudEntities.folder:
@@ -51,12 +49,10 @@ cloud.controllers.renameModalController = cloud.controllers.renameModalControlle
 					headers: headers,
 					config: config
 				});
-
-				$scope.entity.name = self.oldName;
 			};
 
 			httpService.makeRequest(
-				constants.httpMethod.post, url, null, { name: newFileName }, success, error);
+				constants.httpMethod.post, url, null, { name: $scope.entryNewName }, success, error);
 		};
 
 		$scope.cancel = function() {

@@ -168,7 +168,6 @@ namespace Cloud.Storages.GoogleDrive {
 				};
 				var request = service.Files.Patch(file, fileId);
 				var responce = request.Execute();
-
 				return responce.Title;
 			} catch (Exception ex) {
 

@@ -133,7 +133,7 @@ namespace Cloud.Storages.Dropbox {
 
 			//}
 			// todo:
-			return responce.Name;
+			return _manager.ConstructEntityId(responce.path);
 		}
 
 		public async Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName ) {
@@ -154,7 +154,7 @@ namespace Cloud.Storages.Dropbox {
 
 			//}
 
-			return responce.Name;
+			return _manager.ConstructEntityId(responce.path);
 		}
 
 		public async Task DeleteFileAsync( string userId, string fileId ) {
