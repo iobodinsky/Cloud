@@ -7,6 +7,7 @@ using Cloud.Common.Models;
 using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Repositories;
 using Cloud.Storages.Resources;
+using Google;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v2.Data;
 
@@ -17,6 +18,7 @@ namespace Cloud.Storages.GoogleDrive {
 		private readonly int _id;
 		private readonly DriveManager _manager;
 		private readonly UserStoragesRepository _userStoragesRepository;
+		private readonly GoogleDriveTokenRepository _tokenRepository;
 
 		#endregion Private fields
 
@@ -24,6 +26,7 @@ namespace Cloud.Storages.GoogleDrive {
 			_id = id;
 			_manager = new DriveManager();
 			_userStoragesRepository = new UserStoragesRepository();
+			_tokenRepository = new GoogleDriveTokenRepository();
 		}
 
 		#region IStorage implementation
@@ -33,8 +36,9 @@ namespace Cloud.Storages.GoogleDrive {
 			await _userStoragesRepository.AddAsync(userId, _id);
 		}
 
-		public Task DisconnectAsync( string userId ) {
-			throw new NotImplementedException();
+		public async Task DisconnectAsync( string userId ) {
+			await _userStoragesRepository.DeleteAsync(userId, _id);
+			await _tokenRepository.DeleteAsync(userId);
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
@@ -98,7 +102,11 @@ namespace Cloud.Storages.GoogleDrive {
 					Folder = currentFolder,
 					StorageId = _id
 				};
-			} catch (TokenResponseException ex) {
+			} catch (TokenResponseException) {
+				DisconnectAsync(userId).Wait();
+				throw;
+			} catch (GoogleApiException) {
+				DisconnectAsync(userId).Wait();
 				throw;
 			}
 		}
@@ -146,8 +154,11 @@ namespace Cloud.Storages.GoogleDrive {
 					Folders = folders,
 					Folder = currentFolder
 				};
-			} catch (Exception ex) {
-
+			} catch (TokenResponseException) {
+				DisconnectAsync(userId).Wait();
+				throw;
+			} catch (GoogleApiException) {
+				DisconnectAsync(userId).Wait();
 				throw;
 			}
 		}
@@ -169,42 +180,50 @@ namespace Cloud.Storages.GoogleDrive {
 				var request = service.Files.Patch(file, fileId);
 				var responce = request.Execute();
 				return responce.Title;
-			} catch (Exception ex) {
-
+			} catch (TokenResponseException) {
+				DisconnectAsync(userId).Wait();
+				throw;
+			} catch (GoogleApiException) {
+				DisconnectAsync(userId).Wait();
 				throw;
 			}
-
 		}
 
 		public async Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName ) {
 			try {
 				return await UpdateFileNameAsync(userId, folderId, newFolderName);
-			} catch (Exception ex) {
-
+			} catch (TokenResponseException) {
+				DisconnectAsync(userId).Wait();
+				throw;
+			} catch (GoogleApiException) {
+				DisconnectAsync(userId).Wait();
 				throw;
 			}
-
 		}
 
 		public async Task DeleteFileAsync( string userId, string fileId ) {
 			try {
 				var service = await _manager.BuildServiceAsync(userId);
 				service.Files.Delete(fileId).Execute();
-			} catch (Exception ex) {
-
+			} catch (TokenResponseException) {
+				DisconnectAsync(userId).Wait();
+				throw;
+			} catch (GoogleApiException) {
+				DisconnectAsync(userId).Wait();
 				throw;
 			}
-
 		}
 
 		public async Task DeleteFolderAsync( string userId, string folderId ) {
 			try {
 				await DeleteFileAsync(userId, folderId);
-			} catch (Exception ex) {
-
+			} catch (TokenResponseException) {
+				DisconnectAsync(userId).Wait();
+				throw;
+			} catch (GoogleApiException) {
+				DisconnectAsync(userId).Wait();
 				throw;
 			}
-
 		}
 
 		#endregion IStorage implementation

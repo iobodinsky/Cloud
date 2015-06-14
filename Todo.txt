@@ -1,8 +1,6 @@
 2. validate to not write dot for renaming
 2. LastModifyingDate
-6. rename dbropbox failed for second attempt to rename
 8. implement history on folder browsing
-10. var folderId = 'baba2553-f024-4afb-aa8d-358b9e1ebf4a';
 11. inmplement ngMessages
 13. add description for alert
 15. remove alert displaying

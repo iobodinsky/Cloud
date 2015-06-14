@@ -135,7 +135,7 @@ textarea {
 }
 
 .box .name {
-	width: 135px;
+	width: 170px;
 	white-space: nowrap;
 	overflow: hidden !important;
 	-moz-text-overflow: ellipsis;

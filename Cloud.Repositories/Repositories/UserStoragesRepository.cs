@@ -28,5 +28,16 @@ namespace Cloud.Repositories.Repositories {
 				Entities.SaveChanges();
 			});
 		}
+
+		public async Task DeleteAsync( string userId, int storageId ) {
+			await Task.Run(() => {
+				var entity = Entities.AspNetUsers_Storages.SingleOrDefault(
+				userStorage => userStorage.UserId == userId && userStorage.StorageId == storageId);
+				if (entity == null) return;
+				Entities.AspNetUsers_Storages.Attach(entity);
+				Entities.AspNetUsers_Storages.Remove(entity);
+				Entities.SaveChanges();
+			});
+		}
 	}
 }
