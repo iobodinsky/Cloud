@@ -1,9 +1,9 @@
 ﻿<div class="cloud container">
-	<div ng-if="!isLoginView">
+	<div ng-if="!isLoginView && storages.connected.length">
 		<div class="row">
 			<div class="col-md-2 cloud-block options text-center">
 				<button class="btn btn-danger create-folder-button"
-				        ng-click="createFolder()">
+						  ng-click="createFolder()">
 					new folder
 					<span class="glyphicon glyphicon-plus pull-left new-folder"></span>
 				</button>
@@ -21,7 +21,7 @@
 					<div class="box folder container relative folder"
 						  ng-repeat="folder in folders track by folder.id">
 						<div class="logo"
-						  ng-class="getStorageImageClass(folder.storageId)"></div>
+							  ng-class="getStorageImageClass(folder.storageId)"></div>
 						<div class="name absolute" title="{{folder.name}}"
 							  ng-click="openFolder(folder)">{{folder.name}}</div>
 						<button class="option absolute" type="button" data-toggle="dropdown"
@@ -102,6 +102,31 @@
 				        ng-click="register()">
 					register
 				</button>
+			</div>
+		</div>
+	</div>
+	
+	<div ng-if="!storages.connected.length">
+		<div class="welcome text-center">welcome page</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 logo-storage-container"
+				     ng-repeat="storage in storages.available"
+				     ng-click="authorizeStorage(storage.id)">
+					<div class="logo-lg text-center container"
+					     ng-class="getStorageLargeImageClass(storage.id)"></div>
+					<div class="text-center logo-storage-name">{{storage.name}}</div>
+					<div class="connect text-center">connect</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 logo-storage-container"
+				     ng-repeat="storage in storages.connected">
+					<div class="logo-lg text-center container"
+					     ng-class="getStorageLargeImageClass(storage.id)"></div>
+					<div class="text-center logo-storage-name">{{storage.name}}</div>
+					<div class="disconnect text-center">disconnect</div>
+				</div>
 			</div>
 		</div>
 	</div>

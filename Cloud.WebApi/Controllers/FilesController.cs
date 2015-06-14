@@ -99,9 +99,9 @@ namespace Cloud.WebApi.Controllers {
 		public async Task<IHttpActionResult> DeleteFile( [FromUri] string fileId,
 			[FromUri] int storageId ) {
 			var cloud = StorageRepository.ResolveStorageInstance(storageId);
-			var result = await cloud.DeleteFileAsync(UserId, fileId);
+			await cloud.DeleteFileAsync(UserId, fileId);
 
-			return Ok(result);
+			return Ok();
 		}
 
 		#region Private methods

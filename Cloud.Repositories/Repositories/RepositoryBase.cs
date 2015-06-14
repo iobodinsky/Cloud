@@ -3,7 +3,6 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
-using Cloud.Common.Models;
 using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Repositories {
@@ -56,8 +55,7 @@ namespace Cloud.Repositories.Repositories {
 			var storage = Entities.Storages.
 				SingleOrDefault(server => server.Id == storageId);
 			if (storage == null) return null;
-			var storageType = Type.GetType(string.Concat(
-				storage.ClassName, ", ", Constants.CloudStoragesAssemblyName), true);
+			var storageType = Type.GetType(storage.ClassName, true);
 			if (storageType == null) return null;
 			var storageInstance = Activator.CreateInstance(storageType, storageId) as IStorage;
 
@@ -65,8 +63,7 @@ namespace Cloud.Repositories.Repositories {
 		}
 
 		public IStorage ResolveStorageInstance( int storageId, string className ) {
-			var storageType = Type.GetType(string.Concat(
-				className, ", ", Constants.CloudStoragesAssemblyName), true);
+			var storageType = Type.GetType(className, true);
 			if (storageType == null) return null;
 			var storage = Activator.CreateInstance(storageType, storageId) as IStorage;
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Models;
 using Cloud.Repositories.Repositories;
@@ -15,30 +16,52 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		// GET api/storages
-		[Route("")]
+		[Route( "" )]
 		public async Task<IHttpActionResult> GetUserStorages() {
 			var userStorages = new UserStorages {
 				Connected = await Task.Run(() =>
-					_userStoragesRepository.GetConnectedUserStorages(UserId)),
+					_userStoragesRepository.GetConnectedUserStorages(UserId)
+						.Select(storage => new StorageModel {
+							Id = storage.Id,
+							Name = storage.Name
+						})),
 				Available = await Task.Run(() =>
-					_userStoragesRepository.GetAvailableUserStorages(UserId))
+					_userStoragesRepository.GetAvailableUserStorages(UserId)
+						.Select(storage => new StorageModel {
+							Id = storage.Id,
+							Name = storage.Name
+						})),
 			};
-			
+
 			return Ok(userStorages);
 		}
 
-		// GET api/storages/dropbox/authorize
-		[Route( "dropbox/authorize" )]
+		// GET api/storages/authorize/cloud
+		[Route( "authorize/cloud" )]
+		[HttpPost]
+		public async Task<IHttpActionResult> AuthoriseCloud(
+			[FromUri] string code = null, [FromUri] string error = null ) {
+			var storage = _userStoragesRepository
+				.ResolveStorageInstance(Constants.LocalLenovoStorageId);
+			await storage.AuthorizeAsync(UserId, code);
+
+			// todo: successed 
+			return Ok("successed outhorised");
+		}
+
+		// GET api/storages/authorize/dropbox
+		[Route( "authorize/dropbox" )]
 		[HttpGet]
 		public async Task<IHttpActionResult> AuthoriseDropbox(
-			[FromUri] string code = null, [FromUri] string error = null ) {
+			[FromUri] string code = null, [FromUri] string error = null, [FromUri] string error_description = null) {
 			if (error != null) {
 				return RedirectToRoute(Routes.Default, null);
 			}
 
-			var dropboxStorage = _userStoragesRepository
+			var storage = _userStoragesRepository
 				.ResolveStorageInstance(Constants.DropboxStorageId);
-			await dropboxStorage.AuthorizeAsync(UserId, code);
+			await storage.AuthorizeAsync(UserId, code);
+			
 			return RedirectToRoute(Routes.Default, null);
 		}
 	}

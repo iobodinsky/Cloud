@@ -21,8 +21,8 @@ namespace Cloud.Common.Interfaces {
 
 		Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName );
 
-		Task<bool> DeleteFileAsync( string userId, string fileId );
+		Task DeleteFileAsync( string userId, string fileId );
 
-		Task<bool> DeleteFolderAsync( string userId, string folderId );
+		Task DeleteFolderAsync( string userId, string folderId );
 	}
 }

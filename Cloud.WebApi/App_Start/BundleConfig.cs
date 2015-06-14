@@ -27,6 +27,7 @@ namespace Cloud.WebApi
 					 "~/Scripts/app/controllers/renameModalController.js",
 					 "~/Scripts/app/controllers/createFolderModalController.js",
 					 "~/Scripts/app/controllers/deleteConfirmModalController.js",
+					 "~/Scripts/app/controllers/storagesModalController.js",
                 "~/Scripts/app/cloud.js"));
 
             bundles.Add(new StyleBundle("~/Content/css")

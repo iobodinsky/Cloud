@@ -47,6 +47,11 @@ textarea {
     max-width: 280px;
 }
 
+.welcome { 
+	font-size: 40px;
+	color: #bdb9b9;
+}
+
 .cloud-logo {
 	margin-left: -10px;
 	margin-right: 100px;
@@ -150,6 +155,8 @@ textarea {
 
 .no-entities { font-size: 20px; }
 
+.title { font-size: 18px; }
+
 .logo { 
 	position: absolute;
 	top: 10px;
@@ -172,6 +179,73 @@ textarea {
 .logo-3 { 
 	background: url("Images/Storages/logo-dropbox.png") top left no-repeat;
 	background-size: contain;
+}
+
+.row.storages-container { margin-left: 10px; }
+
+.logo-storage-container { 
+	background: #E5E7E4;
+	margin: 10px;
+	position: relative;
+	border-radius: 5px;
+}
+
+.connect,
+.disconnect { 
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	opacity: 0.7;
+	padding-top: 40px;
+	font-size: 25px;
+	color: #fff;
+}
+
+.connect { background: #708964;  }
+
+.disconnect { background: #9f6662; }
+
+.logo-storage-container:hover .connect,
+.logo-storage-container:hover .disconnect { 
+	cursor: pointer;
+	border-radius: 5px;
+	display: block
+}
+
+.logo-lg { 
+	width: 200px; height: 200px;
+	background-size: contain !important;
+	margin-top: 5px;
+}
+
+.logo-sm { 
+	width: 80px; height: 80px;
+	background-size: contain !important;
+	margin-top: 5px;
+}
+
+.logo-lg-1 { 
+	background: url(Images/Storages/drive-logo-lg.png) top left no-repeat;
+}
+
+.logo-lg-2 { 
+	background: url(Images/Storages/logo-cloud.png) top left no-repeat;
+}
+
+.logo-lg-3 { 
+	background: url(Images/Storages/dropbox-logo-lg.png) top left no-repeat;
+}
+
+.logo-storage-name {
+	font-size: 30px;
+	color: #6F6C6C;
+}
+
+.storages-sm .logo-storage-name {
+	font-size: 18px;
 }
 
 .alert-container {

@@ -3,7 +3,7 @@
 cloud.services = cloud.services || {};
 
 cloud.services.httpService = cloud.services.httpService ||
-	function($http, loaderService, userTokenService, constants) {
+	function($http, $window, loaderService, userTokenService, alertService, constants) {
 
 		function makeRequest(method, url, requestHeaders, requestData, successCallback, errorCallback) {
 			var request = {
@@ -38,7 +38,11 @@ cloud.services.httpService = cloud.services.httpService ||
 				.error(function(data, status, headers, config) {
 					if (errorCallback) {
 						errorCallback(data, status, headers, config);
+					} else {
+						alertService.show(constants.alert.type.danger,
+							data.message + ' ' + data.stackTrace);
 					}
+
 					loaderService.remove();
 				});
 		};

@@ -179,12 +179,10 @@ namespace Cloud.Storages.GoogleDrive {
 
 		}
 
-		public async Task<bool> DeleteFileAsync( string userId, string fileId ) {
+		public async Task DeleteFileAsync( string userId, string fileId ) {
 			try {
 				var service = await _manager.BuildServiceAsync(userId);
 				service.Files.Delete(fileId).Execute();
-
-				return true;
 			} catch (Exception ex) {
 
 				throw;
@@ -192,9 +190,9 @@ namespace Cloud.Storages.GoogleDrive {
 
 		}
 
-		public async Task<bool> DeleteFolderAsync( string userId, string folderId ) {
+		public async Task DeleteFolderAsync( string userId, string folderId ) {
 			try {
-				return await DeleteFileAsync(userId, folderId);
+				await DeleteFileAsync(userId, folderId);
 			} catch (Exception ex) {
 
 				throw;

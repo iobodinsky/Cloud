@@ -23,8 +23,9 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right" ng-if="!isLoginView">
-					<li><a>{{userInfo.Name}}</a></li>
+					<li><a>{{userInfo.name}}</a></li>
 					<li><a ng-click="logout()">logout</a></li>
+					<li><a ng-click="manageStorages()">storages</a></li>
 				</ul>
 			</div>
 		</div>
@@ -41,7 +42,7 @@
 
 	<script type="text/ng-template" id="createFolderModal.html">
 		<div class="modal-header">
-			<h3 class="modal-title">create folder</h3>
+			<h3 class="modal-title text-center">create folder</h3>
 		</div>
 		<div class="modal-body">
 			<div>
@@ -55,7 +56,7 @@
 	</script>
 	<script type="text/ng-template" id="renameModal.html">
 		<div class="modal-header">
-			<h3 class="modal-title">rename</h3>
+			<h3 class="modal-title text-center">rename</h3>
 		</div>
 		<div class="modal-body">
 			<div>
@@ -69,7 +70,7 @@
 	</script>
 	<script type="text/ng-template" id="deleteConfirmModal.html">
 		<div class="modal-header">
-			<h3 class="modal-title">confirm</h3>
+			<h3 class="modal-title text-center">confirm</h3>
 		</div>
 		<div class="modal-body">
 			<div>
@@ -78,6 +79,45 @@
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-primary" ng-click="delete()">delete</button>
+			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
+		</div>
+	</script>
+	
+	<script type="text/ng-template" id="storagesModal.html">
+		<div class="modal-header">
+			<h3 class="modal-title text-center">storages</h3>
+		</div>
+		<div class="modal-body">
+			<div class="title">
+				available:
+			</div>
+			<div class="row storages-container">
+				<div ng-if="!storages.available.length">no storages</div>
+				<div class="col-md-3 storages-sm logo-storage-container"
+					  ng-repeat="storage in storages.available"
+					  ng-click="authorizeStorage(storage.id)">
+					<div class="logo-sm text-center container"
+						  ng-class="getStorageLargeImageClass(storage.id)"></div>
+					<div class="text-center logo-storage-name">{{storage.name}}</div>
+					<div class="connect text-center">connect</div>
+				</div>
+			</div>
+			<div class="title">
+				connected:
+			</div>
+			<div class="row storages-container">
+				<div ng-if="!storages.connected.length">no connected</div>
+				<div class="col-md-3 logo-storage-container"
+					  ng-repeat="storage in storages.connected"
+					  ng-click="disconnect(storage.id)">
+					<div class="logo-sm text-center container"
+						  ng-class="getStorageLargeImageClass(storage.id)"></div>
+					<div class="text-center logo-storage-name">{{storage.name}}</div>
+					<div class="disconnect text-center">disconnect</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
 			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
 		</div>
 	</script>

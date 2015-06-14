@@ -282,18 +282,6 @@ namespace Cloud.WebApi.Controllers {
 				return GetErrorResult(result);
 			}
 
-			// Create user root directory on servers
-			var userRootFolder = new UserFolder {
-				Id = user.Id,
-				Name = user.Id,
-				ParentId = LocalCloudCommon.RootFolderId,
-				UserId = user.Id
-			};
-
-			var cloud = new StorageRepository().ResolveStorageInstance(
-				Constants.LocalLenovoStorageId);
-			await cloud.AddFolderAsync(user.Id, userRootFolder);
-
 			return Ok();
 		}
 

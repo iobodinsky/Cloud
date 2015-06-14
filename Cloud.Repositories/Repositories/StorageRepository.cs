@@ -7,8 +7,21 @@ using Cloud.Common.Resources;
 
 namespace Cloud.Repositories.Repositories {
 	public class StorageRepository : RepositoryBase {
+		private readonly UserStoragesRepository _userStoragesRepository;
 
-		#region IFileRepository implementation
+		public StorageRepository() {
+			_userStoragesRepository = new UserStoragesRepository();
+		}
+
+		public IEnumerable<IStorage> GetStorages( string userId ) {
+			var connectedStorages = _userStoragesRepository.GetConnectedUserStorages(userId);
+			var storages = new List<IStorage>();
+			foreach (var storage in connectedStorages) {
+				storages.Add(ResolveStorageInstance(storage.Id, storage.ClassName));
+			}
+
+			return storages;
+		}
 
 		public IFile GetFileInfo( string userId, string fileId ) {
 			throw new NotImplementedException();
@@ -36,8 +49,6 @@ namespace Cloud.Repositories.Repositories {
 				.SingleOrDefault(folderItem => folderItem.Id == userRootFolderId);
 			return folder;
 		}
-
-		#endregion IFileRepository implementation
 
 		#region Private methods
 

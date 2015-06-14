@@ -7,8 +7,10 @@ cloud.app.constant('constants', cloud.models.constants);
 // services
 cloud.app.service('httpService', [
 	'$http',
+	'$window',
 	'loaderService',
 	'userTokenService',
+	'alertService',
 	'constants',
 	cloud.services.httpService
 ]);
@@ -30,7 +32,7 @@ cloud.app.service('loaderService', [
 ]);
 
 // controllers
-cloud.app.controller('cloudController', [
+cloud.app.controller('appController', [
 	'$scope',
 	'$window',
 	'httpService',
@@ -40,7 +42,7 @@ cloud.app.controller('cloudController', [
 	'userTokenService',
 	'FileUploader',
 	'$modal',
-	cloud.controllers.cloudController
+	cloud.controllers.appController
 ]);
 
 cloud.app.controller('userAccountController', [
@@ -82,4 +84,13 @@ cloud.app.controller('deleteConfirmModalController', [
 	'constants',
 	'deleteEntity',
 	cloud.controllers.deleteConfirmModalController
+]);
+
+cloud.app.controller('storagesModalController', [
+	'$scope',
+	'$modalInstance',
+	'httpService',
+	'alertService',
+	'storages',
+	cloud.controllers.storagesModalController
 ]);

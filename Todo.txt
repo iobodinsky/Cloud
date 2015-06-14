@@ -26,6 +26,7 @@
 30. make public CloudDbEntities Entities PROTECTED
 31. make repository async, Entities.SaveChangesAsync
 32. on register do not create fordel for Local storage, create folder on Local storage enable
+33. add common error
 
 Stoped on:
 

@@ -4,7 +4,11 @@ cloud.models = cloud.models || {};
 cloud.models.constants = cloud.models.constants || {
 	userTokenKey: 'CloudUserBearerToken',
 	userTokenType: 'Bearer',
-	cloudId: 2,
+	storages: {
+		cloudId: 2,
+		googleDriveId: 1,
+		dropboxId: 3
+	},
 	rootCloudFolderName: 'Cloud',
 	alert: {
 		timeout: 3000,
@@ -28,7 +32,7 @@ cloud.models.constants = cloud.models.constants || {
 		},
 		value: {
 			formUrlencoded: 'application/x-www-form-urlencoded;',
-			json: 'application/json;'
+			json: 'application/json; charset=utf-8'
 		}
 	},
 	urls: {
@@ -38,38 +42,43 @@ cloud.models.constants = cloud.models.constants || {
 			logout: 'api/Account/Logout',
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
+			storages: 'api/storages',
+			authorize: 'api/storages/authorize/cloud',
 			files: {
-				constructUpload: function(folderId, cloudId) {
-					return 'api/files/cloud/' + cloudId + '/folder/' + folderId + '/upload';
+				constructUpload: function(folderId, storageId) {
+					return 'api/files/cloud/' + storageId + '/folder/' + folderId + '/upload';
 				},
 				constructDownloadLink: function(fileId) {
 					return 'api/files/' + fileId + '/requestlink';
 				},
-				constructRename: function(fileId, cloudId) {
-					return 'api/files/' + fileId + '/cloud/' + cloudId + '/rename';
+				constructRename: function(fileId, storageId) {
+					return 'api/files/' + fileId + '/cloud/' + storageId + '/rename';
 				},
-				constructDelete: function(fileId, cloudId) {
-					return 'api/files/' + fileId + '/cloud/' + cloudId + '/delete';
+				constructDelete: function(fileId, storageId) {
+					return 'api/files/' + fileId + '/cloud/' + storageId + '/delete';
 				},
 			},
 			folders: {
 				rootFolderData: 'api/folders',
-				constructCreate: function(cloudId) {
-					return 'api/folders/cloud/' + cloudId + '/create';
+				constructCreate: function(storageId) {
+					return 'api/folders/cloud/' + storageId + '/create';
 				},
-				constructRename: function(folderId, cloudId) {
-					return 'api/folders/' + folderId + '/cloud/' + cloudId + '/rename';
+				constructRename: function(folderId, storageId) {
+					return 'api/folders/' + folderId + '/cloud/' + storageId + '/rename';
 				},
-				constructFolderData: function(folderId, cloudId) {
-					return 'api/folders/' + folderId + '/cloud/' + cloudId;
+				constructFolderData: function(folderId, storageId) {
+					return 'api/folders/' + folderId + '/cloud/' + storageId;
 				},
-				constructDelete: function(folderId, cloudId) {
-					return 'api/folders/' + folderId + '/cloud/' + cloudId + '/delete';
+				constructDelete: function(folderId, storageId) {
+					return 'api/folders/' + folderId + '/cloud/' + storageId + '/delete';
 				}
 			},
 		},
 		drive: {
-			driveUpload: 'https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart'
+			authorize: 'api/storages/authorize/googledrive',
+		},
+		dropbox: {
+			authorize: 'api/storages/authorize/dropbox',
 		}
 	},
 	cloudEntities: {

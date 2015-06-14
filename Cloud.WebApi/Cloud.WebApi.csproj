@@ -255,6 +255,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\NewNameModel.cs" />
     <Compile Include="Models\ServerError.cs" />
+    <Compile Include="Models\StorageModel.cs" />
     <Compile Include="Models\UserFileDetails.cs" />
     <Compile Include="Models\UserStorages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,6 +273,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Storages\drive-logo-lg.png" />
+    <Content Include="Content\Images\Storages\dropbox-logo-lg.png" />
     <Content Include="Content\Images\Storages\logo-cloud.png" />
     <Content Include="Content\Images\Storages\logo-dropbox.png" />
     <Content Include="favicon.ico" />
@@ -284,6 +287,7 @@
     <Content Include="Scripts\app\controllers\createFolderModalController.js" />
     <Content Include="Scripts\app\controllers\deleteConfirmModalController.js" />
     <Content Include="Scripts\app\controllers\renameModalController.js" />
+    <Content Include="Scripts\app\controllers\storagesModalController.js" />
     <Content Include="Scripts\app\controllers\userAccountController.js" />
     <Content Include="Scripts\app\models\constants.js" />
     <Content Include="Scripts\app\services\alertService.js" />

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
-using Cloud.Storages;
 using Cloud.Repositories.DataContext;
 using Cloud.WebApi.Models;
 
@@ -13,7 +12,7 @@ namespace Cloud.WebApi.Controllers {
 		// GET api/folders
 		[Route( "" )]
 		public async Task<IHttpActionResult> GetRootFolderData() {
-			var clouds = new StorageManager().GetStorages();
+			var clouds = StorageRepository.GetStorages(UserId);
 			var folderDatas = new List<FolderData>();
 			foreach (var cloud in clouds) {
 				folderDatas.Add(await cloud.GetRootFolderDataAsync(UserId));

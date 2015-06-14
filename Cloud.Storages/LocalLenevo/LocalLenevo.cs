@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
+using Cloud.Common.Resources;
 using Cloud.Repositories;
 using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Repositories;
@@ -14,20 +15,35 @@ namespace Cloud.Storages.LocalLenevo {
 
 		private readonly int _id;
 		private readonly StorageRepository _storageRepository;
+		private readonly UserStoragesRepository _userStoragesRepository;
 		private readonly FileServerManager _fileServerManager;
 
 		#endregion Private fields
 
-		public LocalLenevo(int id) {
+		public LocalLenevo( int id ) {
 			_id = id;
 			_fileServerManager = new FileServerManager();
+			_userStoragesRepository = new UserStoragesRepository();
 			_storageRepository = new StorageRepository();
 		}
 
 		#region IStorage implementation
 
-		public async Task AuthorizeAsync(string userId, string code) {
-			throw new NotImplementedException();
+		public async Task AuthorizeAsync( string userId, string code ) {
+			// Create user root directory on servers
+			var userRootFolder = new UserFolder {
+				Id = userId,
+				Name = userId,
+				ParentId = LocalCloudCommon.RootFolderId,
+				UserId = userId
+			};
+
+			var cloud = new StorageRepository().ResolveStorageInstance(
+				Constants.LocalLenovoStorageId);
+			await cloud.AddFolderAsync(userId, userRootFolder);
+
+			await _userStoragesRepository.AddAsync(
+				userId, Constants.LocalLenovoStorageId);
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
@@ -48,7 +64,7 @@ namespace Cloud.Storages.LocalLenevo {
 			// todo: entity as UserFolder
 			// Save file info to Db
 			await _storageRepository.AddAsync(folder as UserFolder, true);
-			
+
 			return folder;
 		}
 
@@ -173,7 +189,7 @@ namespace Cloud.Storages.LocalLenevo {
 			return newFolderName;
 		}
 
-		public async Task<bool> DeleteFileAsync( string userId, string fileId ) {
+		public async Task DeleteFileAsync( string userId, string fileId ) {
 			// Delete file from servers
 			var file = _storageRepository.Entities.UserFiles
 				.SingleOrDefault(fileItem => fileItem.UserId == userId &&
@@ -191,10 +207,9 @@ namespace Cloud.Storages.LocalLenevo {
 				_storageRepository.Entities.UserFiles.Remove(file);
 				_storageRepository.SaveChanges();
 			});
-			return true;
 		}
 
-		public async Task<bool> DeleteFolderAsync( string userId, string folderId ) {
+		public async Task DeleteFolderAsync( string userId, string folderId ) {
 			var folder = _storageRepository.Entities.UserFolders
 				.SingleOrDefault(folderItem => folderItem.UserId == userId &&
 				                               folderItem.Id == folderId);
@@ -213,8 +228,6 @@ namespace Cloud.Storages.LocalLenevo {
 				_storageRepository.Entities.UserFolders.Remove(folder);
 				_storageRepository.SaveChanges();
 			});
-
-			return true;
 		}
 
 		#endregion IStorage implementation

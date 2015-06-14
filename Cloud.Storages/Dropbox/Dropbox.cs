@@ -1,51 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Repositories.DataContext;
-using Cloud.Repositories.Repositories;
 using Cloud.Storages.Resources;
-using DropboxRestAPI;
 
 namespace Cloud.Storages.Dropbox {
 	internal class Dropbox : IStorage {
 		private readonly int _id;
-		private readonly DropboxUserTokenRepository _tokenRepository;
-		private readonly UserStoragesRepository _userStoragesRepository;
-		
+
+
 		private readonly DropboxManager _manager;
 
-		public Dropbox(int id) {
+		public Dropbox( int id ) {
 			_id = id;
-			_manager = new DropboxManager();
-			_tokenRepository = new DropboxUserTokenRepository();
-			_userStoragesRepository = new UserStoragesRepository();
+			_manager = new DropboxManager(id);
 		}
 
 		#region IStorage implementation
 
-		public async Task AuthorizeAsync(string userId, string code) {
-			var options = new Options {
-				ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppKey],
-				ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppSecret],
-				RedirectUri = ConfigurationManager.AppSettings[AppSettingKeys.DropboxRedirectUri]
-			};
-
-			var client = new Client(options);
-			var token = await client.Core.OAuth2.TokenAsync(code);
-			var dropboxToken = new DropboxUserToken {
-				UserId = userId,
-				AccessToken = token.access_token,
-				TeamId = token.team_id,
-				TokenType = token.token_type,
-				Uid = token.uid
-			};
-
-			await _tokenRepository.AddOrUpdateAsunc(dropboxToken, userId);
-			await _userStoragesRepository.AddAsync(userId, _id);
+		public async Task AuthorizeAsync( string userId, string code ) {
+			await _manager.AuthorizeAsync(userId, code);
 		}
 
 		public async Task<IFile> AddFileAsync( string userId, FullUserFile file ) {
@@ -62,7 +39,7 @@ namespace Cloud.Storages.Dropbox {
 				DropboxKeys.RootFolderPath);
 			var folders = new List<IFolder>();
 			var files = new List<IFile>();
-			var folderData = new FolderData { StorageId = _id };
+			var folderData = new FolderData {StorageId = _id};
 			foreach (var folderFile in rootFilesFolders.contents) {
 				if (folderFile.is_dir) {
 					folders.Add(new UserFolder {
@@ -177,7 +154,7 @@ namespace Cloud.Storages.Dropbox {
 			return responce.Name;
 		}
 
-		public async Task<bool> DeleteFileAsync( string userId, string fileId ) {
+		public async Task DeleteFileAsync( string userId, string fileId ) {
 			var client = await _manager.GetClient(userId);
 			var response = await client.Core.FileOperations.DeleteAsync(
 				_manager.ConstructEntityPath(fileId));
@@ -185,11 +162,9 @@ namespace Cloud.Storages.Dropbox {
 				// todo:
 				throw new Exception("todo");
 			}
-
-			return true;
 		}
 
-		public async Task<bool> DeleteFolderAsync( string userId, string folderId ) {
+		public async Task DeleteFolderAsync( string userId, string folderId ) {
 			var client = await _manager.GetClient(userId);
 			var response = await client.Core.FileOperations.DeleteAsync(
 				_manager.ConstructEntityPath(folderId));
@@ -197,8 +172,6 @@ namespace Cloud.Storages.Dropbox {
 				// todo:
 				throw new Exception("todo");
 			}
-
-			return true;
 		}
 
 		#endregion IStorage implementation

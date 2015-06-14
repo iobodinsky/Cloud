@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
-using Cloud.Repositories.DataContext;
+using Newtonsoft.Json;
 
 namespace Cloud.WebApi.Models {
 	public class UserStorages {
-		public IEnumerable<Storage> Connected { get; set; }
-		public IEnumerable<Storage> Available { get; set; }
+		[JsonProperty( "connected" )]
+		public IEnumerable<StorageModel> Connected { get; set; }
+
+		[JsonProperty( "available" )]
+		public IEnumerable<StorageModel> Available { get; set; }
 	}
 }
