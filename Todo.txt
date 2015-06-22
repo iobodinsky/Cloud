@@ -24,6 +24,7 @@
 31. make repository async, Entities.SaveChangesAsync
 32. on register do not create fordel for Local storage, create folder on Local storage enable
 33. add common error
+34. for login, register pass ng-model on view as ng-click parameter, initialize by ng-init
 
 Stoped on:
 
@@ -36,3 +37,10 @@ orange: #E0A147
 #75768a
 
 ##bb4446
+
+
+background: #ffffff;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3), 0 10px 15px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 0 25px rgba(0,0,0,0.3), 0 10px 15px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 0 25px rgba(0,0,0,0.3), 0 10px 15px rgba(0,0,0,0.1);
+  -khtml-box-shadow: 0 0 25px rgba(0,0,0,0.3), 0 10px 15px rgba(0,0,0,0.1);

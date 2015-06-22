@@ -1,5 +1,9 @@
 ﻿window.cloud = window.cloud || {};
-cloud.app = cloud.app || angular.module('cloud', ['angularFileUpload', 'ui.bootstrap']);
+
+cloud.app = cloud.app || angular.module('cloud', [
+	'angularFileUpload',
+	'ui.bootstrap'
+]);
 
 // constants
 cloud.app.constant('constants', cloud.models.constants);

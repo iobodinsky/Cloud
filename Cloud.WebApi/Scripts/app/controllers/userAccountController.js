@@ -32,7 +32,7 @@ cloud.controllers.userAccountController =
 			};
 
 			function error() {
-				alertService.show(constants.alert.type.success,
+				alertService.show(constants.alert.type.danger,
 					constants.message.failRegister);
 			};
 

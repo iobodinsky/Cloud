@@ -55,6 +55,8 @@ cloud.controllers.appController = cloud.controllers.appController ||
 							$scope.cloudFolders[0].id, constants.storages.cloudId);
 					}
 				}
+
+				self.addRootFolder();
 			};
 
 			function error() {
@@ -107,6 +109,12 @@ cloud.controllers.appController = cloud.controllers.appController ||
 				$scope.storages.connected = data.connected;
 				$scope.storages.available = data.available;
 			};
+		};
+		self.addRootFolder = function() {
+			if ($scope.cloudFolders.length <= 0) {
+				$scope.cloudFolders = [];
+				$scope.cloudFolders.push({name: constants.rootCloudFolderName});
+			}
 		};
 		self.driveFolder = null;
 		self.dropboxFolder = null;
