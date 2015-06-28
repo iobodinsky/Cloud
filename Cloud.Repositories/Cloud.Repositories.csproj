@@ -120,7 +120,7 @@
       <DependentUpon>CloudEntities.edmx</DependentUpon>
       <LastGenOutput>CloudEntities.cs</LastGenOutput>
     </None>
-    <None Include="DbItems\CloudDb.bak" />
+    <None Include="DbItems\CloudDbBack" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
