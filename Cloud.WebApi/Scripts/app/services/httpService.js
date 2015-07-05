@@ -5,7 +5,8 @@ cloud.services = cloud.services || {};
 cloud.services.httpService = cloud.services.httpService ||
 	function($http, $window, loaderService, userTokenService, alertService, constants) {
 
-		function makeRequest(method, url, requestHeaders, requestData, successCallback, errorCallback) {
+	    function makeRequest(method, url, requestHeaders, requestData,
+            successCallback, errorCallback) {
 			var request = {
 				method: method ? method : constants.httpMethod.get,
 				url: url,

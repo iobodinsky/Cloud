@@ -8,12 +8,12 @@ using Cloud.Repositories.DataContext;
 using Cloud.Storages.Resources;
 
 namespace Cloud.Storages.Dropbox {
-	public class Dropbox : IStorage {
+	public class DropboxStorage : IStorage {
 		private readonly int _id;
 
 		private readonly DropboxManager _manager;
 
-		public Dropbox( int id ) {
+		public DropboxStorage( int id ) {
 			_id = id;
 			_manager = new DropboxManager(id);
 		}

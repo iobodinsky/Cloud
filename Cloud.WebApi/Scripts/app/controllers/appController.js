@@ -48,12 +48,6 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					for (var k = 0; k < data[i].files.length; k++) {
 						$scope.files.push(data[i].files[k]);
 					}
-					if (data[i].folder.storageId === constants.storages.cloudId) {
-						data[i].folder.name = constants.rootCloudFolderName;
-						$scope.cloudFolders.push(data[i].folder);
-						$scope.uploader.url = constants.urls.cloud.files.constructUpload(
-							$scope.cloudFolders[0].id, constants.storages.cloudId);
-					}
 				}
 
 				self.addRootFolder();
@@ -137,7 +131,9 @@ cloud.controllers.appController = cloud.controllers.appController ||
 				self.getUserInfo();
 				self.getUserStorages();
 				self.getRootFolderData();
-				self.initUploader();
+
+                // todo: removed local cloud
+				//self.initUploader();
 				$scope.isLoginView = false;
 			} else {
 				$scope.isLoginView = true;
@@ -156,12 +152,8 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					constants.message.failLogout);
 			};
 
-			httpService.makeRequest(
-				constants.httpMethod.post,
-				constants.urls.cloud.logout,
-				null,
-				null,
-				success, error);
+			httpService.makeRequest( constants.httpMethod.post,
+				constants.urls.cloud.logout, null, null, success, error);
 		};
 
 		// Files
@@ -174,18 +166,6 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					alertService.show(constants.alert.type.info,
 						constants.message.infoDriveFileDownloadingNotAllowed);
 				}
-				break;
-			case constants.storages.cloudId: // Cloud
-				var url = constants.urls.cloud.files.constructDownloadLink(file.id);
-
-				function error() {
-					alertService.show(constants.alert.type.danger,
-						constants.message.failRequestDownloadLink);
-				};
-
-				httpService.makeRequest(
-					constants.httpMethod.get, url, null, null, success, error);
-
 				break;
 			case constants.storages.dropboxId: // Dropbox
 				httpService.makeRequest(
@@ -308,7 +288,7 @@ cloud.controllers.appController = cloud.controllers.appController ||
 			});
 		};
 
-		// Folders
+	    // Folders
 		$scope.createFolder = function() {
 			var currentFolder = $scope.cloudFolders[$scope.cloudFolders.length - 1];
 			if (currentFolder && currentFolder.id) {
@@ -376,13 +356,9 @@ cloud.controllers.appController = cloud.controllers.appController ||
 					data.folder.name = folder.name;
 				}
 				$scope.cloudFolders.push(data.folder);
-				$scope.uploader.url =
-					constants.urls.cloud.files.constructUpload(
-						data.folder.id, constants.storages.cloudId);
 
 				$scope.folders = data.folders;
 				$scope.files = data.files;
-
 			};
 
 			function error() {
@@ -409,11 +385,6 @@ cloud.controllers.appController = cloud.controllers.appController ||
 		// Storage
 		$scope.authorizeStorage = function(storageId) {
 			switch (storageId) {
-			case constants.storages.cloudId: // cloud
-				httpService.makeRequest(
-					constants.httpMethod.post,
-					constants.urls.cloud.authorize, null, null, success);
-				break;
 			case constants.storages.googleDriveId: // google drive
 				httpService.makeRequest(constants.httpMethod.get,
 					constants.urls.drive.authorize, null, null, success);
@@ -441,7 +412,7 @@ cloud.controllers.appController = cloud.controllers.appController ||
 		$scope.disconnect = function(storageId) {
 			httpService.makeRequest(
 				constants.httpMethod.post,
-				constants.urls.common.constructDisconnect(storageId), null, null, success);
+				constants.urls.cloud.constructDisconnect(storageId), null, null, success);
 
 			function success() {
 				$scope.initialize();

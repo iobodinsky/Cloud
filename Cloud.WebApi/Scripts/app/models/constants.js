@@ -5,7 +5,6 @@ cloud.models.constants = cloud.models.constants || {
 	userTokenKey: 'CloudUserBearerToken',
 	userTokenType: 'Bearer',
 	storages: {
-		cloudId: 2,
 		googleDriveId: 1,
 		dropboxId: 3
 	},
@@ -36,11 +35,6 @@ cloud.models.constants = cloud.models.constants || {
 		}
 	},
 	urls: {
-		common: {
-			constructDisconnect: function(storageId) {
-				return 'api/storages/' + storageId + '/disconnect';
-			}
-		},
 		cloud: {
 			home: '',
 			token: '/Token',
@@ -49,12 +43,12 @@ cloud.models.constants = cloud.models.constants || {
 			userInfo: 'api/Account/UserInfo',
 			storages: 'api/storages',
 			authorize: 'api/storages/authorize/cloud',
+			constructDisconnect: function(storageId) {
+			    return 'api/storages/' + storageId + '/disconnect';
+			},
 			files: {
 				constructUpload: function(folderId, storageId) {
 					return 'api/files/cloud/' + storageId + '/folder/' + folderId + '/upload';
-				},
-				constructDownloadLink: function(fileId) {
-					return 'api/files/' + fileId + '/requestlink';
 				},
 				constructRename: function(fileId, storageId) {
 					return 'api/files/' + fileId + '/cloud/' + storageId + '/rename';

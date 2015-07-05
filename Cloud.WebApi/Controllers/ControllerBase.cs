@@ -7,7 +7,7 @@ namespace Cloud.WebApi.Controllers {
 	public class ControllerBase : Controller {
 		private ApplicationUserManager _userManager;
 
-		protected readonly StorageRepository StorageRepository;
+        protected readonly UserStoragesRepository UserStoragesRepository;
 
 		protected ApplicationUserManager UserManager {
 			get {
@@ -20,7 +20,7 @@ namespace Cloud.WebApi.Controllers {
 		}
 
 		protected ControllerBase() {
-			StorageRepository = new StorageRepository();
+            UserStoragesRepository = new UserStoragesRepository();
 		}
 	}
 }

@@ -8,6 +8,7 @@ cloud.controllers.userAccountController =
 		userTokenService, loaderService, constants) {
 		var self = this;
 
+        // todo: what is this?
 		self.initialize = function() {};
 
 		$scope.userRegistrationName = '';

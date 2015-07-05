@@ -88,15 +88,6 @@ namespace Cloud.Storages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DriveUserCredentalsFolder.
-        /// </summary>
-        public static string DriveUserCredentalsFolder {
-            get {
-                return ResourceManager.GetString("DriveUserCredentalsFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to DropboxAccessToken.
         /// </summary>
         public static string DropboxAccessToken {

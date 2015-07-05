@@ -49,14 +49,6 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Tokens" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
-        <EntityType Name="LocalFileServers">
-          <Key>
-            <PropertyRef Name="ServerId" />
-          </Key>
-          <Property Name="ServerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
-        </EntityType>
         <EntityType Name="Storages">
           <Key>
             <PropertyRef Name="Id" />
@@ -167,7 +159,6 @@
           <EntitySet Name="AspNetUsers_Storages" EntityType="Self.AspNetUsers_Storages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DropboxUserTokens" EntityType="Self.DropboxUserTokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleDriveUserTokens" EntityType="Self.GoogleDriveUserTokens" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LocalFileServers" EntityType="Self.LocalFileServers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFiles" EntityType="Self.UserFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFolders" EntityType="Self.UserFolders" Schema="dbo" store:Type="Tables" />
@@ -201,7 +192,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CloudDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CloudDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="LocalFileServers" EntityType="CloudDbModel.LocalFileServer" />
           <EntitySet Name="AspNetUsers" EntityType="CloudDbModel.AspNetUser" />
           <EntitySet Name="AspNetUsers_Storages" EntityType="CloudDbModel.AspNetUsers_Storages" />
           <EntitySet Name="DropboxUserTokens" EntityType="CloudDbModel.DropboxUserToken" />
@@ -234,14 +224,6 @@
             <End Role="UserFolder" EntitySet="UserFolders" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="LocalFileServer">
-          <Key>
-            <PropertyRef Name="ServerId" />
-          </Key>
-          <Property Name="ServerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Path" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
@@ -409,15 +391,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CloudDbModelStoreContainer" CdmEntityContainer="CloudDbEntities">
-          <EntitySetMapping Name="LocalFileServers">
-            <EntityTypeMapping TypeName="CloudDbModel.LocalFileServer">
-              <MappingFragment StoreEntitySet="LocalFileServers">
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="CloudDbModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">

@@ -126,9 +126,6 @@
   <data name="DriveClientSecret" xml:space="preserve">
     <value>DriveClientSecret</value>
   </data>
-  <data name="DriveUserCredentalsFolder" xml:space="preserve">
-    <value>DriveUserCredentalsFolder</value>
-  </data>
   <data name="DropboxAccessToken" xml:space="preserve">
     <value>DropboxAccessToken</value>
   </data>

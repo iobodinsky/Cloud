@@ -1,10 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cloud.Common.Interfaces;
 using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Repositories {
 	public class UserStoragesRepository : RepositoryBase {
+        public IEnumerable<IStorage> GetStorages(string userId)
+        {
+            var connectedStorages = GetConnectedUserStorages(userId);
+            var storages = new List<IStorage>();
+            foreach (var storage in connectedStorages)
+            {
+                storages.Add(ResolveStorageInstance(storage.Id, storage.ClassName));
+            }
+
+            return storages;
+        }
+
 		public IEnumerable<Storage> GetConnectedUserStorages( string userId ) {
 			return Entities.AspNetUsers_Storages.Where(
 				userStorage => userStorage.Storage.IsActive && 

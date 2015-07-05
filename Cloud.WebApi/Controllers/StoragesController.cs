@@ -37,19 +37,6 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(userStorages);
 		}
 
-		// POST api/storages/authorize/cloud
-		[Route( "authorize/cloud" )]
-		[HttpPost]
-		public async Task<IHttpActionResult> AuthoriseCloud(
-			[FromUri] string code = null, [FromUri] string error = null ) {
-			var storage = _userStoragesRepository
-				.ResolveStorageInstance(Constants.LocalLenovoStorageId);
-			await storage.AuthorizeAsync(UserId, code);
-
-			// todo: successed 
-			return Ok("successed outhorised");
-		}
-
 		// GET api/storages/authorize/dropbox
 		[Route( "authorize/dropbox" )]
 		[HttpGet]
@@ -83,7 +70,7 @@ namespace Cloud.WebApi.Controllers {
 		[HttpPost]
 		public async Task<IHttpActionResult> DisconnectCloud(
 			[FromUri] int storageId ) {
-			var storage = StorageRepository.ResolveStorageInstance(storageId);
+                var storage = UserStoragesRepository.ResolveStorageInstance(storageId);
 			await storage.DisconnectAsync(UserId);
 
 			return Ok();

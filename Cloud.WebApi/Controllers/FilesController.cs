@@ -1,56 +1,19 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
-using Cloud.Common.Resources;
 using Cloud.Storages.Dropbox;
 using Cloud.WebApi.Models;
-using HttpHeaders = Cloud.Common.Resources.HttpHeaders;
 
 namespace Cloud.WebApi.Controllers {
 	[RoutePrefix( "api/files" )]
 	public class FilesController : ApiControllerBase {
-		// GET api/files/1/requestlink
-		[Route( "{fileId}/requestlink" )]
-		[HttpGet]
-		public async Task<IHttpActionResult> RequestDownloadFileLink(
-			[FromUri] string fileId ) {
-			var downloadUrl = await Task.Run(() =>
-				ConstractCloudDownloadFileUrl(fileId, UserId));
-
-			return Ok(downloadUrl);
-		}
-
-		// GET api/files/1/users/1/download
-		[Route( "{fileId}/users/{userId}/download" )]
-		[HttpGet]
-		[AllowAnonymous]
-		public async Task<HttpResponseMessage> DownloadFile( [FromUri] string fileId,
-			[FromUri] string userId ) {
-			var resporseResult = new HttpResponseMessage(HttpStatusCode.OK);
-			var cloudStorage = StorageRepository.ResolveStorageInstance(
-				Constants.LocalLenovoStorageId);
-			var file = await cloudStorage.GetFileAsync(userId, fileId);
-			resporseResult.Content = new StreamContent(file.Stream);
-			resporseResult.Content.Headers.ContentType =
-				new MediaTypeHeaderValue(InternetMediaTypes.AppStreem);
-			resporseResult.Content.Headers.ContentDisposition =
-				new ContentDispositionHeaderValue(HttpHeaders.ContentDispositionAttachment) {
-					FileName = file.UserFile.Name
-				};
-
-			return resporseResult;
-		}
-
 		// GET api/files/1/download/dropbox
 		[Route( "{fileId}/download/dropbox" )]
 		public async Task<IHttpActionResult> GetDownloadUrlDropbox( [FromUri] string fileId ) {
-			var downloadUrl = await new Dropbox(Constants.DropboxStorageId)
+			var downloadUrl = await new DropboxStorage(Constants.DropboxStorageId)
 				.GetDownloadUrl(UserId, fileId);
 
 			return Ok(downloadUrl);
@@ -83,7 +46,7 @@ namespace Cloud.WebApi.Controllers {
 				Stream = postedFile.InputStream
 			};
 
-			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+            var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
 			var createdFile = await cloud.AddFileAsync(
 				UserId, userFileModel);
 
@@ -99,7 +62,7 @@ namespace Cloud.WebApi.Controllers {
 				// todo:
 				return BadRequest();
 			}
-			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+            var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
 			var newFileName = await cloud.UpdateFileNameAsync(UserId, fileId, newfile.Name);
 
 			return Ok(newFileName);
@@ -110,18 +73,10 @@ namespace Cloud.WebApi.Controllers {
 		[HttpDelete]
 		public async Task<IHttpActionResult> DeleteFile( [FromUri] string fileId,
 			[FromUri] int storageId ) {
-			var cloud = StorageRepository.ResolveStorageInstance(storageId);
+                var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
 			await cloud.DeleteFileAsync(UserId, fileId);
 
 			return Ok();
 		}
-
-		#region Private methods
-
-		private string ConstractCloudDownloadFileUrl( string fileId, string userId ) {
-			return string.Format("api/files/{0}/users/{1}/download", fileId, userId);
-		}
-
-		#endregion Private methods
 	}
 }

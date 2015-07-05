@@ -25,7 +25,6 @@ namespace Cloud.Repositories.DataContext
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<LocalFileServer> LocalFileServers { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUsers_Storages> AspNetUsers_Storages { get; set; }
         public virtual DbSet<DropboxUserToken> DropboxUserTokens { get; set; }

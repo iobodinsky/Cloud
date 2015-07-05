@@ -119,10 +119,8 @@
     <Compile Include="GoogleDrive\DbDataStore.cs" />
     <Compile Include="GoogleDrive\DriveManager.cs" />
     <Compile Include="Dropbox\DropboxManager.cs" />
-    <Compile Include="LocalLenevo\LocalLenovoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Dropbox\Dropbox.cs" />
-    <Compile Include="LocalLenevo\LocalLenevo.cs" />
+    <Compile Include="Dropbox\DropboxStorage.cs" />
     <Compile Include="Resources\AppSettingKeys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -138,7 +136,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DropboxKeys.resx</DependentUpon>
     </Compile>
-    <Compile Include="GoogleDrive\GoogleDrive.cs" />
+    <Compile Include="GoogleDrive\GoogleDriveStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

@@ -77,9 +77,6 @@
     <Compile Include="DataContext\GoogleDriveUserToken.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataContext\LocalFileServer.cs">
-      <DependentUpon>CloudEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataContext\Storage.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
@@ -93,10 +90,8 @@
     <Compile Include="Models\ExtendedContextModels\UserFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DropboxUserTokenRepository.cs" />
-    <Compile Include="Repositories\FileServerRepository.cs" />
     <Compile Include="Repositories\GoogleDriveTokenRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
-    <Compile Include="Repositories\StorageRepository.cs" />
     <Compile Include="Repositories\UserStoragesRepository.cs" />
   </ItemGroup>
   <ItemGroup>

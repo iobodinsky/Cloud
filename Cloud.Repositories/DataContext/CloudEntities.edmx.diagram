@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f348b98c1e54402ab5eeb0fa0e1ae5bf" Name="Diagram1" ZoomLevel="87">
-        <EntityTypeShape EntityType="CloudDbModel.LocalFileServer" Width="1.5" PointX="4.875" PointY="0.5" />
         <EntityTypeShape EntityType="CloudDbModel.AspNetUser" Width="1.5" PointX="0.75" PointY="8.125" />
         <EntityTypeShape EntityType="CloudDbModel.AspNetUsers_Storages" Width="1.5" PointX="6" PointY="9.125" />
         <EntityTypeShape EntityType="CloudDbModel.DropboxUserToken" Width="1.5" PointX="3" PointY="5.75" />

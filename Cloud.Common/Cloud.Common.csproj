@@ -67,11 +67,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\FullUserFile.cs" />
-    <Compile Include="Resources\LocalCloudCommon.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LocalCloudCommon.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -88,10 +83,6 @@
     <EmbeddedResource Include="Resources\InternetMediaTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InternetMediaTypes.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LocalCloudCommon.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalCloudCommon.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

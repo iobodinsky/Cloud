@@ -12,7 +12,7 @@ using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v2.Data;
 
 namespace Cloud.Storages.GoogleDrive {
-	internal class GoogleDrive : IStorage {
+	internal class GoogleDriveStorage : IStorage {
 		#region Private fields
 
 		private readonly int _id;
@@ -22,7 +22,7 @@ namespace Cloud.Storages.GoogleDrive {
 
 		#endregion Private fields
 
-		public GoogleDrive( int id ) {
+		public GoogleDriveStorage( int id ) {
 			_id = id;
 			_manager = new DriveManager();
 			_userStoragesRepository = new UserStoragesRepository();

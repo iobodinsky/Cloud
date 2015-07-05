@@ -11,14 +11,6 @@ cloud.controllers.storagesModalController =
 			return 'logo-lg-' + storageId;
 		};
 
-		$scope.disconnect = function(storageId) {
-			httpService.makeRequest();
-		};
-
-		$scope.cancel = function() {
-			$modalInstance.dismiss('cancel');
-		};
-
 		$scope.authorizeStorage = function (storageId) {
 			var data = {
 				authorize: true,
@@ -40,4 +32,8 @@ cloud.controllers.storagesModalController =
 				data: data
 			});
 		}
+
+		$scope.cancel = function () {
+		    $modalInstance.dismiss('cancel');
+		};
 	};
