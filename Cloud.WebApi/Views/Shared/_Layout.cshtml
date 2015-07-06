@@ -6,134 +6,134 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body ng-app="cloud" ng-controller="appController">
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<img src="~/Content/Images/Storages/logo-cloud.png"
-					  alt="cloud logo" class="cloud-logo pull-left"/>
-				<span class="pull-left" ng-if="!isLoginView">
-					<span class="cloud-path navbar-brand pull-left"
-							ng-repeat="folder in cloudFolders"
-							ng-click="openFolderFromHeader(folder, $index)">
-						{{folder.name}}
-						<span class="glyphicon glyphicon-menu-right pull-right"></span>
-					</span>
-				</span>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav pull-right" ng-if="!isLoginView">
-					<li><a>{{userInfo.name}}</a></li>
-					<li><a ng-click="logout()">logout</a></li>
-					<li><a ng-click="manageStorages()">storages</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="body-content">
-		@RenderBody()
-	</div>
-	<div ng-class="{'background-loder': isLoader.length >= 1}"></div>
-	<div class="loader" ng-if="isLoader.length >= 1">
-		<div class="inner one"></div>
-		<div class="inner two"></div>
-		<div class="inner three"></div>
-	</div>
+<body ng-app="cloud" ng-controller="appController" class="noselect">
+    <div class="header fixed font-size-m">
+        <img src="~/Content/Images/logo.png"
+             alt="logo" class="logo pull-left" />
+        <div class="user-folder-path pull-left" ng-if="!isLoginView">
+            <div class="cursor-pointer pull-left"
+                 ng-repeat="folder in cloudFolders"
+                 ng-click="openFolderFromHeader(folder, $index)">
+                {{folder.name}}
+                <span class="glyphicon glyphicon-menu-right folder-path-arrow font-size-xs"></span>
+            </div>
+        </div>
+        <div class="pull-right" ng-if="!isLoginView">
+            <a class="cursor-pointer username margin-right-s font-size-xs">{{userInfo.name}}</a>
+            <a class="cursor-pointer margin-right-s" title="manage storages"
+               ng-click="manageStorages()">
+                <span class="glyphicon glyphicon-th text-warning"></span>
+            </a>
+            <a class="cursor-pointer margin-right-s" title="logout"
+               ng-click="logout()">
+                <span class="glyphicon glyphicon-log-out text-danger"></span>
+            </a>
+        </div>
+    </div>
+    <div class="body-content">
+        @RenderBody()
+    </div>
+    <div ng-class="{'background-loder': isLoader.length >= 1}"></div>
+    <div class="loader" ng-if="isLoader.length >= 1">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+    </div>
 
-	<script type="text/ng-template" id="createFolderModal.html">
-		<div class="modal-header">
-			<h3 class="modal-title text-center">create folder</h3>
-		</div>
-		<div class="modal-body">
-			<div>
-				<input type="text" class="form-control centered" ng-model="folderName" />
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" ng-click="create(file.name)">create</button>
-			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-		</div>
-	</script>
+    <script type="text/ng-template" id="createFolderModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">create folder</h3>
+        </div>
+        <div class="modal-body">
+            <div>
+                <input type="text" class="form-control centered" ng-model="folderName" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="create(file.name)">create</button>
+            <button class="btn btn-warning" ng-click="cancel()">cancel</button>
+        </div>
+    </script>
 
-	<script type="text/ng-template" id="renameModal.html">
-		<div class="modal-header">
-			<h3 class="modal-title text-center">rename</h3>
-		</div>
-		<div class="modal-body">
-			<div>
-				<input type="text" class="form-control centered" ng-model="entryNewName" />
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" ng-click="rename()">rename</button>
-			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-		</div>
-	</script>
+    <script type="text/ng-template" id="renameModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">rename</h3>
+        </div>
+        <div class="modal-body">
+            <div>
+                <input type="text" class="form-control centered" ng-model="entryNewName" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="rename()">rename</button>
+            <button class="btn btn-warning" ng-click="cancel()">cancel</button>
+        </div>
+    </script>
 
-	<script type="text/ng-template" id="deleteConfirmModal.html">
-		<div class="modal-header">
-			<h3 class="modal-title text-center">confirm</h3>
-		</div>
-		<div class="modal-body">
-			<div class="text-center">
-				sure to delete '{{getFileNameWithoutExtention(entity.name)}}' ?
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-primary" ng-click="delete()">delete</button>
-			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-		</div>
-	</script>
-	
-	<script type="text/ng-template" id="storagesModal.html">
-		<div class="modal-header">
-			<h3 class="modal-title text-center">storages</h3>
-		</div>
-		<div class="modal-body">
-			<div class="title">
-				available:
-			</div>
-			<div class="row storages-container">
-				<div class="text-center" ng-if="!storages.available.length">no storages</div>
-				<div class="col-md-3 storages-sm logo-storage-container"
-					  ng-repeat="storage in storages.available"
-					  ng-click="authorizeStorage(storage.id)">
-					<div class="logo-sm text-center container"
-						  ng-class="getStorageLargeImageClass(storage.id)"></div>
-					<div class="text-center logo-storage-name">{{storage.name}}</div>
-					<div class="connect text-center">connect</div>
-				</div>
-			</div>
-			<div class="title">
-				connected:
-			</div>
-			<div class="row storages-container">
-				<div class="text-center" ng-if="!storages.connected.length">no connected</div>
-				<div class="col-md-3 storages-sm logo-storage-container"
-					  ng-repeat="storage in storages.connected"
-					  ng-click="disconnect(storage.id)">
-					<div class="logo-sm text-center container"
-						  ng-class="getStorageLargeImageClass(storage.id)"></div>
-					<div class="text-center logo-storage-name">{{storage.name}}</div>
-					<div class="disconnect text-center">disconnect</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-warning" ng-click="cancel()">cancel</button>
-		</div>
-	</script>
+    <script type="text/ng-template" id="deleteConfirmModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">confirm</h3>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+                sure to delete '{{getFileNameWithoutExtention(entity.name)}}' ?
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="delete()">delete</button>
+            <button class="btn btn-warning" ng-click="cancel()">cancel</button>
+        </div>
+    </script>
 
-	<div class="alert-container" ng-show="alerts.length">
-		<alert ng-repeat="alert in alerts"
-				 class="alert text-center"
-				 type="{{alert.type}}"
-				 close="closeAlert($index)">
-			{{alert.msg}}
-		</alert>
-	</div>
+    <script type="text/ng-template" id="storagesModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">storages</h3>
+        </div>
+        <div class="modal-body">
+            <div class="title">
+                available:
+            </div>
+            <div class="row storages-container">
+                <div class="text-center" ng-if="!storages.available.length">no storages</div>
+                <div class="col-md-3 storages-sm logo-storage-container"
+                     ng-repeat="storage in storages.available"
+                     ng-click="authorizeStorage(storage.id)">
+                    <div class="logo-sm text-center container"
+                         ng-class="getStorageLargeImageClass(storage.id)"></div>
+                    <div class="text-center logo-storage-name">{{storage.name}}</div>
+                    <div class="connect text-center">connect</div>
+                </div>
+            </div>
+            <div class="title">
+                connected:
+            </div>
+            <div class="row storages-container">
+                <div class="text-center" ng-if="!storages.connected.length">no connected</div>
+                <div class="col-md-3 storages-sm logo-storage-container"
+                     ng-repeat="storage in storages.connected"
+                     ng-click="disconnect(storage.id)">
+                    <div class="logo-sm text-center container"
+                         ng-class="getStorageLargeImageClass(storage.id)"></div>
+                    <div class="text-center logo-storage-name">{{storage.name}}</div>
+                    <div class="disconnect text-center">disconnect</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">cancel</button>
+        </div>
+    </script>
 
-	@Scripts.Render("~/bundles/common")
-	@Scripts.Render("~/bundles/ng")
+    <div class="alert-container" ng-show="alerts.length">
+        <alert ng-repeat="alert in alerts"
+               class="alert text-center"
+               type="{{alert.type}}"
+               close="closeAlert($index)">
+            {{alert.msg}}
+        </alert>
+    </div>
+
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/ng")
 </body>
 <html>

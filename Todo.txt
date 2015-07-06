@@ -1,3 +1,5 @@
+-1. increase ... on hover file or folder name
+0. show loader on start
 1. ResolveStorageInstance move to factory
 2. /cloud to /storage
 2. validate to not write dot for renaming

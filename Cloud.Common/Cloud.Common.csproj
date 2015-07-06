@@ -49,6 +49,8 @@
     <Compile Include="Managers\IdGenerator.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\FolderData.cs" />
+    <Compile Include="Models\UserFile.cs" />
+    <Compile Include="Models\UserFolder.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Resources\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>

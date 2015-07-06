@@ -1,134 +1,131 @@
-﻿<div class="cloud container">
-	<div ng-if="!isLoginView && storages.connected.length">
-		<div class="row">
-			<div class="col-md-2 cloud-block options text-center">
-				@*<button class="btn btn-danger create-folder-button"
-						  ng-click="createFolder()">
-					new folder
-					<span class="glyphicon glyphicon-plus pull-left new-folder"></span>
-				</button>
-				<input type="file" class=""
-						 nv-file-select uploader="uploader" />
-				<div ng-if="uploader.queue[0]">
-					name: <span ng-bind="uploader.queue[0].file.name"></span><br />
-					<button ng-click="uploader.queue[0].upload()">upload</button>
-				</div>*@
-			</div>
-			<div class="col-md-8 cloud-block content">
-				<div class="entity-container">
-					<div class="text-center no-entities"
-						  ng-if="folders.length === 0">no folders</div>
-					<div class="box folder container relative folder"
-						  ng-repeat="folder in folders track by folder.id">
-						<div class="logo"
-							  ng-class="getStorageImageClass(folder.storageId)"></div>
-						<div class="name absolute" title="{{folder.name}}"
-							  ng-click="openFolder(folder)">{{folder.name}}</div>
-						<button class="option absolute" type="button" data-toggle="dropdown"
-								  aria-expanded="false">
-							<span class="glyphicon glyphicon-cog open-options"></span>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-right" role="menu">
-							<li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
-							<li><a ng-click="renameFolder(folder, $index)">rename</a></li>
-						</ul>
-					</div>
-				</div>
-				<hr />
-				<div class="entity-container">
-					<div class="text-center no-entities"
-						  ng-if="files.length === 0">no files</div>
-					<div class="box file container relative"
-						  ng-repeat="file in files track by file.id">
-						<div class="logo"
-							  ng-class="getStorageImageClass(file.storageId)"></div>
-						<div class="name absolute"
-							  title="{{file.name}}">
-							{{getFileNameWithoutExtention(file.name)}}
-						</div>
-						<button class="option absolute" type="button" data-toggle="dropdown"
-								  aria-expanded="false">
-							<span class="glyphicon glyphicon-cog open-options"></span>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-right" role="menu">
-							<li><a ng-click="download(file)">download</a></li>
-							<li><a ng-click="deleteFile(file, $index)">delete</a></li>
-							<li><a ng-click="renameFile(file, $index)">rename</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+﻿<div class="cloud-content centered margin-top-s"
+     ng-if="!isLoginView && storages.connected.length">
+    @*<div class="col-md-2 text-center">
+        <button class="btn btn-danger create-folder-button"
+                      ng-click="createFolder()">
+                new folder
+                <span class="glyphicon glyphicon-plus pull-left new-folder"></span>
+            </button>
+            <input type="file" class=""
+                     nv-file-select uploader="uploader" />
+            <div ng-if="uploader.queue[0]">
+                name: <span ng-bind="uploader.queue[0].file.name"></span><br />
+                <button ng-click="uploader.queue[0].upload()">upload</button>
+            </div>
+        </div>*@
+    <div>
+        <div class="text-center no-entities"
+             ng-if="folders.length === 0">no folders</div>
+        <div class="box folder container relative folder"
+             ng-repeat="folder in folders track by folder.id">
+            <div class="storage-logo"
+                 ng-class="getStorageImageClass(folder.storageId)"></div>
+            <div class="name absolute" title="{{folder.name}}"
+                 ng-click="openFolder(folder)">{{folder.name}}</div>
+            <button class="option absolute" type="button" data-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="glyphicon glyphicon-cog open-options"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
+                <li><a ng-click="renameFolder(folder, $index)">rename</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <div>
+        <div class="text-center no-entities"
+             ng-if="files.length === 0">no files</div>
+        <div class="box file container relative"
+             ng-repeat="file in files track by file.id">
+            <div class="storage-logo"
+                 ng-class="getStorageImageClass(file.storageId)"></div>
+            <div class="name absolute"
+                 title="{{file.name}}">
+                {{getFileNameWithoutExtention(file.name)}}
+            </div>
+            <button class="option absolute" type="button" data-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="glyphicon glyphicon-cog open-options"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a ng-click="download(file)">download</a></li>
+                <li><a ng-click="deleteFile(file, $index)">delete</a></li>
+                <li><a ng-click="renameFile(file, $index)">rename</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-	<div ng-if="isLoginView">
-		<div class="row" ng-controller="userAccountController">
-			<div class="login-head">
-				<h1>are you ready ?</h1>
-			</div>
-			<div class="form-login col-md-6">
-				<div class="form-group">
-					<input type="text" placeholder="name" class="form-control"
-					       ng-model="userLoginName" />
-				</div>
-				<div class="form-group">
-					<input type="password" placeholder="*******" class="form-control"
-					       ng-model="userLoginPassword" />
-				</div>
-				<div class="form-group">
-					<input type="submit" class="btn btn-default" value="let's go"
-					       ng-click="login()" />
-				</div>
-				<h4><a href="#">lost password ?</a></h4>
-			</div>
-			<div class="form-login col-md-6">
-				<div class="form-group">
-					<input type="text" placeholder="name" class="form-control"
-					       ng-model="userRegistrationName" />
-				</div>
-				<div class="form-group">
-					<input type="email" placeholder="e-mail" class="form-control"
-					       ng-model="userRegistrationEmail" />
-				</div>
-				<div class="form-group">
-					<input type="text" placeholder="*******" class="form-control"
-					       ng-model="userRegistrationPassword" />
-				</div>
-				<div class="form-group">
-					<input type="text" placeholder="*******" class="form-control"
-					       ng-model="userRegistrationConfirmPassword" />
-				</div>
-				<button type="button" class="btn btn-default"
-				        ng-click="register()">
-					register
-				</button>
-			</div>
-		</div>
-	</div>
-	
-	<div ng-if="!isLoginView && !storages.connected.length">
-		<div class="welcome text-center">welcome page</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3 logo-storage-container"
-				     ng-repeat="storage in storages.available"
-				     ng-click="authorizeStorage(storage.id)">
-					<div class="logo-lg text-center container"
-					     ng-class="getStorageLargeImageClass(storage.id)"></div>
-					<div class="text-center logo-storage-name">{{storage.name}}</div>
-					<div class="connect text-center">connect</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3 logo-storage-container"
-					  ng-repeat="storage in storages.connected"
-					  ng-click="disconnect(storage.id)">
-					<div class="logo-lg text-center container"
-						  ng-class="getStorageLargeImageClass(storage.id)"></div>
-					<div class="text-center logo-storage-name">{{storage.name}}</div>
-					<div class="disconnect text-center">disconnect</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div ng-if="isLoginView">
+    <div class="row" ng-controller="userAccountController">
+        <div class="login-head">
+            <h1 class="text-center">are you ready ?</h1>
+        </div>
+        <div class="form-login col-md-6">
+            <form ng-submit=login()>
+                <div class="form-group">
+                    <input type="text" placeholder="login" class="form-control"
+                           ng-model="userLoginName" />
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="*******" class="form-control"
+                           ng-model="userLoginPassword" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="let's go" />
+                </div>
+            </form>
+            <h4><a href="#">lost password ?</a></h4>
+        </div>
+
+        <div class="form-login col-md-6">
+            <div class="form-group">
+                <input type="text" placeholder="login" class="form-control"
+                       ng-model="userRegistrationName" />
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="e-mail" class="form-control"
+                       ng-model="userRegistrationEmail" />
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="*******" class="form-control"
+                       ng-model="userRegistrationPassword" />
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="*******" class="form-control"
+                       ng-model="userRegistrationConfirmPassword" />
+            </div>
+            <button type="button" class="btn btn-primary"
+                    ng-click="register()">
+                register
+            </button>
+        </div>
+    </div>
+</div>
+
+<div ng-if="!isLoginView && !storages.connected.length">
+    <div class="welcome text-center">welcome page</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 logo-storage-container"
+                 ng-repeat="storage in storages.available"
+                 ng-click="authorizeStorage(storage.id)">
+                <div class="logo-lg text-center container"
+                     ng-class="getStorageLargeImageClass(storage.id)"></div>
+                <div class="text-center logo-storage-name">{{storage.name}}</div>
+                <div class="connect text-center">connect</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 logo-storage-container"
+                 ng-repeat="storage in storages.connected"
+                 ng-click="disconnect(storage.id)">
+                <div class="logo-lg text-center container"
+                     ng-class="getStorageLargeImageClass(storage.id)"></div>
+                <div class="text-center logo-storage-name">{{storage.name}}</div>
+                <div class="disconnect text-center">disconnect</div>
+            </div>
+        </div>
+    </div>
 </div>

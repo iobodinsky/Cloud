@@ -19,8 +19,6 @@ namespace Cloud.Repositories.DataContext
             this.AspNetUsers_Storages = new HashSet<AspNetUsers_Storages>();
             this.DropboxUserTokens = new HashSet<DropboxUserToken>();
             this.GoogleDriveUserTokens = new HashSet<GoogleDriveUserToken>();
-            this.UserFiles = new HashSet<UserFile>();
-            this.UserFolders = new HashSet<UserFolder>();
         }
     
         public string Id { get; set; }
@@ -39,7 +37,5 @@ namespace Cloud.Repositories.DataContext
         public virtual ICollection<AspNetUsers_Storages> AspNetUsers_Storages { get; set; }
         public virtual ICollection<DropboxUserToken> DropboxUserTokens { get; set; }
         public virtual ICollection<GoogleDriveUserToken> GoogleDriveUserTokens { get; set; }
-        public virtual ICollection<UserFile> UserFiles { get; set; }
-        public virtual ICollection<UserFolder> UserFolders { get; set; }
     }
 }

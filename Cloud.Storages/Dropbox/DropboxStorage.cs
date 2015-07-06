@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
-using Cloud.Repositories.DataContext;
 using Cloud.Storages.Resources;
 
 namespace Cloud.Storages.Dropbox {

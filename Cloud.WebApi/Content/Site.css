@@ -1,4 +1,48 @@
-﻿body {
+﻿.fixed { position: fixed; }
+
+.relative { position: relative; }
+
+.absolute { position: absolute; }
+
+.full-heigth { height: 100%; }
+
+.font-size-xs { font-size: 15px; }
+
+.font-size-m { font-size: 20px; }
+
+.margin-top-s { margin-top: 10px; }
+
+.margin-left-s { margin-left: 10px; }
+
+.margin-right-s { margin-right: 10px; }
+
+.text-warning { color: #eea236; }
+
+.centered { 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cursor-pointer { cursor: pointer; }
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 0;
 }
@@ -8,70 +52,38 @@
     padding-right: 0;
 }
 
-.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, 
-.col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-sm-1, .col-sm-2, 
-.col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, 
-.col-sm-10, .col-sm-11, .col-sm-12, .col-md-1, .col-md-2, .col-md-3, .col-md-4, 
-.col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, 
-.col-md-12, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, 
-.col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
-    padding-right: 5px;
-    padding-left: 5px;
+.header {
+    height: 50px;
+    line-height: 50px;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #F2F1F4;
+    z-index: 1000;
 }
 
-.navbar-inverse {
-	background-color: #fff;
-	border-bottom: none;
-	background-image: none;
+.header .user-folder-path { margin-left: 4%; }
+
+.header .folder-path-arrow { 
+    margin-left: -5px;
+    color: #C0BEBE;
 }
 
-.navbar-inverse .navbar-brand,
-.navbar-inverse .navbar-nav > li > a { text-shadow: none; }
-
-.navbar-inverse .navbar-brand:hover,
-.navbar-inverse .navbar-nav > li > a:hover { 
-	color: #000;
-	cursor: pointer;
+.header .username { 
+    color: #4C6F59;
+    cursor: default;
 }
 
-.margin-bottom-s { margin-bottom: 10px; }
+.header .username:hover { text-decoration: none; }
 
-.navbar-brand.logo-text { margin-right: 40px; }
+.cloud-content { width: 80%; }
 
-.navbar-fixed-top, .navbar-fixed-bottom { z-index: 0; background-color: #F2F1F4; }
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-.centered { margin: 0 auto; }
-
-.welcome { 
+.welcome {
 	font-size: 40px;
 	color: #bdb9b9;
 }
 
-.cloud-logo {
-	margin-left: -10px;
-	margin-right: 100px;
-}
-
-.cloud.container { width: 100%; margin-top: 10px; }
-
-.cloud-block {
-	height: 100%;
-}
-
-.cloud-block.options { 
-	border-right: #BDB9B9 solid 1px;
-}
-
-.cloud-block.content {
-	border-right: #BDB9B9 solid 1px;
-}
+.logo { margin-left: 5%; }
 
 .login-head {
     background: #6D4A70;
@@ -81,25 +93,11 @@ textarea {
 .login-head h1 {
 	color: #fff;
 	font-size: 1.5em;
-	text-align: left;
-	margin: 0 23px;
 }
 
 .form-login {
     padding: 3em 2em;
     background: #F2F2F2;
-}
-
-.relative { position: relative; }
-
-.absolute { position: absolute; }
-
-.cursor-pointer { cursor: pointer; }
-
-.cloud-path.navbar-brand {
-	color: black;
-	font-size: 20px;
-	padding-right: 5px;
 }
 
 .box {
@@ -111,7 +109,14 @@ textarea {
 	color: #fff;
 }
 
-.box.container { border-radius: 2px; }
+.box.container {
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    top: 0;
+	bottom: 0;
+	height: 45px;
+	line-height: 45px;
+}
 
 .box.file.container .option,
 .box.folder.container .option { color: #BBBABD; }
@@ -127,13 +132,6 @@ textarea {
 
 .box.folder.container:hover,
 .box.file.container:hover { cursor: pointer; }
-
-.box.container {
-	top: 0;
-	bottom: 0;
-	height: 45px;
-	line-height: 45px;
-}
 
 .box .name {
 	width: 170px;
@@ -160,48 +158,48 @@ textarea {
 
 .title { font-size: 18px; }
 
-.logo { 
-	position: absolute;
+.storage-logo {
+    position: absolute;
 	top: 10px;
 	bottom: 10px;
 	left: 10px;
 	right: 10px;
-	background-size: cover;
+    -ms-background-size: cover;
+    background-size: cover;
 }
 
-.logo-2 { 
-	background: url("Images/Storages/logo-cloud.png") top left no-repeat;
-	background-size: contain;
+.logo-1 {
+    background: url("Images/Storages/logo-drive.png") top left no-repeat;
+    -ms-background-size: contain;
+    background-size: contain;
 }
 
-.logo-1 { 
-	background: url("Images/Storages/logo-drive.png") top left no-repeat;
-	background-size: contain;
-}
-
-.logo-3 { 
-	background: url("Images/Storages/logo-dropbox.png") top left no-repeat;
-	background-size: contain;
+.logo-3 {
+    background: url("Images/Storages/logo-dropbox.png") top left no-repeat;
+    -ms-background-size: contain;
+    background-size: contain;
 }
 
 .row.storages-container { margin-left: 10px; }
 
-.logo-storage-container { 
-	background: #E5E7E4;
+.logo-storage-container {
+    background: #E5E7E4;
 	margin: 10px;
 	position: relative;
-	border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .connect,
-.disconnect { 
-	position: absolute;
+.disconnect {
+    position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	display: none;
-	opacity: 0.7;
+    -ms-opacity: 0.7;
+    opacity: 0.7;
 	padding-top: 40px;
 	font-size: 25px;
 	color: #fff;
@@ -212,35 +210,30 @@ textarea {
 .disconnect { background: #9f6662; }
 
 .logo-storage-container:hover .connect,
-.logo-storage-container:hover .disconnect { 
-	cursor: pointer;
-	border-radius: 5px;
+.logo-storage-container:hover .disconnect {
+    cursor: pointer;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
 	display: block
 }
 
-.logo-lg { 
-	width: 200px; height: 200px;
-	background-size: contain !important;
+.logo-lg {
+    width: 200px; height: 200px;
+    -ms-background-size: contain !important;
+    background-size: contain !important;
 	margin-top: 5px;
 }
 
-.logo-sm { 
-	width: 80px; height: 80px;
-	background-size: contain !important;
+.logo-sm {
+    width: 80px; height: 80px;
+    -ms-background-size: contain !important;
+    background-size: contain !important;
 	margin-top: 5px;
 }
 
-.logo-lg-1 { 
-	background: url(Images/Storages/drive-logo-lg.png) top left no-repeat;
-}
+.logo-lg-1 { background: url(Images/Storages/drive-logo-lg.png) top left no-repeat; }
 
-.logo-lg-2 { 
-	background: url(Images/Storages/logo-cloud.png) top left no-repeat;
-}
-
-.logo-lg-3 { 
-	background: url(Images/Storages/dropbox-logo-lg.png) top left no-repeat;
-}
+.logo-lg-3 { background: url(Images/Storages/dropbox-logo-lg.png) top left no-repeat; }
 
 .logo-storage-name {
 	font-size: 30px;
@@ -257,6 +250,7 @@ textarea {
 	right: 33%;
 	left: 33%;
 	width: 33%;
+    z-index: 1100;
 }
 
 .create-folder-button { 
@@ -266,73 +260,77 @@ textarea {
 
 .glyphicon.new-folder { margin-right: 10px; }
 
-.entity-container { margin: 10px; }
-
 /*loader*/
 
 .background-loder {
-	background-image: radial-gradient(circle farthest-corner at center, #3C4B57 0, #1C262B 100%);
+    background-image: radial-gradient(circle farthest-corner at center, #3C4B57 0, #1C262B 100%);
 	position: fixed;
 	top: 0;
 	bottom: 0;
 	right: 0;
 	left: 0;
-	opacity: 0.5;
+    -ms-opacity: 0.5;
+    opacity: 0.5;
 	z-index: 99998;
 }
 
 .loader {
-	position: absolute;
+    position: absolute;
 	top: calc(50% - 64px);
 	left: calc(50% - 64px);
-	width: 128px;
-	height: 128px;
-	border-radius: 50%;
+	width: 90px;
+	height: 90px;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
 	-moz-perspective: 800px;
 	-ms-perspective: 800px;
 	-webkit-perspective: 800px;
-	perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
 	z-index: 99999;
 }
 
 .inner {
-	position: absolute;
+    position: absolute;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
-	border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
 }
 
 .inner.one {
-	left: 0;
+    left: 0;
 	top: 0;
 	-moz-animation: rotate-one 1s linear infinite;
 	-o-animation: rotate-one 1s linear infinite;
 	-webkit-animation: rotate-one 1s linear infinite;
-	animation: rotate-one 1s linear infinite;
-	border-bottom: 10px solid #398439;
+    -ms-animation: rotate-one 1s linear infinite;
+    animation: rotate-one 1s linear infinite;
+	border-bottom: 8px solid #398439;
 }
 
 .inner.two {
-	right: 0;
+    right: 0;
 	top: 0;
 	-moz-animation: rotate-two 1s linear infinite;
 	-o-animation: rotate-two 1s linear infinite;
 	-webkit-animation: rotate-two 1s linear infinite;
-	animation: rotate-two 1s linear infinite;
-	border-right: 10px solid #3276B1;
+    -ms-animation: rotate-two 1s linear infinite;
+    animation: rotate-two 1s linear infinite;
+	border-right: 8px solid #3276B1;
 }
 
 .inner.three {
-	right: 0;
+    right: 0;
 	bottom: 0;
 	-moz-animation: rotate-three 1s linear infinite;
 	-o-animation: rotate-three 1s linear infinite;
 	-webkit-animation: rotate-three 1s linear infinite;
-	animation: rotate-three 1s linear infinite;
-	border-top: 10px solid #D9534F;
+    -ms-animation: rotate-three 1s linear infinite;
+	border-top: 8px solid #D9534F;
 }
 
 @-moz-keyframes rotate-one {

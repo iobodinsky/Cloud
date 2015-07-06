@@ -275,7 +275,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Storages\drive-logo-lg.png" />
     <Content Include="Content\Images\Storages\dropbox-logo-lg.png" />
-    <Content Include="Content\Images\Storages\logo-cloud.png" />
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\Storages\logo-dropbox.png" />
     <Content Include="favicon.ico" />
     <Content Include="Content\Images\Storages\logo-drive.png" />

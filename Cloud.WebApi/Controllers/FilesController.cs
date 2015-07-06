@@ -28,7 +28,7 @@ namespace Cloud.WebApi.Controllers {
 			var httpRequest = HttpContext.Current.Request;
 
 			var postedFile = httpRequest.Files.Get(0);
-			var file = new Repositories.DataContext.UserFile {
+			var file = new UserFile {
 				Id = new IdGenerator().ForFile(),
 				Name = postedFile.FileName,
 				AddedDateTime = DateTime.Now,
