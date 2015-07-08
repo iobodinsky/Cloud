@@ -30,5 +30,6 @@ namespace Cloud.Repositories.DataContext
         public virtual DbSet<DropboxUserToken> DropboxUserTokens { get; set; }
         public virtual DbSet<GoogleDriveUserToken> GoogleDriveUserTokens { get; set; }
         public virtual DbSet<Storage> Storages { get; set; }
+        public virtual DbSet<ErrorLogMessage> ErrorLogMessages { get; set; }
     }
 }

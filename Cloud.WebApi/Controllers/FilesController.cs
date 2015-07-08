@@ -19,8 +19,8 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(downloadUrl);
 		}
 
-		// POST api/files/cloud/1/folder/1/upload
-		[Route( "cloud/{storageId:int}/folder/{folderId}/upload" )]
+		// POST api/files/storage/1/folder/1/upload
+        [Route("storage/{storageId:int}/folder/{folderId}/upload")]
 		[HttpPost]
 		public async Task<IHttpActionResult> UploadFile( [FromUri] int storageId,
 			[FromUri] string folderId ) {
@@ -53,8 +53,8 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(createdFile);
 		}
 
-		// POST api/files/1/cloud/1/rename
-		[Route( "{fileId}/cloud/{storageId:int}/rename" )]
+		// POST api/files/1/storage/1/rename
+		[Route( "{fileId}/storage/{storageId:int}/rename" )]
 		[HttpPost]
 		public async Task<IHttpActionResult> RenameFile( [FromUri] string fileId,
 			[FromUri] int storageId, [FromBody] NewNameModel newfile ) {
@@ -68,8 +68,8 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(newFileName);
 		}
 
-		// DELETE api/files/1/cloud/1/delete
-		[Route( "{fileId}/cloud/{storageId:int:min(1)}/delete" )]
+		// DELETE api/files/1/storage/1/delete
+		[Route( "{fileId}/storage/{storageId:int:min(1)}/delete" )]
 		[HttpDelete]
 		public async Task<IHttpActionResult> DeleteFile( [FromUri] string fileId,
 			[FromUri] int storageId ) {

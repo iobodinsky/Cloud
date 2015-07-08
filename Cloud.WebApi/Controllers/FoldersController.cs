@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Managers;
 using Cloud.Common.Models;
-using Cloud.Repositories.DataContext;
 using Cloud.WebApi.Models;
 
 namespace Cloud.WebApi.Controllers {
@@ -21,18 +21,19 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(folderDatas);
 		}
 
-		// GET api/folders/1/cloud/1
-		[Route( "{folderId}/cloud/{storageId:int}" )]
+		// GET api/folders/1/storage/1
+		[Route( "{folderId}/storage/{storageId:int}" )]
 		public async Task<IHttpActionResult> GetFolderData( [FromUri] string folderId,
-			[FromUri] int storageId ) {
-                var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
+			[FromUri] int storageId )
+		{
+            var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
 			var folderDada = await cloud.GetFolderDataAsync(UserId, folderId);
 
 			return Ok(folderDada);
 		}
 
-		// POST: api/folders/cloud/1/create
-		[Route( "cloud/{storageId:int}/create" )]
+		// POST: api/folders/storage/1/create
+        [Route("storage/{storageId:int}/create")]
 		[HttpPost]
 		public async Task<IHttpActionResult> Create(
 			[FromUri] int storageId, [FromBody] UserFolder folder ) {
@@ -46,8 +47,8 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(createdFolder);
 		}
 
-		// POST api/folders/1/cloud/1/rename
-		[Route( "{folderId}/cloud/{storageId:int}/rename" )]
+		// POST api/folders/1/storage/1/rename
+		[Route( "{folderId}/storage/{storageId:int}/rename" )]
 		[HttpPost]
 		public async Task<IHttpActionResult> RenameFolder( [FromUri] string folderId, [FromUri] int storageId,
 			[FromBody] NewNameModel newFolder ) {
@@ -58,8 +59,8 @@ namespace Cloud.WebApi.Controllers {
 			return Ok(newName);
 		}
 
-		// DELETE: api/folders/1/cloud/1/delete
-		[Route( "{folderId}/cloud/{storageId:int}/delete" )]
+		// DELETE: api/folders/1/storage/1/delete
+		[Route( "{folderId}/storage/{storageId:int}/delete" )]
 		public async  Task<IHttpActionResult> Delete( [FromUri] string folderId, [FromUri] int storageId ) {
             var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
 			await cloud.DeleteFolderAsync(UserId, folderId);

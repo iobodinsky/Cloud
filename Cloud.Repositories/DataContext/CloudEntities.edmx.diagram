@@ -14,6 +14,7 @@
         <AssociationConnector Association="CloudDbModel.FK_DropboxUserTokens_AspNetUsers" />
         <AssociationConnector Association="CloudDbModel.FK_GoogleDriveUserTokens_AspNetUsers" />
         <AssociationConnector Association="CloudDbModel.FK_AspNetUsers_Storages_Storages" />
+        <EntityTypeShape EntityType="CloudDbModel.ErrorLogMessage" Width="1.5" PointX="0.75" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

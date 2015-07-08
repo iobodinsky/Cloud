@@ -42,34 +42,33 @@ cloud.models.constants = cloud.models.constants || {
 			register: 'api/Account/Register',
 			userInfo: 'api/Account/UserInfo',
 			storages: 'api/storages',
-			authorize: 'api/storages/authorize/cloud',
 			constructDisconnect: function(storageId) {
 			    return 'api/storages/' + storageId + '/disconnect';
 			},
 			files: {
 				constructUpload: function(folderId, storageId) {
-					return 'api/files/cloud/' + storageId + '/folder/' + folderId + '/upload';
+					return 'api/files/storage/' + storageId + '/folder/' + folderId + '/upload';
 				},
 				constructRename: function(fileId, storageId) {
-					return 'api/files/' + fileId + '/cloud/' + storageId + '/rename';
+					return 'api/files/' + fileId + '/storage/' + storageId + '/rename';
 				},
 				constructDelete: function(fileId, storageId) {
-					return 'api/files/' + fileId + '/cloud/' + storageId + '/delete';
+					return 'api/files/' + fileId + '/storage/' + storageId + '/delete';
 				},
 			},
 			folders: {
 				rootFolderData: 'api/folders',
 				constructCreate: function(storageId) {
-					return 'api/folders/cloud/' + storageId + '/create';
+					return 'api/folders/storage/' + storageId + '/create';
 				},
 				constructRename: function(folderId, storageId) {
-					return 'api/folders/' + folderId + '/cloud/' + storageId + '/rename';
+					return 'api/folders/' + folderId + '/storage/' + storageId + '/rename';
 				},
 				constructFolderData: function(folderId, storageId) {
-					return 'api/folders/' + folderId + '/cloud/' + storageId;
+					return 'api/folders/' + folderId + '/storage/' + storageId;
 				},
 				constructDelete: function(folderId, storageId) {
-					return 'api/folders/' + folderId + '/cloud/' + storageId + '/delete';
+					return 'api/folders/' + folderId + '/storage/' + storageId + '/delete';
 				}
 			},
 		},

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
-using Cloud.Repositories.DataContext;
 using Cloud.Repositories.Repositories;
 using Cloud.Storages.Resources;
 using Google;

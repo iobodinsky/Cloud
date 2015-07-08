@@ -67,7 +67,7 @@ namespace Cloud.Storages.GoogleDrive {
 					secrets, new[] {DriveService.Scope.Drive}, userId,
 					CancellationToken.None, credentialPersistanceStore);
 
-				var initializer = new BaseClientService.Initializer {
+                var initializer = new BaseClientService.Initializer {
 					HttpClientInitializer = userCredential,
 					ApplicationName = ConfigurationManager.AppSettings[AppSettingKeys.DriveApplicationUserAgent]
 				};
@@ -75,8 +75,6 @@ namespace Cloud.Storages.GoogleDrive {
 				return initializer;
 			} catch (TokenResponseException) {
 				throw new Exception("todo: Google rejected");
-			} catch (Exception) {
-				return null;
 			}
 		}
 

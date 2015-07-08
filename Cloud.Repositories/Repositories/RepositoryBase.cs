@@ -24,15 +24,22 @@ namespace Cloud.Repositories.Repositories {
 		///    Save context changes to the database
 		/// </summary>
 		public virtual void SaveChanges() {
-			try {
-				Entities.SaveChanges();
-			} catch (DbEntityValidationException) {
-			}
-
+		    try
+		    {
+		        Entities.SaveChanges();
+		    }
+		    catch (DbEntityValidationException ex)
+		    {
+		        new Logger().LogException(ex);
+		    }
+		    catch (Exception ex)
+		    {
+                new Logger().LogException(ex);
+		    }
 		}
 
 		/// <summary>
-		///    Generic method to add entity to the data context
+		///    Generic acync method to add entity to the data context
 		/// </summary>
 		/// <param name="entity">The entity that has to be added to the data context</param>
 		/// <param name="isAutoSave">If AutoSave is true the entity will utomatically be saved to the database</param>
@@ -51,7 +58,28 @@ namespace Cloud.Repositories.Repositories {
 			});
 		}
 
-		public IStorage ResolveStorageInstance( int storageId ) {
+	    /// <summary>
+	    ///    Generic method to add entity to the data context
+	    /// </summary>
+	    /// <param name="entity">The entity that has to be added to the data context</param>
+	    /// <param name="isAutoSave">If AutoSave is true the entity will utomatically be saved to the database</param>
+	    /// <typeparam name="T">Entity type</typeparam>
+	    public void Add<T>(T entity, bool isAutoSave) where T : class
+	    {
+	        var dbSet = Entities.Set<T>();
+	        if (dbSet == null)
+	        {
+	            // todo
+	            throw new Exception("todo");
+	        }
+	        dbSet.Add(entity);
+	        if (isAutoSave)
+	        {
+	            SaveChanges();
+	        }
+	    }
+
+	    public IStorage ResolveStorageInstance( int storageId ) {
 			var storage = Entities.Storages.
 				SingleOrDefault(server => server.Id == storageId);
 			if (storage == null) return null;

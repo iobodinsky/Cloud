@@ -41,6 +41,15 @@
           <Property Name="TokenType" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Uid" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="ErrorLogMessages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="StackTrace" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="DateTime" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="GoogleDriveUserTokens">
           <Key>
             <PropertyRef Name="Id" />
@@ -110,6 +119,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers_Storages" EntityType="Self.AspNetUsers_Storages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DropboxUserTokens" EntityType="Self.DropboxUserTokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorLogMessages" EntityType="Self.ErrorLogMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleDriveUserTokens" EntityType="Self.GoogleDriveUserTokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetUsers_Storages_AspNetUsers" Association="Self.FK_AspNetUsers_Storages_AspNetUsers">
@@ -155,6 +165,7 @@
             <End Role="Storage" EntitySet="Storages" />
             <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
           </AssociationSet>
+          <EntitySet Name="ErrorLogMessages" EntityType="CloudDbModel.ErrorLogMessage" />
           </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -265,6 +276,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ErrorLogMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="StackTrace" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -325,6 +345,16 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogMessages">
+            <EntityTypeMapping TypeName="CloudDbModel.ErrorLogMessage">
+              <MappingFragment StoreEntitySet="ErrorLogMessages">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

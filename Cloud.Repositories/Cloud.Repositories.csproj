@@ -74,14 +74,19 @@
     <Compile Include="DataContext\DropboxUserToken.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\ErrorLogMessage.cs">
+      <DependentUpon>CloudEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\GoogleDriveUserToken.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext\Storage.cs">
       <DependentUpon>CloudEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DropboxUserTokenRepository.cs" />
+    <Compile Include="Repositories\ErrorMessageRepository.cs" />
     <Compile Include="Repositories\GoogleDriveTokenRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserStoragesRepository.cs" />

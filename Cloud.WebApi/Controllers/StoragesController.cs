@@ -68,9 +68,8 @@ namespace Cloud.WebApi.Controllers {
 		// POST api/storages/1/disconnect
 		[Route( "{storageId}/disconnect" )]
 		[HttpPost]
-		public async Task<IHttpActionResult> DisconnectCloud(
-			[FromUri] int storageId ) {
-                var storage = UserStoragesRepository.ResolveStorageInstance(storageId);
+		public async Task<IHttpActionResult> DisconnectCloud( [FromUri] int storageId ) {
+            var storage = UserStoragesRepository.ResolveStorageInstance(storageId);
 			await storage.DisconnectAsync(UserId);
 
 			return Ok();

@@ -1,7 +1,9 @@
+-3. move constants to service
+-2. add loger
 -1. increase ... on hover file or folder name
 0. show loader on start
 1. ResolveStorageInstance move to factory
-2. /cloud to /storage
+2. /storage to /storage
 2. validate to not write dot for renaming
 2. LastModifyingDate
 8. implement history on folder browsing
