@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Http;
 using Cloud.Repositories.Repositories;
+using Cloud.Storages;
 using Cloud.WebApi.ActionFilters;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -13,8 +14,9 @@ namespace Cloud.WebApi.Controllers
     {
         private ApplicationUserManager _userManager;
 
+        protected readonly StorageFactory StorageFactory;
         protected readonly string UserId;
-        protected readonly UserStoragesRepository UserStoragesRepository;
+        protected readonly UserStorageRepository UserStoragesRepository;
 
         public ApplicationUserManager UserManager
         {
@@ -30,15 +32,14 @@ namespace Cloud.WebApi.Controllers
 
         protected ApiControllerBase()
         {
+            StorageFactory = new StorageFactory();
             UserId = User.Identity.GetUserId();
-            UserStoragesRepository = new UserStoragesRepository();
+            UserStoragesRepository = new UserStorageRepository();
         }
 
-        protected ApiControllerBase(ApplicationUserManager userManager)
+        protected ApiControllerBase(ApplicationUserManager userManager) : this()
         {
             _userManager = userManager;
-            UserId = User.Identity.GetUserId();
-            UserStoragesRepository = new UserStoragesRepository();
         }
     }
 }

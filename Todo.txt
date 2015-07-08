@@ -1,34 +1,14 @@
--3. move constants to service
--2. add loger
 -1. increase ... on hover file or folder name
 0. show loader on start
 1. ResolveStorageInstance move to factory
-2. /storage to /storage
 2. validate to not write dot for renaming
-2. LastModifyingDate
 8. implement history on folder browsing
 11. inmplement ngMessages
 13. add description for alert
-15. remove alert displaying
-16. hover style on file
-17. add more width for file/folder name
-18. add styles for choose file
-20. add is root cloud folder for ability to add new foder and upload file
-21. responcive design for header and cloud path
-22. position fixed for left and rigth containers on scroll
 23. test fail rename
-24. implement not any active storages
-25. catch (GoogleApiRequestException e) {
-      if (e.HttpStatusCode == HttpStatusCode.Unauthorized) {
-        // Credentials have been revoked.
-        // TODO: Redirect the user to the authorization URL.
 26. Is it good idia to wrap whole async method code to awaitable Task.Run method ?
-27. fail to register - green alert
-28. fail to uploadFile
 29. scrolling main page
-30. make public CloudDbEntities Entities PROTECTED
 31. make repository async, Entities.SaveChangesAsync
-32. on register do not create fordel for Local storage, create folder on Local storage enable
 33. add common error
 34. for login, register pass ng-model on view as ng-click parameter, initialize by ng-init
 

@@ -12,11 +12,11 @@ namespace Cloud.WebApi.Controllers
     public class StoragesController : ApiControllerBase
     {
 
-        private readonly UserStoragesRepository _userStoragesRepository;
+        private readonly UserStorageRepository _userStoragesRepository;
 
         public StoragesController()
         {
-            _userStoragesRepository = new UserStoragesRepository();
+            _userStoragesRepository = new UserStorageRepository();
         }
 
         // GET api/storages
@@ -55,8 +55,7 @@ namespace Cloud.WebApi.Controllers
                 return RedirectToRoute(Routes.Default, null);
             }
 
-            var storage = _userStoragesRepository
-                .ResolveStorageInstance(Constants.DropboxStorageId);
+            var storage = StorageFactory.ResolveInstance(Constants.DropboxStorageId);
             await storage.AuthorizeAsync(UserId, code);
 
             return RedirectToRoute(Routes.Default, null);
@@ -68,8 +67,7 @@ namespace Cloud.WebApi.Controllers
         public async Task<IHttpActionResult> AuthoriseGoogleDrive(
             [FromUri] string code = null, [FromUri] string error = null)
         {
-            var storage = _userStoragesRepository
-                .ResolveStorageInstance(Constants.GoogleDriveStorageId);
+            var storage = StorageFactory.ResolveInstance(Constants.GoogleDriveStorageId);
             await storage.AuthorizeAsync(UserId, code);
 
             return Ok();
@@ -80,7 +78,7 @@ namespace Cloud.WebApi.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> DisconnectCloud([FromUri] int storageId)
         {
-            var storage = UserStoragesRepository.ResolveStorageInstance(storageId);
+            var storage = StorageFactory.ResolveInstance(storageId);
             await storage.DisconnectAsync(UserId);
 
             return Ok();

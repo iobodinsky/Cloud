@@ -89,7 +89,7 @@
     <Compile Include="Repositories\ErrorMessageRepository.cs" />
     <Compile Include="Repositories\GoogleDriveTokenRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
-    <Compile Include="Repositories\UserStoragesRepository.cs" />
+    <Compile Include="Repositories\UserStorageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DataContext\CloudEntities.edmx">

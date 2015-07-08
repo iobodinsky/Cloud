@@ -137,6 +137,7 @@
       <DependentUpon>DropboxKeys.resx</DependentUpon>
     </Compile>
     <Compile Include="GoogleDrive\GoogleDriveStorage.cs" />
+    <Compile Include="StorageFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

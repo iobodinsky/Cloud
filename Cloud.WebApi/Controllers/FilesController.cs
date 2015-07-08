@@ -46,8 +46,8 @@ namespace Cloud.WebApi.Controllers
         //        Stream = postedFile.InputStream
         //    };
 
-        //    var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
-        //    var createdFile = await cloud.AddFileAsync(
+        //    var storage = GetStorageInstance(storageId);
+        //    var createdFile = await storage.AddFileAsync(
         //        UserId, userFileModel);
 
         //    return Ok(createdFile);
@@ -64,8 +64,8 @@ namespace Cloud.WebApi.Controllers
                 // todo:
                 return BadRequest();
             }
-            var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
-            var newFileName = await cloud.UpdateFileNameAsync(UserId, fileId, newfile.Name);
+            var storage = StorageFactory.ResolveInstance(storageId);
+            var newFileName = await storage.UpdateFileNameAsync(UserId, fileId, newfile.Name);
 
             return Ok(newFileName);
         }
@@ -76,8 +76,8 @@ namespace Cloud.WebApi.Controllers
         public async Task<IHttpActionResult> DeleteFile([FromUri] string fileId,
             [FromUri] int storageId)
         {
-            var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
-            await cloud.DeleteFileAsync(UserId, fileId);
+            var storage = StorageFactory.ResolveInstance(storageId);
+            await storage.DeleteFileAsync(UserId, fileId);
 
             return Ok();
         }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Validation;
-using System.Linq;
 using System.Threading.Tasks;
-using Cloud.Common.Interfaces;
 using Cloud.Repositories.DataContext;
 
 namespace Cloud.Repositories.Repositories
@@ -26,7 +24,7 @@ namespace Cloud.Repositories.Repositories
         /// <summary>
         ///    Save context changes to the database
         /// </summary>
-        public virtual void SaveChanges()
+        protected virtual void SaveChanges()
         {
             try
             {
@@ -75,25 +73,6 @@ namespace Cloud.Repositories.Repositories
             if (isAutoSave) SaveChanges();
         }
 
-        public IStorage ResolveStorageInstance(int storageId)
-        {
-            var storageEntity = Entities.Storages.
-                SingleOrDefault(server => server.Id == storageId);
-            if (storageEntity == null) throw new NullReferenceException("storageEntity");
-            var storageType = Type.GetType(storageEntity.ClassName, true);
-            if (storageType == null) throw new NullReferenceException("storageType");
-            var storageInstance = Activator.CreateInstance(storageType, storageId) as IStorage;
-
-            return storageInstance;
-        }
-
-        public IStorage ResolveStorageInstance(int storageId, string className)
-        {
-            var storageType = Type.GetType(className, true);
-            if (storageType == null) throw new NullReferenceException("storageType");
-            var storage = Activator.CreateInstance(storageType, storageId) as IStorage;
-
-            return storage;
-        }
+        
     }
 }

@@ -18,7 +18,7 @@ namespace Cloud.Storages.GoogleDrive
 
         private readonly int _id;
         private readonly DriveManager _manager;
-        private readonly UserStoragesRepository _userStoragesRepository;
+        private readonly UserStorageRepository _userStoragesRepository;
         private readonly GoogleDriveTokenRepository _tokenRepository;
 
         #endregion Private fields
@@ -27,7 +27,7 @@ namespace Cloud.Storages.GoogleDrive
         {
             _id = id;
             _manager = new DriveManager();
-            _userStoragesRepository = new UserStoragesRepository();
+            _userStoragesRepository = new UserStorageRepository();
             _tokenRepository = new GoogleDriveTokenRepository();
         }
 

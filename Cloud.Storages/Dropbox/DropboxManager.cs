@@ -11,14 +11,14 @@ namespace Cloud.Storages.Dropbox
     internal class DropboxManager
     {
         private readonly DropboxUserTokenRepository _tokenRepository;
-        private readonly UserStoragesRepository _userStoragesRepository;
+        private readonly UserStorageRepository _userStoragesRepository;
         private readonly int _dropboxStorageId;
 
         public DropboxManager(int dropboxStorageId)
         {
             _dropboxStorageId = dropboxStorageId;
             _tokenRepository = new DropboxUserTokenRepository();
-            _userStoragesRepository = new UserStoragesRepository();
+            _userStoragesRepository = new UserStorageRepository();
         }
 
         public async Task AuthorizeAsync(string userId, string code)
