@@ -2,25 +2,30 @@
 using System.Threading.Tasks;
 using Cloud.Repositories.DataContext;
 
-namespace Cloud.Repositories.Repositories {
-	public class GoogleDriveTokenRepository : RepositoryBase {
-		public async Task<GoogleDriveUserToken> GetTokenAsync( string key ) {
-			var token = await Task.Run(() =>
-				Entities.GoogleDriveUserTokens
-					.SingleOrDefault(tokenItem => tokenItem.UserId.Equals(key)));
+namespace Cloud.Repositories.Repositories
+{
+    public class GoogleDriveTokenRepository : RepositoryBase
+    {
+        public async Task<GoogleDriveUserToken> GetTokenAsync(string key)
+        {
+            var token = await Task.Run(() =>
+                Entities.GoogleDriveUserTokens
+                    .SingleOrDefault(tokenItem => tokenItem.UserId.Equals(key)));
 
-			return token;
-		}
+            return token;
+        }
 
-		public async Task DeleteAsync( string key ) {
-			await Task.Run(() => {
-				var tokenToDelete = Entities.GoogleDriveUserTokens.
-					SingleOrDefault(token => token.UserId.Equals(key));
-				if (tokenToDelete == null) return;
-				Entities.GoogleDriveUserTokens.Attach(tokenToDelete);
-				Entities.GoogleDriveUserTokens.Remove(tokenToDelete);
-				Entities.SaveChanges();
-			});
-		}
-	}
+        public async Task DeleteAsync(string key)
+        {
+            await Task.Run(() =>
+            {
+                var tokenToDelete = Entities.GoogleDriveUserTokens.
+                    SingleOrDefault(token => token.UserId.Equals(key));
+                if (tokenToDelete == null) return;
+                Entities.GoogleDriveUserTokens.Attach(tokenToDelete);
+                Entities.GoogleDriveUserTokens.Remove(tokenToDelete);
+                Entities.SaveChanges();
+            });
+        }
+    }
 }

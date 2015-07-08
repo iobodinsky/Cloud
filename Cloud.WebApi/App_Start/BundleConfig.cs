@@ -14,20 +14,20 @@ namespace Cloud.WebApi
                 "~/Scripts/assets/js/bootstrap.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ng").Include(
-					 "~/Scripts/assets/js/angular.js",
-					 "~/Scripts/assets/js/angular-file-upload.js",
-					 "~/Scripts/assets/js/ui-bootstrap-tpls-0.13.0.js",
-					 "~/Scripts/app/models/constants.js",
-					 "~/Scripts/app/services/httpService.js",
-					 "~/Scripts/app/services/userTokenService.js",
-					 "~/Scripts/app/services/alertService.js",
-					 "~/Scripts/app/services/loaderService.js",
-					 "~/Scripts/app/controllers/appController.js",
-					 "~/Scripts/app/controllers/userAccountController.js",
-					 "~/Scripts/app/controllers/renameModalController.js",
-					 "~/Scripts/app/controllers/createFolderModalController.js",
-					 "~/Scripts/app/controllers/deleteConfirmModalController.js",
-					 "~/Scripts/app/controllers/storagesModalController.js",
+                "~/Scripts/assets/js/angular.js",
+                "~/Scripts/assets/js/angular-file-upload.js",
+                "~/Scripts/assets/js/ui-bootstrap-tpls-0.13.0.js",
+                "~/Scripts/app/models/constants.js",
+                "~/Scripts/app/services/httpService.js",
+                "~/Scripts/app/services/userTokenService.js",
+                "~/Scripts/app/services/alertService.js",
+                "~/Scripts/app/services/loaderService.js",
+                "~/Scripts/app/controllers/appController.js",
+                "~/Scripts/app/controllers/userAccountController.js",
+                "~/Scripts/app/controllers/renameModalController.js",
+                "~/Scripts/app/controllers/createFolderModalController.js",
+                "~/Scripts/app/controllers/deleteConfirmModalController.js",
+                "~/Scripts/app/controllers/storagesModalController.js",
                 "~/Scripts/app/cloud.js"));
 
             bundles.Add(new StyleBundle("~/Content/css")

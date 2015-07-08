@@ -1,30 +1,32 @@
 ﻿using System.Threading.Tasks;
 using Cloud.Common.Models;
 
-namespace Cloud.Common.Interfaces {
-	public interface IStorage {
-		Task AuthorizeAsync( string userId, string code );
+namespace Cloud.Common.Interfaces
+{
+    public interface IStorage
+    {
+        Task AuthorizeAsync(string userId, string code);
 
-		Task DisconnectAsync( string userId );
+        Task DisconnectAsync(string userId);
 
-		Task<IFile> AddFileAsync( string userId, FullUserFile file );
+        Task<IFile> AddFileAsync(string userId, FullUserFile file);
 
-		Task<IFolder> AddFolderAsync( string userId, IFolder folder );
+        Task<IFolder> AddFolderAsync(string userId, IFolder folder);
 
-		Task<FolderData> GetRootFolderDataAsync( string userId );
+        Task<FolderData> GetRootFolderDataAsync(string userId);
 
-		Task<FolderData> GetFolderDataAsync( string userId, string folderId );
+        Task<FolderData> GetFolderDataAsync(string userId, string folderId);
 
-		Task<IFile> GetFileInfoAsync( string userId, string fileId );
+        Task<IFile> GetFileInfoAsync(string userId, string fileId);
 
-		Task<FullUserFile> GetFileAsync( string userId, string fileId );
+        Task<FullUserFile> GetFileAsync(string userId, string fileId);
 
-		Task<string> UpdateFileNameAsync( string userId, string fileId, string newfileName );
+        Task<string> UpdateFileNameAsync(string userId, string fileId, string newfileName);
 
-		Task<string> UpdateFolderNameAsync( string userId, string folderId, string newFolderName );
+        Task<string> UpdateFolderNameAsync(string userId, string folderId, string newFolderName);
 
-		Task DeleteFileAsync( string userId, string fileId );
+        Task DeleteFileAsync(string userId, string fileId);
 
-		Task DeleteFolderAsync( string userId, string folderId );
-	}
+        Task DeleteFolderAsync(string userId, string folderId);
+    }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Managers;
@@ -65,7 +64,6 @@ namespace Cloud.WebApi.Controllers {
             var cloud = UserStoragesRepository.ResolveStorageInstance(storageId);
 			await cloud.DeleteFolderAsync(UserId, folderId);
 
-			// todo: better return type
 			return Ok(folderId);
 		}
 	}

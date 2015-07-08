@@ -1,8 +1,10 @@
 ﻿using System;
 using Cloud.Common.Interfaces;
 
-namespace Cloud.Common.Models {
-	public class UserFile : IFile {
+namespace Cloud.Common.Models
+{
+    public class UserFile : IFile
+    {
         public string Id { get; set; }
 
         public string UserId { get; set; }
@@ -22,9 +24,9 @@ namespace Cloud.Common.Models {
         public DateTime AddedDateTime { get; set; }
 
         public int DownloadedTimes { get; set; }
-        
+
         public string DownloadUrl { get; set; }
 
         public int StorageId { get; set; }
-	}
+    }
 }

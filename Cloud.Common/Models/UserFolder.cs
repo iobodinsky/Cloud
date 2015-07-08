@@ -1,7 +1,9 @@
 ﻿using Cloud.Common.Interfaces;
 
-namespace Cloud.Common.Models {
-	public class UserFolder : IFolder {
+namespace Cloud.Common.Models
+{
+    public class UserFolder : IFolder
+    {
         public string Id { get; set; }
 
         public string Name { get; set; }
@@ -11,5 +13,5 @@ namespace Cloud.Common.Models {
         public string UserId { get; set; }
 
         public int StorageId { get; set; }
-	}
+    }
 }
