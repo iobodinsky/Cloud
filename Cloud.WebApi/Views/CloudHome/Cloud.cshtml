@@ -58,48 +58,50 @@
 </div>
 
 <div ng-if="isLoginView">
-    <div class="row" ng-controller="userAccountController">
-        <div class="login-head">
-            <h1 class="text-center">are you ready ?</h1>
-        </div>
-        <div class="form-login col-md-6">
-            <form ng-submit=login()>
+    <div class="container full-width">
+        <div class="row" ng-controller="userAccountController">
+            <div class="login-head">
+                <h1 class="text-center">are you ready ?</h1>
+            </div>
+            <div class="form-login col-md-6">
+                <form ng-submit=login()>
+                    <div class="form-group">
+                        <input type="text" placeholder="login" class="form-control"
+                               ng-model="userLoginName" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="*******" class="form-control"
+                               ng-model="userLoginPassword" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="let's go" />
+                    </div>
+                </form>
+                <h4><a href="#">lost password ?</a></h4>
+            </div>
+
+            <div class="form-login col-md-6">
                 <div class="form-group">
                     <input type="text" placeholder="login" class="form-control"
-                           ng-model="userLoginName" />
+                           ng-model="userRegistrationName" />
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="e-mail" class="form-control"
+                           ng-model="userRegistrationEmail" />
                 </div>
                 <div class="form-group">
                     <input type="password" placeholder="*******" class="form-control"
-                           ng-model="userLoginPassword" />
+                           ng-model="userRegistrationPassword" />
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="let's go" />
+                    <input type="password" placeholder="*******" class="form-control"
+                           ng-model="userRegistrationConfirmPassword" />
                 </div>
-            </form>
-            <h4><a href="#">lost password ?</a></h4>
-        </div>
-
-        <div class="form-login col-md-6">
-            <div class="form-group">
-                <input type="text" placeholder="login" class="form-control"
-                       ng-model="userRegistrationName" />
+                <button type="button" class="btn btn-primary"
+                        ng-click="register()">
+                    register
+                </button>
             </div>
-            <div class="form-group">
-                <input type="email" placeholder="e-mail" class="form-control"
-                       ng-model="userRegistrationEmail" />
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="*******" class="form-control"
-                       ng-model="userRegistrationPassword" />
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="*******" class="form-control"
-                       ng-model="userRegistrationConfirmPassword" />
-            </div>
-            <button type="button" class="btn btn-primary"
-                    ng-click="register()">
-                register
-            </button>
         </div>
     </div>
 </div>

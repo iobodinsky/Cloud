@@ -1,9 +1,8 @@
 -1. increase ... on hover file or folder name
 0. show loader on start
-1. ResolveStorageInstance move to factory
 2. validate to not write dot for renaming
 8. implement history on folder browsing
-11. inmplement ngMessages
+11. inmplement ngMessages (validation)
 13. add description for alert
 23. test fail rename
 26. Is it good idia to wrap whole async method code to awaitable Task.Run method ?
