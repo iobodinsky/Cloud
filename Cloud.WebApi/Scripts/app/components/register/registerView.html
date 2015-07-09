@@ -1,0 +1,24 @@
+﻿<div ng-controller="registerController">
+    <div class="form-login">
+        <div class="form-group">
+            <input type="text" placeholder="login" class="form-control"
+                   ng-model="registrationName" />
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder="e-mail" class="form-control"
+                   ng-model="registrationEmail" />
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="*******" class="form-control"
+                   ng-model="registrationPassword" />
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="*******" class="form-control"
+                   ng-model="registrationConfirmPassword" />
+        </div>
+        <button type="button" class="btn btn-primary"
+                ng-click="register()">
+            register
+        </button>
+    </div>
+</div>

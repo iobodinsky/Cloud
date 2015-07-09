@@ -1,8 +1,15 @@
 ﻿window.cloud = window.cloud || {};
 
 cloud.app = cloud.app || angular.module('cloud', [
+    'ui.router',
 	'angularFileUpload',
 	'ui.bootstrap'
+]);
+
+cloud.app.config([
+    '$stateProvider',
+    '$urlRouterProvider',
+    cloud.routeConfig
 ]);
 
 // constants
@@ -36,6 +43,23 @@ cloud.app.service('loaderService', [
 ]);
 
 // controllers
+cloud.app.controller('loginController', [
+    '$scope',
+    'httpService',
+    'userTokenService',
+    'constants',
+    'alertService',
+    cloud.controllers.loginController
+]);
+
+cloud.app.controller('registerController', [
+    '$scope',
+    'httpService',
+    'constants',
+    'alertService',
+    cloud.controllers.registerController
+]);
+
 cloud.app.controller('appController', [
 	'$scope',
 	'$window',
@@ -47,17 +71,6 @@ cloud.app.controller('appController', [
 	'FileUploader',
 	'$modal',
 	cloud.controllers.appController
-]);
-
-cloud.app.controller('userAccountController', [
-	'$scope',
-	'$window',
-	'httpService',
-	'alertService',
-	'userTokenService',
-	'loaderService',
-	'constants',
-	cloud.controllers.userAccountController
 ]);
 
 cloud.app.controller('renameModalController', [

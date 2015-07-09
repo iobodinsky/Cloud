@@ -1,14 +1,8 @@
 -1. increase ... on hover file or folder name
-0. show loader on start
-2. validate to not write dot for renaming
 8. implement history on folder browsing
-11. inmplement ngMessages (validation)
 13. add description for alert
-23. test fail rename
 26. Is it good idia to wrap whole async method code to awaitable Task.Run method ?
 29. scrolling main page
-31. make repository async, Entities.SaveChangesAsync
-33. add common error
 34. for login, register pass ng-model on view as ng-click parameter, initialize by ng-init
 
 Stoped on:
