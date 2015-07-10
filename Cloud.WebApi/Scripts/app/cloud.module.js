@@ -13,7 +13,7 @@ cloud.app.config([
 ]);
 
 // constants
-cloud.app.constant('constants', cloud.models.constants);
+cloud.app.constant('constants', cloud.services.constants);
 
 // services
 cloud.app.service('httpService', [
@@ -40,6 +40,12 @@ cloud.app.service('alertService', [
 
 cloud.app.service('loaderService', [
 	cloud.services.loaderService
+]);
+
+// directives
+cloud.app.directive('cloudAlert', [
+    'alertService',
+    cloud.directives.alertDirective
 ]);
 
 // controllers

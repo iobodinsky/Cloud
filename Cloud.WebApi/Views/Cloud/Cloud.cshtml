@@ -36,6 +36,7 @@
         </div>*@
     <div class="body-content">
         <div ui-view></div>
+        <cloud-alert></cloud-alert>
     </div>
     @*<div ng-class="{'background-loder': isLoader.length >= 1}"></div>
         <div class="loader" ng-if="isLoader.length >= 1">
@@ -44,14 +45,7 @@
             <div class="inner three"></div>
         </div>
 
-        <div class="alert-container" ng-show="alerts.length">
-            <alert ng-repeat="alert in alerts"
-                   class="alert text-center"
-                   type="{{alert.type}}"
-                   close="closeAlert($index)">
-                {{alert.msg}}
-            </alert>
-        </div>*@
+       *@
 
     <script type="text/ng-template" id="createFolderModal.html">
         <div class="modal-header">

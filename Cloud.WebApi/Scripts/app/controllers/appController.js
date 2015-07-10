@@ -147,10 +147,6 @@ cloud.controllers.appController = function($scope, $window, httpService, alertSe
 			});
 		};
 
-		$scope.closeAlert = function($index) {
-			alertService.alerts.splice($index);
-		};
-
 		// Helpers
 		$scope.getStorageLargeImageClass = function(storageId) {
 			return 'logo-lg-' + storageId;

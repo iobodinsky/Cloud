@@ -248,7 +248,7 @@ body {
 
 .alert-container {
 	position: fixed;
-	top: 10px;
+	top: 0;
 	right: 33%;
 	left: 33%;
 	width: 33%;

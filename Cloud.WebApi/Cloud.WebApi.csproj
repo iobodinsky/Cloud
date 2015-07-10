@@ -295,11 +295,13 @@
     <Content Include="Scripts\app\controllers\deleteConfirmModalController.js" />
     <Content Include="Scripts\app\controllers\renameModalController.js" />
     <Content Include="Scripts\app\controllers\storagesModalController.js" />
-    <Content Include="Scripts\app\models\constants.js" />
-    <Content Include="Scripts\app\services\alertService.js" />
-    <Content Include="Scripts\app\services\httpService.js" />
-    <Content Include="Scripts\app\services\loaderService.js" />
-    <Content Include="Scripts\app\services\userTokenService.js" />
+    <Content Include="Scripts\app\shared\alert\alertDirective.js" />
+    <Content Include="Scripts\app\shared\alert\alertView.html" />
+    <Content Include="Scripts\app\shared\constants.js" />
+    <Content Include="Scripts\app\shared\alert\alertService.js" />
+    <Content Include="Scripts\app\shared\httpService.js" />
+    <Content Include="Scripts\app\shared\loader\loaderService.js" />
+    <Content Include="Scripts\app\shared\userTokenService.js" />
     <Content Include="Scripts\assets\js\angular-file-upload.js" />
     <Content Include="Scripts\assets\js\angular-ui-router.min.js" />
     <Content Include="Scripts\assets\js\angular.js" />
@@ -322,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\app\services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

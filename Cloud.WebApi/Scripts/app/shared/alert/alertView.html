@@ -1,0 +1,7 @@
+﻿<div class="alert alert-container" ng-show="alerts.length">
+    <alert ng-repeat="alert in alerts"
+           class="alert text-center"
+           type="{{alert.type}}">
+        {{alert.msg}}
+    </alert>
+</div>
