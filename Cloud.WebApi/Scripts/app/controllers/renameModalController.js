@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || {};
 
-cloud.controllers.renameModalController = function($scope, $modalInstance,
+window.cloud.controllers.renameModalController = function($scope, $modalInstance,
     httpService, userTokenService, constants, renameEntity) {
     // todo: duplicated in appController
     $scope.getFileNameWithoutExtention = function(name) {

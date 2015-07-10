@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.services = cloud.services || {};
+window.cloud.services = window.cloud.services || {};
 
-cloud.services.alertService = function($timeout, constants) {
+window.cloud.services.alertService = function($timeout, constants) {
     var alerts = [];
 
     function show(type, message) {

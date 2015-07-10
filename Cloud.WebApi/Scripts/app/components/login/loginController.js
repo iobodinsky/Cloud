@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || { };
 
-cloud.controllers.loginController = function($scope, $state, httpService,
+window.cloud.controllers.loginController = function($scope, $state, httpService,
     userTokenService, constants, alertService) {
     var self = this;
 

@@ -1,73 +1,73 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.app = angular.module('cloud', [
+window.cloud.app = angular.module('cloud', [
     'ui.router',
 	'angularFileUpload',
 	'ui.bootstrap'
 ]);
 
-cloud.app.config([
+window.cloud.app.config([
     '$stateProvider',
     '$urlRouterProvider',
-    cloud.routeConfig
+    window.cloud.routeConfig
 ]);
 
 // constants
-cloud.app.constant('constants', cloud.services.constants);
+window.cloud.app.constant('constants', window.cloud.services.constants);
 
 // services
-cloud.app.service('httpService', [
+window.cloud.app.service('httpService', [
 	'$http',
 	'$window',
 	'loaderService',
 	'userTokenService',
 	'alertService',
 	'constants',
-	cloud.services.httpService
+	window.cloud.services.httpService
 ]);
 
-cloud.app.service('userTokenService', [
+window.cloud.app.service('userTokenService', [
 	'$window',
 	'constants',
-	cloud.services.userTokenService
+	window.cloud.services.userTokenService
 ]);
 
-cloud.app.service('alertService', [
+window.cloud.app.service('alertService', [
 	'$timeout',
 	'constants',
-	cloud.services.alertService
+	window.cloud.services.alertService
 ]);
 
-cloud.app.service('loaderService', [
-	cloud.services.loaderService
+window.cloud.app.service('loaderService', [
+	window.cloud.services.loaderService
 ]);
 
 // directives
-cloud.app.directive('cloudAlert', [
+window.cloud.app.directive('cloudAlert', [
     'alertService',
-    cloud.directives.alertDirective
+    window.cloud.directives.alertDirective
 ]);
 
 // controllers
-cloud.app.controller('loginController', [
+window.cloud.app.controller('loginController', [
     '$scope',
     '$state',
     'httpService',
     'userTokenService',
     'constants',
     'alertService',
-    cloud.controllers.loginController
+    window.cloud.controllers.loginController
 ]);
 
-cloud.app.controller('registerController', [
+window.cloud.app.controller('registerController', [
     '$scope',
     'httpService',
     'constants',
     'alertService',
-    cloud.controllers.registerController
+    window.cloud.controllers.registerController
 ]);
 
-cloud.app.controller('folderController', [
+window.cloud.app.controller('folderController', [
 	'$scope',
     '$state',
 	'$window',
@@ -78,44 +78,44 @@ cloud.app.controller('folderController', [
 	'userTokenService',
 	'FileUploader',
 	'$modal',
-	cloud.controllers.folderController
+	window.cloud.controllers.folderController
 ]);
 
-cloud.app.controller('renameModalController', [
+window.cloud.app.controller('renameModalController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'userTokenService',
 	'constants',
 	'renameEntity',
-	cloud.controllers.renameModalController
+	window.cloud.controllers.renameModalController
 ]);
 
-cloud.app.controller('createFolderModalController', [
+window.cloud.app.controller('createFolderModalController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'constants',
 	'userTokenService',
 	'folderId',
-	cloud.controllers.createFolderModalController
+	window.cloud.controllers.createFolderModalController
 ]);
 
-cloud.app.controller('deleteConfirmModalController', [
+window.cloud.app.controller('deleteConfirmModalController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'userTokenService',
 	'constants',
 	'deleteEntity',
-	cloud.controllers.deleteConfirmModalController
+	window.cloud.controllers.deleteConfirmModalController
 ]);
 
-cloud.app.controller('storagesModalController', [
+window.cloud.app.controller('storagesModalController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'alertService',
 	'storages',
-	cloud.controllers.storagesModalController
+	window.cloud.controllers.storagesModalController
 ]);

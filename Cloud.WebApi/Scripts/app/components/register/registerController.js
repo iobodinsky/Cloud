@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || {};
 
-cloud.controllers.registerController = function($scope, httpService, constants, alertService) {
+window.cloud.controllers.registerController = function($scope, httpService, constants, alertService) {
     $scope.register = function() {
         var registrationData = {
             UserName: $scope.registrationName,

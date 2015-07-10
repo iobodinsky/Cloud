@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.services = cloud.services || {};
+window.cloud.services = cloud.services || {};
 
-cloud.services.loaderService = function() {
+window.cloud.services.loaderService = function() {
     var loadersQueue = [];
 
     function isLoader() {

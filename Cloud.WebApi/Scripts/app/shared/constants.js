@@ -1,7 +1,8 @@
 ﻿window.cloud = window.cloud || {};
-cloud.services = cloud.services || {};
 
-cloud.services.constants = {
+window.cloud.services = window.cloud.services || { };
+
+window.cloud.services.constants = {
     userTokenKey: 'CloudUserBearerToken',
     userTokenType: 'Bearer',
     storages: {

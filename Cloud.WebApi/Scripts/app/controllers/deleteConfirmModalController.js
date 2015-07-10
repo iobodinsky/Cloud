@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || {};
 
-cloud.controllers.deleteConfirmModalController = function($scope, $modalInstance,
+window.cloud.controllers.deleteConfirmModalController = function($scope, $modalInstance,
     httpService, userTokenService, constants, deleteEntity) {
     $scope.entity = deleteEntity.data;
 

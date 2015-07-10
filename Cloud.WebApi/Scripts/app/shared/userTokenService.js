@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.services = cloud.services || {};
+window.cloud.services = window.cloud.services || {};
 
-cloud.services.userTokenService = function($window, constants) {
+window.cloud.services.userTokenService = function($window, constants) {
     function storeToken(token) {
         $window.sessionStorage.setItem(constants.userTokenKey, token);
     };

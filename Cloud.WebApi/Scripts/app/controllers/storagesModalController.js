@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || {};
 
-cloud.controllers.storagesModalController = function($scope, $modalInstance,
+window.cloud.controllers.storagesModalController = function($scope, $modalInstance,
     httpService, alertService, storages) {
     $scope.storages = storages;
 

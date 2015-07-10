@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || { };
 
-cloud.controllers.createFolderModalController = function($scope, $modalInstance,
+window.cloud.controllers.createFolderModalController = function($scope, $modalInstance,
     httpService, constants, userTokenService, folderId) {
 
     $scope.create = function() {

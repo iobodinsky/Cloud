@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || {};
 
-cloud.controllers.appController = function($scope, $window, httpService, alertService,
+window.cloud.controllers.appController = function($scope, $window, httpService, alertService,
     loaderService, constants, userTokenService, fileUploader, $modal) {
     var self = this;
 

@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.directives = cloud.directives || {};
+window.cloud.directives = cloud.directives || {};
 
-cloud.directives.alertDirective = function(alertService) {
+window.cloud.directives.alertDirective = function(alertService) {
     return {
         restrict: 'E',
         replace: true,

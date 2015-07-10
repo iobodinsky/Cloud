@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.services = cloud.services || {};
+window.cloud.services = window.cloud.services || { };
 
-cloud.services.httpService = function($http, $window, loaderService,
+window.cloud.services.httpService = function($http, $window, loaderService,
     userTokenService, alertService, constants) {
 
     function makeRequest(method, url, requestHeaders, requestData,

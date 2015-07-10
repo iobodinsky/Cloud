@@ -1,8 +1,8 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.controllers = cloud.controllers || {};
+window.cloud.controllers = window.cloud.controllers || { };
 
-cloud.controllers.folderController = function($scope, $state, $window, httpService, alertService,
+window.cloud.controllers.folderController = function($scope, $state, $window, httpService, alertService,
     loaderService, constants, userTokenService, fileUploader, $modal) {
     var self = this;
 
