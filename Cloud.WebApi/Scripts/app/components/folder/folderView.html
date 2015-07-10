@@ -22,14 +22,17 @@
                  ng-class="getStorageImageClass(folder.storageId)"></div>
             <div class="name absolute" title="{{folder.name}}"
                  ng-click="openFolder(folder)">{{folder.name}}</div>
-            <button class="option absolute" type="button" data-toggle="dropdown"
-                    aria-expanded="false">
-                <span class="glyphicon glyphicon-cog open-options"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
-                <li><a ng-click="renameFolder(folder, $index)">rename</a></li>
-            </ul>
+            <div dropdown>
+                <button class="option absolute" type="button" dropdown-toggle>
+                    <span class="glyphicon glyphicon-cog open-options"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a ng-click="openFolder(folder)">open</a></li>
+                    <li class="divider"></li>
+                    <li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
+                    <li><a ng-click="renameFolder(folder, $index)">rename</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <hr />
@@ -41,18 +44,20 @@
             <div class="storage-logo"
                  ng-class="getStorageImageClass(file.storageId)"></div>
             <div class="name absolute"
-                 title="{{file.name}}">
+                 title="{{file.name}}"
+                 ng-click="download(file)">
                 {{getFileNameWithoutExtention(file.name)}}
             </div>
-            <button class="option absolute" type="button" data-toggle="dropdown"
-                    aria-expanded="false">
-                <span class="glyphicon glyphicon-cog open-options"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <li><a ng-click="download(file)">download</a></li>
-                <li><a ng-click="deleteFile(file, $index)">delete</a></li>
-                <li><a ng-click="renameFile(file, $index)">rename</a></li>
-            </ul>
+            <div dropdown>
+                <button class="option absolute" type="button" dropdown-toggle>
+                    <span class="glyphicon glyphicon-cog open-options"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a ng-click="download(file)">download</a></li>
+                    <li><a ng-click="deleteFile(file, $index)">delete</a></li>
+                    <li><a ng-click="renameFile(file, $index)">rename</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

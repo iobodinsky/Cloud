@@ -8,11 +8,7 @@ namespace Cloud.WebApi
         {
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/common").Include(
-                "~/Scripts/assets/js/jquery-1.10.2.min.js",
-                "~/Scripts/assets/js/bootstrap.min.js"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/ng").Include(
                 "~/Scripts/assets/js/angular.js",
                 "~/Scripts/assets/js/angular-ui-router.min.js",

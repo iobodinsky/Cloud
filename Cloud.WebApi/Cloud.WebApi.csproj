@@ -311,8 +311,6 @@
     <Content Include="Scripts\assets\js\angular-file-upload.js" />
     <Content Include="Scripts\assets\js\angular-ui-router.min.js" />
     <Content Include="Scripts\assets\js\angular.js" />
-    <Content Include="Scripts\assets\js\bootstrap.min.js" />
-    <Content Include="Scripts\assets\js\jquery-1.10.2.min.js" />
     <Content Include="Scripts\assets\js\modernizr-2.6.2.js" />
     <Content Include="Scripts\assets\js\ui-bootstrap-tpls-0.13.0.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
@@ -325,7 +323,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\assets\js\jquery-1.10.2.min.map" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
