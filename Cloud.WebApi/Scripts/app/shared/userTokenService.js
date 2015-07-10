@@ -2,33 +2,32 @@
 
 cloud.services = cloud.services || {};
 
-cloud.services.userTokenService = cloud.services.userTokenService ||
-	function($window, constants) {
-		function storeToken(token) {
-			$window.sessionStorage.setItem(constants.userTokenKey, token);
-		};
+cloud.services.userTokenService = function($window, constants) {
+    function storeToken(token) {
+        $window.sessionStorage.setItem(constants.userTokenKey, token);
+    };
 
-		function isTokenExist() {
-			return $window.sessionStorage.getItem(constants.userTokenKey) != null;
-		};
+    function isTokenExist() {
+        return $window.sessionStorage.getItem(constants.userTokenKey) != null;
+    };
 
-		function getToken() {
-			return $window.sessionStorage.getItem(
-				constants.userTokenKey) || '';
-		};
+    function getToken() {
+        return $window.sessionStorage.getItem(
+            constants.userTokenKey) || '';
+    };
 
-		function removeToken() {
-			$window.sessionStorage.removeItem(constants.userTokenKey);
-		}
+    function removeToken() {
+        $window.sessionStorage.removeItem(constants.userTokenKey);
+    }
 
-		function getAuthorizationToken() {
-			return constants.userTokenType + ' ' + getToken();
-		};
+    function getAuthorizationToken() {
+        return constants.userTokenType + ' ' + getToken();
+    };
 
-		return {
-			storeToken: storeToken,
-			isTokenExist: isTokenExist,
-			removeToken: removeToken,
-			getAuthorizationToken: getAuthorizationToken
-		}
-	};
+    return {
+        storeToken: storeToken,
+        isTokenExist: isTokenExist,
+        removeToken: removeToken,
+        getAuthorizationToken: getAuthorizationToken
+    }
+};

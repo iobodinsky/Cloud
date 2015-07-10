@@ -2,7 +2,8 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.loginController = function($scope, $state, httpService, userTokenService, constants, alertService) {
+cloud.controllers.loginController = function($scope, $state, httpService,
+    userTokenService, constants, alertService) {
     var self = this;
 
     self.initialize = function() {

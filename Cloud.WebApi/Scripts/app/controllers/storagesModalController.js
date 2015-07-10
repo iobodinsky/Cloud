@@ -2,36 +2,37 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.storagesModalController = function($scope, $modalInstance, httpService, alertService, storages) {
-		$scope.storages = storages;
+cloud.controllers.storagesModalController = function($scope, $modalInstance,
+    httpService, alertService, storages) {
+    $scope.storages = storages;
 
-		$scope.getStorageLargeImageClass = function(storageId) {
-			return 'logo-lg-' + storageId;
-		};
+    $scope.getStorageLargeImageClass = function(storageId) {
+        return 'logo-lg-' + storageId;
+    };
 
-		$scope.authorizeStorage = function (storageId) {
-			var data = {
-				authorize: true,
-				storageId: storageId
-			}
+    $scope.authorizeStorage = function(storageId) {
+        var data = {
+            authorize: true,
+            storageId: storageId
+        }
 
-			$modalInstance.close({
-				data: data
-			});
-		};
+        $modalInstance.close({
+            data: data
+        });
+    };
 
-		$scope.disconnect = function (storageId) {
-			var data = {
-				disconnect: true,
-				storageId: storageId
-			}
+    $scope.disconnect = function(storageId) {
+        var data = {
+            disconnect: true,
+            storageId: storageId
+        }
 
-			$modalInstance.close({
-				data: data
-			});
-		}
+        $modalInstance.close({
+            data: data
+        });
+    }
 
-		$scope.cancel = function () {
-		    $modalInstance.dismiss('cancel');
-		};
-	};
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+};

@@ -2,28 +2,27 @@
 
 cloud.services = cloud.services || {};
 
-cloud.services.alertService = cloud.services.alertService ||
-	function($timeout, constants) {
-		var alerts = [];
+cloud.services.alertService = function($timeout, constants) {
+    var alerts = [];
 
-		function show(type, message) {
-			if (alerts.length >= constants.alert.maxCount) {
-				alerts.shift();
-			}
-			var alert = { type: type, msg: message };
-			alerts.push(alert);
-			$timeout(function() {
-					remove(alert);
-				},
-				constants.alert.timeout);
-		};
+    function show(type, message) {
+        if (alerts.length >= constants.alert.maxCount) {
+            alerts.shift();
+        }
+        var alert = { type: type, msg: message };
+        alerts.push(alert);
+        $timeout(function() {
+                remove(alert);
+            },
+            constants.alert.timeout);
+    };
 
-		function remove(alert) {
-			alerts.pop(alert);
-		};
+    function remove(alert) {
+        alerts.pop(alert);
+    };
 
-		return {
-			alerts: alerts,
-			show: show
-		}
-	};
+    return {
+        alerts: alerts,
+        show: show
+    }
+};

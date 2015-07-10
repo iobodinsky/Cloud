@@ -302,7 +302,7 @@ cloud.controllers.folderController = function($scope, $state, $window, httpServi
     };
 
     // Helpers
-    $scope.getFileNameWithoutExtention = function (fileName) {
+    $scope.getFileNameWithoutExtention = function(fileName) {
         var lastIndexOfDot = fileName.lastIndexOf('.');
         if (lastIndexOfDot >= 0) {
             return fileName.substr(0, lastIndexOfDot);
@@ -311,7 +311,7 @@ cloud.controllers.folderController = function($scope, $state, $window, httpServi
         }
     };
 
-    $scope.getStorageImageClass = function (storageId) {
+    $scope.getStorageImageClass = function(storageId) {
         return 'logo-' + storageId;
     };
 

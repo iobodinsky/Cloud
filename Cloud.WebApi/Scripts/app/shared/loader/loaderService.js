@@ -2,27 +2,26 @@
 
 cloud.services = cloud.services || {};
 
-cloud.services.loaderService =
-	cloud.services.loaderService || function() {
-		var loadersQueue = [];
+cloud.services.loaderService = function() {
+    var loadersQueue = [];
 
-		function isLoader() {
-			return loadersQueue;
-		}
+    function isLoader() {
+        return loadersQueue;
+    }
 
-		function show() {
-			loadersQueue.push(0);
-		};
+    function show() {
+        loadersQueue.push(0);
+    };
 
-		function remove() {
-			if (loadersQueue.length) {
-				loadersQueue.pop();
-			}
-		}
+    function remove() {
+        if (loadersQueue.length) {
+            loadersQueue.pop();
+        }
+    }
 
-		return {
-			isLoader: isLoader,
-			show: show,
-			remove: remove
-		};
-	};
+    return {
+        isLoader: isLoader,
+        show: show,
+        remove: remove
+    };
+};
