@@ -2,8 +2,7 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.createFolderModalController = cloud.controllers.createFolderModalController ||
-	function($scope, $modalInstance, httpService, constants, userTokenService, folderId) {
+cloud.controllers.createFolderModalController = function($scope, $modalInstance, httpService, constants, userTokenService, folderId) {
 
 		$scope.create = function() {
 			var folder = {

@@ -2,8 +2,7 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.registerController = cloud.controllers.registerController ||
-    function($scope, httpService, constants, alertService) {
+cloud.controllers.registerController = function($scope, httpService, constants, alertService) {
         $scope.register = function () {
             var registrationData = {
                 UserName: $scope.registrationName,

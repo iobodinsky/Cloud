@@ -1,6 +1,6 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.app = cloud.app || angular.module('cloud', [
+cloud.app = angular.module('cloud', [
     'ui.router',
 	'angularFileUpload',
 	'ui.bootstrap'
@@ -45,6 +45,7 @@ cloud.app.service('loaderService', [
 // controllers
 cloud.app.controller('loginController', [
     '$scope',
+    '$state',
     'httpService',
     'userTokenService',
     'constants',
@@ -60,8 +61,9 @@ cloud.app.controller('registerController', [
     cloud.controllers.registerController
 ]);
 
-cloud.app.controller('appController', [
+cloud.app.controller('folderController', [
 	'$scope',
+    '$state',
 	'$window',
 	'httpService',
 	'alertService',
@@ -70,7 +72,7 @@ cloud.app.controller('appController', [
 	'userTokenService',
 	'FileUploader',
 	'$modal',
-	cloud.controllers.appController
+	cloud.controllers.folderController
 ]);
 
 cloud.app.controller('renameModalController', [

@@ -2,9 +2,7 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.storagesModalController =
-	cloud.controllers.storagesModalController ||
-	function($scope, $modalInstance, httpService, alertService, storages) {
+cloud.controllers.storagesModalController = function($scope, $modalInstance, httpService, alertService, storages) {
 		$scope.storages = storages;
 
 		$scope.getStorageLargeImageClass = function(storageId) {

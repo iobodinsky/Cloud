@@ -13,7 +13,7 @@ namespace Cloud.WebApi
             routes.MapRoute(
                 name: Routes.Default,
                 url: "{urlparams}",
-                defaults: new {controller = "CloudHome", action = "Cloud", urlparams = UrlParameter.Optional}
+                defaults: new {controller = "Cloud", action = "Cloud", urlparams = UrlParameter.Optional}
                 );
         }
     }

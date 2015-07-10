@@ -10,7 +10,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body ng-app="cloud" ng-controller="appController" class="noselect">
+<body ng-app="cloud" class="noselect">
     @*<div class="header fixed font-size-m">
             <img src="~/Content/Images/logo.png"
                  alt="logo" class="logo pull-left" />
@@ -142,66 +142,7 @@
 </body>
 <html>
 
-<div class="cloud-content centered margin-top-s"
-     ng-if="!isLoginView && storages.connected.length">
-    @*<div class="col-md-2 text-center">
-        <button class="btn btn-danger create-folder-button"
-                      ng-click="createFolder()">
-                new folder
-                <span class="glyphicon glyphicon-plus pull-left new-folder"></span>
-            </button>
-            <input type="file" class=""
-                     nv-file-select uploader="uploader" />
-            <div ng-if="uploader.queue[0]">
-                name: <span ng-bind="uploader.queue[0].file.name"></span><br />
-                <button ng-click="uploader.queue[0].upload()">upload</button>
-            </div>
-        </div>*@
-    <div>
-        <div class="text-center no-entities"
-             ng-if="folders.length === 0">no folders</div>
-        <div class="box folder container relative folder"
-             ng-repeat="folder in folders track by folder.id">
-            <div class="storage-logo"
-                 ng-class="getStorageImageClass(folder.storageId)"></div>
-            <div class="name absolute" title="{{folder.name}}"
-                 ng-click="openFolder(folder)">{{folder.name}}</div>
-            <button class="option absolute" type="button" data-toggle="dropdown"
-                    aria-expanded="false">
-                <span class="glyphicon glyphicon-cog open-options"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
-                <li><a ng-click="renameFolder(folder, $index)">rename</a></li>
-            </ul>
-        </div>
-    </div>
-    <hr />
-    <div>
-        <div class="text-center no-entities"
-             ng-if="files.length === 0">no files</div>
-        <div class="box file container relative"
-             ng-repeat="file in files track by file.id">
-            <div class="storage-logo"
-                 ng-class="getStorageImageClass(file.storageId)"></div>
-            <div class="name absolute"
-                 title="{{file.name}}">
-                {{getFileNameWithoutExtention(file.name)}}
-            </div>
-            <button class="option absolute" type="button" data-toggle="dropdown"
-                    aria-expanded="false">
-                <span class="glyphicon glyphicon-cog open-options"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <li><a ng-click="download(file)">download</a></li>
-                <li><a ng-click="deleteFile(file, $index)">delete</a></li>
-                <li><a ng-click="renameFile(file, $index)">rename</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div ng-if="!isLoginView && !storages.connected.length">
+@*<div ng-if="!isLoginView && !storages.connected.length">
     <div class="welcome text-center">welcome page</div>
     <div class="container">
         <div class="row">
@@ -225,4 +166,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

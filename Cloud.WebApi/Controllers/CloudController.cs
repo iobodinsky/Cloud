@@ -2,7 +2,7 @@
 
 namespace Cloud.WebApi.Controllers
 {
-    public class CloudHomeController : ControllerBase
+    public class CloudController : ControllerBase
     {
         // GET cloud
         [HttpGet]

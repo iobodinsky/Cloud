@@ -25,7 +25,7 @@ namespace Cloud.WebApi
                 "~/Scripts/app/services/loaderService.js",
                 "~/Scripts/app/components/login/loginController.js",
                 "~/Scripts/app/components/register/registerController.js",
-                "~/Scripts/app/controllers/appController.js",
+                "~/Scripts/app/components/folder/folderController.js",
                 "~/Scripts/app/controllers/userAccountController.js",
                 "~/Scripts/app/controllers/renameModalController.js",
                 "~/Scripts/app/controllers/createFolderModalController.js",

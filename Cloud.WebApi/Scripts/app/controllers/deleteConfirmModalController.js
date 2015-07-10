@@ -2,9 +2,7 @@
 
 cloud.controllers = cloud.controllers || {};
 
-cloud.controllers.deleteConfirmModalController =
-	cloud.controllers.deleteConfirmModalController ||
-	function($scope, $modalInstance, httpService, userTokenService, constants, deleteEntity) {
+cloud.controllers.deleteConfirmModalController = function($scope, $modalInstance, httpService, userTokenService, constants, deleteEntity) {
 		$scope.entity = deleteEntity.data;
 
 		$scope.delete = function() {

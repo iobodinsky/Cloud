@@ -13,5 +13,10 @@ cloud.routeConfig = cloud.routeConfig || function ($stateProvider, $urlRouterPro
             url: '/register',
             templateUrl: 'scripts/app/components/register/registerView.html',
             controller: 'registerController'
+        })
+        .state('cloud', {
+            url: '/cloud',
+            templateUrl: 'scripts/app/components/folder/folderView.html',
+            controller: 'folderController'
         });
 };

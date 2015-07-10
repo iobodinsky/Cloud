@@ -244,7 +244,7 @@
     <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\FilesController.cs" />
-    <Compile Include="Controllers\CloudHomeController.cs" />
+    <Compile Include="Controllers\CloudController.cs" />
     <Compile Include="Controllers\FoldersController.cs" />
     <Compile Include="ActionFilters\ExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -284,6 +284,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.routes.js" />
     <Content Include="Scripts\app\cloud.module.js" />
+    <Content Include="Scripts\app\components\folder\folderController.js" />
+    <Content Include="Scripts\app\components\folder\folderView.html" />
     <Content Include="Scripts\app\components\login\loginController.js" />
     <Content Include="Scripts\app\components\login\loginView.html" />
     <Content Include="Scripts\app\components\register\registerController.js" />
@@ -320,8 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\app\directives\" />
-    <Folder Include="Scripts\views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -349,7 +349,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\CloudHome\Cloud.cshtml" />
+    <Content Include="Views\Cloud\Cloud.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
