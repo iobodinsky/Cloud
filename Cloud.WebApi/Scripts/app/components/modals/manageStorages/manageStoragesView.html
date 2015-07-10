@@ -1,0 +1,36 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title text-center">storages</h3>
+</div>
+<div class="modal-body">
+    <div class="title">
+        available:
+    </div>
+    <div class="row storages-container">
+        <div class="text-center" ng-if="!storages.available.length">no storages</div>
+        <div class="col-md-3 storages-sm logo-storage-container"
+             ng-repeat="storage in storages.available"
+             ng-click="authorizeStorage(storage.id)">
+            <div class="logo-sm text-center container"
+                 ng-class="getStorageLargeImageClass(storage.id)"></div>
+            <div class="text-center logo-storage-name">{{storage.name}}</div>
+            <div class="connect text-center">connect</div>
+        </div>
+    </div>
+    <div class="title">
+        connected:
+    </div>
+    <div class="row storages-container">
+        <div class="text-center" ng-if="!storages.connected.length">no connected</div>
+        <div class="col-md-3 storages-sm logo-storage-container"
+             ng-repeat="storage in storages.connected"
+             ng-click="disconnect(storage.id)">
+            <div class="logo-sm text-center container"
+                 ng-class="getStorageLargeImageClass(storage.id)"></div>
+            <div class="text-center logo-storage-name">{{storage.name}}</div>
+            <div class="disconnect text-center">disconnect</div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()">cancel</button>
+</div>

@@ -32,7 +32,7 @@ namespace Cloud.WebApi
                 "~/Scripts/app/controllers/createFolderModalController.js",
                 "~/Scripts/app/components/modals/deleteConfirm/deleteConfirmController.js",
                 "~/Scripts/app/components/modals/rename/renameController.js",
-                "~/Scripts/app/controllers/storagesModalController.js",
+                "~/Scripts/app/components/modals/manageStorages/manageStoragesController.js",
                 "~/Scripts/app/cloud.routes.js",
                 "~/Scripts/app/cloud.module.js"));
 

@@ -118,11 +118,11 @@ window.cloud.app.controller('deleteConfirmController', [
 	window.cloud.controllers.deleteConfirmController
 ]);
 
-window.cloud.app.controller('storagesModalController', [
+window.cloud.app.controller('manageStoragesController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'alertService',
 	'storages',
-	window.cloud.controllers.storagesModalController
+	window.cloud.controllers.manageStoragesController
 ]);

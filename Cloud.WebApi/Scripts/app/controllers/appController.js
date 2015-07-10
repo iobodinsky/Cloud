@@ -112,8 +112,8 @@ window.cloud.controllers.appController = function($scope, $window, httpService, 
     $scope.manageStorages = function() {
         var modalInstance = $modal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'storagesModal.html',
-            controller: cloud.controllers.storagesModalController,
+            templateUrl: 'scripts/app/components/modals/manageStorages/manageStoragesView.html',
+            controller: cloud.controllers.manageStoragesController,
             resolve: {
                 storages: function() {
                     return $scope.storages;
