@@ -31,7 +31,7 @@ namespace Cloud.WebApi
                 "~/Scripts/app/controllers/userAccountController.js",
                 "~/Scripts/app/controllers/renameModalController.js",
                 "~/Scripts/app/controllers/createFolderModalController.js",
-                "~/Scripts/app/controllers/deleteConfirmModalController.js",
+                "~/Scripts/app/components/modals/deleteConfirm/deleteConfirmController.js",
                 "~/Scripts/app/controllers/storagesModalController.js",
                 "~/Scripts/app/cloud.routes.js",
                 "~/Scripts/app/cloud.module.js"));

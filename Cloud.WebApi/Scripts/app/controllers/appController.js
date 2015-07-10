@@ -6,22 +6,6 @@ window.cloud.controllers.appController = function($scope, $window, httpService, 
     loaderService, constants, userTokenService, fileUploader, $modal) {
     var self = this;
 
-    self.clearAppData = function() {
-        $scope.files = [];
-        $scope.folders = [];
-        $scope.uploader = null;
-        $scope.userName = null;
-        self.driveFolder = null;
-        self.dropboxFolder = null;
-        $scope.cloudFolders = [];
-        $scope.userInfo = {
-            name: ''
-        };
-        $scope.storages = {
-            connected: [],
-            available: []
-        };
-    };
     self.getUserInfo = function() {
         httpService.makeRequest(
             constants.httpMethod.get,

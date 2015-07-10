@@ -2,12 +2,13 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.deleteConfirmModalController = function($scope, $modalInstance,
-    httpService, userTokenService, constants, deleteEntity) {
+window.cloud.controllers.deleteConfirmController = function($scope, $modalInstance,
+    httpService, userTokenService, alertService, constants, deleteEntity) {
     $scope.entity = deleteEntity.data;
 
     $scope.delete = function() {
         var url = '';
+
         switch (deleteEntity.type) {
         case constants.cloudEntities.folder:
             url = constants.urls.cloud.folders.constructDelete(
@@ -18,6 +19,9 @@ window.cloud.controllers.deleteConfirmModalController = function($scope, $modalI
                 deleteEntity.data.id, deleteEntity.data.storageId);
             break;
         default:
+            alertService.show(constants.alert.type.danger,
+                constants.message.failDeleteEntityNotSupported);
+            break;
         };
 
         function success(data, status, headers, config) {
@@ -39,6 +43,8 @@ window.cloud.controllers.deleteConfirmModalController = function($scope, $modalI
                 config: config
             });
         };
+
+        if (!url) $modalInstance.dismiss('cancel');
 
         httpService.makeRequest(
             constants.httpMethod.deleteMethod, url, null, null, success, error);

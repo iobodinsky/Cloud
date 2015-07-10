@@ -106,14 +106,15 @@ window.cloud.app.controller('createFolderModalController', [
 	window.cloud.controllers.createFolderModalController
 ]);
 
-window.cloud.app.controller('deleteConfirmModalController', [
+window.cloud.app.controller('deleteConfirmController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'userTokenService',
+    'alertService',
 	'constants',
 	'deleteEntity',
-	window.cloud.controllers.deleteConfirmModalController
+	window.cloud.controllers.deleteConfirmController
 ]);
 
 window.cloud.app.controller('storagesModalController', [

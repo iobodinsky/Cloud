@@ -113,8 +113,8 @@ window.cloud.controllers.folderController = function($scope, $state, $window, ht
 
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'deleteConfirmModal.html',
-            controller: cloud.controllers.deleteConfirmModalController,
+            templateUrl: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',
+            controller: cloud.controllers.deleteConfirmController,
             resolve: {
                 deleteEntity: function() {
                     return deleteEntity;
@@ -246,8 +246,8 @@ window.cloud.controllers.folderController = function($scope, $state, $window, ht
 
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'deleteConfirmModal.html',
-            controller: cloud.controllers.deleteConfirmModalController,
+            templateUrl: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',
+            controller: cloud.controllers.deleteConfirmController,
             resolve: {
                 deleteEntity: function() {
                     return deleteEntity;
