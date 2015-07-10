@@ -5,10 +5,6 @@ window.cloud.services = cloud.services || {};
 window.cloud.services.loaderService = function() {
     var loadersQueue = [];
 
-    function isLoader() {
-        return loadersQueue;
-    }
-
     function show() {
         loadersQueue.push(0);
     };
@@ -20,7 +16,7 @@ window.cloud.services.loaderService = function() {
     }
 
     return {
-        isLoader: isLoader,
+        loaders: loadersQueue,
         show: show,
         remove: remove
     };

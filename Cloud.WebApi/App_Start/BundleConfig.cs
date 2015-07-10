@@ -23,6 +23,7 @@ namespace Cloud.WebApi
                 "~/Scripts/app/shared/userTokenService.js",
                 "~/Scripts/app/shared/alert/alertService.js",
                 "~/Scripts/app/shared/alert/alertDirective.js",
+                "~/Scripts/app/shared/loader/loaderDirective.js",
                 "~/Scripts/app/shared/loader/loaderService.js",
                 "~/Scripts/app/components/login/loginController.js",
                 "~/Scripts/app/components/register/registerController.js",

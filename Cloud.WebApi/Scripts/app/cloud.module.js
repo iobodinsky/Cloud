@@ -48,6 +48,11 @@ window.cloud.app.directive('cloudAlert', [
     window.cloud.directives.alertDirective
 ]);
 
+window.cloud.app.directive('cloudLoader', [
+    'loaderService',
+    window.cloud.directives.loaderDirective
+]);
+
 // controllers
 window.cloud.app.controller('loginController', [
     '$scope',

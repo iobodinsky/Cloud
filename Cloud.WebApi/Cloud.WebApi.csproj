@@ -300,6 +300,8 @@
     <Content Include="Scripts\app\shared\constants.js" />
     <Content Include="Scripts\app\shared\alert\alertService.js" />
     <Content Include="Scripts\app\shared\httpService.js" />
+    <Content Include="Scripts\app\shared\loader\loaderView.html" />
+    <Content Include="Scripts\app\shared\loader\loaderDirective.js" />
     <Content Include="Scripts\app\shared\loader\loaderService.js" />
     <Content Include="Scripts\app\shared\userTokenService.js" />
     <Content Include="Scripts\assets\js\angular-file-upload.js" />
