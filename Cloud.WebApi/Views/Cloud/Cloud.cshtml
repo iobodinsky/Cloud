@@ -42,21 +42,6 @@
     <cloud-alert></cloud-alert>
     <cloud-loader></cloud-loader>
 
-    <script type="text/ng-template" id="createFolderModal.html">
-        <div class="modal-header">
-            <h3 class="modal-title text-center">create folder</h3>
-        </div>
-        <div class="modal-body">
-            <div>
-                <input type="text" class="form-control centered" ng-model="folderName" />
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="create(file.name)">create</button>
-            <button class="btn btn-warning" ng-click="cancel()">cancel</button>
-        </div>
-    </script>
-
     @Scripts.Render("~/bundles/common")
     @Scripts.Render("~/bundles/ng")
 </body>

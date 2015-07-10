@@ -213,8 +213,8 @@ window.cloud.controllers.folderController = function($scope, $state, $window, ht
         if (currentFolder && currentFolder.id) {
             var modalInstance = $modal.open({
                 animation: self.animationsEnabled,
-                templateUrl: 'createFolderModal.html',
-                controller: cloud.controllers.createFolderModalController,
+                templateUrl: 'scripts/app/components/modals/createFolder/createFolderView.html',
+                controller: cloud.controllers.createFolderController,
                 resolve: {
                     folderId: function() {
                         return currentFolder.id;

@@ -284,6 +284,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.routes.js" />
     <Content Include="Scripts\app\cloud.module.js" />
+    <Content Include="Scripts\app\components\modals\createFolder\createFolderView.html" />
     <Content Include="Scripts\app\components\modals\deleteConfirm\deleteConfirmView.html" />
     <Content Include="Scripts\app\components\folder\folderController.js" />
     <Content Include="Scripts\app\components\folder\folderView.html" />
@@ -294,7 +295,7 @@
     <Content Include="Scripts\app\components\register\registerController.js" />
     <Content Include="Scripts\app\components\register\registerView.html" />
     <Content Include="Scripts\app\controllers\appController.js" />
-    <Content Include="Scripts\app\controllers\createFolderModalController.js" />
+    <Content Include="Scripts\app\components\modals\createFolder\createFolderController.js" />
     <Content Include="Scripts\app\components\modals\deleteConfirm\deleteConfirmController.js" />
     <Content Include="Scripts\app\components\modals\rename\renameController.js" />
     <Content Include="Scripts\app\components\modals\manageStorages\manageStoragesController.js" />
