@@ -86,14 +86,15 @@ window.cloud.app.controller('folderController', [
 	window.cloud.controllers.folderController
 ]);
 
-window.cloud.app.controller('renameModalController', [
+window.cloud.app.controller('renameController', [
 	'$scope',
 	'$modalInstance',
 	'httpService',
 	'userTokenService',
+    'alertService',
 	'constants',
 	'renameEntity',
-	window.cloud.controllers.renameModalController
+	window.cloud.controllers.renameController
 ]);
 
 window.cloud.app.controller('createFolderModalController', [

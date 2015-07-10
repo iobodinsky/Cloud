@@ -142,8 +142,8 @@ window.cloud.controllers.folderController = function($scope, $state, $window, ht
 
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'renameModal.html',
-            controller: cloud.controllers.renameModalController,
+            templateUrl: 'scripts/app/components/modals/rename/renameView.html',
+            controller: cloud.controllers.renameController,
             resolve: {
                 renameEntity: function() {
                     return renameEntity;
@@ -177,8 +177,8 @@ window.cloud.controllers.folderController = function($scope, $state, $window, ht
         };
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'renameModal.html',
-            controller: cloud.controllers.renameModalController,
+            templateUrl: 'scripts/app/components/modals/rename/renameView.html',
+            controller: cloud.controllers.renameController,
             resolve: {
                 renameEntity: function() {
                     return renameEntity;

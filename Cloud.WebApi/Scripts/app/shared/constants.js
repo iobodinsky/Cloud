@@ -101,6 +101,7 @@ window.cloud.services.constants = {
         failCloudNotFound: 'cloud not found',
         failDelete: 'fail to delete',
         failDeleteEntityNotSupported: 'fail to delete this type entity',
+        failRenameEntityNotSupported: 'fail to rename this type entity',
 
         infoDriveFileDownloadingNotAllowed: 'download file not allowed',
         infoDropboxDownloadNotAllowed: 'download file from Dropbox not allowed',

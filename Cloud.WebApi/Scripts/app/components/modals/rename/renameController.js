@@ -2,8 +2,8 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.renameModalController = function($scope, $modalInstance,
-    httpService, userTokenService, constants, renameEntity) {
+window.cloud.controllers.renameController = function($scope, $modalInstance,
+    httpService, userTokenService, alertService, constants, renameEntity) {
     // todo: duplicated in appController
     $scope.getFileNameWithoutExtention = function(name) {
         var lastIndexOfDot = name.lastIndexOf('.');
@@ -29,6 +29,9 @@ window.cloud.controllers.renameModalController = function($scope, $modalInstance
                 renameEntity.data.id, renameEntity.data.storageId);
             break;
         default:
+            alertService.show(constants.alert.type.danger,
+                constants.message.failRenameEntityNotSupported);
+            break;
         };
 
         function success(data, status, headers, config) {
