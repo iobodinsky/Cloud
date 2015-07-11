@@ -93,6 +93,7 @@ window.cloud.services.constants = {
         failOpenFolder: 'fail to open folder',
         failUploadFile: 'fail to uploadFile',
         failGetRootFolderData: 'fail to get root folder',
+        failGetStorages: 'fail to get storages',
         failCreatFolder: 'fail to create folder',
         failRename: 'fail to rename',
         failRegister: 'fail to register',
@@ -102,6 +103,7 @@ window.cloud.services.constants = {
         failDelete: 'fail to delete',
         failDeleteEntityNotSupported: 'fail to delete this type entity',
         failRenameEntityNotSupported: 'fail to rename this type entity',
+        failConnectToUnknownStorage: 'fail to connect to unknown storage',
 
         infoDriveFileDownloadingNotAllowed: 'download file not allowed',
         infoDropboxDownloadNotAllowed: 'download file from Dropbox not allowed',

@@ -1,6 +1,6 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.routeConfig = cloud.routeConfig || function ($stateProvider, $urlRouterProvider) {
+cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
@@ -16,7 +16,15 @@ cloud.routeConfig = cloud.routeConfig || function ($stateProvider, $urlRouterPro
         })
         .state('cloud', {
             url: '/cloud',
-            templateUrl: 'scripts/app/components/folder/folderView.html',
-            controller: 'folderController'
+            views: {
+                'userAccount': {
+                    templateUrl: 'scripts/app/components/userAccount/userAccountView.html',
+                    controller: 'userAccountController'
+                },
+                '': {
+                    templateUrl: 'scripts/app/components/folder/folderView.html',
+                    controller: 'folderController'
+                }
+            }
         });
 };

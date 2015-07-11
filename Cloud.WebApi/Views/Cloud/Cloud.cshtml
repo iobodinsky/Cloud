@@ -12,28 +12,18 @@
 </head>
 <body ng-app="cloud" class="noselect">
     <div class="header fixed font-size-m">
-            <img src="~/Content/Images/logo.png"
-                 alt="logo" class="logo pull-left" />
-            @*<div class="user-folder-path pull-left" ng-if="!isLoginView">
+        <img src="~/Content/Images/logo.png"
+             alt="logo" class="logo pull-left" />
+        @*<div class="user-folder-path pull-left" ng-if="!isLoginView">
                 <div class="cursor-pointer pull-left"
                      ng-repeat="folder in cloudFolders"
                      ng-click="openFolderFromHeader(folder, $index)">
                     {{folder.name}}
                     <span class="glyphicon glyphicon-menu-right folder-path-arrow font-size-xs"></span>
                 </div>
-            </div>
-            <div class="pull-right" ng-if="!isLoginView">
-                <a class="cursor-pointer username margin-right-s font-size-xs">{{userInfo.name}}</a>
-                <a class="cursor-pointer margin-right-s" title="manage storages"
-                   ng-click="manageStorages()">
-                    <span class="glyphicon glyphicon-th text-warning"></span>
-                </a>
-                <a class="cursor-pointer margin-right-s" title="logout"
-                   ng-click="logout()">
-                    <span class="glyphicon glyphicon-log-out text-danger"></span>
-                </a>
-            </div>*@
-        </div>
+          </div>*@
+        <div ui-view="userAccount"></div>
+    </div>
 
     <div class="body-content">
         <div ui-view></div>

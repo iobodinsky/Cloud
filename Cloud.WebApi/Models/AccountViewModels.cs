@@ -27,8 +27,8 @@ namespace Cloud.WebApi.Models
 
     public class UserInfoViewModel
     {
-        [JsonProperty("email")]
-        public string Email { get; set; }
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
 
         public bool HasRegistered { get; set; }
 

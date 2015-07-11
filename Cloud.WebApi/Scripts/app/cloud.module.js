@@ -86,6 +86,18 @@ window.cloud.app.controller('folderController', [
 	window.cloud.controllers.folderController
 ]);
 
+window.cloud.app.controller('userAccountController', [
+	'$scope',
+	'$window',
+    '$modal',
+    '$state',
+	'httpService',
+    'userTokenService',
+	'alertService',
+	'constants',
+	window.cloud.controllers.userAccountController
+]);
+
 window.cloud.app.controller('renameController', [
 	'$scope',
 	'$modalInstance',

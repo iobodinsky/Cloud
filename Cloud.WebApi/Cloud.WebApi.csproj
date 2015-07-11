@@ -294,6 +294,8 @@
     <Content Include="Scripts\app\components\modals\rename\renameView.html" />
     <Content Include="Scripts\app\components\register\registerController.js" />
     <Content Include="Scripts\app\components\register\registerView.html" />
+    <Content Include="Scripts\app\components\userAccount\userAccountController.js" />
+    <Content Include="Scripts\app\components\userAccount\userAccountView.html" />
     <Content Include="Scripts\app\controllers\appController.js" />
     <Content Include="Scripts\app\components\modals\createFolder\createFolderController.js" />
     <Content Include="Scripts\app\components\modals\deleteConfirm\deleteConfirmController.js" />
@@ -327,6 +329,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\app\components\folderHistory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
