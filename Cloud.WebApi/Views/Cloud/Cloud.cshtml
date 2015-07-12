@@ -28,29 +28,3 @@
     @Scripts.Render("~/bundles/ng")
 </body>
 <html>
-
-@*<div ng-if="!isLoginView && !storages.connected.length">
-    <div class="welcome text-center">welcome page</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 logo-storage-container"
-                 ng-repeat="storage in storages.available"
-                 ng-click="authorizeStorage(storage.id)">
-                <div class="logo-lg text-center container"
-                     ng-class="getStorageLargeImageClass(storage.id)"></div>
-                <div class="text-center logo-storage-name">{{storage.name}}</div>
-                <div class="connect text-center">connect</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 logo-storage-container"
-                 ng-repeat="storage in storages.connected"
-                 ng-click="disconnect(storage.id)">
-                <div class="logo-lg text-center container"
-                     ng-class="getStorageLargeImageClass(storage.id)"></div>
-                <div class="text-center logo-storage-name">{{storage.name}}</div>
-                <div class="disconnect text-center">disconnect</div>
-            </div>
-        </div>
-    </div>
-</div>*@
