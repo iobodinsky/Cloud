@@ -32,6 +32,18 @@ window.cloud.app.service('userTokenService', [
 	window.cloud.services.userTokenService
 ]);
 
+window.cloud.app.service('folderService', [
+    'httpService',
+    'folderHistoryService',
+    'alertService',
+    'constants',
+    window.cloud.services.folderService
+]);
+
+window.cloud.app.service('folderHistoryService', [
+	window.cloud.services.folderHistoryService
+]);
+
 window.cloud.app.service('alertService', [
 	'$timeout',
 	'constants',
@@ -72,20 +84,6 @@ window.cloud.app.controller('registerController', [
     window.cloud.controllers.registerController
 ]);
 
-window.cloud.app.controller('folderController', [
-	'$scope',
-    '$state',
-	'$window',
-	'httpService',
-	'alertService',
-	'loaderService',
-	'constants',
-	'userTokenService',
-	'FileUploader',
-	'$modal',
-	window.cloud.controllers.folderController
-]);
-
 window.cloud.app.controller('userAccountController', [
 	'$scope',
 	'$window',
@@ -96,6 +94,27 @@ window.cloud.app.controller('userAccountController', [
 	'alertService',
 	'constants',
 	window.cloud.controllers.userAccountController
+]);
+
+window.cloud.app.controller('folderController', [
+	'$scope',
+    '$state',
+	'$window',
+    '$modal',
+	'httpService',
+    'folderService',
+    'userTokenService',
+	'alertService',
+	'loaderService',
+	'constants',
+	window.cloud.controllers.folderController
+]);
+
+window.cloud.app.controller('folderHistoryController', [
+    '$scope',
+    'folderHistoryService',
+    'folderService',
+    window.cloud.controllers.folderHistoryController
 ]);
 
 window.cloud.app.controller('renameController', [

@@ -9,6 +9,7 @@ window.cloud.services.constants = {
         googleDriveId: 1,
         dropboxId: 3
     },
+    rootCloudFolderId: 'cloudRoot',
     rootCloudFolderName: 'Cloud',
     alert: {
         timeout: 3000,

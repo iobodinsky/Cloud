@@ -284,6 +284,10 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.routes.js" />
     <Content Include="Scripts\app\cloud.module.js" />
+    <Content Include="Scripts\app\components\folderHistory\folderHistoryController.js" />
+    <Content Include="Scripts\app\components\folderHistory\folderHistoryService.js" />
+    <Content Include="Scripts\app\components\folderHistory\folderHistoryView.html" />
+    <Content Include="Scripts\app\components\folder\folderService.js" />
     <Content Include="Scripts\app\components\modals\createFolder\createFolderView.html" />
     <Content Include="Scripts\app\components\modals\deleteConfirm\deleteConfirmView.html" />
     <Content Include="Scripts\app\components\folder\folderController.js" />
@@ -296,7 +300,6 @@
     <Content Include="Scripts\app\components\register\registerView.html" />
     <Content Include="Scripts\app\components\userAccount\userAccountController.js" />
     <Content Include="Scripts\app\components\userAccount\userAccountView.html" />
-    <Content Include="Scripts\app\controllers\appController.js" />
     <Content Include="Scripts\app\components\modals\createFolder\createFolderController.js" />
     <Content Include="Scripts\app\components\modals\deleteConfirm\deleteConfirmController.js" />
     <Content Include="Scripts\app\components\modals\rename\renameController.js" />
@@ -329,7 +332,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\app\components\folderHistory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

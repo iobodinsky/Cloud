@@ -17,6 +17,10 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
         .state('cloud', {
             url: '/cloud',
             views: {
+                'folderHistory': {
+                    templateUrl: 'scripts/app/components/folderHistory/folderHistoryView.html',
+                    controller: 'folderHistoryController'
+                },
                 'userAccount': {
                     templateUrl: 'scripts/app/components/userAccount/userAccountView.html',
                     controller: 'userAccountController'

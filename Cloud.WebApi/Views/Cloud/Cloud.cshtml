@@ -14,14 +14,7 @@
     <div class="header fixed font-size-m">
         <img src="~/Content/Images/logo.png"
              alt="logo" class="logo pull-left" />
-        @*<div class="user-folder-path pull-left" ng-if="!isLoginView">
-                <div class="cursor-pointer pull-left"
-                     ng-repeat="folder in cloudFolders"
-                     ng-click="openFolderFromHeader(folder, $index)">
-                    {{folder.name}}
-                    <span class="glyphicon glyphicon-menu-right folder-path-arrow font-size-xs"></span>
-                </div>
-          </div>*@
+        <div ui-view="folderHistory"></div>
         <div ui-view="userAccount"></div>
     </div>
 

@@ -1,18 +1,5 @@
 ﻿<div class="cloud-content centered margin-top-s">
-    <!--<div class="col-md-2 text-center">
-        <button class="btn btn-danger create-folder-button"
-                ng-click="createFolder()">
-            new folder
-            <span class="glyphicon glyphicon-plus pull-left new-folder"></span>
-        </button>
-        <input type="file" class=""
-               nv-file-select uploader="uploader" />
-        <div ng-if="uploader.queue[0]">
-            name: <span ng-bind="uploader.queue[0].file.name"></span><br />
-            <button ng-click="uploader.queue[0].upload()">upload</button>
-        </div>
-    </div>-->
-    <div>
+   <div>
         <div class="text-center no-entities"
              ng-if="folders.length === 0">no folders</div>
         <div class="box folder container relative folder"
@@ -28,8 +15,8 @@
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                     <li><a ng-click="openFolder(folder)">open</a></li>
                     <li class="divider"></li>
-                    <li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
                     <li><a ng-click="renameFolder(folder, $index)">rename</a></li>
+                    <li><a ng-click="deleteFolder(folder, $index)">delete</a></li>
                 </ul>
             </div>
         </div>
@@ -52,7 +39,7 @@
                     <span class="glyphicon glyphicon-cog open-options"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    <li><a ng-click="download(file)">download</a></li>
+                    <li><a ng-click="downloadFile(file)">download</a></li>
                     <li><a ng-click="deleteFile(file, $index)">delete</a></li>
                     <li><a ng-click="renameFile(file, $index)">rename</a></li>
                 </ul>
