@@ -8,7 +8,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
 
     self.initilize = function() {
         if (!userTokenService.isTokenExist()) $state.go('login');
-        folderService.getRootFolderData();
+        else folderService.getRootFolderData();
     };
     self.animationsEnabled = true;
 

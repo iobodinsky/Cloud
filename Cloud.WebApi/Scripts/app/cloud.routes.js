@@ -1,8 +1,6 @@
 ﻿window.cloud = window.cloud || {};
 
 cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/login');
-
     $stateProvider
         .state('login', {
             url: '/login',
@@ -31,4 +29,6 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
                 }
             }
         });
+
+    $urlRouterProvider.otherwise('/cloud');
 };

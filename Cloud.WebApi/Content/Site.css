@@ -61,14 +61,21 @@ body {
     right: 0;
     left: 0;
     background-color: #F2F1F4;
+    font-size: 17px;
     z-index: 1000;
 }
 
 .header .user-folder-path { margin-left: 4%; }
 
+.header .user-folder-path .folder:last-child { font-weight: bold; }
+
+.header .user-folder-path .folder:last-child,
+.header .user-folder-path .folder:hover { color: #A2544E; }
+
 .header .folder-path-arrow { 
     margin-left: -5px;
     color: #C0BEBE;
+    font-size: 13px;
 }
 
 .header .username { 
@@ -271,8 +278,8 @@ body {
 	bottom: 0;
 	right: 0;
 	left: 0;
-    -ms-opacity: 0.5;
-    opacity: 0.5;
+    -ms-opacity: 0.9;
+    opacity: 0.9;
 	z-index: 99998;
 }
 

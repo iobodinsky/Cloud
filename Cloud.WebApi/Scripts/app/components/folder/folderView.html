@@ -1,7 +1,7 @@
 ﻿<div class="cloud-content centered margin-top-s">
    <div>
         <div class="text-center no-entities"
-             ng-if="folders.length === 0">no folders</div>
+             ng-if="!folders.length">no folders</div>
         <div class="box folder container relative folder"
              ng-repeat="folder in folders track by folder.id">
             <div class="storage-logo"
@@ -24,7 +24,7 @@
     <hr />
     <div>
         <div class="text-center no-entities"
-             ng-if="files.length === 0">no files</div>
+             ng-if="!files.length">no files</div>
         <div class="box file container relative"
              ng-repeat="file in files track by file.id">
             <div class="storage-logo"
@@ -40,8 +40,8 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                     <li><a ng-click="downloadFile(file)">download</a></li>
-                    <li><a ng-click="deleteFile(file, $index)">delete</a></li>
                     <li><a ng-click="renameFile(file, $index)">rename</a></li>
+                    <li><a ng-click="deleteFile(file, $index)">delete</a></li>
                 </ul>
             </div>
         </div>
