@@ -2,10 +2,12 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.userStoragesController = function($scope, userStoragesService) {
+window.cloud.controllers.userStoragesController = function($scope, $state, userStoragesService, userTokenService) {
     var self = this;
 
     self.initialize = function() {
+        if (!userTokenService.isTokenExist()) $state.go('login');
+
         userStoragesService.getStorages();
     };
 

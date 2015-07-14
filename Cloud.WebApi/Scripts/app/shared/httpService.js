@@ -2,7 +2,7 @@
 
 window.cloud.services = window.cloud.services || { };
 
-window.cloud.services.httpService = function($http, $window, loaderService,
+window.cloud.services.httpService = function($http, $window, $state, loaderService,
     userTokenService, alertService, constants) {
 
     function makeRequest(method, url, requestHeaders, requestData,
@@ -37,6 +37,13 @@ window.cloud.services.httpService = function($http, $window, loaderService,
                 loaderService.remove();
             })
             .error(function(data, status, headers, config) {
+                if (status === 401) {
+                    $state.go('login');
+                    loaderService.remove();
+
+                    return;
+                }
+
                 if (errorCallback) {
                     errorCallback(data, status, headers, config);
                 } else {

@@ -19,6 +19,7 @@ window.cloud.app.constant('constants', window.cloud.services.constants);
 window.cloud.app.service('httpService', [
 	'$http',
 	'$window',
+    '$state',
 	'loaderService',
 	'userTokenService',
 	'alertService',
@@ -129,7 +130,9 @@ window.cloud.app.controller('folderHistoryController', [
 
 window.cloud.app.controller('userStoragesController', [
     '$scope',
+    '$state',
     'userStoragesService',
+    'userTokenService',
     window.cloud.controllers.userStoragesController
 ]);
 
