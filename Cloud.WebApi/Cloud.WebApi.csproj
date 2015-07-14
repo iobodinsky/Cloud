@@ -285,6 +285,8 @@
     <Content Include="Scripts\app\cloud.routes.js" />
     <Content Include="Scripts\app\cloud.module.js" />
     <Content Include="Scripts\app\components\login\loginService.js" />
+    <Content Include="Scripts\app\components\register\matchPasswordDirective.js" />
+    <Content Include="Scripts\app\components\register\requiredDigitDirective.js" />
     <Content Include="Scripts\app\components\userStorages\userStoragesView.html" />
     <Content Include="Scripts\app\components\userStorages\userStoragesController.js" />
     <Content Include="Scripts\app\components\folderHistory\folderHistoryController.js" />
@@ -318,6 +320,7 @@
     <Content Include="Scripts\app\shared\loader\loaderService.js" />
     <Content Include="Scripts\app\shared\userTokenService.js" />
     <Content Include="Scripts\assets\js\angular-file-upload.js" />
+    <Content Include="Scripts\assets\js\angular-messages.js" />
     <Content Include="Scripts\assets\js\angular-ui-router.min.js" />
     <Content Include="Scripts\assets\js\angular.js" />
     <Content Include="Scripts\assets\js\modernizr-2.6.2.js" />

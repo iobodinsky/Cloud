@@ -9,9 +9,10 @@ window.cloud.controllers.loginController = function($scope, $state,
     self.initialize = function() {
         if (userTokenService.isTokenExist()) $state.go('cloud');
     };
-    self.clearUserLoginData = function() {
+    self.clearLoginFormInputs = function() {
         $scope.loginName = '';
         $scope.loginPassword = '';
+        $scope.loginForm.$setPristine();
     };
 
     $scope.login = function() {
@@ -20,11 +21,13 @@ window.cloud.controllers.loginController = function($scope, $state,
             userPassword: $scope.loginPassword
         };
 
-        function error() {
-            alertService.show(constants.alert.type.danger,
-                constants.message.failLogin);
+        function error(data) {
+            if (data.error_description) 
+                alertService.show(constants.alert.type.danger, data.error_description);
+            else
+                alertService.show(constants.alert.type.danger, constants.message.failLogin);
 
-            self.clearUserLoginData();
+            self.clearLoginFormInputs();
         };
 
         loginService.login(loginData, null, error);

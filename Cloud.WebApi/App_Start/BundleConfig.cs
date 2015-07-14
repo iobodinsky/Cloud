@@ -11,6 +11,7 @@ namespace Cloud.WebApi
             
             bundles.Add(new ScriptBundle("~/bundles/ng").Include(
                 "~/Scripts/assets/js/angular.js",
+                "~/Scripts/assets/js/angular-messages.js",
                 "~/Scripts/assets/js/angular-ui-router.min.js",
                 "~/Scripts/assets/js/angular-file-upload.js",
                 "~/Scripts/assets/js/ui-bootstrap-tpls-0.13.0.js",
@@ -24,6 +25,8 @@ namespace Cloud.WebApi
                 "~/Scripts/app/components/login/loginController.js",
                 "~/Scripts/app/components/login/loginService.js",
                 "~/Scripts/app/components/register/registerController.js",
+                "~/Scripts/app/components/register/matchPasswordDirective.js",
+                "~/Scripts/app/components/register/requiredDigitDirective.js",
                 "~/Scripts/app/components/userAccount/userAccountController.js",
                 "~/Scripts/app/components/folder/folderController.js",
                 "~/Scripts/app/components/folder/folderService.js",

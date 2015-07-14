@@ -12,7 +12,7 @@ window.cloud.services.constants = {
     rootCloudFolderId: 'cloudRoot',
     rootCloudFolderName: 'Cloud',
     alert: {
-        timeout: 3000,
+        timeout: 4000,
         type: {
             success: 'success',
             info: 'info',

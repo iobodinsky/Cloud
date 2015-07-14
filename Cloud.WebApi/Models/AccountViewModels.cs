@@ -41,4 +41,13 @@ namespace Cloud.WebApi.Models
 
         public string ProviderKey { get; set; }
     }
+
+    public class RegistrationModelErrors
+    {
+        [JsonProperty("hasErrors")]
+        public bool HasErrors { get; set; }
+
+        [JsonProperty("errors")]
+        public IList<string> Errors { get; set; }
+    }
 }

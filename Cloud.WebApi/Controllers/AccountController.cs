@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Cloud.Common.Resources;
-using Cloud.Repositories.DataContext;
-using Cloud.Repositories.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -17,7 +16,6 @@ using Microsoft.Owin.Security.OAuth;
 using Cloud.WebApi.Models;
 using Cloud.WebApi.Providers;
 using Cloud.WebApi.Results;
-using Constants = Cloud.Common.Models.Constants;
 
 namespace Cloud.WebApi.Controllers
 {
@@ -315,10 +313,7 @@ namespace Cloud.WebApi.Controllers
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
-            {
-                // todo:
-                return BadRequest(ModelState);
-            }
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, GetModelErrorsFromModelState()));
 
             var user = new ApplicationUser
             {
@@ -382,6 +377,36 @@ namespace Cloud.WebApi.Controllers
 
         #region Helpers
 
+        private RegistrationModelErrors GetModelErrorsFromModelState()
+        {
+            var errorModel = new RegistrationModelErrors
+            {
+                HasErrors = true,
+                Errors = new List<string>()
+            };
+
+            foreach (var modelValue in ModelState.Values)
+            {
+                foreach (var modelError in modelValue.Errors)
+                {
+                    errorModel.Errors.Add(modelError.ErrorMessage);
+                }
+            }
+
+            return errorModel;
+        }
+
+        private RegistrationModelErrors GetModelErrors(IEnumerable<string> errors)
+        {
+            var errorModel = new RegistrationModelErrors
+            {
+                HasErrors = true,
+                Errors = errors.ToList()
+            };
+
+            return errorModel;
+        }
+
         private IAuthenticationManager Authentication
         {
             get { return Request.GetOwinContext().Authentication; }
@@ -389,28 +414,18 @@ namespace Cloud.WebApi.Controllers
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
-            if (result == null)
+            if (result == null) return InternalServerError();
+            if (result.Succeeded) return null;
+
+            if (result.Errors != null)
             {
-                return InternalServerError();
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, GetModelErrors(result.Errors)));
             }
 
-            if (!result.Succeeded)
+            if (ModelState.IsValid)
             {
-                if (result.Errors != null)
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
+                // No ModelState errors are available to send, so just return an empty BadRequest.
+                return BadRequest();
             }
 
             return null;

@@ -1,21 +1,45 @@
 ﻿<div class="form-login">
-    <form ng-submit="register()">
+    <form name="registerForm" ng-submit="registerForm.$valid && register()" novalidate>
         <div class="form-group">
-            <input type="text" placeholder="login" class="form-control"
-                   ng-model="registrationName" />
+            <input type="text" name="loginInput" placeholder="login" class="form-control"
+                   ng-model="registrationName" required />
+            <div class="margin-top-s text-danger"
+                 ng-messages="registerForm.loginInput.$error">
+                <span ng-message="required">write your login</span>
+            </div>
         </div>
         <div class="form-group">
-            <input type="email" placeholder="e-mail" class="form-control"
-                   ng-model="registrationEmail" />
+            <input type="email" name="emailInput" placeholder="e-mail" class="form-control"
+                   ng-model="registrationEmail" required />
+            <div class="margin-top-s text-danger"
+                 ng-messages="registerForm.emailInput.$error">
+                <span ng-message="required">write your e-mail</span>
+                <span ng-message="email">write e-mail correctly</span>
+            </div>
         </div>
         <div class="form-group">
-            <input type="password" placeholder="*******" class="form-control"
-                   ng-model="registrationPassword" />
+            <input type="password" name="passwordInput" placeholder="*******" class="form-control"
+                   ng-model="registrationPassword" required minlength="6" required-digit />
+            <div class="margin-top-s text-danger"
+                 ng-messages="registerForm.passwordInput.$error">
+                <span ng-message="required">write your password</span>
+                <span ng-message="minlength">password must be min 6 characters</span>
+                <span ng-message="requiredDigit">password must contain at least one digit</span>
+            </div>
         </div>
         <div class="form-group">
-            <input type="password" placeholder="*******" class="form-control"
-                   ng-model="registrationConfirmPassword" />
+            <input type="password" name="confirmPasswordInput" placeholder="*******" class="form-control"
+                   ng-model="registrationConfirmPassword" required match-password="registrationPassword" />
+            <div class="margin-top-s text-danger"
+                 ng-messages="registerForm.confirmPasswordInput.$error">
+                <span ng-message="required">write confirm password</span>
+                <span ng-message="matchPassword">doesn't match confirm password</span>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">register</button>
+        <div class="margin-bottom-s text-danger"
+             ng-repeat="error in serverValidationErrors">{{error}}</div>
+        <button type="submit" class="btn btn-primary"
+                ng-disabled="registerForm.$invalid">register</button>
+        <a ui-sref="login" class="btn btn-default">go to login</a>
     </form>
 </div>

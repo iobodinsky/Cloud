@@ -3,7 +3,8 @@
 window.cloud.app = angular.module('cloud', [
     'ui.router',
 	'angularFileUpload',
-	'ui.bootstrap'
+	'ui.bootstrap',
+    'ngMessages'
 ]);
 
 window.cloud.app.config([
@@ -82,6 +83,14 @@ window.cloud.app.directive('cloudAlert', [
 window.cloud.app.directive('cloudLoader', [
     'loaderService',
     window.cloud.directives.loaderDirective
+]);
+
+window.cloud.app.directive('matchPassword', [
+    window.cloud.directives.matchPasswordDirective
+]);
+
+window.cloud.app.directive('requiredDigit', [
+    window.cloud.directives.requiredDigitDirective
 ]);
 
 // controllers

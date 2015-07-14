@@ -7,13 +7,17 @@ window.cloud.controllers.registerController = function($scope, httpService,
     var self = this;
 
     self.crearRegisterData = function() {
-        $scope.registrationName = '';
-        $scope.registrationEmail = '';
+        //$scope.registrationName = '';
+        //$scope.registrationEmail = '';
         $scope.registrationPassword = '';
         $scope.registrationConfirmPassword = '';
     };
 
+    $scope.serverValidationErrors = [];
+
     $scope.register = function() {
+        $scope.serverValidationErrors = [];
+
         var registrationData = {
             UserName: $scope.registrationName,
             Email: $scope.registrationEmail,
@@ -21,13 +25,19 @@ window.cloud.controllers.registerController = function($scope, httpService,
             ConfirmPassword: $scope.registrationConfirmPassword
         };
 
-        function success() {
-            var loginData = {
-                userName: registrationData.UserName,
-                userPassword: registrationData.Password
-            }
+        function success(data) {
+            self.crearRegisterData();
 
-            loginService.login(loginData);
+            if (data.hasErrors) {
+                $scope.serverValidationErrors = data.errors;
+            } else {
+                var loginData = {
+                    userName: registrationData.UserName,
+                    userPassword: registrationData.Password
+                }
+
+                loginService.login(loginData);
+            }
         };
 
         function error() {
