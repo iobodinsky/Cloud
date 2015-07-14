@@ -284,6 +284,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cloud.routes.js" />
     <Content Include="Scripts\app\cloud.module.js" />
+    <Content Include="Scripts\app\components\login\loginService.js" />
     <Content Include="Scripts\app\components\userStorages\userStoragesView.html" />
     <Content Include="Scripts\app\components\userStorages\userStoragesController.js" />
     <Content Include="Scripts\app\components\folderHistory\folderHistoryController.js" />

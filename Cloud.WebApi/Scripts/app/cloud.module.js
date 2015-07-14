@@ -27,6 +27,15 @@ window.cloud.app.service('httpService', [
 	window.cloud.services.httpService
 ]);
 
+window.cloud.app.service('loginService', [
+    '$state',
+    'httpService',
+    'userTokenService',
+	'alertService',
+	'constants',
+	window.cloud.services.loginService
+]);
+
 window.cloud.app.service('userTokenService', [
 	'$window',
 	'constants',
@@ -79,18 +88,17 @@ window.cloud.app.directive('cloudLoader', [
 window.cloud.app.controller('loginController', [
     '$scope',
     '$state',
-    'httpService',
     'userTokenService',
-    'constants',
-    'alertService',
+    'loginService',
     window.cloud.controllers.loginController
 ]);
 
 window.cloud.app.controller('registerController', [
     '$scope',
     'httpService',
-    'constants',
+    'loginService',
     'alertService',
+    'constants',
     window.cloud.controllers.registerController
 ]);
 
