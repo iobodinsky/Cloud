@@ -44,6 +44,15 @@ window.cloud.app.service('folderHistoryService', [
 	window.cloud.services.folderHistoryService
 ]);
 
+window.cloud.app.service('userStoragesService', [
+    '$window',
+    '$state',
+    'httpService',
+    'alertService',
+    'constants',
+    window.cloud.services.userStoragesService
+]);
+
 window.cloud.app.service('alertService', [
 	'$timeout',
 	'constants',
@@ -89,6 +98,7 @@ window.cloud.app.controller('userAccountController', [
 	'$window',
     '$modal',
     '$state',
+    'userStoragesService',
 	'httpService',
     'userTokenService',
 	'alertService',
@@ -115,6 +125,12 @@ window.cloud.app.controller('folderHistoryController', [
     'folderHistoryService',
     'folderService',
     window.cloud.controllers.folderHistoryController
+]);
+
+window.cloud.app.controller('userStoragesController', [
+    '$scope',
+    'userStoragesService',
+    window.cloud.controllers.userStoragesController
 ]);
 
 window.cloud.app.controller('renameController', [
@@ -152,8 +168,6 @@ window.cloud.app.controller('deleteConfirmController', [
 window.cloud.app.controller('manageStoragesController', [
 	'$scope',
 	'$modalInstance',
-	'httpService',
-	'alertService',
-	'storages',
+	'userStoragesService',
 	window.cloud.controllers.manageStoragesController
 ]);

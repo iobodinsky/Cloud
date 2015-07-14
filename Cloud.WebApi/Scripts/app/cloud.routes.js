@@ -28,6 +28,19 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
                     controller: 'folderController'
                 }
             }
+        })
+        .state('connect', {
+            url: '/connect',
+            views: {
+                'userAccount': {
+                    templateUrl: 'scripts/app/components/userAccount/userAccountView.html',
+                    controller: 'userAccountController'
+                },
+                '': {
+                    templateUrl: 'scripts/app/components/userStorages/userStoragesView.html',
+                    controller: 'userStoragesController'
+                }
+            }
         });
 
     $urlRouterProvider.otherwise('/cloud');

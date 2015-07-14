@@ -2,13 +2,15 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.manageStoragesController = function ($scope, $modalInstance,
-    httpService, alertService, storages) {
-    $scope.storages = storages;
+window.cloud.controllers.manageStoragesController = function($scope, $modalInstance,
+    userStoragesService) {
+    var self = this;
 
-    $scope.getStorageLargeImageClass = function(storageId) {
-        return 'logo-lg-' + storageId;
+    self.inirialize = function() {
+        userStoragesService.getStorages();
     };
+
+    $scope.storages = userStoragesService.storages;
 
     $scope.authorizeStorage = function(storageId) {
         var data = {
@@ -35,4 +37,10 @@ window.cloud.controllers.manageStoragesController = function ($scope, $modalInst
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
+
+    $scope.getStorageLargeImageClass = function(storageId) {
+        return 'logo-lg-' + storageId;
+    };
+
+    self.inirialize();
 };
