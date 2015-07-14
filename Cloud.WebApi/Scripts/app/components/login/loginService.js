@@ -2,19 +2,9 @@
 
 window.cloud.services = window.cloud.services || { };
 
-window.cloud.services.loginService = function ($state, httpService,
+window.cloud.services.loginService = function($state, httpService,
     userTokenService, alertService, constants) {
-    function login(loginData) {
-        function success(data) {
-            userTokenService.storeToken(data.access_token);
-            $state.go('cloud');
-        };
-
-        function error() {
-            alertService.show(constants.alert.type.danger,
-                constants.message.failLogin);
-        };
-
+    function login(loginData, successCallback, errorCallback) {
         var requestHeaders = {};
         requestHeaders[constants.httpHeader.name.contentType] =
             constants.httpHeader.value.formUrlencoded;
@@ -22,7 +12,20 @@ window.cloud.services.loginService = function ($state, httpService,
         var requestData = 'grant_type=password&username=' + loginData.userName +
             '&password=' + loginData.userPassword;
 
-        httpService.makeRequest( constants.httpMethod.post, constants.urls.cloud.token,
+        function successDefault(data) {
+            userTokenService.storeToken(data.access_token);
+            $state.go('cloud');
+        };
+
+        function errorDefault() {
+            alertService.show(constants.alert.type.danger,
+                constants.message.failLogin);
+        };
+
+        var success = successCallback ? successCallback : successDefault;
+        var error = errorCallback ? errorCallback : errorDefault;
+
+        httpService.makeRequest(constants.httpMethod.post, constants.urls.cloud.token,
             requestHeaders, requestData, success, error);
     };
 

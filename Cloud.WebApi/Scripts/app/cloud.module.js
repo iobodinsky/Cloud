@@ -90,6 +90,8 @@ window.cloud.app.controller('loginController', [
     '$state',
     'userTokenService',
     'loginService',
+    'alertService',
+    'constants',
     window.cloud.controllers.loginController
 ]);
 

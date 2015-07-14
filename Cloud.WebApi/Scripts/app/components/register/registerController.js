@@ -2,8 +2,17 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.registerController = function ($scope, httpService,
+window.cloud.controllers.registerController = function($scope, httpService,
     loginService, alertService, constants) {
+    var self = this;
+
+    self.crearRegisterData = function() {
+        $scope.registrationName = '';
+        $scope.registrationEmail = '';
+        $scope.registrationPassword = '';
+        $scope.registrationConfirmPassword = '';
+    };
+
     $scope.register = function() {
         var registrationData = {
             UserName: $scope.registrationName,
@@ -24,6 +33,8 @@ window.cloud.controllers.registerController = function ($scope, httpService,
         function error() {
             alertService.show(constants.alert.type.danger,
                 constants.message.failRegister);
+
+            self.crearRegisterData();
         };
 
         var requestHeaders = {};
