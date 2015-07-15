@@ -14,7 +14,7 @@ window.cloud.services.loginService = function($state, httpService,
 
         function successDefault(data) {
             userTokenService.storeToken(data.access_token);
-            $state.go('cloud');
+            $state.go(constants.routeState.cloud);
         };
 
         function errorDefault() {

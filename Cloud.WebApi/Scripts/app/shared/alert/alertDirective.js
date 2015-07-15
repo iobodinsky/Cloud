@@ -2,11 +2,11 @@
 
 window.cloud.directives = cloud.directives || {};
 
-window.cloud.directives.alertDirective = function(alertService) {
+window.cloud.directives.alertDirective = function(alertService, constants) {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'scripts/app/shared/alert/alertView.html',
+        templateUrl: constants.viewTemplatePath.alert,
         link: function($scope) {
             $scope.alerts = alertService.alerts;
         }

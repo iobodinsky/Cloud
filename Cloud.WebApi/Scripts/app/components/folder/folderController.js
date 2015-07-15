@@ -7,7 +7,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
     var self = this;
 
     self.initilize = function() {
-        if (!userTokenService.isTokenExist()) $state.go('login');
+        if (!userTokenService.isTokenExist()) $state.go(constants.routeState.login);
         else folderService.getRootFolderData();
     };
     self.animationsEnabled = true;
@@ -26,7 +26,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
         };
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'scripts/app/components/modals/rename/renameView.html',
+            templateUrl: constants.viewTemplatePath.rename,
             controller: cloud.controllers.renameController,
             resolve: {
                 renameEntity: function() {
@@ -62,7 +62,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
 
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',
+            templateUrl: constants.viewTemplatePath.deleteConfirm,
             controller: cloud.controllers.deleteConfirmController,
             resolve: {
                 deleteEntity: function() {
@@ -117,7 +117,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
 
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'scripts/app/components/modals/rename/renameView.html',
+            templateUrl: constants.viewTemplatePath.rename,
             controller: cloud.controllers.renameController,
             resolve: {
                 renameEntity: function() {
@@ -151,7 +151,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
 
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',
+            templateUrl: constants.viewTemplatePath.deleteConfirm,
             controller: cloud.controllers.deleteConfirmController,
             resolve: {
                 deleteEntity: function() {

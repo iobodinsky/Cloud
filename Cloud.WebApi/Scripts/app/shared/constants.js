@@ -36,6 +36,25 @@ window.cloud.services.constants = {
             json: 'application/json; charset=utf-8'
         }
     },
+    routeState: {
+        login: 'login',
+        register: 'register',
+        cloud: 'cloud',
+        connect: 'connect'
+    },
+    viewTemplatePath: {
+        login: 'scripts/app/components/login/loginView.html',
+        register: 'scripts/app/components/register/registerView.html',
+        folder: 'scripts/app/components/folder/folderView.html',
+        folderHistory: 'scripts/app/components/folderHistory/folderHistoryView.html',
+        userAccount: 'scripts/app/components/userAccount/userAccountView.html',
+        userStorages: 'scripts/app/components/userStorages/userStoragesView.html',
+        manageStorages: 'scripts/app/components/modals/manageStorages/manageStoragesView.html',
+        rename: 'scripts/app/components/modals/rename/renameView.html',
+        deleteConfirm: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',
+        alert: 'scripts/app/shared/alert/alertView.html',
+        loader: 'scripts/app/shared/loader/loaderView.html'
+    },
     urls: {
         cloud: {
             home: '',

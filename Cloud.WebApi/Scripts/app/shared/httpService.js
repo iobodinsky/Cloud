@@ -38,7 +38,7 @@ window.cloud.services.httpService = function($http, $window, $state, loaderServi
             })
             .error(function(data, status, headers, config) {
                 if (status === 401) {
-                    $state.go('login');
+                    $state.go(constants.routeState.login);
                     loaderService.remove();
 
                     return;

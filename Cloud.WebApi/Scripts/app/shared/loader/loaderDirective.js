@@ -2,11 +2,11 @@
 
 window.cloud.directives = window.cloud.directives || {};
 
-window.cloud.directives.loaderDirective = function(loaderService) {
+window.cloud.directives.loaderDirective = function(loaderService, constants) {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'scripts/app/shared/loader/loaderView.html',
+        templateUrl: constants.viewTemplatePath.loader,
         link: function($scope) {
             $scope.loaders = loaderService.loaders;
         }

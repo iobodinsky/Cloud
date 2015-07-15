@@ -11,7 +11,7 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
             self.getUserInfo();
             userStoragesService.getStorages();
         } else {
-            $state.go('login');
+            $state.go(constants.routeState.login);
         }
     };
     self.getUserInfo = function() {
@@ -41,7 +41,7 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
     $scope.logout = function() {
         function success() {
             userTokenService.removeToken();
-            $state.go('login');
+            $state.go(constants.routeState.login);
         };
 
         function error() {
@@ -56,7 +56,7 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
     $scope.manageStorages = function() {
         var modalInstance = $modal.open({
             animation: self.animationsEnabled,
-            templateUrl: 'scripts/app/components/modals/manageStorages/manageStoragesView.html',
+            templateUrl: constants.viewTemplatePath.manageStorages,
             controller: cloud.controllers.manageStoragesController
         });
 

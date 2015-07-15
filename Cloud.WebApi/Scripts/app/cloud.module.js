@@ -10,6 +10,7 @@ window.cloud.app = angular.module('cloud', [
 window.cloud.app.config([
     '$stateProvider',
     '$urlRouterProvider',
+    'constants',
     window.cloud.routeConfig
 ]);
 
@@ -77,11 +78,13 @@ window.cloud.app.service('loaderService', [
 // directives
 window.cloud.app.directive('cloudAlert', [
     'alertService',
+    'constants',
     window.cloud.directives.alertDirective
 ]);
 
 window.cloud.app.directive('cloudLoader', [
     'loaderService',
+    'constants',
     window.cloud.directives.loaderDirective
 ]);
 
@@ -152,6 +155,7 @@ window.cloud.app.controller('userStoragesController', [
     '$state',
     'userStoragesService',
     'userTokenService',
+    'constants',
     window.cloud.controllers.userStoragesController
 ]);
 

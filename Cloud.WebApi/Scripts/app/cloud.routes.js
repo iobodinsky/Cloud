@@ -1,47 +1,47 @@
 ﻿window.cloud = window.cloud || {};
 
-cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProvider) {
+cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProvider, constants) {
     $stateProvider
-        .state('login', {
-            url: '/login',
-            templateUrl: 'scripts/app/components/login/loginView.html',
+        .state(constants.routeState.login, {
+            url: '/' + constants.routeState.login,
+            templateUrl: constants.viewTemplatePath.login,
             controller: 'loginController'
         })
-        .state('register', {
-            url: '/register',
-            templateUrl: 'scripts/app/components/register/registerView.html',
+        .state(constants.routeState.register, {
+            url: '/' + constants.routeState.register,
+            templateUrl: constants.viewTemplatePath.register,
             controller: 'registerController'
         })
-        .state('cloud', {
-            url: '/cloud',
+        .state(constants.routeState.cloud, {
+            url: '/' + constants.routeState.cloud,
             views: {
                 'folderHistory': {
-                    templateUrl: 'scripts/app/components/folderHistory/folderHistoryView.html',
+                    templateUrl: constants.viewTemplatePath.folderHistory,
                     controller: 'folderHistoryController'
                 },
                 'userAccount': {
-                    templateUrl: 'scripts/app/components/userAccount/userAccountView.html',
+                    templateUrl: constants.viewTemplatePath.userAccount,
                     controller: 'userAccountController'
                 },
                 '': {
-                    templateUrl: 'scripts/app/components/folder/folderView.html',
+                    templateUrl: constants.viewTemplatePath.folder,
                     controller: 'folderController'
                 }
             }
         })
-        .state('connect', {
-            url: '/connect',
+        .state(constants.routeState.connect, {
+            url: '/' + constants.routeState.connect,
             views: {
                 'userAccount': {
-                    templateUrl: 'scripts/app/components/userAccount/userAccountView.html',
+                    templateUrl: constants.viewTemplatePath.userAccount,
                     controller: 'userAccountController'
                 },
                 '': {
-                    templateUrl: 'scripts/app/components/userStorages/userStoragesView.html',
+                    templateUrl: constants.viewTemplatePath.userStorages,
                     controller: 'userStoragesController'
                 }
             }
         });
 
-    $urlRouterProvider.otherwise('/cloud');
+    $urlRouterProvider.otherwise('/' + constants.routeState.cloud);
 };

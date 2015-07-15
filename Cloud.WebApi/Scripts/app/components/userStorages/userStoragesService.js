@@ -10,7 +10,7 @@ window.cloud.services.userStoragesService = function($window, $state, httpServic
 
     function getStorages() {
         function success(data) {
-            if (!data.connected.length) $state.go('connect');
+            if (!data.connected.length) $state.go(constants.routeState.connect);
 
             storages.connected = data.connected;
             storages.available = data.available;
