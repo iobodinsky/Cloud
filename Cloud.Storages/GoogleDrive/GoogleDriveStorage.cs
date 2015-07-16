@@ -107,13 +107,11 @@ namespace Cloud.Storages.GoogleDrive
             }
             catch (TokenResponseException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
             catch (GoogleApiException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
         }
 
@@ -169,13 +167,11 @@ namespace Cloud.Storages.GoogleDrive
             }
             catch (TokenResponseException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
             catch (GoogleApiException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
         }
 
@@ -204,13 +200,11 @@ namespace Cloud.Storages.GoogleDrive
             }
             catch (TokenResponseException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
             catch (GoogleApiException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
         }
 
@@ -222,13 +216,11 @@ namespace Cloud.Storages.GoogleDrive
             }
             catch (TokenResponseException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
             catch (GoogleApiException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
         }
 
@@ -241,13 +233,11 @@ namespace Cloud.Storages.GoogleDrive
             }
             catch (TokenResponseException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
             catch (GoogleApiException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
         }
 
@@ -259,13 +249,11 @@ namespace Cloud.Storages.GoogleDrive
             }
             catch (TokenResponseException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
             catch (GoogleApiException)
             {
-                DisconnectAsync(userId).Wait();
-                throw;
+                throw new Exception("Drive unauthorized");
             }
         }
 
