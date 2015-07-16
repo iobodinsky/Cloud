@@ -39,7 +39,7 @@ window.cloud.services.constants = {
     routeState: {
         login: 'login',
         register: 'register',
-        cloud: 'cloud',
+        storages: 'storages',
         connect: 'connect'
     },
     viewTemplatePath: {

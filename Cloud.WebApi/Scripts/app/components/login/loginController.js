@@ -7,7 +7,7 @@ window.cloud.controllers.loginController = function($scope, $state,
     var self = this;
 
     self.initialize = function() {
-        if (userTokenService.isTokenExist()) $state.go(constants.routeState.cloud);
+        if (userTokenService.isTokenExist()) $state.go(constants.routeState.storages);
     };
     self.clearLoginFormInputs = function() {
         $scope.loginName = '';

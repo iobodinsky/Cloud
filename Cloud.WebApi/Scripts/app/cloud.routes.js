@@ -12,8 +12,8 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
             templateUrl: constants.viewTemplatePath.register,
             controller: 'registerController'
         })
-        .state(constants.routeState.cloud, {
-            url: '/' + constants.routeState.cloud,
+        .state(constants.routeState.storages, {
+            url: '/' + constants.routeState.storages,
             views: {
                 'folderHistory': {
                     templateUrl: constants.viewTemplatePath.folderHistory,
@@ -43,5 +43,5 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
             }
         });
 
-    $urlRouterProvider.otherwise('/' + constants.routeState.cloud);
+    $urlRouterProvider.otherwise('/' + constants.routeState.storages);
 };
