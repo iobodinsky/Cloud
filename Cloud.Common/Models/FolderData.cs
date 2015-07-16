@@ -15,7 +15,7 @@ namespace Cloud.Common.Models
         [JsonProperty("folder")]
         public IFolder Folder { get; set; }
 
-        [JsonProperty("storageId")]
-        public int StorageId { get; set; }
+        [JsonProperty("storage")]
+        public string Storage { get; set; }
     }
 }

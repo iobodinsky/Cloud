@@ -5,9 +5,9 @@
         <div class="text-center" ng-if="!storages.available.length">no available</div>
         <div class="col-md-2 logo-storage-container"
              ng-repeat="storage in storages.available"
-             ng-click="connect(storage.id)">
+             ng-click="connect(storage.alias)">
             <div class="logo-lg text-center container"
-                 ng-class="getStorageLargeImageClass(storage.id)"></div>
+                 ng-class="getStorageLargeImageClass(storage.alias)"></div>
             <div class="text-center logo-storage-name">{{storage.name}}</div>
             <div class="connect text-center">connect</div>
         </div>
@@ -17,9 +17,9 @@
         <div class="text-center" ng-if="!storages.connected.length">no connected</div>
         <div class="col-md-2 logo-storage-container"
              ng-repeat="storage in storages.connected"
-             ng-click="disconnect(storage.id)">
+             ng-click="disconnect(storage.alias)">
             <div class="logo-lg text-center container"
-                 ng-class="getStorageLargeImageClass(storage.id)"></div>
+                 ng-class="getStorageLargeImageClass(storage.alias)"></div>
             <div class="text-center logo-storage-name">{{storage.name}}</div>
             <div class="disconnect text-center">disconnect</div>
         </div>

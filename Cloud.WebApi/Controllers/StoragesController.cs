@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Cloud.Common.Models;
 using Cloud.Repositories.Repositories;
-using Cloud.Storages.Dropbox;
 using Cloud.WebApi.Models;
 using Cloud.WebApi.Resources;
 
@@ -31,14 +29,16 @@ namespace Cloud.WebApi.Controllers
                         .Select(storage => new StorageModel
                         {
                             Id = storage.Id,
-                            Name = storage.Name
+                            Name = storage.Name,
+                            Alias = storage.Alias
                         })),
                 Available = await Task.Run(() =>
                     _userStoragesRepository.GetAvailableUserStorages(UserId)
                         .Select(storage => new StorageModel
                         {
                             Id = storage.Id,
-                            Name = storage.Name
+                            Name = storage.Name,
+                            Alias = storage.Alias
                         })),
             };
 
@@ -53,7 +53,7 @@ namespace Cloud.WebApi.Controllers
         {
             if (error != null) return RedirectToRoute(Routes.Default, null);
 
-            var storage = new DropboxStorage(Constants.DropboxStorageId);
+            var storage = StorageFactory.GetDropboxInstance();
 
             if (string.IsNullOrEmpty(code))
                 return Ok(await storage.GetAuthorizationRegirectUrlAsync());
@@ -69,18 +69,18 @@ namespace Cloud.WebApi.Controllers
         public async Task<IHttpActionResult> AuthoriseGoogleDrive(
             [FromUri] string code = null, [FromUri] string error = null)
         {
-            var storage = StorageFactory.ResolveInstance(Constants.GoogleDriveStorageId);
+            var storage = StorageFactory.GetGoogleDriveInstance();
             await storage.AuthorizeAsync(UserId, code);
 
             return Ok();
         }
 
         // POST api/storages/1/disconnect
-        [Route("{storageId}/disconnect")]
+        [Route("{storageAlias}/disconnect")]
         [HttpPost]
-        public async Task<IHttpActionResult> DisconnectCloud([FromUri] int storageId)
+        public async Task<IHttpActionResult> DisconnectCloud([FromUri] string storageAlias)
         {
-            var storage = StorageFactory.ResolveInstance(storageId);
+            var storage = StorageFactory.ResolveInstance(storageAlias);
             await storage.DisconnectAsync(UserId);
 
             return Ok();

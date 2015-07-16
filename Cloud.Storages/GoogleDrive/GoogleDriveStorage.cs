@@ -12,21 +12,23 @@ using Google.Apis.Drive.v2.Data;
 
 namespace Cloud.Storages.GoogleDrive
 {
-    internal class GoogleDriveStorage : IStorage
+    public class GoogleDriveStorage : IStorage
     {
         #region Private fields
 
         private readonly int _id;
-        private readonly DriveManager _manager;
+        private readonly string _alias;
+        private readonly GoogleDriveManager _manager;
         private readonly UserStorageRepository _userStoragesRepository;
         private readonly GoogleDriveTokenRepository _tokenRepository;
 
         #endregion Private fields
 
-        public GoogleDriveStorage(int id)
+        public GoogleDriveStorage(int id, string alias)
         {
             _id = id;
-            _manager = new DriveManager();
+            _alias = alias;
+            _manager = new GoogleDriveManager();
             _userStoragesRepository = new UserStorageRepository();
             _tokenRepository = new GoogleDriveTokenRepository();
         }
@@ -81,7 +83,7 @@ namespace Cloud.Storages.GoogleDrive
                             ? new DateTime()
                             : file.CreatedDate.Value,
                         DownloadUrl = file.WebContentLink,
-                        StorageId = _id
+                        Storage = _alias
                     });
                 var folders = foldersFiles.Where(
                     folderFile => folderFile.MimeType.Equals(DriveSearchFilters.FolderMimiType))
@@ -89,12 +91,12 @@ namespace Cloud.Storages.GoogleDrive
                     {
                         Id = folder.Id,
                         Name = folder.Title,
-                        StorageId = _id
+                        Storage = _alias
                     });
                 var currentFolder = new UserFolder
                 {
                     Id = "root",
-                    StorageId = _id
+                    Storage = _alias
                 };
 
                 return new FolderData
@@ -102,7 +104,7 @@ namespace Cloud.Storages.GoogleDrive
                     Files = files,
                     Folders = folders,
                     Folder = currentFolder,
-                    StorageId = _id
+                    Storage = _alias
                 };
             }
             catch (TokenResponseException)
@@ -142,7 +144,7 @@ namespace Cloud.Storages.GoogleDrive
                             ? new DateTime()
                             : file.CreatedDate.Value,
                         DownloadUrl = file.WebContentLink,
-                        StorageId = _id
+                        Storage = _alias
                     });
                 var folders = foldersFiles.Where(
                     folderFile => folderFile.MimeType.Equals(DriveSearchFilters.FolderMimiType))
@@ -150,12 +152,12 @@ namespace Cloud.Storages.GoogleDrive
                     {
                         Id = folder.Id,
                         Name = folder.Title,
-                        StorageId = _id
+                        Storage = _alias
                     });
                 var currentFolder = new UserFolder
                 {
                     Id = folderId,
-                    StorageId = _id
+                    Storage = _alias
                 };
 
                 return new FolderData

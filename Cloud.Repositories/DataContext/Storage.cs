@@ -23,6 +23,7 @@ namespace Cloud.Repositories.DataContext
         public string Name { get; set; }
         public string ClassName { get; set; }
         public bool IsActive { get; set; }
+        public string Alias { get; set; }
     
         public virtual ICollection<AspNetUsers_Storages> AspNetUsers_Storages { get; set; }
     }

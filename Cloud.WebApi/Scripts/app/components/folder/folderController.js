@@ -38,7 +38,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
         modalInstance.result.then(function(options) {
             if (options.isSuccess) {
                 if (options.isSuccess) {
-                    if (folder.storageId == constants.storages.dropboxId) {
+                    if (folder.storage == constants.storages.dropboxAlias) {
                         folderService.renameDropboxFolder($index, options.newName);
                     } else {
                         folderService.renameFolder($index, options.newName);
@@ -84,15 +84,15 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
     };
 
     $scope.downloadFile = function(file) {
-        switch (file.storageId) {
-        case constants.storages.googleDriveId: // Drive
+        switch (file.storage) {
+        case constants.storages.googleDriveAlias: // Drive
             if (file.downloadUrl) $window.open(file.downloadUrl, '_blank');
             else {
                 alertService.show(constants.alert.type.info,
                     constants.message.infoDriveFileDownloadingNotAllowed);
             }
             break;
-        case constants.storages.dropboxId: // Dropbox
+        case constants.storages.dropboxAlias: // Dropbox
             httpService.makeRequest(
                 constants.httpMethod.get,
                 constants.urls.dropbox.constructDownload(file.id),
@@ -128,7 +128,7 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
 
         modalInstance.result.then(function(options) {
             if (options.isSuccess) {
-                if (file.storageId == constants.storages.dropboxId) {
+                if (file.storage == constants.storages.dropboxAlias) {
                     folderService.renameDropboxFile($index, options.newName);
                 } else {
                     folderService.renameFile($index, options.newName);
@@ -177,8 +177,8 @@ window.cloud.controllers.folderController = function($scope, $state, $window, $m
         return folderService.getFileNameWithoutExtention(fileName);
     };
 
-    $scope.getStorageImageClass = function(storageId) {
-        return 'logo-' + storageId;
+    $scope.getStorageImageClass = function(storage) {
+        return 'logo-' + storage;
     };
 
     self.initilize();

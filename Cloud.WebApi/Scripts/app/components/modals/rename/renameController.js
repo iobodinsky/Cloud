@@ -22,11 +22,11 @@ window.cloud.controllers.renameController = function($scope, $modalInstance,
         switch (renameEntity.type) {
         case constants.cloudEntities.folder:
             url = constants.urls.cloud.folders.constructRename(
-                renameEntity.data.id, renameEntity.data.storageId);
+                renameEntity.data.id, renameEntity.data.storage);
             break;
         case constants.cloudEntities.file:
             url = constants.urls.cloud.files.constructRename(
-                renameEntity.data.id, renameEntity.data.storageId);
+                renameEntity.data.id, renameEntity.data.storage);
             break;
         default:
             alertService.show(constants.alert.type.danger,

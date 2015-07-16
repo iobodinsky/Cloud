@@ -12,10 +12,10 @@ window.cloud.controllers.manageStoragesController = function($scope, $modalInsta
 
     $scope.storages = userStoragesService.storages;
 
-    $scope.authorizeStorage = function(storageId) {
+    $scope.authorizeStorage = function(storage) {
         var data = {
             authorize: true,
-            storageId: storageId
+            storage: storage
         }
 
         $modalInstance.close({
@@ -23,10 +23,10 @@ window.cloud.controllers.manageStoragesController = function($scope, $modalInsta
         });
     };
 
-    $scope.disconnect = function(storageId) {
+    $scope.disconnect = function(storage) {
         var data = {
             disconnect: true,
-            storageId: storageId
+            storage: storage
         }
 
         $modalInstance.close({
@@ -38,8 +38,8 @@ window.cloud.controllers.manageStoragesController = function($scope, $modalInsta
         $modalInstance.dismiss('cancel');
     };
 
-    $scope.getStorageLargeImageClass = function(storageId) {
-        return 'logo-lg-' + storageId;
+    $scope.getStorageLargeImageClass = function(storage) {
+        return 'logo-lg-' + storage;
     };
 
     self.inirialize();

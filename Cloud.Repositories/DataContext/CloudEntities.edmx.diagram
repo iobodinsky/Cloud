@@ -9,12 +9,12 @@
         <EntityTypeShape EntityType="CloudDbModel.AspNetUsers_Storages" Width="1.5" PointX="6" PointY="9.125" />
         <EntityTypeShape EntityType="CloudDbModel.DropboxUserToken" Width="1.5" PointX="3" PointY="5.75" />
         <EntityTypeShape EntityType="CloudDbModel.GoogleDriveUserToken" Width="1.5" PointX="3" PointY="11.625" />
-        <EntityTypeShape EntityType="CloudDbModel.Storage" Width="1.5" PointX="3.75" PointY="18.125" />
         <AssociationConnector Association="CloudDbModel.FK_AspNetUsers_Storages_AspNetUsers" />
         <AssociationConnector Association="CloudDbModel.FK_DropboxUserTokens_AspNetUsers" />
         <AssociationConnector Association="CloudDbModel.FK_GoogleDriveUserTokens_AspNetUsers" />
-        <AssociationConnector Association="CloudDbModel.FK_AspNetUsers_Storages_Storages" />
         <EntityTypeShape EntityType="CloudDbModel.ErrorLogMessage" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CloudDbModel.Storage" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="CloudDbModel.FK_AspNetUsers_Storages_Storages" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

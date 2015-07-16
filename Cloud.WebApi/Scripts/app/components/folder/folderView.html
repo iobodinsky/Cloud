@@ -5,7 +5,7 @@
         <div class="box folder container relative folder"
              ng-repeat="folder in folders track by folder.id">
             <div class="storage-logo"
-                 ng-class="getStorageImageClass(folder.storageId)"></div>
+                 ng-class="getStorageImageClass(folder.storage)"></div>
             <div class="name absolute" title="{{folder.name}}"
                  ng-click="openFolder(folder)">{{folder.name}}</div>
             <div dropdown>
@@ -28,7 +28,7 @@
         <div class="box file container relative"
              ng-repeat="file in files track by file.id">
             <div class="storage-logo"
-                 ng-class="getStorageImageClass(file.storageId)"></div>
+                 ng-class="getStorageImageClass(file.storage)"></div>
             <div class="name absolute"
                  title="{{file.name}}"
                  ng-click="download(file)">

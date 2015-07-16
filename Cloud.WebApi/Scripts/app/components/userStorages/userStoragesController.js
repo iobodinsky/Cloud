@@ -14,16 +14,16 @@ window.cloud.controllers.userStoragesController = function($scope, $state,
 
     $scope.storages = userStoragesService.storages;
 
-    $scope.connect = function(storageId) {
-        userStoragesService.connect(storageId);
+    $scope.connect = function(storage) {
+        userStoragesService.connect(storage);
     };
 
-    $scope.disconnect = function(storageId) {
-        userStoragesService.disconnect(storageId);
+    $scope.disconnect = function(storage) {
+        userStoragesService.disconnect(storage);
     };
 
-    $scope.getStorageLargeImageClass = function(storageId) {
-        return 'logo-lg-' + storageId;
+    $scope.getStorageLargeImageClass = function(storage) {
+        return 'logo-lg-' + storage;
     };
 
     self.initialize();

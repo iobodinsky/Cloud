@@ -179,13 +179,13 @@ body {
     background-size: cover;
 }
 
-.logo-1 {
-    background: url("Images/Storages/logo-drive.png") top left no-repeat;
+.logo-googledrive {
+    background: url("Images/Storages/logo-googledrive.png") top left no-repeat;
     -ms-background-size: contain;
     background-size: contain;
 }
 
-.logo-3 {
+.logo-dropbox {
     background: url("Images/Storages/logo-dropbox.png") top left no-repeat;
     -ms-background-size: contain;
     background-size: contain;
@@ -244,9 +244,9 @@ body {
 	margin-top: 5px;
 }
 
-.logo-lg-1 { background: url(Images/Storages/drive-logo-lg.png) top left no-repeat; }
+.logo-lg-googledrive { background: url(Images/Storages/googledrive-logo-lg.png) top left no-repeat; }
 
-.logo-lg-3 { background: url(Images/Storages/dropbox-logo-lg.png) top left no-repeat; }
+.logo-lg-dropbox { background: url(Images/Storages/dropbox-logo-lg.png) top left no-repeat; }
 
 .logo-storage-name {
 	font-size: 20px;

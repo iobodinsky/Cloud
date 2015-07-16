@@ -16,7 +16,7 @@ namespace Cloud.Common.Interfaces
         [JsonProperty("userId")]
         string UserId { get; set; }
 
-        [JsonProperty("storageId")]
-        int StorageId { get; set; }
+        [JsonProperty("storage")]
+        string Storage { get; set; }
     }
 }

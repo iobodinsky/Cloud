@@ -66,6 +66,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="ClassName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetUsers_Storages_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -148,7 +149,6 @@
           <EntitySet Name="AspNetUsers_Storages" EntityType="CloudDbModel.AspNetUsers_Storages" />
           <EntitySet Name="DropboxUserTokens" EntityType="CloudDbModel.DropboxUserToken" />
           <EntitySet Name="GoogleDriveUserTokens" EntityType="CloudDbModel.GoogleDriveUserToken" />
-          <EntitySet Name="Storages" EntityType="CloudDbModel.Storage" />
           <AssociationSet Name="FK_AspNetUsers_Storages_AspNetUsers" Association="CloudDbModel.FK_AspNetUsers_Storages_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
@@ -161,11 +161,12 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="GoogleDriveUserToken" EntitySet="GoogleDriveUserTokens" />
           </AssociationSet>
+          <EntitySet Name="ErrorLogMessages" EntityType="CloudDbModel.ErrorLogMessage" />
+          <EntitySet Name="Storages" EntityType="CloudDbModel.Storage" />
           <AssociationSet Name="FK_AspNetUsers_Storages_Storages" Association="CloudDbModel.FK_AspNetUsers_Storages_Storages">
             <End Role="Storage" EntitySet="Storages" />
             <End Role="AspNetUsers_Storages" EntitySet="AspNetUsers_Storages" />
           </AssociationSet>
-          <EntitySet Name="ErrorLogMessages" EntityType="CloudDbModel.ErrorLogMessage" />
           </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -218,16 +219,6 @@
           <Property Name="Tokens" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="CloudDbModel.FK_GoogleDriveUserTokens_AspNetUsers" FromRole="GoogleDriveUserToken" ToRole="AspNetUser" />
         </EntityType>
-        <EntityType Name="Storage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers_Storages" Relationship="CloudDbModel.FK_AspNetUsers_Storages_Storages" FromRole="Storage" ToRole="AspNetUsers_Storages" />
-        </EntityType>
         <Association Name="FK_AspNetUsers_Storages_AspNetUsers">
           <End Type="CloudDbModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="CloudDbModel.AspNetUsers_Storages" Role="AspNetUsers_Storages" Multiplicity="*" />
@@ -264,6 +255,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ErrorLogMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="StackTrace" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers_Storages" Relationship="CloudDbModel.FK_AspNetUsers_Storages_Storages" FromRole="Storage" ToRole="AspNetUsers_Storages" />
+        </EntityType>
         <Association Name="FK_AspNetUsers_Storages_Storages">
           <End Type="CloudDbModel.Storage" Role="Storage" Multiplicity="1" />
           <End Type="CloudDbModel.AspNetUsers_Storages" Role="AspNetUsers_Storages" Multiplicity="*" />
@@ -276,15 +287,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ErrorLogMessage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="StackTrace" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="DateTime" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -339,22 +341,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Storages">
-            <EntityTypeMapping TypeName="CloudDbModel.Storage">
-              <MappingFragment StoreEntitySet="Storages">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ErrorLogMessages">
             <EntityTypeMapping TypeName="CloudDbModel.ErrorLogMessage">
               <MappingFragment StoreEntitySet="ErrorLogMessages">
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storages">
+            <EntityTypeMapping TypeName="CloudDbModel.Storage">
+              <MappingFragment StoreEntitySet="Storages">
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

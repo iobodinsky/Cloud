@@ -62,10 +62,10 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
 
         modalInstance.result.then(function(options) {
             if (options.data.authorize) {
-                userStoragesService.connect(options.data.storageId);
+                userStoragesService.connect(options.data.storage);
             }
             if (options.data.disconnect) {
-                userStoragesService.disconnect(options.data.storageId);
+                userStoragesService.disconnect(options.data.storage);
             }
         });
     };

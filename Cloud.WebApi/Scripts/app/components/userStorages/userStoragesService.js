@@ -27,13 +27,13 @@ window.cloud.services.userStoragesService = function($window, $state, httpServic
             null, null, success, error);
     };
 
-    function connect(storageId) {
-        switch (storageId) {
-        case constants.storages.googleDriveId: // google drive
+    function connect(storage) {
+        switch (storage) {
+        case constants.storages.googleDriveAlias: // google drive
             httpService.makeRequest(constants.httpMethod.get,
                 constants.urls.drive.authorize, null, null, success, error);
             break;
-        case constants.storages.dropboxId: // dropbox
+        case constants.storages.dropboxAlias: // dropbox
             httpService.makeRequest(constants.httpMethod.get,
                 constants.urls.dropbox.authorize, null, null, dropboxSuccess, error);
 
@@ -58,10 +58,10 @@ window.cloud.services.userStoragesService = function($window, $state, httpServic
         }
     };
 
-    function disconnect(storageId) {
+    function disconnect(storage) {
         httpService.makeRequest(
             constants.httpMethod.post,
-            constants.urls.cloud.constructDisconnect(storageId), null, null, success, error);
+            constants.urls.cloud.constructDisconnect(storage), null, null, success, error);
 
         function success() {
             $state.reload();

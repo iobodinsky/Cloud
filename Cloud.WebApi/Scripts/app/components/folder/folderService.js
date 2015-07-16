@@ -38,7 +38,7 @@ window.cloud.services.folderService = function(httpService,
         };
 
         var url = constants.urls.cloud.folders.constructFolderData(
-            folder.id, folder.storageId);
+            folder.id, folder.storage);
 
         httpService.makeRequest(
             constants.httpMethod.get, url, null, null, success, error);

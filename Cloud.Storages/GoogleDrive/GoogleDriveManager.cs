@@ -13,7 +13,7 @@ using Google.Apis.Util.Store;
 
 namespace Cloud.Storages.GoogleDrive
 {
-    internal class DriveManager
+    internal class GoogleDriveManager
     {
         #region Public methods
 

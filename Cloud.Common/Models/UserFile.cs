@@ -27,6 +27,6 @@ namespace Cloud.Common.Models
 
         public string DownloadUrl { get; set; }
 
-        public int StorageId { get; set; }
+        public string Storage { get; set; }
     }
 }

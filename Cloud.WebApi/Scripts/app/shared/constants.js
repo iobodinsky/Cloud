@@ -6,8 +6,8 @@ window.cloud.services.constants = {
     userTokenKey: 'CloudUserBearerToken',
     userTokenType: 'Bearer',
     storages: {
-        googleDriveId: 1,
-        dropboxId: 3
+        googleDriveAlias: 'googledrive',
+        dropboxAlias: 'dropbox'
     },
     rootCloudFolderId: 'cloudRoot',
     rootCloudFolderName: 'Cloud',
@@ -63,33 +63,33 @@ window.cloud.services.constants = {
             register: 'api/Account/Register',
             userInfo: 'api/Account/UserInfo',
             storages: 'api/storages',
-            constructDisconnect: function(storageId) {
-                return 'api/storages/' + storageId + '/disconnect';
+            constructDisconnect: function(storage) {
+                return 'api/storages/' + storage + '/disconnect';
             },
             files: {
-                constructUpload: function(folderId, storageId) {
-                    return 'api/files/storage/' + storageId + '/folder/' + folderId + '/upload';
+                constructUpload: function(folderId, storage) {
+                    return 'api/files/storage/' + storage + '/folder/' + folderId + '/upload';
                 },
-                constructRename: function(fileId, storageId) {
-                    return 'api/files/' + fileId + '/storage/' + storageId + '/rename';
+                constructRename: function(fileId, storage) {
+                    return 'api/files/' + fileId + '/storage/' + storage + '/rename';
                 },
-                constructDelete: function(fileId, storageId) {
-                    return 'api/files/' + fileId + '/storage/' + storageId + '/delete';
+                constructDelete: function(fileId, storage) {
+                    return 'api/files/' + fileId + '/storage/' + storage + '/delete';
                 },
             },
             folders: {
                 rootFolderData: 'api/folders',
-                constructCreate: function(storageId) {
-                    return 'api/folders/storage/' + storageId + '/create';
+                constructCreate: function(storage) {
+                    return 'api/folders/storage/' + storage + '/create';
                 },
-                constructRename: function(folderId, storageId) {
-                    return 'api/folders/' + folderId + '/storage/' + storageId + '/rename';
+                constructRename: function(folderId, storage) {
+                    return 'api/folders/' + folderId + '/storage/' + storage + '/rename';
                 },
-                constructFolderData: function(folderId, storageId) {
-                    return 'api/folders/' + folderId + '/storage/' + storageId;
+                constructFolderData: function(folderId, storage) {
+                    return 'api/folders/' + folderId + '/storage/' + storage;
                 },
-                constructDelete: function(folderId, storageId) {
-                    return 'api/folders/' + folderId + '/storage/' + storageId + '/delete';
+                constructDelete: function(folderId, storage) {
+                    return 'api/folders/' + folderId + '/storage/' + storage + '/delete';
                 }
             },
         },

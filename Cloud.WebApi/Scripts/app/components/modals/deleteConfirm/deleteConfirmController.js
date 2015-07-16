@@ -12,11 +12,11 @@ window.cloud.controllers.deleteConfirmController = function($scope, $modalInstan
         switch (deleteEntity.type) {
         case constants.cloudEntities.folder:
             url = constants.urls.cloud.folders.constructDelete(
-                deleteEntity.data.id, deleteEntity.data.storageId);
+                deleteEntity.data.id, deleteEntity.data.storage);
             break;
         case constants.cloudEntities.file:
             url = constants.urls.cloud.files.constructDelete(
-                deleteEntity.data.id, deleteEntity.data.storageId);
+                deleteEntity.data.id, deleteEntity.data.storage);
             break;
         default:
             alertService.show(constants.alert.type.danger,

@@ -12,6 +12,6 @@ namespace Cloud.Common.Models
 
         public string UserId { get; set; }
 
-        public int StorageId { get; set; }
+        public string Storage { get; set; }
     }
 }

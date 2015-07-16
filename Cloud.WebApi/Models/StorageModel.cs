@@ -9,5 +9,8 @@ namespace Cloud.WebApi.Models
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("alias")]
+        public string Alias { get; set; }
     }
 }

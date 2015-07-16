@@ -13,12 +13,14 @@ namespace Cloud.Storages.Dropbox
     public class DropboxStorage : IStorage
     {
         private readonly int _id;
+        private readonly string _alias;
 
         private readonly DropboxManager _manager;
 
-        public DropboxStorage(int id)
+        public DropboxStorage(int id, string alias)
         {
             _id = id;
+            _alias = alias;
             _manager = new DropboxManager(id);
         }
 
@@ -75,14 +77,14 @@ namespace Cloud.Storages.Dropbox
                 DropboxKeys.RootFolderPath);
             var folders = new List<IFolder>();
             var files = new List<IFile>();
-            var folderData = new FolderData {StorageId = _id};
+            var folderData = new FolderData {Storage = _alias};
             foreach (var folderFile in rootFilesFolders.contents)
             {
                 if (folderFile.is_dir)
                 {
                     folders.Add(new UserFolder
                     {
-                        StorageId = _id,
+                        Storage = _alias,
                         Id = _manager.ConstructEntityId(folderFile.path),
                         UserId = userId,
                         Name = folderFile.Name
@@ -92,7 +94,7 @@ namespace Cloud.Storages.Dropbox
                 {
                     files.Add(new UserFile
                     {
-                        StorageId = _id,
+                        Storage = _alias,
                         Name = folderFile.Name,
                         Id = _manager.ConstructEntityId(folderFile.path),
                         UserId = userId
@@ -102,7 +104,7 @@ namespace Cloud.Storages.Dropbox
             var folder = new UserFolder
             {
                 Id = _manager.ConstructEntityId(DropboxKeys.RootFolderPath),
-                StorageId = _id
+                Storage = _alias
             };
             folderData.Folders = folders;
             folderData.Files = files;
@@ -118,14 +120,14 @@ namespace Cloud.Storages.Dropbox
                 _manager.ConstructEntityPath(folderId));
             var folders = new List<IFolder>();
             var files = new List<IFile>();
-            var folderData = new FolderData {StorageId = _id};
+            var folderData = new FolderData {Storage = _alias};
             foreach (var folderFile in filesFolders.contents)
             {
                 if (folderFile.is_dir)
                 {
                     folders.Add(new UserFolder
                     {
-                        StorageId = _id,
+                        Storage = _alias,
                         Id = _manager.ConstructEntityId(folderFile.path),
                         UserId = userId,
                         Name = folderFile.Name,
@@ -135,7 +137,7 @@ namespace Cloud.Storages.Dropbox
                 {
                     files.Add(new UserFile
                     {
-                        StorageId = _id,
+                        Storage = _alias,
                         Name = folderFile.Name,
                         Id = _manager.ConstructEntityId(folderFile.path),
                         UserId = userId,
@@ -145,7 +147,7 @@ namespace Cloud.Storages.Dropbox
             var folder = new UserFolder
             {
                 Id = _manager.ConstructEntityId(folderId),
-                StorageId = _id
+                Storage = _alias
             };
             folderData.Folders = folders;
             folderData.Files = files;
