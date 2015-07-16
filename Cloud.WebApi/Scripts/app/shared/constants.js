@@ -68,38 +68,38 @@ window.cloud.services.constants = {
             },
             files: {
                 constructUpload: function(folderId, storage) {
-                    return 'api/files/storage/' + storage + '/folder/' + folderId + '/upload';
+                    return 'api/files/storages/' + storage + '/folder/' + folderId + '/upload';
                 },
                 constructRename: function(fileId, storage) {
-                    return 'api/files/' + fileId + '/storage/' + storage + '/rename';
+                    return 'api/files/' + fileId + '/storages/' + storage + '/rename';
                 },
                 constructDelete: function(fileId, storage) {
-                    return 'api/files/' + fileId + '/storage/' + storage + '/delete';
+                    return 'api/files/' + fileId + '/storages/' + storage + '/delete';
                 },
             },
             folders: {
                 rootFolderData: 'api/folders',
                 constructCreate: function(storage) {
-                    return 'api/folders/storage/' + storage + '/create';
+                    return 'api/folders/storages/' + storage + '/create';
                 },
                 constructRename: function(folderId, storage) {
-                    return 'api/folders/' + folderId + '/storage/' + storage + '/rename';
+                    return 'api/folders/' + folderId + '/storages/' + storage + '/rename';
                 },
                 constructFolderData: function(folderId, storage) {
-                    return 'api/folders/' + folderId + '/storage/' + storage;
+                    return 'api/folders/' + folderId + '/storages/' + storage;
                 },
                 constructDelete: function(folderId, storage) {
-                    return 'api/folders/' + folderId + '/storage/' + storage + '/delete';
+                    return 'api/folders/' + folderId + '/storages/' + storage + '/delete';
                 }
             },
         },
         drive: {
-            authorize: 'api/storages/authorize/googledrive'
+            authorize: 'api/storages/googledrive/authorize'
         },
         dropbox: {
-            authorize: 'api/storages/authorize/dropbox',
+            authorize: 'api/storages/dropbox/authorize',
             constructDownload: function(fileId) {
-                return 'api/files/' + fileId + '/download/dropbox';
+                return 'api/files/' + fileId + '/dropbox/download';
             }
         }
     },

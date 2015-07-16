@@ -7,8 +7,8 @@ namespace Cloud.WebApi.Controllers
     [RoutePrefix("api/files")]
     public class FilesController : ApiControllerBase
     {
-        // GET api/files/1/download/dropbox
-        [Route("{fileId}/download/dropbox")]
+        // GET api/files/1/dropbox/download
+        [Route("{fileId}/dropbox/download")]
         public async Task<IHttpActionResult> GetDownloadUrlDropbox([FromUri] string fileId)
         {
             var downloadUrl = await StorageFactory.GetDropboxInstance()
@@ -17,8 +17,8 @@ namespace Cloud.WebApi.Controllers
             return Ok(downloadUrl);
         }
 
-        //// POST api/files/storage/1/folder/1/upload
-        //[Route("storage/{storageAlias}/folder/{folderId}/upload")]
+        //// POST api/files/storages/1/folder/1/upload
+        //[Route("storages/{storageAlias}/folder/{folderId}/upload")]
         //[HttpPost]
         //public async Task<IHttpActionResult> UploadFile( [FromUri] string storageAlias,
         //    [FromUri] string folderId ) {
@@ -51,8 +51,8 @@ namespace Cloud.WebApi.Controllers
         //    return Ok(createdFile);
         //}
 
-        // POST api/files/1/storage/1/rename
-        [Route("{fileId}/storage/{storageAlias}/rename")]
+        // POST api/files/1/storages/1/rename
+        [Route("{fileId}/storages/{storageAlias}/rename")]
         [HttpPost]
         public async Task<IHttpActionResult> RenameFile([FromUri] string fileId,
             [FromUri] string storageAlias, [FromBody] NewNameModel newfile)
@@ -68,8 +68,8 @@ namespace Cloud.WebApi.Controllers
             return Ok(newFileName);
         }
 
-        // DELETE api/files/1/storage/1/delete
-        [Route("{fileId}/storage/{storageAlias:min(1)}/delete")]
+        // DELETE api/files/1/storages/1/delete
+        [Route("{fileId}/storages/{storageAlias}/delete")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteFile([FromUri] string fileId,
             [FromUri] string storageAlias)

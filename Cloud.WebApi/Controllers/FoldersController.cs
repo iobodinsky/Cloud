@@ -31,8 +31,8 @@ namespace Cloud.WebApi.Controllers
             return Ok(foldersData);
         }
 
-        // GET api/folders/1/storage/1
-        [Route("{folderId}/storage/{storageAlias}")]
+        // GET api/folders/1/storages/1
+        [Route("{folderId}/storages/{storageAlias}")]
         public async Task<IHttpActionResult> GetFolderData([FromUri] string folderId,
             [FromUri] string storageAlias)
         {
@@ -42,8 +42,8 @@ namespace Cloud.WebApi.Controllers
             return Ok(folderDada);
         }
 
-        // POST: api/folders/storage/1/create
-        [Route("storage/{storageAlias}/create")]
+        // POST: api/folders/storages/1/create
+        [Route("storages/{storageAlias}/create")]
         [HttpPost]
         public async Task<IHttpActionResult> Create(
             [FromUri] string storageAlias, [FromBody] UserFolder folder)
@@ -58,8 +58,8 @@ namespace Cloud.WebApi.Controllers
             return InternalServerError();
         }
 
-        // POST api/folders/1/storage/1/rename
-        [Route("{folderId}/storage/{storageAlias}/rename")]
+        // POST api/folders/1/storages/1/rename
+        [Route("{folderId}/storages/{storageAlias}/rename")]
         [HttpPost]
         public async Task<IHttpActionResult> RenameFolder([FromUri] string folderId, [FromUri] string storageAlias,
             [FromBody] NewNameModel newFolder)
@@ -71,8 +71,8 @@ namespace Cloud.WebApi.Controllers
             return Ok(newName);
         }
 
-        // DELETE: api/folders/1/storage/1/delete
-        [Route("{folderId}/storage/{storageAlias}/delete")]
+        // DELETE: api/folders/1/storages/1/delete
+        [Route("{folderId}/storages/{storageAlias}/delete")]
         public async Task<IHttpActionResult> Delete([FromUri] string folderId, [FromUri] string storageAlias)
         {
             var storage = StorageFactory.ResolveInstance(storageAlias);

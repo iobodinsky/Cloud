@@ -45,8 +45,8 @@ namespace Cloud.WebApi.Controllers
             return Ok(userStorages);
         }
 
-        // GET api/storages/authorize/dropbox
-        [Route("authorize/dropbox")]
+        // GET api/storages/dropbox/authorize
+        [Route("dropbox/authorize")]
         [HttpGet]
         public async Task<IHttpActionResult> AuthoriseDropbox(
             [FromUri] string code = null, [FromUri] string error = null)
@@ -63,8 +63,8 @@ namespace Cloud.WebApi.Controllers
             return RedirectToRoute(Routes.Default, null);
         }
 
-        // GET api/storages/authorize/googledrive
-        [Route("authorize/googledrive")]
+        // GET api/storages/googledrive/authorize
+        [Route("googledrive/authorize")]
         [HttpGet]
         public async Task<IHttpActionResult> AuthoriseGoogleDrive(
             [FromUri] string code = null, [FromUri] string error = null)
