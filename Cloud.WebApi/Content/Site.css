@@ -67,6 +67,8 @@ body {
     z-index: 1000;
 }
 
+.header .logo { margin-left: 5%; }
+
 .header .user-folder-path { margin-left: 4%; }
 
 .header .user-folder-path .folder:last-child { font-weight: bold; }
@@ -93,8 +95,6 @@ body {
 	font-size: 40px;
 	color: #bdb9b9;
 }
-
-.logo { margin-left: 5%; }
 
 .login-head {
     background: #6D4A70;

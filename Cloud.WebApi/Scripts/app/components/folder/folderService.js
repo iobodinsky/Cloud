@@ -3,7 +3,7 @@
 window.cloud.services = window.cloud.services || {};
 
 window.cloud.services.folderService = function(httpService,
-    folderHistoryService, alertService, constants) {
+    folderHistoryService, storageService, alertService, constants) {
     var folders = [];
     var files = [];
 
@@ -28,8 +28,10 @@ window.cloud.services.folderService = function(httpService,
             for (var j = 0; j < data.files.length; j++) {
                 files.push(data.files[j]);
             }
-
+            
             folderHistoryService.addFolder(data.folder);
+
+            storageService.setFolderStorage(data.storage);
         };
 
         function error() {
@@ -57,6 +59,7 @@ window.cloud.services.folderService = function(httpService,
         function success(data) {
             clearFilesFolders();
             clearFolderHistory();
+            storageService.clearFolderStorage();
 
             for (var i = 0; i < data.length; i++) {
                 for (var j = 0; j < data[i].folders.length; j++) {

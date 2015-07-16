@@ -2,24 +2,24 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.userStoragesController = function($scope, $state,
-    userStoragesService, userTokenService, constants) {
+window.cloud.controllers.storageController = function($scope, $state,
+    storageService, userTokenService, constants) {
     var self = this;
 
     self.initialize = function() {
         if (!userTokenService.isTokenExist()) $state.go(constants.routeState.login);
 
-        userStoragesService.getStorages();
+        storageService.getStorages();
     };
 
-    $scope.storages = userStoragesService.storages;
+    $scope.storages = storageService.userStorages;
 
     $scope.connect = function(storage) {
-        userStoragesService.connect(storage);
+        storageService.connect(storage);
     };
 
     $scope.disconnect = function(storage) {
-        userStoragesService.disconnect(storage);
+        storageService.disconnect(storage);
     };
 
     $scope.getStorageLargeImageClass = function(storage) {

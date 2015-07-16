@@ -37,8 +37,8 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
                     controller: 'userAccountController'
                 },
                 '': {
-                    templateUrl: constants.viewTemplatePath.userStorages,
-                    controller: 'userStoragesController'
+                    templateUrl: constants.viewTemplatePath.storage,
+                    controller: 'storageController'
                 }
             }
         });

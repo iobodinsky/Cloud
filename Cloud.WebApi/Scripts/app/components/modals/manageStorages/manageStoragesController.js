@@ -2,15 +2,15 @@
 
 window.cloud.controllers = window.cloud.controllers || {};
 
-window.cloud.controllers.manageStoragesController = function($scope, $modalInstance,
-    userStoragesService) {
+window.cloud.controllers.manageStoragesController = function($scope,
+    $modalInstance, storageService) {
     var self = this;
 
     self.inirialize = function() {
-        userStoragesService.getStorages();
+        storageService.getStorages();
     };
 
-    $scope.storages = userStoragesService.storages;
+    $scope.storages = storageService.userStorages;
 
     $scope.authorizeStorage = function(storage) {
         var data = {

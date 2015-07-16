@@ -2,18 +2,22 @@
 
 window.cloud.services = window.cloud.services || {};
 
-window.cloud.services.userStoragesService = function($window, $state, httpService, alertService, constants) {
-    var storages = {
+window.cloud.services.storageService = function ($window,
+    $state, httpService, alertService, constants) {
+
+    var userStorages = {
         connected: [],
         available: []
     };
+
+    var folderStorage = '';
 
     function getStorages() {
         function success(data) {
             if (!data.connected.length) $state.go(constants.routeState.connect);
 
-            storages.connected = data.connected;
-            storages.available = data.available;
+            userStorages.connected = data.connected;
+            userStorages.available = data.available;
         };
 
         function error() {
@@ -29,7 +33,7 @@ window.cloud.services.userStoragesService = function($window, $state, httpServic
 
     function connect(storage) {
         switch (storage) {
-        case constants.storages.googleDriveAlias: // google drive
+        case constants.storages.googleDriveAlias: // googledrive
             httpService.makeRequest(constants.httpMethod.get,
                 constants.urls.drive.authorize, null, null, success, error);
             break;
@@ -73,10 +77,21 @@ window.cloud.services.userStoragesService = function($window, $state, httpServic
         };
     };
 
+    function setFolderStorage(value) {
+        folderStorage = value;
+    };
+
+    function clearFolderStorage() {
+        folderStorage = '';
+    };
+
     return {
-        storages: storages,
+        userStorages: userStorages,
         getStorages: getStorages,
         connect: connect,
-        disconnect: disconnect
+        disconnect: disconnect,
+        folderStorage: folderStorage,
+        setFolderStorage: setFolderStorage,
+        clearFolderStorage: clearFolderStorage
     };
 };

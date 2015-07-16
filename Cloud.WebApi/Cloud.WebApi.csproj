@@ -288,8 +288,8 @@
     <Content Include="Scripts\app\components\login\loginService.js" />
     <Content Include="Scripts\app\components\register\matchPasswordDirective.js" />
     <Content Include="Scripts\app\components\register\requiredDigitDirective.js" />
-    <Content Include="Scripts\app\components\userStorages\userStoragesView.html" />
-    <Content Include="Scripts\app\components\userStorages\userStoragesController.js" />
+    <Content Include="Scripts\app\components\storage\storageView.html" />
+    <Content Include="Scripts\app\components\storage\storageController.js" />
     <Content Include="Scripts\app\components\folderHistory\folderHistoryController.js" />
     <Content Include="Scripts\app\components\folderHistory\folderHistoryService.js" />
     <Content Include="Scripts\app\components\folderHistory\folderHistoryView.html" />
@@ -310,7 +310,7 @@
     <Content Include="Scripts\app\components\modals\deleteConfirm\deleteConfirmController.js" />
     <Content Include="Scripts\app\components\modals\rename\renameController.js" />
     <Content Include="Scripts\app\components\modals\manageStorages\manageStoragesController.js" />
-    <Content Include="Scripts\app\components\userStorages\userStoragesService.js" />
+    <Content Include="Scripts\app\components\storage\storageService.js" />
     <Content Include="Scripts\app\shared\alert\alertDirective.js" />
     <Content Include="Scripts\app\shared\alert\alertView.html" />
     <Content Include="Scripts\app\shared\constants.js" />

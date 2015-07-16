@@ -3,13 +3,13 @@
 window.cloud.controllers = window.cloud.controllers || {};
 
 window.cloud.controllers.userAccountController = function($scope, $window, $modal, $state,
-    userStoragesService, httpService, userTokenService, alertService, constants) {
+    storageService, httpService, userTokenService, alertService, constants) {
     var self = this;
 
     self.initialize = function() {
         if (userTokenService.isTokenExist()) {
             self.getUserInfo();
-            userStoragesService.getStorages();
+            storageService.getStorages();
         } else {
             $state.go(constants.routeState.login);
         }
@@ -32,7 +32,7 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
     };
     self.animationsEnabled = true;
 
-    $scope.storages = userStoragesService.storages;
+    $scope.storages = storageService.userStorages;
 
     $scope.userInfo = {
         name: ''
@@ -62,10 +62,10 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
 
         modalInstance.result.then(function(options) {
             if (options.data.authorize) {
-                userStoragesService.connect(options.data.storage);
+                storageService.connect(options.data.storage);
             }
             if (options.data.disconnect) {
-                userStoragesService.disconnect(options.data.storage);
+                storageService.disconnect(options.data.storage);
             }
         });
     };

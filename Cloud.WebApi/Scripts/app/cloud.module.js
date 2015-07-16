@@ -47,6 +47,7 @@ window.cloud.app.service('userTokenService', [
 window.cloud.app.service('folderService', [
     'httpService',
     'folderHistoryService',
+    'storageService',
     'alertService',
     'constants',
     window.cloud.services.folderService
@@ -56,13 +57,13 @@ window.cloud.app.service('folderHistoryService', [
 	window.cloud.services.folderHistoryService
 ]);
 
-window.cloud.app.service('userStoragesService', [
+window.cloud.app.service('storageService', [
     '$window',
     '$state',
     'httpService',
     'alertService',
     'constants',
-    window.cloud.services.userStoragesService
+    window.cloud.services.storageService
 ]);
 
 window.cloud.app.service('alertService', [
@@ -121,7 +122,7 @@ window.cloud.app.controller('userAccountController', [
 	'$window',
     '$modal',
     '$state',
-    'userStoragesService',
+    'storageService',
 	'httpService',
     'userTokenService',
 	'alertService',
@@ -150,13 +151,13 @@ window.cloud.app.controller('folderHistoryController', [
     window.cloud.controllers.folderHistoryController
 ]);
 
-window.cloud.app.controller('userStoragesController', [
+window.cloud.app.controller('storageController', [
     '$scope',
     '$state',
-    'userStoragesService',
+    'storageService',
     'userTokenService',
     'constants',
-    window.cloud.controllers.userStoragesController
+    window.cloud.controllers.storageController
 ]);
 
 window.cloud.app.controller('renameController', [
@@ -194,6 +195,6 @@ window.cloud.app.controller('deleteConfirmController', [
 window.cloud.app.controller('manageStoragesController', [
 	'$scope',
 	'$modalInstance',
-	'userStoragesService',
+	'storageService',
 	window.cloud.controllers.manageStoragesController
 ]);
