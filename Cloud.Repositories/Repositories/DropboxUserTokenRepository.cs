@@ -22,11 +22,7 @@ namespace Cloud.Repositories.Repositories
             {
                 var tokenToDelete = Entities.DropboxUserTokens.
                     SingleOrDefault(token => token.UserId.Equals(key));
-                if (tokenToDelete == null)
-                {
-                    // todo:
-                    throw new Exception("todo");
-                }
+                if (tokenToDelete == null) return;
 
                 Entities.DropboxUserTokens.Attach(tokenToDelete);
                 Entities.DropboxUserTokens.Remove(tokenToDelete);

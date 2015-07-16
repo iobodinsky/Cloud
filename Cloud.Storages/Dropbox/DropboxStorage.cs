@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using Cloud.Common.Interfaces;
 using Cloud.Common.Models;
 using Cloud.Storages.Resources;
+using DropboxRestAPI;
 
 namespace Cloud.Storages.Dropbox
 {
@@ -25,6 +27,23 @@ namespace Cloud.Storages.Dropbox
             var client = await _manager.GetClient(userId);
             return (await client.Core.Metadata.MediaAsync(
                 _manager.ConstructEntityPath(fileId))).url;
+        }
+
+        public async Task<string> GetAuthorizationRegirectUrlAsync()
+        {
+            var options = new Options
+            {
+                ClientId = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppKey],
+                ClientSecret = ConfigurationManager.AppSettings[AppSettingKeys.DropboxAppSecret],
+                RedirectUri = ConfigurationManager.AppSettings[AppSettingKeys.DropboxRedirectUri]
+            };
+
+            var client = new Client(options);
+
+            var authRequestUrl = await client.Core.OAuth2
+                .AuthorizeAsync(DropboxKeys.AuthorizeResponceType);
+
+            return authRequestUrl.AbsoluteUri;
         }
 
         #region IStorage implementation

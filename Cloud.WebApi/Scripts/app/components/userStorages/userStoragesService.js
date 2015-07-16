@@ -35,12 +35,10 @@ window.cloud.services.userStoragesService = function($window, $state, httpServic
             break;
         case constants.storages.dropboxId: // dropbox
             httpService.makeRequest(constants.httpMethod.get,
-                constants.urls.dropbox.authorize, null, null, success, dropboxError);
+                constants.urls.dropbox.authorize, null, null, dropboxSuccess, error);
 
-            function dropboxError(data) {
-                if (data.message === 'Dropbox account unauthorised') {
-                    $window.location.href = data.innerServerError.message;
-                }
+            function dropboxSuccess(url) {
+                $window.location = url;
             };
 
             break;

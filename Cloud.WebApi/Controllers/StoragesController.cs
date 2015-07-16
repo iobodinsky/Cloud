@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Cloud.Common.Models;
 using Cloud.Repositories.Repositories;
+using Cloud.Storages.Dropbox;
 using Cloud.WebApi.Models;
 using Cloud.WebApi.Resources;
 
@@ -50,12 +51,13 @@ namespace Cloud.WebApi.Controllers
         public async Task<IHttpActionResult> AuthoriseDropbox(
             [FromUri] string code = null, [FromUri] string error = null)
         {
-            if (error != null)
-            {
-                return RedirectToRoute(Routes.Default, null);
-            }
+            if (error != null) return RedirectToRoute(Routes.Default, null);
 
-            var storage = StorageFactory.ResolveInstance(Constants.DropboxStorageId);
+            var storage = new DropboxStorage(Constants.DropboxStorageId);
+
+            if (string.IsNullOrEmpty(code))
+                return Ok(await storage.GetAuthorizationRegirectUrlAsync());
+
             await storage.AuthorizeAsync(UserId, code);
 
             return RedirectToRoute(Routes.Default, null);

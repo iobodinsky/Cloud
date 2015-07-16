@@ -32,14 +32,7 @@ namespace Cloud.Storages.Dropbox
 
             var client = new Client(options);
 
-            if (string.IsNullOrEmpty(code))
-            {
-                var authRequestUrl = await client.Core.OAuth2
-                    .AuthorizeAsync(DropboxKeys.AuthorizeResponceType);
-                // todo
-                throw new Exception("Dropbox account unauthorised",
-                    new Exception(authRequestUrl.AbsoluteUri));
-            }
+            if (string.IsNullOrEmpty(code)) throw new ArgumentException("code");
 
             var token = await client.Core.OAuth2.TokenAsync(code);
             var dropboxToken = new DropboxUserToken
@@ -68,8 +61,7 @@ namespace Cloud.Storages.Dropbox
             var userToken = await new DropboxUserTokenRepository()
                 .GetTokenAsync(userId);
 
-            if (userToken == null) await AuthorizeAsync(userId, string.Empty);
-            else client.UserAccessToken = userToken.AccessToken;
+            if (userToken != null) client.UserAccessToken = userToken.AccessToken;
 
             return client;
         }

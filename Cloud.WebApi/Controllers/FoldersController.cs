@@ -23,13 +23,13 @@ namespace Cloud.WebApi.Controllers
                 storages.Add(StorageFactory.ResolveInstance(storage.Id, storage.ClassName));
             }
 
-            var folderDatas = new List<FolderData>();
+            var foldersData = new List<FolderData>();
             foreach (var storage in storages)
             {
-                folderDatas.Add(await storage.GetRootFolderDataAsync(UserId));
+                foldersData.Add(await storage.GetRootFolderDataAsync(UserId));
             }
 
-            return Ok(folderDatas);
+            return Ok(foldersData);
         }
 
         // GET api/folders/1/storage/1
