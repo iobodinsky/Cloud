@@ -49,6 +49,7 @@ window.cloud.services.constants = {
         folderHistory: 'scripts/app/components/folderHistory/folderHistoryView.html',
         userAccount: 'scripts/app/components/userAccount/userAccountView.html',
         storage: 'scripts/app/components/storage/storageView.html',
+        upload: 'scripts/app/components/upload/uploadView.html',
         manageStorages: 'scripts/app/components/modals/manageStorages/manageStoragesView.html',
         rename: 'scripts/app/components/modals/rename/renameView.html',
         deleteConfirm: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',

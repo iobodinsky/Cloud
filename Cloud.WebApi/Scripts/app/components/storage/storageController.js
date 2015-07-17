@@ -9,7 +9,11 @@ window.cloud.controllers.storageController = function($scope, $state,
     self.initialize = function() {
         if (!userTokenService.isTokenExist()) $state.go(constants.routeState.login);
 
-        storageService.getStorages();
+        storageService.subscibeForStorages(function () {
+            $scope.storages = storageService.getStorages();
+        });
+
+        storageService.updateStorages();
     };
 
     $scope.storages = storageService.userStorages;

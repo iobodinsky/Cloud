@@ -6,11 +6,14 @@ window.cloud.controllers.manageStoragesController = function($scope,
     $modalInstance, storageService) {
     var self = this;
 
-    self.inirialize = function() {
-        storageService.getStorages();
+    self.inirialize = function () {
+        storageService.subscibeForStorages(function() {
+            $scope.storages = storageService.getStorages();
+        });
+        storageService.updateStorages();
     };
 
-    $scope.storages = storageService.userStorages;
+    $scope.storages = storageService.getStorages();
 
     $scope.authorizeStorage = function(storage) {
         var data = {

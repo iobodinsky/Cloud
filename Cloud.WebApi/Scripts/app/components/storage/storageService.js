@@ -2,7 +2,7 @@
 
 window.cloud.services = window.cloud.services || {};
 
-window.cloud.services.storageService = function ($window,
+window.cloud.services.storageService = function($window,
     $state, httpService, alertService, constants) {
 
     var userStorages = {
@@ -12,12 +12,21 @@ window.cloud.services.storageService = function ($window,
 
     var folderStorage = '';
 
+    function getFolderStorage() {
+        return folderStorage;
+    };
+
     function getStorages() {
+        return userStorages;
+    };
+
+    function updateStorages() {
         function success(data) {
             if (!data.connected.length) $state.go(constants.routeState.connect);
 
             userStorages.connected = data.connected;
             userStorages.available = data.available;
+            notifyObserversStorages();
         };
 
         function error() {
@@ -79,19 +88,51 @@ window.cloud.services.storageService = function ($window,
 
     function setFolderStorage(value) {
         folderStorage = value;
+        notifyObserversFolderStorage();
     };
 
     function clearFolderStorage() {
         folderStorage = '';
+        notifyObserversFolderStorage();
+    };
+
+    var observerFolderStorageCallbacks = [];
+
+    function subscibeForFolderStorage(callback) {
+        observerFolderStorageCallbacks.push(callback);
+    };
+
+    function notifyObserversFolderStorage() {
+        angular.forEach(observerFolderStorageCallbacks, function(callback) {
+            if (angular.isFunction(callback)) {
+                callback();
+            }
+        });
+    };
+
+    var observerStoragesCallbacks = [];
+
+    function subscibeForStorages(callback) {
+        observerStoragesCallbacks.push(callback);
+    };
+
+    function notifyObserversStorages() {
+        angular.forEach(observerStoragesCallbacks, function(callback) {
+            if (angular.isFunction(callback)) {
+                callback();
+            }
+        });
     };
 
     return {
-        userStorages: userStorages,
         getStorages: getStorages,
+        updateStorages: updateStorages,
         connect: connect,
         disconnect: disconnect,
-        folderStorage: folderStorage,
+        getFolderStorage: getFolderStorage,
         setFolderStorage: setFolderStorage,
-        clearFolderStorage: clearFolderStorage
+        clearFolderStorage: clearFolderStorage,
+        subscibeForFolderStorage: subscibeForFolderStorage,
+        subscibeForStorages: subscibeForStorages
     };
 };

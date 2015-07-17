@@ -26,6 +26,10 @@ cloud.routeConfig = cloud.routeConfig || function($stateProvider, $urlRouterProv
                 '': {
                     templateUrl: constants.viewTemplatePath.folder,
                     controller: 'folderController'
+                },
+                'upload': {
+                    templateUrl: constants.viewTemplatePath.upload,
+                    controller: 'uploadController'
                 }
             }
         })

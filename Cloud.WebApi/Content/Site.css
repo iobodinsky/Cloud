@@ -91,6 +91,11 @@ body {
 
 .cloud-content { width: 80%; }
 
+.upload {
+    top: 70px;
+    left: 15px;
+}
+
 .welcome {
 	font-size: 40px;
 	color: #bdb9b9;

@@ -6,10 +6,14 @@ window.cloud.controllers.userAccountController = function($scope, $window, $moda
     storageService, httpService, userTokenService, alertService, constants) {
     var self = this;
 
-    self.initialize = function() {
+    self.initialize = function () {
+        storageService.subscibeForStorages(function () {
+            $scope.storages = storageService.getStorages();
+        });
+
         if (userTokenService.isTokenExist()) {
             self.getUserInfo();
-            storageService.getStorages();
+            storageService.updateStorages();
         } else {
             $state.go(constants.routeState.login);
         }

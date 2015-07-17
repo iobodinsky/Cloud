@@ -66,6 +66,10 @@ window.cloud.app.service('storageService', [
     window.cloud.services.storageService
 ]);
 
+window.cloud.app.service('uploadService', [
+    window.cloud.services.uploadService
+]);
+
 window.cloud.app.service('alertService', [
 	'$timeout',
 	'constants',
@@ -158,6 +162,12 @@ window.cloud.app.controller('storageController', [
     'userTokenService',
     'constants',
     window.cloud.controllers.storageController
+]);
+
+window.cloud.app.controller('uploadController', [
+    '$scope',
+    'storageService',
+    window.cloud.controllers.uploadController
 ]);
 
 window.cloud.app.controller('renameController', [

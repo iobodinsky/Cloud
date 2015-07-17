@@ -304,6 +304,9 @@
     <Content Include="Scripts\app\components\modals\rename\renameView.html" />
     <Content Include="Scripts\app\components\register\registerController.js" />
     <Content Include="Scripts\app\components\register\registerView.html" />
+    <Content Include="Scripts\app\components\upload\uploadController.js" />
+    <Content Include="Scripts\app\components\upload\uploadService.js" />
+    <Content Include="Scripts\app\components\upload\uploadView.html" />
     <Content Include="Scripts\app\components\userAccount\userAccountController.js" />
     <Content Include="Scripts\app\components\userAccount\userAccountView.html" />
     <Content Include="Scripts\app\components\modals\createFolder\createFolderController.js" />

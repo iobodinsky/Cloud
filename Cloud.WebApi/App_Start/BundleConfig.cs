@@ -34,6 +34,8 @@ namespace Cloud.WebApi
                 "~/Scripts/app/components/folderHistory/folderHistoryService.js",
                 "~/Scripts/app/components/storage/storageController.js",
                 "~/Scripts/app/components/storage/storageService.js",
+                "~/Scripts/app/components/upload/uploadController.js",
+                "~/Scripts/app/components/upload/uploadService.js",
                 "~/Scripts/app/components/modals/createFolder/createFolderController.js",
                 "~/Scripts/app/components/modals/deleteConfirm/deleteConfirmController.js",
                 "~/Scripts/app/components/modals/rename/renameController.js",
