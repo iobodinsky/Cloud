@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,9 +53,36 @@ namespace Cloud.Storages.GoogleDrive
             throw new NotImplementedException();
         }
 
-        public async Task<IFolder> AddFolderAsync(string userId, IFolder file)
+        public async Task<IFolder> AddFolderAsync(string userId, IFolder folder)
         {
-            throw new NotImplementedException();
+            var service = await _manager.BuildServiceAsync(userId);
+            var newFolder = new File
+            {
+                Title = folder.Name,
+                MimeType = GoogleDriveMimeTypes.Folder
+            };
+
+            if (folder.ParentId != null)
+            {
+                newFolder.Parents = new List<ParentReference>
+                {
+                    new ParentReference
+                    {
+                        Id = folder.ParentId
+                    }
+                };
+            }
+
+            var createdGoogleFile = await service.Files.Insert(newFolder).ExecuteAsync();
+            var ceatedFolder = new UserFolder
+            {
+                Id = createdGoogleFile.Id,
+                Name = createdGoogleFile.Title,
+                ParentId = folder.ParentId,
+                Storage = _alias
+            };
+
+            return ceatedFolder;
         }
 
         public async Task<FolderData> GetRootFolderDataAsync(string userId)
