@@ -91,9 +91,16 @@ body {
 
 .cloud-content { width: 80%; }
 
-.upload {
+.upload-container {
     top: 70px;
     left: 15px;
+}
+
+.upload-container button.upload { width: 90px; }
+
+.upload-container .btn-group > .btn + .dropdown-toggle {
+    padding-left: 1px; 
+    padding-right: 1px;
 }
 
 .welcome {

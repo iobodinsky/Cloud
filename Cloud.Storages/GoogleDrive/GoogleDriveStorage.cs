@@ -164,7 +164,8 @@ namespace Cloud.Storages.GoogleDrive
                 {
                     Files = files,
                     Folders = folders,
-                    Folder = currentFolder
+                    Folder = currentFolder,
+                    Storage = _alias
                 };
             }
             catch (TokenResponseException)
