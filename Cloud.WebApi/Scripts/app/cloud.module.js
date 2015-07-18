@@ -166,7 +166,10 @@ window.cloud.app.controller('storageController', [
 
 window.cloud.app.controller('uploadController', [
     '$scope',
+    '$modal',
+    'alertService',
     'storageService',
+    'constants',
     window.cloud.controllers.uploadController
 ]);
 
@@ -187,7 +190,7 @@ window.cloud.app.controller('createFolderController', [
 	'httpService',
 	'constants',
 	'userTokenService',
-	'folderId',
+	'storage',
 	window.cloud.controllers.createFolderController
 ]);
 

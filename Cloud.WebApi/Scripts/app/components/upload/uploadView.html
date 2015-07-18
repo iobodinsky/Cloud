@@ -2,7 +2,8 @@
     <div class="margin-bottom-s">
         <div class="btn-group" dropdown>
             <button type="button" class="btn btn-success btn-sm upload"
-                    ng-disabled="!folderStorage">
+                    ng-disabled="!folderStorage"
+                    ng-click="createFolder()">
                 create folder
             </button>
             <button type="button" class="btn btn-success btn-sm dropdown-toggle" dropdown-toggle>
@@ -11,7 +12,7 @@
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="storage in storages.connected">
-                    <a href="">{{storage.name}}</a>
+                    <a ng-click="createFolder(storage.alias)">{{storage.name}}</a>
                 </li>
             </ul>
         </div>

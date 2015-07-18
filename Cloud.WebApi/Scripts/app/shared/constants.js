@@ -52,6 +52,7 @@ window.cloud.services.constants = {
         upload: 'scripts/app/components/upload/uploadView.html',
         manageStorages: 'scripts/app/components/modals/manageStorages/manageStoragesView.html',
         rename: 'scripts/app/components/modals/rename/renameView.html',
+        createFolder: 'scripts/app/components/modals/createFolder/createFolderView.html',
         deleteConfirm: 'scripts/app/components/modals/deleteConfirm/deleteConfirmView.html',
         alert: 'scripts/app/shared/alert/alertView.html',
         loader: 'scripts/app/shared/loader/loaderView.html'
@@ -139,5 +140,6 @@ window.cloud.services.constants = {
         warningNotInCloudFolder: 'you cannot add new item in non cloud folder',
         warningCannotDisconnectStorage: 'you cannot disconnect storage',
         warningDelete: 'you cannot download from Dropbox',
+        warningChooseStorage: 'choose storage first'
     }
 };

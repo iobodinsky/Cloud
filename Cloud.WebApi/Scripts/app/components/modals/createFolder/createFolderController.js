@@ -3,12 +3,12 @@
 window.cloud.controllers = window.cloud.controllers || { };
 
 window.cloud.controllers.createFolderController = function ($scope, $modalInstance,
-    httpService, constants, userTokenService, folderId) {
+    httpService, constants, userTokenService, storage) {
 
     $scope.create = function() {
         var folder = {
             'Name': $scope.folderName,
-            'ParentId': folderId
+            'Storage': storage
         };
 
         function success(data, status, headers, config) {
@@ -31,8 +31,8 @@ window.cloud.controllers.createFolderController = function ($scope, $modalInstan
             });
         };
 
-        // todo: not implemented
-        //httpService.makeRequest(constants.httpMethod.post, , null, folder, success, error);
+        httpService.makeRequest(constants.httpMethod.post,
+            constants.urls.cloud.folders.constructCreate(storage), null, folder, success, error);
     };
 
     $scope.cancel = function() {
