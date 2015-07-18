@@ -32,7 +32,7 @@ window.cloud.controllers.uploadController = function($scope, $modal,
 
         modalInstance.result.then(function(options) {
             if (options.isSuccess) {
-
+                folderService.folders.push(options.data);
                 alertService.show(constants.alert.type.success,
                     constants.message.successfolderCreate);
             } else {

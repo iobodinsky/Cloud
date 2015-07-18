@@ -70,6 +70,8 @@ namespace Cloud.Storages.Dropbox
             var client = await _manager.GetClient(userId);
             var folderPath = _manager.ConstructNewEntityPath(folder.ParentId, folder.Name);
             await client.Core.FileOperations.CreateFolderAsync(folderPath);
+
+            folder.Id = _manager.ConstructEntityId(folderPath);
             return folder;
         }
 
