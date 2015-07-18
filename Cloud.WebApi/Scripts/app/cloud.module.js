@@ -169,6 +169,7 @@ window.cloud.app.controller('uploadController', [
     '$modal',
     'alertService',
     'storageService',
+    'folderService',
     'constants',
     window.cloud.controllers.uploadController
 ]);

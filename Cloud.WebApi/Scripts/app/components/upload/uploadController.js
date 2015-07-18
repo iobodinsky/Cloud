@@ -3,7 +3,7 @@
 window.cloud.controllers = window.cloud.controllers || {};
 
 window.cloud.controllers.uploadController = function($scope, $modal,
-    alertService, storageService, constants) {
+    alertService, storageService, folderService, constants) {
     var self = this;
 
     self.initialize = function() {
@@ -23,6 +23,9 @@ window.cloud.controllers.uploadController = function($scope, $modal,
             resolve: {
                 storage: function() {
                     return storage;
+                },
+                currentStorageFolder: function() {
+                    return folderService.getCurrenStorageFolder();
                 }
             }
         });

@@ -6,6 +6,11 @@ window.cloud.services.folderService = function(httpService,
     folderHistoryService, storageService, alertService, constants) {
     var folders = [];
     var files = [];
+    var currenStorageFolder = '';
+
+    function getCurrenStorageFolder() {
+        return currenStorageFolder;
+    }
 
     function clearFilesFolders() {
         folders.length = 0;
@@ -19,6 +24,7 @@ window.cloud.services.folderService = function(httpService,
     function openFolder(folder) {
         function success(data) {
             clearFilesFolders();
+            currenStorageFolder = '';
 
             if (!data.folder.name) data.folder.name = folder.name;
 
@@ -28,6 +34,8 @@ window.cloud.services.folderService = function(httpService,
             for (var j = 0; j < data.files.length; j++) {
                 files.push(data.files[j]);
             }
+
+            currenStorageFolder = data.folder;
             
             folderHistoryService.addFolder(data.folder);
 
@@ -59,6 +67,7 @@ window.cloud.services.folderService = function(httpService,
         function success(data) {
             clearFilesFolders();
             clearFolderHistory();
+            currenStorageFolder = '';
             storageService.clearFolderStorage();
 
             for (var i = 0; i < data.length; i++) {
@@ -123,6 +132,7 @@ window.cloud.services.folderService = function(httpService,
     return {
         folders: folders,
         files: files,
+        getCurrenStorageFolder: getCurrenStorageFolder,
         openFolder: openFolder,
         openFolderFromHeader: openFolderFromHeader,
         getRootFolderData: getRootFolderData,

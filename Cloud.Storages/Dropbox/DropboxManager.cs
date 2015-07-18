@@ -76,6 +76,12 @@ namespace Cloud.Storages.Dropbox
             return path.Replace('|', '/');
         }
 
+        public string ConstructNewEntityPath(string parentPath, string name)
+        {
+            var newPath = string.Concat(parentPath, '|', name);
+            return ConstructEntityPath(newPath);
+        }
+
         public string MakeValidPath(string path)
         {
             return path.Replace("\\", "/")

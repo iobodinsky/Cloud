@@ -3,12 +3,12 @@
 window.cloud.controllers = window.cloud.controllers || { };
 
 window.cloud.controllers.createFolderController = function ($scope, $modalInstance,
-    httpService, constants, userTokenService, storage) {
+    httpService, constants, userTokenService, storage, currentStorageFolder) {
 
     $scope.create = function() {
         var folder = {
             'Name': $scope.folderName,
-            'Storage': storage
+            'ParentId': currentStorageFolder.id
         };
 
         function success(data, status, headers, config) {

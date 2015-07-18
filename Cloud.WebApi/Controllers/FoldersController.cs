@@ -48,14 +48,13 @@ namespace Cloud.WebApi.Controllers
         public async Task<IHttpActionResult> Create(
             [FromUri] string storageAlias, [FromBody] UserFolder folder)
         {
-            //var storage = StorageFactory.ResolveInstance(storageAlias);
-            //folder.Id = new IdGenerator().ForFolder();;
-            //folder.UserId = UserId;
-            //folder.StorageId = storage.;
-            //var createdFolder = await storage.AddFolderAsync(UserId, folder);
+            var storage = StorageFactory.ResolveInstance(storageAlias);
+            folder.Storage = storageAlias;
+            folder.UserId = UserId;
 
-            //return Ok(createdFolder);
-            return InternalServerError();
+            var createdFolder = await storage.AddFolderAsync(UserId, folder);
+
+            return Ok(createdFolder);
         }
 
         // POST api/folders/1/storages/1/rename

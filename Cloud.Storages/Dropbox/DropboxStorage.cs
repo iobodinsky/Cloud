@@ -67,7 +67,10 @@ namespace Cloud.Storages.Dropbox
 
         public async Task<IFolder> AddFolderAsync(string userId, IFolder folder)
         {
-            throw new NotImplementedException();
+            var client = await _manager.GetClient(userId);
+            var folderPath = _manager.ConstructNewEntityPath(folder.ParentId, folder.Name);
+            await client.Core.FileOperations.CreateFolderAsync(folderPath);
+            return folder;
         }
 
         public async Task<FolderData> GetRootFolderDataAsync(string userId)
